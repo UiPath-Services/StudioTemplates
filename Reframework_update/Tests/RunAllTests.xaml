@@ -79,7 +79,7 @@
           <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="528,2483.2" sap2010:WorkflowViewState.IdRef="Sequence_15">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="TestStatus" />
-              <Variable x:TypeArguments="x:String" Name="TestComments" />
+              <Variable x:TypeArguments="x:String" Name="TestComment" />
               <Variable x:TypeArguments="sd:DataTable" Name="Tests" />
               <Variable x:TypeArguments="x:Int32" Default="0" Name="FailedTestsCounter" />
               <Variable x:TypeArguments="x:Int32" Default="0" Name="PassedTestsCounter" />
@@ -143,11 +143,11 @@
                             <InArgument x:TypeArguments="x:String" x:Key="in_TestLogFile">[in_TestLogFile]</InArgument>
                             <OutArgument x:TypeArguments="x:String" x:Key="out_Status">[TestStatus]</OutArgument>
                             <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
-                            <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("Exception").ToString]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("ExpectedResult").ToString]</InArgument>
                             <InArgument x:TypeArguments="x:String" x:Key="in_WorkflowFilename">[Row("WorkflowFile").ToString]</InArgument>
                             <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[Nothing]</InArgument>
                             <InArgument x:TypeArguments="x:String" x:Key="in_ActualOutcome">Success</InArgument>
-                            <OutArgument x:TypeArguments="x:String" x:Key="out_Comments">[TestComments]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="out_Comment">[TestComment]</OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                         </ui:InvokeWorkflowFile>
                       </Sequence>
@@ -166,16 +166,16 @@
                           </ActivityAction.Argument>
                           <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Test Logging (Application Exception)" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Tests\RunAllTests_Logging.xaml">
                             <ui:InvokeWorkflowFile.Arguments>
-                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
                               <InArgument x:TypeArguments="x:Int32" x:Key="in_TestCounter">[TestCounter]</InArgument>
                               <InOutArgument x:TypeArguments="x:Int32" x:Key="io_FailedTestsCounter">[FailedTestsCounter]</InOutArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_TestLogFile">[in_TestLogFile]</InArgument>
                               <OutArgument x:TypeArguments="x:String" x:Key="out_Status">[TestStatus]</OutArgument>
+                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("Exception").ToString]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_WorkflowFilename">[Row("WorkflowFile").ToString]</InArgument>
                               <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[Exception]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_ActualOutcome">AppEx</InArgument>
-                              <OutArgument x:TypeArguments="x:String" x:Key="out_Comments">[TestComments]</OutArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_Comment">[TestComment]</OutArgument>
                             </ui:InvokeWorkflowFile.Arguments>
                           </ui:InvokeWorkflowFile>
                         </ActivityAction>
@@ -193,16 +193,16 @@
                           </ActivityAction.Argument>
                           <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Test Logging (BRE)" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\RunAllTests_Logging.xaml">
                             <ui:InvokeWorkflowFile.Arguments>
-                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
                               <InArgument x:TypeArguments="x:Int32" x:Key="in_TestCounter">[TestCounter]</InArgument>
                               <InOutArgument x:TypeArguments="x:Int32" x:Key="io_FailedTestsCounter">[FailedTestsCounter]</InOutArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_TestLogFile">[in_TestLogFile]</InArgument>
                               <OutArgument x:TypeArguments="x:String" x:Key="out_Status">[TestStatus]</OutArgument>
+                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("Exception").ToString]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_WorkflowFilename">[Row("WorkflowFile").ToString]</InArgument>
                               <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[Exception]</InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_ActualOutcome">BRE</InArgument>
-                              <OutArgument x:TypeArguments="x:String" x:Key="out_Comments">[TestComments]</OutArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_Comment">[TestComment]</OutArgument>
                             </ui:InvokeWorkflowFile.Arguments>
                           </ui:InvokeWorkflowFile>
                         </ActivityAction>
@@ -229,7 +229,7 @@
                             <OutArgument x:TypeArguments="x:Object">[Row("Comments")]</OutArgument>
                           </Assign.To>
                           <Assign.Value>
-                            <InArgument x:TypeArguments="x:Object">[TestComments]</InArgument>
+                            <InArgument x:TypeArguments="x:Object">[TestComment]</InArgument>
                           </Assign.Value>
                         </Assign>
                       </Sequence>
