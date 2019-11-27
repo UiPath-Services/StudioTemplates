@@ -9,12 +9,12 @@
     <x:Property sap2010:Annotation.AnnotationText="Filename of the workflow that implements a test." Name="in_WorkflowFilename" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Exception thrown by tests and used for logging purposes." Name="in_Exception" Type="InArgument(s:Exception)" />
     <x:Property sap2010:Annotation.AnnotationText="Actual outcome of the test. It can be &quot;Success&quot;, &quot;AppEx&quot; or &quot;BRE&quot;." Name="in_ActualOutcome" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="Comment about the test to be written to the report." Name="out_Comments" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Comment about the test to be written to the report." Name="out_Comment" Type="OutArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1019.2,1087.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1019.2,1091.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>RunAllTests_Logging_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -63,14 +63,14 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Log the result of running the test, based on the type of test and its outcome." DisplayName="Run All Tests - Logging" sap:VirtualizedContainerService.HintSize="999.2,1027.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence sap2010:Annotation.AnnotationText="Log the result of running the test, based on the type of test and its outcome." DisplayName="Run All Tests - Logging" sap:VirtualizedContainerService.HintSize="999.2,1031.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If outcome is the expected one" sap:VirtualizedContainerService.HintSize="957.6,906.4" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_ExpectedOutcome = in_ActualOutcome]" DisplayName="If outcome is the expected one" sap:VirtualizedContainerService.HintSize="957.6,910.4" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -104,7 +104,7 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence DisplayName="Test failed" sap:VirtualizedContainerService.HintSize="538.4,756.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Test failed" sap:VirtualizedContainerService.HintSize="538.4,760.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -127,7 +127,7 @@
               <InArgument x:TypeArguments="x:String">FAIL</InArgument>
             </Assign.Value>
           </Assign>
-          <Switch x:TypeArguments="x:String" DisplayName="Switch to choose test comment" Expression="[in_ActualOutcome]" sap:VirtualizedContainerService.HintSize="496.8,289.6" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+          <Switch x:TypeArguments="x:String" DisplayName="Switch to choose test comment" Expression="[in_ActualOutcome]" sap:VirtualizedContainerService.HintSize="496.8,293.6" sap2010:WorkflowViewState.IdRef="Switch`1_1">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -136,7 +136,7 @@
             </sap:WorkflowViewStateService.ViewState>
             <Assign x:Key="BRE" DisplayName="Assign out_Comment (BRE)" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_5">
               <Assign.To>
-                <OutArgument x:TypeArguments="x:String">[out_Comments]</OutArgument>
+                <OutArgument x:TypeArguments="x:String">[out_Comment]</OutArgument>
               </Assign.To>
               <Assign.Value>
                 <InArgument x:TypeArguments="x:String">["BRE: "+in_Exception.Message+" at Source: "+in_Exception.Source]</InArgument>
@@ -144,7 +144,7 @@
             </Assign>
             <Assign x:Key="AppEx" DisplayName="Assign out_Comment (AppEx)" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_6">
               <Assign.To>
-                <OutArgument x:TypeArguments="x:String">[out_Comments]</OutArgument>
+                <OutArgument x:TypeArguments="x:String">[out_Comment]</OutArgument>
               </Assign.To>
               <Assign.Value>
                 <InArgument x:TypeArguments="x:String">["AppEx: "+in_Exception.Message+" at Source: "+in_Exception.Source]</InArgument>
@@ -152,7 +152,7 @@
             </Assign>
             <Assign x:Key="Success" DisplayName="Assign out_Comment (Success)" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_7">
               <Assign.To>
-                <OutArgument x:TypeArguments="x:String">[out_Comments]</OutArgument>
+                <OutArgument x:TypeArguments="x:String">[out_Comment]</OutArgument>
               </Assign.To>
               <Assign.Value>
                 <InArgument x:TypeArguments="x:String">No exception thrown.</InArgument>
