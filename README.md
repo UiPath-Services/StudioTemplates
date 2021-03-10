@@ -18,5 +18,7 @@ If you cloned this repository (instead of using the template from Studio):
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+####*Do not push directly do main!* Create pull requests for that. You will need at least one approve. 
+
 ## License
 Mixed. See each project individually.
