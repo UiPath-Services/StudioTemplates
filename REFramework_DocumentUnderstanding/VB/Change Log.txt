@@ -1,0 +1,47 @@
+v1.0.6 - 2021-03-10
+Changed:
+	- renamed framework to REFramework_DocumentUnderstanding
+
+v1.0.5 - 2021-03-02
+Added:
+	- added new log fields:
+		- in_DocumentSource - String: optional input parameter. If given, it can report what the source of the document was(email, link, local, etc)
+		- DigitizationExecutionTime - TimeSpan: Duration of the digitization process
+		- ForcedDigitizations - Int32: The number of forced digitizations that occurred (instead of native reading)
+		- NumberOfPages - Int32: How many pages did we just digitize
+		- ClassificationExecutionTime - TimeSpan: Duration of the classification process
+		- AutomaticClassifierConfidence - List<Double>: List of classification confidences
+		- OCRConfidence - List<Double>: List of OCR confidences
+		- PieClassification - List<KeyValuePair<String,Int32>>: Creates a list of how many classifications of each type we had. This can be used to create graphs later on.
+		- ListOfClassifications - List<String>: Creates a list of all the automatic classifications
+		- ListOfValidatedClassifications - List<String>: Creates a list of all the validated classifications
+		- AutoClassificationSuccess - boolean: Says if the classification was automatically a success.
+		- ExtractionExecutionTime - TimeSpan: Duration of the extraction process
+		- EachFieldExtractedConfidence - List<KeyValuePair<String, Double>>: Contains a list of all the extracted fields with their confidence. If the field is missing the value -1 will be inserted.
+		- AutoExtractionSuccess - boolean: Says if the extraction was automatically a success.
+		
+v1.0.4 - 2021-01-16
+Changed:
+	- yyyyMMdd instead of ddMMyyyy for logs
+	- updated template nupkg
+v1.0.3 - 2021-01-16
+Added:
+	- New log in "Read Config file"
+	- New log in split documents
+	- Insights Integration with the new "logKey" prefix to all the logs
+Changed:
+	- Updated the nupkg version to 1.0.3
+	- Updated IOCR to 4.12.0-preview
+Removed:
+	- Sanity, drop by drop.
+
+v1.0.2 - 2021-01-15
+Added:
+	- Change Log
+	- both Main files: logic to update the classificationResult object after a PDF file split
+Changed:
+	- both Main files: currentDocument iteration variable renamed to classificationResult
+	- both Main files: classificationResults variable renamed to classificationResultsArray
+	- 50_Extract.xaml: replaced input argument DocumentTypeId with ClassificationResult
+Removed:
+	- both Main files: Validate Path check removed
