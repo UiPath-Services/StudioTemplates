@@ -1,0 +1,270 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="RunAllTests" this:RunAllTests.in_TestLogFile="Tests\TestLog.txt" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Path to the file to which test logs are written." Name="in_TestLogFile" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Path to the Excel file to which the result of the tests are written." Name="in_OutputExcel" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>626,3003</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>RunAllTests_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Run all tests defined in Tests.xlsx and log their results.&#xA;All tests are invoked in the same order they are defined in the Excel file." DisplayName="Run All Tests" sap:VirtualizedContainerService.HintSize="606,2943" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <If Condition="[Not File.Exists(in_TestLogFile)]" DisplayName="If log file does not exist, create it" sap:VirtualizedContainerService.HintSize="564,208" sap2010:WorkflowViewState.IdRef="If_4">
+      <If.Then>
+        <ui:CreateFile Name="{x:Null}" ContinueOnError="True" DisplayName="Create Log file" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="CreateFile_1" Path="[in_TestLogFile]" />
+      </If.Then>
+    </If>
+    <ui:ExcelApplicationScope Password="{x:Null}" CreateNewFile="False" DisplayName="Excel application scope" sap:VirtualizedContainerService.HintSize="564,2561" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" WorkbookPath="Tests\Tests.xlsx">
+      <ui:ExcelApplicationScope.Body>
+        <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="530,2452" sap2010:WorkflowViewState.IdRef="Sequence_15">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="TestStatus" />
+              <Variable x:TypeArguments="x:String" Name="TestComment" />
+              <Variable x:TypeArguments="sd:DataTable" Name="Tests" />
+              <Variable x:TypeArguments="x:Int32" Default="0" Name="FailedTestsCounter" />
+              <Variable x:TypeArguments="x:Int32" Default="0" Name="PassedTestsCounter" />
+              <Variable x:TypeArguments="s:DateTime" Default="[Now]" Name="StartTime" />
+              <Variable x:TypeArguments="x:Int32" Default="0" Name="TestCounter" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:ExcelReadRange AddHeaders="True" DataTable="[Tests]" DisplayName="Read Range (Defined tests)" sap:VirtualizedContainerService.HintSize="488,59" sap2010:WorkflowViewState.IdRef="ExcelReadRange_2" SheetName="Tests">
+              <ui:ExcelReadRange.Range>
+                <InArgument x:TypeArguments="x:String">
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </InArgument>
+              </ui:ExcelReadRange.Range>
+            </ui:ExcelReadRange>
+            <ui:AppendLine DisplayName="Append line (Header top) " FileName="[in_TestLogFile]" sap:VirtualizedContainerService.HintSize="488,132" sap2010:WorkflowViewState.IdRef="AppendLine_17" Text="[Environment.NewLine+&quot;=================================================&quot;]" />
+            <ui:AppendLine DisplayName="Append line  (Header intormation)" FileName="[in_TestLogFile]" sap:VirtualizedContainerService.HintSize="488,132" sap2010:WorkflowViewState.IdRef="AppendLine_18" Text="[&quot;Starting new set of &quot;+Tests.Rows.Count.ToString+&quot; tests at &quot;+now.ToString(&quot;hh:mm:ss  tt, dd/MM/yyyy&quot;)]" />
+            <ui:AppendLine DisplayName="Append line (Header bottom) " FileName="[in_TestLogFile]" sap:VirtualizedContainerService.HintSize="488,132" sap2010:WorkflowViewState.IdRef="AppendLine_19" Text="=================================================" />
+            <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Status" DataTable="[Tests]" DisplayName="Add Status column" sap:VirtualizedContainerService.HintSize="488,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_4" MaxLength="-1" Unique="False" />
+            <ui:AddDataColumn x:TypeArguments="x:String" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Comments" DataTable="[Tests]" DisplayName="Add Comments column" sap:VirtualizedContainerService.HintSize="488,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_5" MaxLength="-1" Unique="False" />
+            <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[Tests]" DisplayName="For each test row" sap:VirtualizedContainerService.HintSize="488,960" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+              <ui:ForEachRow.Body>
+                <ActivityAction x:TypeArguments="sd:DataRow">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sd:DataRow" Name="Row" />
+                  </ActivityAction.Argument>
+                  <TryCatch sap2010:Annotation.AnnotationText="Execute test and log its result." DisplayName="Try catch" sap:VirtualizedContainerService.HintSize="438,813" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <TryCatch.Try>
+                      <Sequence DisplayName="Run test and log result" sap:VirtualizedContainerService.HintSize="376,537" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="Assign TestCounter" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[TestCounter]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[TestCounter+1]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:LogMessage DisplayName="Log message (Test number)" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace" Message="[&quot;Running test #&quot;+TestCounter.ToString]" />
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke Test File" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="[Row(&quot;WorkflowFile&quot;).ToString]">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke RunAllTests_Logging workflow (Success)" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Tests\RunAllTests_Logging.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:Int32" x:Key="in_TestCounter">[TestCounter]</InArgument>
+                            <InOutArgument x:TypeArguments="x:Int32" x:Key="io_FailedTestsCounter">[FailedTestsCounter]</InOutArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_TestLogFile">[in_TestLogFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="out_Status">[TestStatus]</OutArgument>
+                            <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("ExpectedResult").ToString]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_WorkflowFilename">[Row("WorkflowFile").ToString]</InArgument>
+                            <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[Nothing]</InArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="in_ActualOutcome">Success</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="out_Comment">[TestComment]</OutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
+                      </Sequence>
+                    </TryCatch.Try>
+                    <TryCatch.Catches>
+                      <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="s:Exception">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="s:Exception" Name="Exception" />
+                          </ActivityAction.Argument>
+                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke RunAllTests_Loggingg (System Exception)" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Tests\RunAllTests_Logging.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:Int32" x:Key="in_TestCounter">[TestCounter]</InArgument>
+                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_FailedTestsCounter">[FailedTestsCounter]</InOutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_TestLogFile">[in_TestLogFile]</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_Status">[TestStatus]</OutArgument>
+                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("ExpectedResult").ToString]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_WorkflowFilename">[Row("WorkflowFile").ToString]</InArgument>
+                              <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[Exception]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_ActualOutcome">SystemException</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_Comment">[TestComment]</OutArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                        </ActivityAction>
+                      </Catch>
+                      <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="Exception" />
+                          </ActivityAction.Argument>
+                          <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke RunAllTests_Logging (Business Exception)" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\RunAllTests_Logging.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:Int32" x:Key="in_TestCounter">[TestCounter]</InArgument>
+                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_FailedTestsCounter">[FailedTestsCounter]</InOutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_TestLogFile">[in_TestLogFile]</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_Status">[TestStatus]</OutArgument>
+                              <InOutArgument x:TypeArguments="x:Int32" x:Key="io_PassedTestsCounter">[PassedTestsCounter]</InOutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedOutcome">[Row("ExpectedResult").ToString]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_WorkflowFilename">[Row("WorkflowFile").ToString]</InArgument>
+                              <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[Exception]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_ActualOutcome">BusinessException</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_Comment">[TestComment]</OutArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                          </ui:InvokeWorkflowFile>
+                        </ActivityAction>
+                      </Catch>
+                    </TryCatch.Catches>
+                    <TryCatch.Finally>
+                      <Sequence DisplayName="Assign test status and comment" sap:VirtualizedContainerService.HintSize="304,252.8" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="Assign Row(&quot;Status&quot;)" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_18">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[Row("Status")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">[TestStatus]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Assign DisplayName="Assign Row(&quot;Comment&quot;)" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Object">[Row("Comments")]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Object">[TestComment]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </TryCatch.Finally>
+                  </TryCatch>
+                </ActivityAction>
+              </ui:ForEachRow.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ForEachRow>
+            <ui:ExcelWriteRange AddHeaders="True" DataTable="[Tests]" DisplayName="Write Range (Tests results)" sap:VirtualizedContainerService.HintSize="488,87" sap2010:WorkflowViewState.IdRef="ExcelWriteRange_2" SheetName="Result" StartingCell="A1" />
+            <ui:AppendLine DisplayName="Append line (Footer top) " FileName="[in_TestLogFile]" sap:VirtualizedContainerService.HintSize="488,132" sap2010:WorkflowViewState.IdRef="AppendLine_20" Text="================================" />
+            <ui:AppendLine DisplayName="Append line (Summary)" FileName="[in_TestLogFile]" sap:VirtualizedContainerService.HintSize="488,132" sap2010:WorkflowViewState.IdRef="AppendLine_21" Text="[now.ToString(&quot;hh:mm:ss&quot;)+vbTab+&quot;Summary: &quot;+PassedTestsCounter.ToString+&quot;/&quot;+Tests.Rows.Count.ToString+&quot; Tests Passed. Total execution time: &quot;+(now-StartTime).TotalSeconds.ToString(&quot;N0&quot;)+&quot; seconds&quot;]" />
+            <ui:OpenApplication ApplicationWindow="{x:Null}" TimeoutMS="{x:Null}" WorkingDirectory="{x:Null}" sap2010:Annotation.AnnotationText="Open log file in a Notepad window." Arguments="[in_TestLogFile]" ContinueOnError="True" DisplayName="Open application (Notepad)" FileName="C:\windows\system32\notepad.exe" sap:VirtualizedContainerService.HintSize="488,150" sap2010:WorkflowViewState.IdRef="OpenApplication_2" Selector="&lt;wnd app='notepad.exe' cls='Notepad' title='TestLog.txt - Notepad' /&gt;">
+              <ui:OpenApplication.Body>
+                <ActivityAction x:TypeArguments="x:Object">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                  </ActivityAction.Argument>
+                </ActivityAction>
+              </ui:OpenApplication.Body>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:OpenApplication>
+          </Sequence>
+        </ActivityAction>
+      </ui:ExcelApplicationScope.Body>
+    </ui:ExcelApplicationScope>
+  </Sequence>
+</Activity>
