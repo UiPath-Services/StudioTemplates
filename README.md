@@ -20,5 +20,10 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 #### *Do not push directly to master/develop!* Create pull requests for that. You will need at least one approval. 
 
+- Any new features will be created in a feature/<your_feature_name> branch
+- develop will always be the main branch that is the most up to date
+- the 'master' branches will be the release channels for the different projects that we have 
+Ex: When we release a new update of Document Understanding Process, it will be published in master/DocumentUnderstandingProcess) from there it will be built and pushed to the official feed in Studio
+
 ## License
 Mixed. See each project individually.
