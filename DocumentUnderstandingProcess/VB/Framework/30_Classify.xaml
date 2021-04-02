@@ -13,7 +13,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1089,1948</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1283,1948</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_30_Classify_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="68">
@@ -122,7 +122,7 @@
     <ui:RetryScope sap2010:Annotation.AnnotationText="Classifiers might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Classify" sap:VirtualizedContainerService.HintSize="520,746" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <p3:ClassifyDocumentScope ClassificationResults="[out_ClassificationResults]" DisplayName="Classify Document Scope" DocumentObjectModel="[in_DOM]" DocumentPath="[in_TargetDocument]" DocumentText="[in_DocText]" sap:VirtualizedContainerService.HintSize="478,530" sap2010:WorkflowViewState.IdRef="ClassifyDocumentScope_1" Taxonomy="[in_DocTaxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:{&quot;DocumentTypeMappings&quot;:{}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{}}">
+          <p3:ClassifyDocumentScope ClassificationResults="[out_ClassificationResults]" DisplayName="Classify Document Scope" DocumentObjectModel="[in_DOM]" DocumentPath="[in_TargetDocument]" DocumentText="[in_DocText]" sap:VirtualizedContainerService.HintSize="478,530" sap2010:WorkflowViewState.IdRef="ClassifyDocumentScope_1" Taxonomy="[in_DocTaxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;Semi-StructuredDocuments.Financial.Receipt&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Receipt&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Semi-StructuredDocuments.Financial.Invoice&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Invoice&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;StructuredDocuments.LendingForms.W-9&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;StructuredDocuments.LendingForms.W-9&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Documents.Other.Certificate-of-filing&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Documents.Other.Certificate-of-filing&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true}}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{}}">
             <p3:ClassifyDocumentScope.Classifiers>
               <p3:IntelligentKeywordClassifier LearningData="{x:Null}" ApiKey="[in_Config(&quot;ApiKey&quot;)]" DisplayName="Intelligent Keyword Classifier" Endpoint="https://du.uipath.com/svc/intelligentkeywords" sap:VirtualizedContainerService.HintSize="234,209" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifier_1" LearningFilePath="[in_Config(&quot;ClassifierLearningFilePath&quot;)]" PersistenceId="UI5533016733244eac811d80cb7db3878b">
                 <p3:IntelligentKeywordClassifier.ClassifierResult>
@@ -191,24 +191,12 @@
     </Assign>
     <ui:AddLogFields DisplayName="Add Log Fields" sap:VirtualizedContainerService.HintSize="520,22" sap2010:WorkflowViewState.IdRef="AddLogFields_1">
       <ui:AddLogFields.Fields>
-        <InArgument x:TypeArguments="x:TimeSpan" x:Key="ClassificationExecutionTime">
-          <mva:VisualBasicValue x:TypeArguments="x:TimeSpan" ExpressionText="DateTime.Now.Subtract(StartingTime)" />
-        </InArgument>
-        <InArgument x:TypeArguments="scg:List(x:Double)" x:Key="AutomaticClassifierConfidence">
-          <mva:VisualBasicValue x:TypeArguments="scg:List(x:Double)" ExpressionText="out_ClassificationResults.Select(Function(cr) cDbl(cr.Confidence)).ToList" />
-        </InArgument>
-        <InArgument x:TypeArguments="scg:List(x:Double)" x:Key="OCRConfidence">
-          <mva:VisualBasicValue x:TypeArguments="scg:List(x:Double)" ExpressionText="out_ClassificationResults.Select(Function(cr) cDbl(cr.OCRConfidence)).ToList" />
-        </InArgument>
-        <InArgument x:TypeArguments="scg:List(scg:KeyValuePair(x:String, x:Int32))" x:Key="PieClassification">
-          <mva:VisualBasicValue x:TypeArguments="scg:List(scg:KeyValuePair(x:String, x:Int32))" ExpressionText="out_ClassificationResults.Select(Function(i) i.DocumentTypeId).GroupBy(Function(i) i).Select(Function(i) new KeyValuePair(Of String, Int32) (i.Key, i.Count) ).ToList" />
-        </InArgument>
-        <InArgument x:TypeArguments="scg:List(x:String)" x:Key="ListOfClassifications">
-          <mva:VisualBasicValue x:TypeArguments="scg:List(x:String)" ExpressionText="out_ClassificationResults.Select(Function(id) id.DocumentTypeId).ToList" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Boolean" x:Key="AutoClassificationSuccess">
-          <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="out_AutoClassificationSuccess" />
-        </InArgument>
+        <InArgument x:TypeArguments="x:TimeSpan" x:Key="ClassificationExecutionTime">[DateTime.Now.Subtract(StartingTime)]</InArgument>
+        <InArgument x:TypeArguments="scg:List(x:Double)" x:Key="AutomaticClassifierConfidence">[out_ClassificationResults.Select(Function(cr) cDbl(cr.Confidence)).ToList]</InArgument>
+        <InArgument x:TypeArguments="scg:List(x:Double)" x:Key="OCRConfidence">[out_ClassificationResults.Select(Function(cr) cDbl(cr.OCRConfidence)).ToList]</InArgument>
+        <InArgument x:TypeArguments="scg:List(scg:KeyValuePair(x:String, x:Int32))" x:Key="PieClassification">[out_ClassificationResults.Select(Function(i) i.DocumentTypeId).GroupBy(Function(i) i).Select(Function(i) new KeyValuePair(Of String, Int32) (i.Key, i.Count) ).ToList]</InArgument>
+        <InArgument x:TypeArguments="scg:List(x:String)" x:Key="ListOfClassifications">[out_ClassificationResults.Select(Function(id) id.DocumentTypeId).ToList]</InArgument>
+        <InArgument x:TypeArguments="x:Boolean" x:Key="AutoClassificationSuccess">[out_AutoClassificationSuccess]</InArgument>
       </ui:AddLogFields.Fields>
     </ui:AddLogFields>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="520,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[in_Config(&quot;logKey&quot;) + in_Config(&quot;LogMessage_ClassificationFinished&quot;)]" />
