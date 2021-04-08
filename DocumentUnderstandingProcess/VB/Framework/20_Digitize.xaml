@@ -10,7 +10,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1067,1529</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1014,1681</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_20_Digitize_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="35">
@@ -90,9 +90,10 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Digitizes the specified file. OCR engine is process-dependant!&#xA;&#xA;Any pre-processing logic that should be executed prior to digitization belongs here." DisplayName="Digitize" sap:VirtualizedContainerService.HintSize="418,1364" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Digitizes the specified file. OCR engine is process-dependant!&#xA;&#xA;Any pre-processing logic that should be executed prior to digitization belongs here." DisplayName="Digitize" sap:VirtualizedContainerService.HintSize="418,1516" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="s:DateTime" Name="StartingTime" />
     </Sequence.Variables>
@@ -102,7 +103,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - DigitizationStarted" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;logKey&quot;) + in_Config(&quot;LogMessage_DigitizationStarted&quot;) + &quot; &quot; + Path.GetFileName(in_TargetDocument)]" />
+    <ui:LogMessage DisplayName="Log Message - DigitizationStarted" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_DigitizationStarted&quot;) + &quot; &quot; + Path.GetFileName(in_TargetDocument) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
     <ui:Comment DisplayName="Comment Pre-Digitization" sap:VirtualizedContainerService.HintSize="376,93" sap2010:WorkflowViewState.IdRef="Comment_1" Text="If needed, any pre-digitization processing meant to help improve OCR results belongs here. Eg: grayscaling" />
     <Assign DisplayName="Set Starting Time" sap:VirtualizedContainerService.HintSize="376,60" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
@@ -112,7 +113,8 @@
         <InArgument x:TypeArguments="s:DateTime">[Datetime.Now]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:RetryScope sap2010:Annotation.AnnotationText="OCR engines might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Digitize" sap:VirtualizedContainerService.HintSize="376,581" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+    <ui:Comment DisplayName="Note About Retry Mechanism" sap:VirtualizedContainerService.HintSize="376,112" sap2010:WorkflowViewState.IdRef="Comment_2" Text="An OCR engine that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
+    <ui:RetryScope sap2010:Annotation.AnnotationText="OCR engines might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Digitize" sap:VirtualizedContainerService.HintSize="376,581" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[Cint(in_Config(&quot;MaxExecutionAttemptsDigitize&quot;))]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
           <p1:DigitizeDocument DegreeOfParallelism="-1" DisplayName="Digitize Document - Digitize" DocumentObjectModel="[out_DOM]" DocumentPath="[in_TargetDocument]" DocumentText="[out_DocText]" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="334,350" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
@@ -143,7 +145,7 @@
         <InArgument x:TypeArguments="x:Int32" x:Key="NumberOfPages">[out_DOM.Pages.Count()]</InArgument>
       </ui:AddLogFields.Fields>
     </ui:AddLogFields>
-    <ui:LogMessage DisplayName="Log Message - Digitize Finished" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[in_Config(&quot;logKey&quot;) + in_Config(&quot;LogMessage_DigitizationFinished&quot;)]" />
+    <ui:LogMessage DisplayName="Log Message - Digitize Finished" sap:VirtualizedContainerService.HintSize="376,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[in_Config(&quot;LogMessage_DigitizationFinished&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
     <ui:RemoveLogFields DisplayName="Remove Log Fields - Digitize" sap:VirtualizedContainerService.HintSize="376,22" sap2010:WorkflowViewState.IdRef="RemoveLogFields_2">
       <ui:RemoveLogFields.Fields>
         <scg:List x:TypeArguments="InArgument(x:String)" Capacity="4">
