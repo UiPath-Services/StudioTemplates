@@ -12,7 +12,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1067,1402</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1014,1402</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_40_TrainClassifiers_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="32">
@@ -86,6 +86,7 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Classifier training (if needed)." DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="562,1237" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -95,7 +96,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Train Classifiers Start" sap:VirtualizedContainerService.HintSize="520,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;logKey&quot;) + in_Config(&quot;LogMessage_TrainClassifiersStart&quot;)]" />
+    <ui:LogMessage DisplayName="Log Message - Train Classifiers Start" sap:VirtualizedContainerService.HintSize="520,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;LogMessage_TrainClassifiersStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
     <ui:Comment DisplayName="Comment - Train Classifiers" sap:VirtualizedContainerService.HintSize="520,303" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time.&#xA;&#xA;Three options are readily available (see the Examples folder for sample implementations):&#xA;&#xA;1. Locking/unlocking the learning file before/after accessing it&#xA;2. Using a semaphore to regulate access&#xA;3. Adding training data to a queue and have a dedicated job for training" />
     <ui:RetryScope sap2010:Annotation.AnnotationText="Learning files could be located in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;NOTE: ContinueOnError = True - For classifier training, losing a small bit of training data to allow data extraction seems the preferred approach. This setting should be changed if it does not suit the Business Requirements of the process!" ContinueOnError="True" DisplayName="Retry Scope - Train Classifiers" sap:VirtualizedContainerService.HintSize="520,640" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
