@@ -75,7 +75,7 @@
         <InArgument x:TypeArguments="x:String">[in_Config("ClassifierLearningFilePath") + ".lock" + Datetime.Now.ToString("ddMMyyyyhhmmssfffffff")]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:LogMessage DisplayName="Log Message with keyword file name" sap:VirtualizedContainerService.HintSize="462,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Locking keyword file: &quot; + out_KeywordLockName]" />
+    <ui:LogMessage DisplayName="Log Message - LockFile" sap:VirtualizedContainerService.HintSize="462,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Locking keyword file: &quot; + out_KeywordLockName]" />
     <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="While the lock file doesn't exist yet, rename the current classifier file and wait one second. &#xD;&#xA;&#xD;&#xA;This will repeat in case there was a hidden error." Condition="[IO.File.Exists(out_KeywordLockName) = False]" DisplayName="While Lock file" sap:VirtualizedContainerService.HintSize="462,548" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
       <ui:InterruptibleWhile.Body>
         <Sequence DisplayName="Body of While Loop" sap:VirtualizedContainerService.HintSize="426,311" sap2010:WorkflowViewState.IdRef="Sequence_2">
