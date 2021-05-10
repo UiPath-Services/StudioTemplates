@@ -1,11 +1,14 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_80_EndProcess" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_80_EndProcess" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
+    <x:Property Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
+    <x:Property Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1014,579</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1336,898.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_80_EndProcess_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -30,6 +33,7 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -62,16 +66,25 @@
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Post-export &amp; Process Cleanup&#xA;&#xA;Post-export - any logic that must be executed after data export belongs here." DisplayName="EndProcess" sap:VirtualizedContainerService.HintSize="376,255" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Post-export &amp; Process Cleanup&#xA;&#xA;Post-export - any logic that must be executed after data export belongs here." DisplayName="EndProcess" sap:VirtualizedContainerService.HintSize="420,415.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Start End Process" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_EndProcessStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:LogMessage DisplayName="Log Message - Start End Process" sap:VirtualizedContainerService.HintSize="378.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_EndProcessStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="SetTransactionStatus - Success" sap:VirtualizedContainerService.HintSize="378.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\SetTransactionStatus.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[in_TransactionItem]</InArgument>
+        <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception" />
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
+        <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[in_MaxAttempts]</InArgument>
+        <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[in_RetryInterval]</InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
   </Sequence>
 </Activity>
