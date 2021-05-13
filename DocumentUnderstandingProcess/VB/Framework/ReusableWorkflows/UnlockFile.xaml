@@ -7,7 +7,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>993,1515</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1237,1515</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>UnlockFile_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -68,6 +68,7 @@
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="UnlockFile" sap:VirtualizedContainerService.HintSize="526,1350" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -77,8 +78,8 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:Comment DisplayName="Comment - UnlockFile" sap:VirtualizedContainerService.HintSize="484,131" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML enables file unlocking of a specific file." />
-    <ui:LogMessage DisplayName="Log Message - UnlockFile" sap:VirtualizedContainerService.HintSize="484,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Unlocking keyword file: &quot; + in_KeywordLockName]" />
-    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="While the lock file name exists, rename it to the unlocked version. Then wait 1 second.&#xD;&#xA;&#xD;&#xA;If any errors occur, it will be repeated until no errors come up." Condition="[IO.File.Exists(in_Config(&quot;ClassifierLearningFilePath&quot;)) = False]" DisplayName="While Unlock" sap:VirtualizedContainerService.HintSize="484,548" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+    <ui:LogMessage DisplayName="Log Message - UnlockFile" sap:VirtualizedContainerService.HintSize="484,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;LogMessage_UnLockFileStarted&quot;)  + in_KeywordLockName + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="While the lock file name exists, rename it to the unlocked version. Then wait 1 second.&#xA;&#xA;If any errors occur, it will be repeated until no errors come up." Condition="[IO.File.Exists(in_Config(&quot;ClassifierLearningFilePath&quot;)) = False]" DisplayName="While Unlock" sap:VirtualizedContainerService.HintSize="484,548" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
       <ui:InterruptibleWhile.Body>
         <Sequence DisplayName="Body of While" sap:VirtualizedContainerService.HintSize="426,311" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
@@ -143,7 +144,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:InterruptibleWhile>
-    <ui:LogMessage DisplayName="Log Message - UnlockFile complete" sap:VirtualizedContainerService.HintSize="484,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Unlock complete!&quot;]" />
+    <ui:LogMessage DisplayName="Log Message - UnlockFile complete" sap:VirtualizedContainerService.HintSize="484,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[in_Config(&quot;LogMessage_UnLockFileFinished&quot;)  + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
     <If Condition="[in_SysException IsNot Nothing]" DisplayName="Check Exception" sap:VirtualizedContainerService.HintSize="484,237" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Throw DisplayName="Throw Exception" Exception="[in_SysException]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
