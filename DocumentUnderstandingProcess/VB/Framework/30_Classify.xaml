@@ -13,7 +13,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1220.8,2120.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1156.8,2152.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_30_Classify_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="68">
@@ -91,10 +91,9 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Classification workflow. Classifiers are  process-dependant!&#xA;&#xA;Outputs whether the document was successfully classified or not." DisplayName="Classify" sap:VirtualizedContainerService.HintSize="561.6,1956" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Classification workflow. Classifiers are  process-dependant!&#xA;&#xA;Outputs whether the document was successfully classified or not." DisplayName="Classify" sap:VirtualizedContainerService.HintSize="561.6,1988" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="s:DateTime" Name="StartingTime" />
     </Sequence.Variables>
@@ -121,7 +120,7 @@
       </Assign.Value>
     </Assign>
     <ui:Comment DisplayName="Note About Retry Mechanism" sap:VirtualizedContainerService.HintSize="520,113.6" sap2010:WorkflowViewState.IdRef="Comment_3" Text="A Classifier that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Classifiers might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - Classify" sap:VirtualizedContainerService.HintSize="520,759.2" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[Cint(in_Config(&quot;MaxExecutionAttemptsClassify&quot;))]" RetryInterval="[in_RetryInterval]">
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Classifiers might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xD;&#xA;&#xD;&#xA;MaxExecutionAttemptsClassify overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Classify" sap:VirtualizedContainerService.HintSize="520,791.2" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[Cint(in_Config(&quot;MaxExecutionAttemptsClassify&quot;))]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
           <p3:ClassifyDocumentScope ClassificationResults="[out_ClassificationResults]" DisplayName="Classify Document Scope - Classify" DocumentObjectModel="[in_DOM]" DocumentPath="[in_TargetDocument]" DocumentText="[in_DocText]" sap:VirtualizedContainerService.HintSize="477.6,539.2" sap2010:WorkflowViewState.IdRef="ClassifyDocumentScope_1" Taxonomy="[in_DocTaxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;Semi-StructuredDocuments.Financial.Receipt&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Receipt&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Semi-StructuredDocuments.Financial.Invoice&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Invoice&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;StructuredDocuments.LendingForms.W-9&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;StructuredDocuments.LendingForms.W-9&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Documents.Other.Certificate-of-filing&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Documents.Other.Certificate-of-filing&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true}}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{}}">
