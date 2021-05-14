@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_40_TrainClassifiers" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p3="http://schemas.uipath.com/workflow/activities/intelligentocr/training" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_40_TrainClassifiers" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p3="http://schemas.uipath.com/workflow/activities/intelligentocr/training" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TargetDocument" Type="InArgument(x:String)" />
     <x:Property Name="in_DocTaxonomy" Type="InArgument(p:DocumentTaxonomy)" />
@@ -12,7 +12,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>950,1781</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1220.8,1768</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_40_TrainClassifiers_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="34">
@@ -92,7 +92,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Classifier training (if needed)." DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="600,1616" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Classifier training (if needed)." DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="560.8,1603.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="keywordLockName" />
     </Sequence.Variables>
@@ -102,108 +102,75 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Train Classifiers Start" sap:VirtualizedContainerService.HintSize="558,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;LogMessage_TrainClassifiersStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:Comment DisplayName="Comment - Train Classifiers" sap:VirtualizedContainerService.HintSize="558,303" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time.&#xA;&#xA;Three options are readily available (see the Examples folder for sample implementations):&#xA;&#xA;1. Locking/unlocking the learning file before/after accessing it&#xA;2. Using a semaphore to regulate access&#xA;3. Adding training data to a queue and have a dedicated job for training" />
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke LockFile" sap:VirtualizedContainerService.HintSize="558,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\LockFile.xaml">
+    <ui:LogMessage DisplayName="Log Message - Train Classifiers Start" sap:VirtualizedContainerService.HintSize="519.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_TrainClassifiersStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:Comment DisplayName="Comment - Train Classifiers" sap:VirtualizedContainerService.HintSize="519.2,344.8" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time.&#xA;&#xA;Three options are readily available (see the Examples folder for sample implementations):&#xA;&#xA;1. Locking/unlocking the learning file before/after accessing it&#xA;2. Using a semaphore to regulate access&#xA;3. Adding training data to a queue and have a dedicated job for training" />
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke LockFile" sap:VirtualizedContainerService.HintSize="519.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\LockFile.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_KeywordLockName">[keywordLockName]</OutArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="in_Config" />
+        </InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_KeywordLockName">
+          <mva:VisualBasicReference x:TypeArguments="x:String" ExpressionText="keywordLockName" />
+        </OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <TryCatch DisplayName="Try Catch - Train Classifiers" sap:VirtualizedContainerService.HintSize="558,867" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-      <TryCatch.Variables>
-        <Variable x:TypeArguments="s:Exception" Name="sysException" />
-      </TryCatch.Variables>
-      <TryCatch.Try>
-        <ui:RetryScope sap2010:Annotation.AnnotationText="Learning files could be located in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;NOTE: ContinueOnError = True - For classifier training, losing a small bit of training data to allow data extraction seems the preferred approach. This setting should be changed if it does not suit the Business Requirements of the process!" ContinueOnError="True" DisplayName="Retry Scope - Train Classifiers" sap:VirtualizedContainerService.HintSize="520,640" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
-          <ui:RetryScope.ActivityBody>
-            <ActivityAction>
-              <p3:TrainClassifiersScope HumanValidatedData="{x:Null}" DisplayName="Train Classifiers Scope - Train Classifiers" DocumentObjectModel="[in_DOM]" DocumentPath="[in_TargetDocument]" DocumentText="[in_DocText]" sap:VirtualizedContainerService.HintSize="478,364" HumanValidatedClassificationData="[in_ValidatedClassificationResults]" sap2010:WorkflowViewState.IdRef="TrainClassifiersScope_1" Taxonomy="[in_DocTaxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UIe92f3405e61d43c69621ce0c40eb6099&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;Semi-StructuredDocuments.Financial.Receipt&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Receipt&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Semi-StructuredDocuments.Financial.Invoice&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Invoice&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;StructuredDocuments.LendingForms.W-9&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;StructuredDocuments.LendingForms.W-9&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Documents.Other.Certificate-of-filing&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Documents.Other.Certificate-of-filing&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true}}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UIe92f3405e61d43c69621ce0c40eb6099&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{&quot;UIe92f3405e61d43c69621ce0c40eb6099&quot;:[]}}">
-                <p3:TrainClassifiersScope.Trainables>
-                  <p3:IntelligentKeywordClassifierTrainer LearningData="{x:Null}" DisplayName="Intelligent Keyword Classifier Trainer - Train Classifiers" sap:VirtualizedContainerService.HintSize="234,113" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifierTrainer_1" LearningFilePath="[in_Config(&quot;ClassifierLearningFilePath&quot;)]" PersistenceId="UIe92f3405e61d43c69621ce0c40eb6099">
-                    <p3:IntelligentKeywordClassifierTrainer.DocumentObjectModel>
-                      <InArgument x:TypeArguments="p1:Document">
-                        <DelegateArgumentValue x:TypeArguments="p1:Document">
-                          <DelegateInArgument x:TypeArguments="p1:Document" Name="DocumentObjectModel" />
-                        </DelegateArgumentValue>
-                      </InArgument>
-                    </p3:IntelligentKeywordClassifierTrainer.DocumentObjectModel>
-                    <p3:IntelligentKeywordClassifierTrainer.DocumentPath>
-                      <InArgument x:TypeArguments="x:String">
-                        <DelegateArgumentValue x:TypeArguments="x:String">
-                          <DelegateInArgument x:TypeArguments="x:String" Name="DocumentPath" />
-                        </DelegateArgumentValue>
-                      </InArgument>
-                    </p3:IntelligentKeywordClassifierTrainer.DocumentPath>
-                    <p3:IntelligentKeywordClassifierTrainer.DocumentText>
-                      <InArgument x:TypeArguments="x:String">
-                        <DelegateArgumentValue x:TypeArguments="x:String">
-                          <DelegateInArgument x:TypeArguments="x:String" Name="DocumentText" />
-                        </DelegateArgumentValue>
-                      </InArgument>
-                    </p3:IntelligentKeywordClassifierTrainer.DocumentText>
-                    <p3:IntelligentKeywordClassifierTrainer.HumanValidatedData>
-                      <InArgument x:TypeArguments="p2:ExtractionResult[]">
-                        <DelegateArgumentValue x:TypeArguments="p2:ExtractionResult[]">
-                          <DelegateInArgument x:TypeArguments="p2:ExtractionResult[]" Name="HumanValidatedData" />
-                        </DelegateArgumentValue>
-                      </InArgument>
-                    </p3:IntelligentKeywordClassifierTrainer.HumanValidatedData>
-                  </p3:IntelligentKeywordClassifierTrainer>
-                </p3:TrainClassifiersScope.Trainables>
-              </p3:TrainClassifiersScope>
-            </ActivityAction>
-          </ui:RetryScope.ActivityBody>
-          <ui:RetryScope.Condition>
-            <ActivityFunc x:TypeArguments="x:Boolean" />
-          </ui:RetryScope.Condition>
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-        </ui:RetryScope>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-              <x:Boolean x:Key="IsPinned">False</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <ActivityAction x:TypeArguments="s:Exception">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-            </ActivityAction.Argument>
-            <Sequence DisplayName="Sequence - Train Classifiers Try Catch" sap:VirtualizedContainerService.HintSize="376,283" sap2010:WorkflowViewState.IdRef="Sequence_2">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Log Message - Try Catch" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Error" Message="[in_Config(&quot;LogMessage_ClassifierTrainingUnsuccessful&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-              <Assign DisplayName="Assign Exception" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_1">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="s:Exception">[sysException]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="s:Exception">[exception]</InArgument>
-                </Assign.Value>
-              </Assign>
-            </Sequence>
-          </ActivityAction>
-        </Catch>
-      </TryCatch.Catches>
-      <TryCatch.Finally>
-        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke UnlockFile " sap:VirtualizedContainerService.HintSize="363,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\UnlockFile.xaml">
-          <ui:InvokeWorkflowFile.Arguments>
-            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[in_Config]</InArgument>
-            <InArgument x:TypeArguments="s:Exception" x:Key="in_SysException">[sysException]</InArgument>
-            <InArgument x:TypeArguments="x:String" x:Key="in_KeywordLockName">[keywordLockName]</InArgument>
-          </ui:InvokeWorkflowFile.Arguments>
-        </ui:InvokeWorkflowFile>
-      </TryCatch.Finally>
-    </TryCatch>
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Learning files could be located in a shared location. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;NOTE: ContinueOnError = True - For classifier training, losing a small bit of training data to allow data extraction seems the preferred approach. This setting should be changed if it does not suit the Business Requirements of the process!" ContinueOnError="True" DisplayName="Retry Scope - Train Classifiers" sap:VirtualizedContainerService.HintSize="519.2,654.4" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+      <ui:RetryScope.ActivityBody>
+        <ActivityAction>
+          <p3:TrainClassifiersScope HumanValidatedData="{x:Null}" DisplayName="Train Classifiers Scope - Train Classifiers" DocumentObjectModel="[in_DOM]" DocumentPath="[in_TargetDocument]" DocumentText="[in_DocText]" sap:VirtualizedContainerService.HintSize="477.6,370.4" HumanValidatedClassificationData="[in_ValidatedClassificationResults]" sap2010:WorkflowViewState.IdRef="TrainClassifiersScope_1" Taxonomy="[in_DocTaxonomy]" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UIe92f3405e61d43c69621ce0c40eb6099&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;Semi-StructuredDocuments.Financial.Receipt&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Receipt&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Semi-StructuredDocuments.Financial.Invoice&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Invoice&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;StructuredDocuments.LendingForms.W-9&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;StructuredDocuments.LendingForms.W-9&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Documents.Other.Certificate-of-filing&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Documents.Other.Certificate-of-filing&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true}}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UIe92f3405e61d43c69621ce0c40eb6099&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{&quot;UIe92f3405e61d43c69621ce0c40eb6099&quot;:[]}}">
+            <p3:TrainClassifiersScope.Trainables>
+              <p3:IntelligentKeywordClassifierTrainer LearningData="{x:Null}" DisplayName="Intelligent Keyword Classifier Trainer - Train Classifiers" sap:VirtualizedContainerService.HintSize="233.6,115.2" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifierTrainer_1" LearningFilePath="[keywordLockName]" PersistenceId="UIe92f3405e61d43c69621ce0c40eb6099">
+                <p3:IntelligentKeywordClassifierTrainer.DocumentObjectModel>
+                  <InArgument x:TypeArguments="p1:Document">
+                    <DelegateArgumentValue x:TypeArguments="p1:Document">
+                      <DelegateInArgument x:TypeArguments="p1:Document" Name="DocumentObjectModel" />
+                    </DelegateArgumentValue>
+                  </InArgument>
+                </p3:IntelligentKeywordClassifierTrainer.DocumentObjectModel>
+                <p3:IntelligentKeywordClassifierTrainer.DocumentPath>
+                  <InArgument x:TypeArguments="x:String">
+                    <DelegateArgumentValue x:TypeArguments="x:String">
+                      <DelegateInArgument x:TypeArguments="x:String" Name="DocumentPath" />
+                    </DelegateArgumentValue>
+                  </InArgument>
+                </p3:IntelligentKeywordClassifierTrainer.DocumentPath>
+                <p3:IntelligentKeywordClassifierTrainer.DocumentText>
+                  <InArgument x:TypeArguments="x:String">
+                    <DelegateArgumentValue x:TypeArguments="x:String">
+                      <DelegateInArgument x:TypeArguments="x:String" Name="DocumentText" />
+                    </DelegateArgumentValue>
+                  </InArgument>
+                </p3:IntelligentKeywordClassifierTrainer.DocumentText>
+                <p3:IntelligentKeywordClassifierTrainer.HumanValidatedData>
+                  <InArgument x:TypeArguments="p2:ExtractionResult[]">
+                    <DelegateArgumentValue x:TypeArguments="p2:ExtractionResult[]">
+                      <DelegateInArgument x:TypeArguments="p2:ExtractionResult[]" Name="HumanValidatedData" />
+                    </DelegateArgumentValue>
+                  </InArgument>
+                </p3:IntelligentKeywordClassifierTrainer.HumanValidatedData>
+              </p3:IntelligentKeywordClassifierTrainer>
+            </p3:TrainClassifiersScope.Trainables>
+          </p3:TrainClassifiersScope>
+        </ActivityAction>
+      </ui:RetryScope.ActivityBody>
+      <ui:RetryScope.Condition>
+        <ActivityFunc x:TypeArguments="x:Boolean" />
+      </ui:RetryScope.Condition>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:RetryScope>
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke UnlockFile " sap:VirtualizedContainerService.HintSize="519.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\UnlockFile.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_KeywordLockName">
+          <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="keywordLockName" />
+        </InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+          <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="in_Config" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
   </Sequence>
 </Activity>
