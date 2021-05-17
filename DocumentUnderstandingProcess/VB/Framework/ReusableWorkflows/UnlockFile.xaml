@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1220.8,1273.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1112,1273.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>UnlockFile_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -67,6 +67,7 @@
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="UnlockFile" sap:VirtualizedContainerService.HintSize="502.4,1108.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -77,7 +78,7 @@
     </sap:WorkflowViewStateService.ViewState>
     <ui:Comment DisplayName="Comment - UnlockFile" sap:VirtualizedContainerService.HintSize="460.8,152" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML enables file unlocking of a specific file." />
     <ui:LogMessage DisplayName="Log Message - UnlockFile" sap:VirtualizedContainerService.HintSize="460.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_UnLockFileStarted&quot;)  + in_KeywordLockName + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="While the lock file name exists, rename it to the unlocked version. Then wait 1 second.&#xA;&#xA;If any errors occur, it will be repeated until no errors come up." Condition="[IO.File.Exists(in_Config(&quot;ClassifierLearningFilePath&quot;)) = False]" DisplayName="While Unlock" sap:VirtualizedContainerService.HintSize="460.8,558.4" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="While the lock file name exists, rename it to the unlocked version. Then wait 1 second.&#xA;&#xA;If any errors occur, it will be repeated until no errors come up." DisplayName="While Unlock" sap:VirtualizedContainerService.HintSize="460.8,558.4" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
       <ui:InterruptibleWhile.Body>
         <Sequence DisplayName="Body of While" sap:VirtualizedContainerService.HintSize="425.6,315.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
@@ -134,6 +135,9 @@
           </Delay>
         </Sequence>
       </ui:InterruptibleWhile.Body>
+      <ui:InterruptibleWhile.Condition>
+        <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="not IO.File.Exists(in_Config(&quot;ClassifierLearningFilePath&quot;))" />
+      </ui:InterruptibleWhile.Condition>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>

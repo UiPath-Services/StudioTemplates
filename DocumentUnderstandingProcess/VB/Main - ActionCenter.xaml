@@ -99,6 +99,7 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Main Sequence - Action Center" sap:VirtualizedContainerService.HintSize="712,1124.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
@@ -303,21 +304,21 @@
                                                 <av:PointCollection x:Key="ConnectorLocation">250,150.5 250,170.5</av:PointCollection>
                                               </scg:Dictionary>
                                             </sap:WorkflowViewStateService.ViewState>
-                                            <If Condition="[classificationResultsArray.Count &gt; 1]" DisplayName="Split Document (if needed)" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="If_19">
+                                            <If Condition="[classificationResultsArray.Count &gt; 1 AndAlso config(&quot;AutomaticallySplitPDFs&quot;).ToUpper.Equals(&quot;YES&quot;)]" DisplayName="Split Document (if needed)" sap:VirtualizedContainerService.HintSize="794.4,1168.8" sap2010:WorkflowViewState.IdRef="If_19">
                                               <sap:WorkflowViewStateService.ViewState>
                                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                 </scg:Dictionary>
                                               </sap:WorkflowViewStateService.ViewState>
                                               <If.Then>
-                                                <Sequence DisplayName="Split Document" sap:VirtualizedContainerService.HintSize="376,995" sap2010:WorkflowViewState.IdRef="Sequence_55">
+                                                <Sequence DisplayName="Split Document" sap:VirtualizedContainerService.HintSize="375.2,1009.6" sap2010:WorkflowViewState.IdRef="Sequence_55">
                                                   <sap:WorkflowViewStateService.ViewState>
                                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                     </scg:Dictionary>
                                                   </sap:WorkflowViewStateService.ViewState>
-                                                  <ui:LogMessage DisplayName="Log Message Splitting Pages Start" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_88" Message="[config(&quot;LogMessage_SplitingDocumentStart&quot;) + Environment.NewLine + config(&quot;logKey&quot;)]" />
-                                                  <ui:MultipleAssign DisplayName="Multiple Assign - Start Splitting" sap:VirtualizedContainerService.HintSize="334,129" sap2010:WorkflowViewState.IdRef="MultipleAssign_12">
+                                                  <ui:LogMessage DisplayName="Log Message Splitting Pages Start" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_88" Message="[config(&quot;LogMessage_SplitingDocumentStart&quot;) + Environment.NewLine + config(&quot;logKey&quot;)]" />
+                                                  <ui:MultipleAssign DisplayName="Multiple Assign - Start Splitting" sap:VirtualizedContainerService.HintSize="333.6,130.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_12">
                                                     <ui:MultipleAssign.AssignOperations>
                                                       <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                                                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
@@ -339,8 +340,8 @@
                                                       </scg:List>
                                                     </ui:MultipleAssign.AssignOperations>
                                                   </ui:MultipleAssign>
-                                                  <upap:ExtractPDFPageRange DisplayName="Extract PDF Page Range - Split Current Document" FileName="[in_TargetFile]" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExtractPDFPageRange_1" OutputFileName="[splitFile]" Range="[pageRange]" />
-                                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Re-Digitize Split File" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_71" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\20_Digitize.xaml">
+                                                  <upap:ExtractPDFPageRange DisplayName="Extract PDF Page Range - Split Current Document" FileName="[in_TargetFile]" sap:VirtualizedContainerService.HintSize="333.6,88" sap2010:WorkflowViewState.IdRef="ExtractPDFPageRange_1" OutputFileName="[splitFile]" Range="[pageRange]" />
+                                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Re-Digitize Split File" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_71" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\20_Digitize.xaml">
                                                     <ui:InvokeWorkflowFile.Arguments>
                                                       <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[splitFile]</InArgument>
                                                       <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
@@ -356,7 +357,7 @@
                                                       </scg:Dictionary>
                                                     </sap:WorkflowViewStateService.ViewState>
                                                   </ui:InvokeWorkflowFile>
-                                                  <ui:MultipleAssign sap2010:Annotation.AnnotationText="DocumentId = name of split file&#xA;DocumentBounds.StartPage = 0 (first page in file)&#xA;DocumentBounds.TextStartIndex = 0 (first character)&#xA;DocumentBounds.TextLength = length of split text&#xA;Reference = Nothing (remove reference - it no longer matches)" DisplayName="Multiple Assign - Match Classification to SplitFile" sap:VirtualizedContainerService.HintSize="334,324" sap2010:WorkflowViewState.IdRef="MultipleAssign_14">
+                                                  <ui:MultipleAssign sap2010:Annotation.AnnotationText="DocumentId = name of split file&#xA;DocumentBounds.StartPage = 0 (first page in file)&#xA;DocumentBounds.TextStartIndex = 0 (first character)&#xA;DocumentBounds.TextLength = length of split text&#xA;Reference = Nothing (remove reference - it no longer matches)" DisplayName="Multiple Assign - Match Classification to SplitFile" sap:VirtualizedContainerService.HintSize="333.6,332" sap2010:WorkflowViewState.IdRef="MultipleAssign_14">
                                                     <ui:MultipleAssign.AssignOperations>
                                                       <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
                                                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
@@ -410,13 +411,13 @@
                                                 </Sequence>
                                               </If.Then>
                                               <If.Else>
-                                                <Sequence DisplayName="Split Document - Skip" sap:VirtualizedContainerService.HintSize="376,252" sap2010:WorkflowViewState.IdRef="Sequence_60">
+                                                <Sequence DisplayName="Split Document - Skip" sap:VirtualizedContainerService.HintSize="375.2,254.4" sap2010:WorkflowViewState.IdRef="Sequence_60">
                                                   <sap:WorkflowViewStateService.ViewState>
                                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                     </scg:Dictionary>
                                                   </sap:WorkflowViewStateService.ViewState>
-                                                  <ui:MultipleAssign DisplayName="Multiple Assign - Mock Splitting" sap:VirtualizedContainerService.HintSize="334,160" sap2010:WorkflowViewState.IdRef="MultipleAssign_13">
+                                                  <ui:MultipleAssign DisplayName="Multiple Assign - Mock Splitting" sap:VirtualizedContainerService.HintSize="333.6,161.6" sap2010:WorkflowViewState.IdRef="MultipleAssign_13">
                                                     <ui:MultipleAssign.AssignOperations>
                                                       <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                                                         <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
@@ -522,7 +523,7 @@
                                                             <av:PointCollection x:Key="ConnectorLocation">455.2,321.3 455.2,379.7 350,379.7</av:PointCollection>
                                                           </scg:Dictionary>
                                                         </sap:WorkflowViewStateService.ViewState>
-                                                        <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="519.2,1847.2" sap2010:WorkflowViewState.IdRef="Sequence_58">
+                                                        <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="200,68.8" sap2010:WorkflowViewState.IdRef="Sequence_58">
                                                           <Sequence.Variables>
                                                             <Variable x:TypeArguments="p2:ExtractionResult" Name="validatedExtractionResults" />
                                                             <Variable x:TypeArguments="uiaam:DocumentValidationActionData" Name="validationAction" />
@@ -622,9 +623,11 @@
                                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                 </scg:Dictionary>
                                               </sap:WorkflowViewStateService.ViewState>
-                                              <ui:Comment DisplayName="Comment - Warning Do NOT Rethrow" sap:VirtualizedContainerService.HintSize="340.8,210.4" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Exceptions here are to be expected - generated by documents rejected by HitL&#xA;&#xA;Exceptions should NEVER be rethrown here!&#xA;&#xA;A rethrown exception would stop the processing flow of ALL documents within the input file and would orphan any pending Validation Actions!" />
+                                              <ui:Comment DisplayName="Comment - Do NOT Rethrow" sap:VirtualizedContainerService.HintSize="340.8,210.4" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Exceptions here are to be expected - generated by documents rejected by HitL&#xA;&#xA;Exceptions should NEVER be rethrown here!&#xA;&#xA;A rethrown exception would stop the processing flow of ALL documents within the input file and would orphan any pending Validation Actions!" />
                                               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ERR_DocumentProcessingError workflow" sap:VirtualizedContainerService.HintSize="340.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_87" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ERR_HandleDocumentError.xaml">
                                                 <ui:InvokeWorkflowFile.Arguments>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">[in_TargetFile]</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="in_PageRange">[(classificationResult.DocumentBounds.StartPage + 1).ToString + "-"+(classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString]</InArgument>
                                                   <InArgument x:TypeArguments="x:String" x:Key="in_ErrorMessage">[exception.ToString]</InArgument>
                                                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
                                                 </ui:InvokeWorkflowFile.Arguments>
