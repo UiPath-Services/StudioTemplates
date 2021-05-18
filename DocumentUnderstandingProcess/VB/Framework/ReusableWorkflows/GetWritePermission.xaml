@@ -1,13 +1,15 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="UnlockFile" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="GetWritePermission" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_KeywordLockName" Type="InArgument(x:String)" />
+    <x:Property Name="in_AccessQueue" Type="InArgument(x:String)" />
+    <x:Property Name="in_AccessQueueFolderPath" Type="InArgument(x:String)" />
     <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property Name="out_AccessToken" Type="OutArgument(ui:QueueItem)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1112,1304.8</sap:VirtualizedContainerService.HintSize>
-  <sap2010:WorkflowViewState.IdRef>UnlockFile_1</sap2010:WorkflowViewState.IdRef>
+  <sap:VirtualizedContainerService.HintSize>1112,1155.2</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>GetWritePermission_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -31,9 +33,8 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Windows.Markup</x:String>
-      <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.Runtime.Serialization</x:String>
-      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.Activities.DynamicUpdate</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
@@ -55,45 +56,45 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
-      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
-      <AssemblyReference>System.Memory</AssemblyReference>
-      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
       <AssemblyReference>UiPath.DocumentUnderstanding.ML.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-      <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
-      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="UnlockFile" sap:VirtualizedContainerService.HintSize="502.4,1140" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is retrieved. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GetWritePermission" sap:VirtualizedContainerService.HintSize="375.2,990.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Comment - UnlockFile" sap:VirtualizedContainerService.HintSize="460.8,152" sap2010:WorkflowViewState.IdRef="Comment_2" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML enables file unlocking of a specific file." />
-    <ui:LogMessage DisplayName="Log Message - UnlockFile" sap:VirtualizedContainerService.HintSize="460.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_UnLockFileStarted&quot;)  + in_KeywordLockName + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="While the lock file name exists, rename it to the unlocked version. Then wait 1 second.&#xA;&#xA;If any errors occur, it will be repeated until no errors come up." DisplayName="While Unlock" sap:VirtualizedContainerService.HintSize="460.8,589.6" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+    <ui:Comment DisplayName="Comment - GetWritePermission" sap:VirtualizedContainerService.HintSize="333.6,152" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
+    <ui:LogMessage DisplayName="Log Message - GetWritePermission" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_GetWritePermission&quot;) +Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="When a Transaction Item cannot be obtained, it means another job is writing the file. " Condition="[out_AccessToken is Nothing]" DisplayName="While Cannot Get Permission" sap:VirtualizedContainerService.HintSize="333.6,432.8" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
       <ui:InterruptibleWhile.Body>
-        <Sequence DisplayName="Body of While" sap:VirtualizedContainerService.HintSize="425.6,346.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="While Body" sap:VirtualizedContainerService.HintSize="241.6,221.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MoveFile sap2010:Annotation.AnnotationText="Overwrite, because the classifier file still exists" ContinueOnError="True" Destination="[in_Config(&quot;ClassifierLearningFilePath&quot;)]" DisplayName="Move File to Original State" sap:VirtualizedContainerService.HintSize="384,191.2" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="[in_KeywordLockName]">
+          <ui:GetQueueItem TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="ContinueOnError = True; we want to retry until successful" ContinueOnError="True" DisplayName="Get &quot;AccessToken&quot;" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="200,66.4" sap2010:WorkflowViewState.IdRef="GetQueueItem_1" QueueType="[in_AccessQueue]" TransactionItem="[out_AccessToken]">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-          </ui:MoveFile>
-          <Delay mva:VisualBasic.Settings="{x:Null}" DisplayName="Delay 1 second" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="384,22.4" sap2010:WorkflowViewState.IdRef="Delay_1">
+          </ui:GetQueueItem>
+          <Delay mva:VisualBasic.Settings="{x:Null}" DisplayName="Delay 1 second" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Delay_2">
             <TextExpression.Namespaces>
               <sco:Collection x:TypeArguments="x:String">
                 <x:String>System.Activities</x:String>
@@ -141,17 +142,11 @@
           </Delay>
         </Sequence>
       </ui:InterruptibleWhile.Body>
-      <ui:InterruptibleWhile.Condition>
-        <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="IO.File.Exists(in_KeywordLockName)" />
-      </ui:InterruptibleWhile.Condition>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:InterruptibleWhile>
-    <ui:LogMessage DisplayName="Log Message - UnlockFile complete" sap:VirtualizedContainerService.HintSize="460.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[in_Config(&quot;LogMessage_UnLockFileFinished&quot;)  + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
   </Sequence>
 </Activity>
