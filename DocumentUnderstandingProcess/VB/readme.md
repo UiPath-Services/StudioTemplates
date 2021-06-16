@@ -16,10 +16,7 @@ Please read it carefully.
 If you disagree with the license agreement, do not install or use the software and delete it from your computer.
 
 # Usage
-If you want, you can add your API key from https://cloud.uipath.com and run the process 
-from 'Main - Attended' file. This will use a sample merged file and show classification, extraction, and data saving.
-
-For an actual project, you will have to modify this xaml for your own process.
+Please see the attached User Guide and the official documentation for more details about the template and on how to get started.
 
 # Notes
 
