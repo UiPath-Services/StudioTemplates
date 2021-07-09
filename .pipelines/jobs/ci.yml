@@ -1,0 +1,30 @@
+
+parameters: 
+  projectPath: ""
+  projectNuspec: ""
+  outputDirectory: "$(Pipeline.Workspace)/packagesDirectory"
+  templatePrefix: Build
+
+jobs:
+  - job: ${{ parameters.templatePrefix }}
+    timeoutInMinutes: 120
+    steps:
+      - task: NuGetToolInstaller@1
+        displayName: "[${{ parameters.templatePrefix }}] Install nuget"
+
+      - pwsh: |
+          $nuspecPath = '$(Build.SourcesDirectory)/${{ parameters.projectPath }}/${{ parameters.projectNuspec }}'
+          if (Test-Path $nuspecPath){          
+            $Command = "nuget pack $nuspecPath -OutputDirectory ${{ parameters.outputDirectory }}"
+            Write-Host $Command
+            Invoke-Expression $Command
+          } else {
+            Write-Error "$nuspecPath file not found"
+          }
+        displayName: "[${{ parameters.templatePrefix }}] NuGet pack ${{ parameters.projectPath }} "
+
+      - task: PublishBuildArtifacts@1
+        displayName: "[${{ parameters.templatePrefix }}] Upload Artifacts"
+        inputs:
+          PathtoPublish:  '${{ parameters.outputDirectory }}'
+          ArtifactName:   'Packages'
