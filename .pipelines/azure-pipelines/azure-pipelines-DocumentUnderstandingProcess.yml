@@ -1,0 +1,35 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - develop
+    - master/DocumentUnderstandingProcess/*
+  paths:
+    include:
+    - DocumentUnderstandingProcess/*
+    - .pipelines/*
+
+pr: none
+  # branches:
+  #   include:
+  #   - develop
+  #   - master/DocumentUnderstandingProcess/*    
+  # paths:
+  #   include:
+  #   - DocumentUnderstandingProcess/*
+  #   - .pipelines/*
+  #   - azure-pipelines-DocumentUnderstandingProcess.yml
+
+variables:
+  - template: ../variables/common.yml
+  - name: projectPath
+    value: 'DocumentUnderstandingProcess'
+  - name: projectNuspec
+    value: 'UiPath.Template.DocumentUnderstandingProcess.nuspec'
+
+jobs:
+  - template: ../jobs/ci.yml
+    parameters: 
+      projectPath: ${{ variables.projectPath }}
+      projectNuspec: ${{ variables.projectNuspec }}
+

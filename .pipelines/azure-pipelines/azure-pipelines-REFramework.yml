@@ -1,0 +1,36 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - develop
+    - master/REFramework/*
+  paths:
+    include:
+    - REFramework/*
+    - .pipelines/*
+
+
+pr: none
+  # branches:
+  #   include:
+  #   - develop
+  #   - master/REFramework/*
+  # paths:
+  #   include:
+  #   - REFramework/*
+  #   - .pipelines/*
+
+
+variables:
+  - template: ../variables/common.yml
+  - name: projectPath
+    value: 'REFramework'
+  - name: projectNuspec
+    value: 'UiPath.Template.REFramework.nuspec'
+
+jobs:
+  - template: ../jobs/ci.yml
+    parameters: 
+      projectPath: ${{ variables.projectPath }}
+      projectNuspec: ${{ variables.projectNuspec }}
+
