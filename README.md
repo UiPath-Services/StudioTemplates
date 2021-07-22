@@ -7,6 +7,9 @@ Studio Templates is a place where we keep our REFramework templates.
 They should always be in the latest version of Studio. 
 Otherwise, you can simply clone this repo and use the templates from here.
 
+Check also the release page here:
+https://github.com/UiPath-Services/StudioTemplates/releases
+
 ## Usage
 
 Remember: A "Template" project cannot be uploaded to Orchestrator. 
