@@ -7,27 +7,59 @@ pr: none
 
 variables:
   - template: ../variables/common.yml
-  - name: projectPath
-    value: 'DocumentUnderstandingProcess'
-  - name: projectNuspec
-    value: 'UiPath.Template.DocumentUnderstandingProcess.nuspec'
+  - name: outputDirectory
+    value: "$(Pipeline.Workspace)/packagesDirectory"
 
 pool:
   vmImage: 'windows-latest'
 
 jobs:
-  - job: Test
+  - job: Build
     steps:
+    - task: NuGetToolInstaller@1
+      displayName: "Install nuget"
+
     - pwsh: |
         ## get the changed files
         $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
-        $temp=$files -split ' '
-        $count=$temp.Length
+        $list=$files -split ' '
+        $count=$list.Length
         echo "Total changed $count files"
-      
-        For ($i=0; $i -lt $temp.Length; $i++)
+        echo $list
+        echo "Creating the hashset..."
+        $set = New-Object System.Collections.Generic.HashSet[string]
+
+        echo "Iterating through the list of modified files"
+        For ($i = 0; $i -lt $list.Length; $i++)
         {
-          $name=$temp[$i]
-          echo "this is $name file"
+          $endOfDirectoryName = $list[$i].IndexOf("/")
+          if ($endOfDirectoryName -gt 0) {
+            echo "Getting the root path..."
+            $targetPackage = $list[$i].Substring(0, $endOfDirectoryName)
+            echo "Appending $targetPackage to hashset..."
+            $set.Add($targetPackage) >$null 2>&1  # last part is used to stop logging the output
+          }
+        }
+
+        echo "The list of modified paths: $set"
+        foreach ($directory in $set) {
+          echo "First path is $directory"
+          $directoryPath = Join-Path $(Build.SourcesDirectory) ${ $directory }
+          echo "Directory path is $directoryPath"
+          $nuspecPath = Get-ChildItem $directoryPath -Recurse -Filter *.nuspec | % { $_.FullName }
+          echo ".nuspec path is $nuspecPath"
+          if (Test-Path $nuspecPath){          
+            $Command = "nuget pack $nuspecPath -OutputDirectory ${{ variables.outputDirectory }}"
+            Write-Host $Command
+            Invoke-Expression $Command
+          } else {
+            Write-Error "$nuspecPath file not found"
+          }
         }
       displayName: "Hello"
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Upload Artifacts"
+      inputs:
+        PathtoPublish: '${{ variables.outputDirectory }}'
+        ArtifactName: 'Packages'
