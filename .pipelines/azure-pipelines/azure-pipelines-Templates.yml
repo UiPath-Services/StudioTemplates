@@ -20,16 +20,16 @@ jobs:
       displayName: "Install nuget"
 
     - pwsh: |
-        ## get the changed files
+        # get changed files from last commit
         $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
         $list=$files -split ' '
         $count=$list.Length
-        echo "Total changed $count files"
-        echo $list
-        echo "Creating the hashset..."
+        Write-Host "Total changed $count files"
+        Write-Host $list
+        Write-Host "Creating the hashset..."
         $set = New-Object System.Collections.Generic.HashSet[string]
 
-        echo "Iterating through the list of modified files"
+        Write-Host "Iterating through the list of modified files"
         For ($i = 0; $i -lt $list.Length; $i++)
         {
           $endOfDirectoryName = $list[$i].IndexOf("/")
@@ -42,21 +42,23 @@ jobs:
         }
 
         echo "The list of modified paths: $set"
+        $absolutePath = $Env:BUILD_SOURCESDIRECTORY
+        Write-Host "Absolute path is $absolutePath"
         foreach ($directory in $set) {
-          echo "First path is $directory"
-          $directoryPath = Join-Path $(Build.SourcesDirectory) ${ $directory }
-          echo "Directory path is $directoryPath"
-          $nuspecPath = Get-ChildItem $directoryPath -Recurse -Filter *.nuspec | % { $_.FullName }
-          echo ".nuspec path is $nuspecPath"
-          if (Test-Path $nuspecPath){          
+          Write-Host "Current directory is $directory"
+          $directoryPath = "$absolutePath\$directory"
+          Write-Host "Directory path is $directoryPath"
+          $nuspecPath = Get-ChildItem $directoryPath -Recurse -Depth 1 -Filter *.nuspec | Select-Object -First 1 | % { $_.FullName }
+          Write-Host ".nuspec path is $nuspecPath"
+          if ($nuspecPath -And (Test-Path $nuspecPath)) {          
             $Command = "nuget pack $nuspecPath -OutputDirectory ${{ variables.outputDirectory }}"
             Write-Host $Command
             Invoke-Expression $Command
           } else {
-            Write-Error "$nuspecPath file not found"
+            Write-Host "##vso[task.LogIssue type=warning;] $nuspecPath file not found"
           }
         }
-      displayName: "Hello"
+      displayName: "Pack modified templates"
 
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
