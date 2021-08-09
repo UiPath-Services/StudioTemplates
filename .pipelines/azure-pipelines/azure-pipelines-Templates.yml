@@ -2,8 +2,15 @@ trigger:
   branches:
     include:
     - testpipeline
+  paths:
+    exclude:
+    - .pipelines/*
 
-pr: none
+pr: 
+  branches:
+    include:
+      - fix/*
+      - feature/*
 
 variables:
   - template: ../variables/common.yml
@@ -19,45 +26,13 @@ jobs:
     - task: NuGetToolInstaller@1
       displayName: "Install nuget"
 
-    - pwsh: |
-        # get changed files from last commit
-        $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
-        $list=$files -split ' '
-        $count=$list.Length
-        Write-Host "Total changed $count files"
-        Write-Host $list
-        Write-Host "Creating the hashset..."
-        $set = New-Object System.Collections.Generic.HashSet[string]
-
-        Write-Host "Iterating through the list of modified files"
-        For ($i = 0; $i -lt $list.Length; $i++)
-        {
-          $endOfDirectoryName = $list[$i].IndexOf("/")
-          if ($endOfDirectoryName -gt 0) {
-            echo "Getting the root path..."
-            $targetPackage = $list[$i].Substring(0, $endOfDirectoryName)
-            echo "Appending $targetPackage to hashset..."
-            $set.Add($targetPackage) >$null 2>&1  # last part is used to stop logging the output
-          }
-        }
-
-        echo "The list of modified paths: $set"
-        $absolutePath = $Env:BUILD_SOURCESDIRECTORY
-        Write-Host "Absolute path is $absolutePath"
-        foreach ($directory in $set) {
-          Write-Host "Current directory is $directory"
-          $directoryPath = "$absolutePath\$directory"
-          Write-Host "Directory path is $directoryPath"
-          $nuspecPath = Get-ChildItem $directoryPath -Recurse -Depth 1 -Filter *.nuspec | Select-Object -First 1 | % { $_.FullName }
-          Write-Host ".nuspec path is $nuspecPath"
-          if ($nuspecPath -And (Test-Path $nuspecPath)) {          
-            $Command = "nuget pack $nuspecPath -OutputDirectory ${{ variables.outputDirectory }}"
-            Write-Host $Command
-            Invoke-Expression $Command
-          } else {
-            Write-Host "##vso[task.LogIssue type=warning;] $nuspecPath file not found"
-          }
-        }
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(System.DefaultWorkingDirectory)\.pipelines\azure-pipelines\DecideTemplatesToPack.ps1
+        arguments:
+          -outputDirectory '${{ variables.outputDirectory }}'
+          -shouldGetTemplatesFromConfig $(shouldGetTemplatesFromConfig)
       displayName: "Pack modified templates"
 
     - task: PublishBuildArtifacts@1
