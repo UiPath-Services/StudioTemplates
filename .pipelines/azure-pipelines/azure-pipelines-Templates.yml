@@ -1,0 +1,44 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - master/*
+      - release/*
+  paths:
+    exclude:
+      - .pipelines/*
+
+pr: 
+  branches:
+    include:
+      - fix/*
+      - feature/*
+
+variables:
+  - template: ../variables/common.yml
+  - name: outputDirectory
+    value: "$(Pipeline.Workspace)/packagesDirectory"
+
+pool:
+  vmImage: 'windows-latest'
+
+jobs:
+  - job: Build
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: "Install nuget"
+
+    - task: PowerShell@2
+      inputs:
+        targetType: 'filePath'
+        filePath: $(System.DefaultWorkingDirectory)\.pipelines\azure-pipelines\DecideTemplatesToPack.ps1
+        arguments:
+          -outputDirectory '${{ variables.outputDirectory }}'
+          -shouldGetTemplatesFromConfig $(shouldGetTemplatesFromConfig)
+      displayName: "Pack modified templates"
+
+    - task: PublishBuildArtifacts@1
+      displayName: "Upload Artifacts"
+      inputs:
+        PathtoPublish: '${{ variables.outputDirectory }}'
+        ArtifactName: 'Packages'
