@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+    branches: 
+      - develop
+      - release
+      - master
+      - release/*
+      - master/*
+      - testpipeline
+
+jobs:
+    build:
+        name: Call Azure Pipeline
+        runs-on: windows-latest
+        steps:
+        - name: Azure Pipelines Action
+          uses: Azure/pipelines@v1
+          with:
+            azure-devops-project-url: https://uipath.visualstudio.com/StudioTemplates
+            azure-pipeline-name: 'UiPath-Services.StudioTemplates'
+            azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
