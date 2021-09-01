@@ -3,13 +3,16 @@ param(
 
     [string] $templatesConfig = "$PSScriptRoot\templates.config",
 
+    [string] $commitHash,
+
     [string] $outputDirectory
 )
 
 Write-Host "Creating the hashset..."
 $set = New-Object System.Collections.Generic.HashSet[string]
 Write-Host "Deciding wether to use the templates.config file or check the commit differences"
-if ($shouldGetTemplatesFromConfig) {
+Write-Host "shouldGetTemplatesFromConfig equals $shouldGetTemplatesFromConfig"
+if ($shouldGetTemplatesFromConfig -eq $true) {
     Write-Host "Reading from config file $templatesConfig"
     [xml]$templatesXmlDoc = Get-Content -Path $script:templatesConfig
     Write-Host "Extracting items..."
@@ -20,10 +23,9 @@ if ($shouldGetTemplatesFromConfig) {
         $set.Add($template.name) >$null 2>&1  # last part is used to prevent logging the output
     }
 } else {
-    Write-Host "Checking the commit difference"
-
+    Write-Host "Checking the commit difference for $commitHash"
     # get changed files from last commit
-    $files=$(git diff-tree --no-commit-id --name-only -r $(Build.SourceVersion))
+    $files=$(git diff-tree --no-commit-id --name-only -r $commitHash)
     $list=$files -split ' '
     $count=$list.Length
     Write-Host "Total changed $count files"
