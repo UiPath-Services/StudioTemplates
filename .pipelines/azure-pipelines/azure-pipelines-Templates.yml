@@ -18,6 +18,8 @@ variables:
   - template: ../variables/common.yml
   - name: outputDirectory
     value: "$(Pipeline.Workspace)/packagesDirectory"
+  - name: shouldGetTemplatesFromConfig
+    value: ${{ parameters.shouldGetTemplatesFromConfig }}
 
 pool:
   vmImage: 'windows-latest'
@@ -34,7 +36,8 @@ jobs:
         filePath: $(System.DefaultWorkingDirectory)\.pipelines\azure-pipelines\DecideTemplatesToPack.ps1
         arguments:
           -outputDirectory '${{ variables.outputDirectory }}'
-          -shouldGetTemplatesFromConfig $(shouldGetTemplatesFromConfig)
+          -commitHash $(Build.SourceVersion)
+          -shouldGetTemplatesFromConfig $$(shouldGetTemplatesFromConfig)
       displayName: "Pack modified templates"
 
     - task: PublishBuildArtifacts@1
