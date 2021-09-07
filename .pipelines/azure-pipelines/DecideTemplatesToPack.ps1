@@ -23,9 +23,19 @@ if ($shouldGetTemplatesFromConfig -eq $true) {
         $set.Add($template.name) >$null 2>&1  # last part is used to prevent logging the output
     }
 } else {
-    Write-Host "Checking the commit difference for $commitHash"
-    # get changed files from last commit
-    $files=$(git diff-tree --no-commit-id --name-only -r $commitHash)
+    Write-Host "Build reason is $Env:BUILD_REASON"
+    if ($Env:BUILD_REASON -eq "PullRequest") {
+        Write-Host "Checking the commit difference for the PR"
+        Write-Host "Target branch: origin/$Env:SYSTEM_PULLREQUEST_TARGETBRANCH"
+        Write-Host "Source branch: origin/$Env:SYSTEM_PULLREQUEST_SOURCEBRANCH"
+        # get changed files from last commit
+        $files=$(git diff-tree --no-commit-id --name-only -r origin/$Env:SYSTEM_PULLREQUEST_TARGETBRANCH origin/$Env:SYSTEM_PULLREQUEST_SOURCEBRANCH --)
+    } else {
+        Write-Host "Checking the commit difference for $commitHash"
+        # get changed files from last commit
+        $files=$(git diff-tree --no-commit-id --name-only -r $commitHash)
+    }
+
     $list=$files -split ' '
     $count=$list.Length
     Write-Host "Total changed $count files"

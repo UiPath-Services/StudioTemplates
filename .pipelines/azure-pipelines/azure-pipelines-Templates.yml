@@ -38,6 +38,10 @@ jobs:
           -outputDirectory '${{ variables.outputDirectory }}'
           -commitHash $(Build.SourceVersion)
           -shouldGetTemplatesFromConfig $$(shouldGetTemplatesFromConfig)
+      env:
+        BUILD_REASON: $(Build.Reason)
+        SYSTEM_PULLREQUEST_SOURCEBRANCH: $(System.PullRequest.SourceBranch)
+        SYSTEM_PULLREQUEST_TARGETBRANCH: $(System.PullRequest.TargetBranch)
       displayName: "Pack modified templates"
 
     - task: PublishBuildArtifacts@1
