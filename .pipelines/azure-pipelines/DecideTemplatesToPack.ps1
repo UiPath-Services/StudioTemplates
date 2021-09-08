@@ -5,6 +5,14 @@ param(
 
     [string] $commitHash,
 
+    [string] $buildReason,
+
+    [string] $buildSourcesDirectory,
+
+    [string] $systemPullRequestSourceBranch,
+
+    [string] $systemPullRequestTargetBranch,
+
     [string] $outputDirectory
 )
 
@@ -23,9 +31,19 @@ if ($shouldGetTemplatesFromConfig -eq $true) {
         $set.Add($template.name) >$null 2>&1  # last part is used to prevent logging the output
     }
 } else {
-    Write-Host "Checking the commit difference for $commitHash"
-    # get changed files from last commit
-    $files=$(git diff-tree --no-commit-id --name-only -r $commitHash)
+    Write-Host "Build reason is $buildReason"
+    if ($buildReason -eq "PullRequest") {
+        Write-Host "Checking the commit difference for the PR"
+        Write-Host "Target branch: origin/$systemPullRequestTargetBranch"
+        Write-Host "Source branch: origin/$systemPullRequestSourceBranch"
+        # get changed files from last commit
+        $files=$(git diff-tree --no-commit-id --name-only -r origin/$systemPullRequestTargetBranch origin/$systemPullRequestSourceBranch --)
+    } else {
+        Write-Host "Checking the commit difference for $commitHash"
+        # get changed files from last commit
+        $files=$(git diff-tree --no-commit-id --name-only -r $commitHash)
+    }
+
     $list=$files -split ' '
     $count=$list.Length
     Write-Host "Total changed $count files"
@@ -44,11 +62,10 @@ if ($shouldGetTemplatesFromConfig -eq $true) {
 }
 
 Write-Host "The list of modified paths: $set"
-$absolutePath = $Env:BUILD_SOURCESDIRECTORY
-Write-Host "Absolute path is $absolutePath"
+Write-Host "Absolute path is $buildSourcesDirectory"
 foreach ($directory in $set) {
     Write-Host "Current directory is $directory"
-    $directoryPath = "$absolutePath\$directory"
+    $directoryPath = "$buildSourcesDirectory\$directory"
     Write-Host "Directory path is $directoryPath"
     $nuspecPath = Get-ChildItem $directoryPath -Recurse -Depth 1 -Filter *.nuspec | Select-Object -First 1 | % { $_.FullName }
     Write-Host ".nuspec path is $nuspecPath"
