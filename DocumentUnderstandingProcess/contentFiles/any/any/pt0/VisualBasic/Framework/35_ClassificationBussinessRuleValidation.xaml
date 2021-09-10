@@ -2,11 +2,11 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetDocument" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="in_DocTaxonomy" Type="InArgument(p:DocumentTaxonomy)" />
+    <x:Property sap2010:Annotation.AnnotationText="Classification results given by running the chosen classifier over the target document." Name="in_ClassificationResults" Type="InArgument(p1:ClassificationResult[])" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="io_ExtractionResults" Type="InOutArgument(p1:ExtractionResult)" />
-    <x:Property sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the classification process." Name="out_AutoExtractionSuccess" Type="OutArgument(x:Boolean)" />
+    <x:Property sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the classification process." Name="out_AutoClassificationSuccess" Type="OutArgument(x:Boolean)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>1466,827</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1466,750</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="32">
@@ -85,7 +85,7 @@
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap2010:Annotation.AnnotationText="Flowchart for the Business Rule Validation after the Extraction process has been completed.&#xA;Please note that the Switch statement requires the correct DocumentTypeIDs for it to work properly." DisplayName="Bussiness Rule Validation" sap:VirtualizedContainerService.HintSize="821,696" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart sap2010:Annotation.AnnotationText="Flowchart for the Business Rule Validation after the Classification process has been completed." DisplayName="Bussiness Rule Validation" sap:VirtualizedContainerService.HintSize="821,685" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -99,32 +99,32 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID5</x:Reference>
+      <x:Reference>__ReferenceID3</x:Reference>
     </Flowchart.StartNode>
-    <FlowDecision x:Name="__ReferenceID4" DisplayName="Always Validate Manually" sap:VirtualizedContainerService.HintSize="139,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+    <FlowDecision x:Name="__ReferenceID2" DisplayName="Always Validate Manually" sap:VirtualizedContainerService.HintSize="139,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
       <FlowDecision.Condition>
-        <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="CBool(in_Config(&quot;AlwaysValidateExtraction&quot;))" />
+        <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="CBool(in_Config(&quot;AlwaysValidateClassification&quot;))" />
       </FlowDecision.Condition>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <av:Point x:Key="ShapeLocation">230.5,176.5</av:Point>
           <av:Size x:Key="ShapeSize">139,87</av:Size>
-          <av:PointCollection x:Key="TrueConnector">230.5,220 140,220 140,521.5</av:PointCollection>
-          <av:PointCollection x:Key="FalseConnector">369.5,220 530,220 530,266.5</av:PointCollection>
+          <av:PointCollection x:Key="TrueConnector">230.5,220 140,220 140,501.5</av:PointCollection>
+          <av:PointCollection x:Key="FalseConnector">369.5,220 580,220 580,303</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <FlowDecision.True>
         <FlowStep x:Name="__ReferenceID0">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <av:Point x:Key="ShapeLocation">9,521.5</av:Point>
+              <av:Point x:Key="ShapeLocation">9,501.5</av:Point>
               <av:Size x:Key="ShapeSize">262,91</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign sap2010:Annotation.AnnotationText="Data will be sent to for manual validation" DisplayName="Assign Extraction Success" sap:VirtualizedContainerService.HintSize="262,91" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign sap2010:Annotation.AnnotationText="Data will be sent to for manual validation" DisplayName="Assign Classification Success" sap:VirtualizedContainerService.HintSize="262,91" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
-              <OutArgument x:TypeArguments="x:Boolean">[out_AutoExtractionSuccess]</OutArgument>
+              <OutArgument x:TypeArguments="x:Boolean">[out_AutoClassificationSuccess]</OutArgument>
             </Assign.To>
             <Assign.Value>
               <InArgument x:TypeArguments="x:Boolean">False</InArgument>
@@ -139,77 +139,24 @@
         </FlowStep>
       </FlowDecision.True>
       <FlowDecision.False>
-        <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID2" DisplayName="Type Of Document" sap:VirtualizedContainerService.HintSize="105,87" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_3">
-          <FlowSwitch.Default>
-            <FlowStep x:Name="__ReferenceID3">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <av:Point x:Key="ShapeLocation">453,403</av:Point>
-                  <av:Size x:Key="ShapeSize">334,74</av:Size>
-                  <av:PointCollection x:Key="ConnectorLocation">620,477 620,567 271,567</av:PointCollection>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <ui:Comment DisplayName="Comment - Business Rule Validation" sap:VirtualizedContainerService.HintSize="334,74" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Write your custom Data Extraction &amp; Bussiness Rule Validation code here" />
-              <FlowStep.Next>
-                <x:Reference>__ReferenceID0</x:Reference>
-              </FlowStep.Next>
-            </FlowStep>
-          </FlowSwitch.Default>
-          <FlowSwitch.Expression>
-            <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="io_ExtractionResults.ResultsDocument.DocumentTypeId" />
-          </FlowSwitch.Expression>
+        <FlowStep x:Name="__ReferenceID1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <av:Point x:Key="ShapeLocation">477.5,266.5</av:Point>
-              <av:Size x:Key="ShapeSize">105,87</av:Size>
-              <av:PointCollection x:Key="Semi-StructuredDocuments.Financial.InvoiceConnector">477.5,310 310,310 310,386</av:PointCollection>
-              <av:PointCollection x:Key="Default">582.5,310 620,310 620,403</av:PointCollection>
+              <av:Point x:Key="ShapeLocation">413,303</av:Point>
+              <av:Size x:Key="ShapeSize">334,74</av:Size>
+              <av:PointCollection x:Key="ConnectorLocation">580,377 580,547 271,547</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <FlowStep x:Key="Semi-StructuredDocuments.Financial.Invoice" x:Name="__ReferenceID1">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <av:Point x:Key="ShapeLocation">210,386</av:Point>
-                <av:Size x:Key="ShapeSize">200,108</av:Size>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Post processes an invoice to reduce the number of manual validations required." DisplayName="InvoicePostProcessing" sap:VirtualizedContainerService.HintSize="200,108" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\InvoicePostProcessing.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                  <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="in_Config" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">
-                  <mva:VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="out_AutoExtractionSuccess" />
-                </OutArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TargetDocument" />
-                </InArgument>
-                <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                  <mva:VisualBasicValue x:TypeArguments="p:DocumentTaxonomy" ExpressionText="in_DocTaxonomy" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">
-                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="io_ExtractionResults.ResultsDocument.DocumentTypeId" />
-                </InArgument>
-                <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">
-                  <mva:VisualBasicReference x:TypeArguments="p1:ExtractionResult" ExpressionText="io_ExtractionResults" />
-                </InOutArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:InvokeWorkflowFile>
-          </FlowStep>
-        </FlowSwitch>
+          <ui:Comment DisplayName="Comment - Business Rule Validation" sap:VirtualizedContainerService.HintSize="334,74" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Write your custom Data Classification &amp; Bussiness Rule Validation code here" />
+          <FlowStep.Next>
+            <x:Reference>__ReferenceID0</x:Reference>
+          </FlowStep.Next>
+        </FlowStep>
       </FlowDecision.False>
     </FlowDecision>
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
-    <x:Reference>__ReferenceID2</x:Reference>
-    <x:Reference>__ReferenceID3</x:Reference>
-    <FlowStep x:Name="__ReferenceID5">
+    <FlowStep x:Name="__ReferenceID3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <av:Point x:Key="ShapeLocation">200,97.5</av:Point>
@@ -217,9 +164,9 @@
           <av:PointCollection x:Key="ConnectorLocation">300,148.5 300,176.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log Message - Start Business Rule Validation" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_ExtractionBusinessRuleValidationStart&quot;) + &quot; &quot; + Path.GetFileName(in_TargetDocument) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+      <ui:LogMessage DisplayName="Log Message - Start Business Rule Validation" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_ClassificationBusinessRuleValidationStart&quot;) + &quot; &quot; + Path.GetFileName(in_TargetDocument) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
       <FlowStep.Next>
-        <x:Reference>__ReferenceID4</x:Reference>
+        <x:Reference>__ReferenceID2</x:Reference>
       </FlowStep.Next>
     </FlowStep>
   </Flowchart>
