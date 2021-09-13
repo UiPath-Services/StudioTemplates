@@ -101,7 +101,6 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Main Sequence - Attended" sap:VirtualizedContainerService.HintSize="714,1447" sap2010:WorkflowViewState.IdRef="Sequence_9">
@@ -273,23 +272,13 @@
                                 <av:PointCollection x:Key="ConnectorLocation">190,465.5 189.8,465.5 189.8,486</av:PointCollection>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Classification Business Rule Validation" DisplayName="Bussiness Rule Validation" sap:VirtualizedContainerService.HintSize="379,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_92" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\35_ClassificationBussinessRuleValidation.xaml">
+                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Classification Business Rule Validation" DisplayName="Classification Rule Check" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_92" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\35_ClassificationBussinessRuleValidation.xaml">
                               <ui:InvokeWorkflowFile.Arguments>
-                                <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TargetFile" />
-                                </InArgument>
-                                <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                                  <mva:VisualBasicValue x:TypeArguments="p:DocumentTaxonomy" ExpressionText="docTaxonomy" />
-                                </InArgument>
-                                <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResults">
-                                  <mva:VisualBasicValue x:TypeArguments="p2:ClassificationResult[]" ExpressionText="classificationResultsArray" />
-                                </InArgument>
-                                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                  <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
-                                </InArgument>
-                                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoClassificationSuccess">
-                                  <mva:VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="classificationSuccessFlag" />
-                                </OutArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[in_TargetFile]</InArgument>
+                                <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
+                                <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResults">[classificationResultsArray]</InArgument>
+                                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+                                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoClassificationSuccess">[classificationSuccessFlag]</OutArgument>
                               </ui:InvokeWorkflowFile.Arguments>
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -318,7 +307,7 @@
                                         <av:PointCollection x:Key="ConnectorLocation">190,644.6 190,668.8</av:PointCollection>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Process all documents within the input file" DisplayName="Process Each Document" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
+                                    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Process all documents within the input file" DisplayName="Process Each Document" sap:VirtualizedContainerService.HintSize="709,998" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
                                       <ui:ForEach.Body>
                                         <ActivityAction x:TypeArguments="p2:ClassificationResult">
                                           <ActivityAction.Argument>
@@ -351,7 +340,7 @@
                                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                       <av:Point x:Key="ShapeLocation">150,97.7</av:Point>
                                                       <av:Size x:Key="ShapeSize">200,51</av:Size>
-                                                      <av:PointCollection x:Key="ConnectorLocation">250,150.366666666667 250,170.5</av:PointCollection>
+                                                      <av:PointCollection x:Key="ConnectorLocation">250,148.7 250,170.5</av:PointCollection>
                                                     </scg:Dictionary>
                                                   </sap:WorkflowViewStateService.ViewState>
                                                   <If Condition="[classificationResultsArray.Count &gt; 1 AndAlso config(&quot;AutomaticallySplitPDFs&quot;).ToUpper.Equals(&quot;YES&quot;)]" DisplayName="Split Document (if needed)" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="If_21">
@@ -512,7 +501,7 @@
                                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                           <av:Point x:Key="ShapeLocation">150,170.5</av:Point>
                                                           <av:Size x:Key="ShapeSize">200,51</av:Size>
-                                                          <av:PointCollection x:Key="ConnectorLocation">250,223.166666666667 250,254.5</av:PointCollection>
+                                                          <av:PointCollection x:Key="ConnectorLocation">250,221.5 250,254.5</av:PointCollection>
                                                         </scg:Dictionary>
                                                       </sap:WorkflowViewStateService.ViewState>
                                                       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Pre-extraction &amp;&#xA;Data Extraction" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_82" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
@@ -541,26 +530,16 @@
                                                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                               <av:Point x:Key="ShapeLocation">150,254.5</av:Point>
                                                               <av:Size x:Key="ShapeSize">200,51</av:Size>
-                                                              <av:PointCollection x:Key="ConnectorLocation">250,307.166666666667 250,336.5</av:PointCollection>
+                                                              <av:PointCollection x:Key="ConnectorLocation">250,305.5 250,336.5</av:PointCollection>
                                                             </scg:Dictionary>
                                                           </sap:WorkflowViewStateService.ViewState>
-                                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Extraction Bussiness Rule Validation&#xA;" DisplayName="Business Rule Validation" sap:VirtualizedContainerService.HintSize="379,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_91" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBussinessRuleValidation.xaml">
+                                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Extraction Bussiness Rule Validation&#xA;" DisplayName="Extraction Rule Check" sap:VirtualizedContainerService.HintSize="379,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_91" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBussinessRuleValidation.xaml">
                                                             <ui:InvokeWorkflowFile.Arguments>
-                                                              <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                                                                <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="splitFile" />
-                                                              </InArgument>
-                                                              <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                                                                <mva:VisualBasicValue x:TypeArguments="p:DocumentTaxonomy" ExpressionText="docTaxonomy" />
-                                                              </InArgument>
-                                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                                                <mva:VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
-                                                              </InArgument>
-                                                              <InOutArgument x:TypeArguments="p2:ExtractionResult" x:Key="io_ExtractionResults">
-                                                                <mva:VisualBasicReference x:TypeArguments="p2:ExtractionResult" ExpressionText="extractionResults" />
-                                                              </InOutArgument>
-                                                              <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">
-                                                                <mva:VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="extractionSuccessFlag" />
-                                                              </OutArgument>
+                                                              <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[splitFile]</InArgument>
+                                                              <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
+                                                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+                                                              <InOutArgument x:TypeArguments="p2:ExtractionResult" x:Key="io_ExtractionResults">[extractionResults]</InOutArgument>
+                                                              <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[extractionSuccessFlag]</OutArgument>
                                                             </ui:InvokeWorkflowFile.Arguments>
                                                             <sap:WorkflowViewStateService.ViewState>
                                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -576,7 +555,7 @@
                                                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                                   <av:Point x:Key="ShapeLocation">215,336.5</av:Point>
                                                                   <av:Size x:Key="ShapeSize">70,87</av:Size>
-                                                                  <av:PointCollection x:Key="FalseConnector">285,379.833333333333 315,379.833333333333 315,381.666666666667 350,381.666666666667</av:PointCollection>
+                                                                  <av:PointCollection x:Key="FalseConnector">285,380 350,380</av:PointCollection>
                                                                   <av:PointCollection x:Key="TrueConnector">215,380 120,380 120,470 150,470</av:PointCollection>
                                                                 </scg:Dictionary>
                                                               </sap:WorkflowViewStateService.ViewState>
@@ -610,7 +589,7 @@
                                                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                                       <av:Point x:Key="ShapeLocation">350,347</av:Point>
                                                                       <av:Size x:Key="ShapeSize">200,66</av:Size>
-                                                                      <av:PointCollection x:Key="ConnectorLocation">450,416.333333333333 450,469.833333333333 350,469.833333333333</av:PointCollection>
+                                                                      <av:PointCollection x:Key="ConnectorLocation">450,413 450,470 350,470</av:PointCollection>
                                                                     </scg:Dictionary>
                                                                   </sap:WorkflowViewStateService.ViewState>
                                                                   <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="200,66" sap2010:WorkflowViewState.IdRef="Sequence_65">
