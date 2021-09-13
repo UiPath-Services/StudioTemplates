@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TestCase" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap:VirtualizedContainerService.HintSize="1199,1775" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="TestCase" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap:VirtualizedContainerService.HintSize="1072,1399" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -77,9 +77,10 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Root" sap:VirtualizedContainerService.HintSize="606,1710" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Root" sap:VirtualizedContainerService.HintSize="1082,1334" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="context" />
       <Variable x:TypeArguments="scg:List(x:Object)" Name="data" />
@@ -90,7 +91,7 @@
       <Variable x:TypeArguments="x:Int32" Default="0" Name="filesCounter" />
       <Variable x:TypeArguments="x:Int32" Name="fileMaxSize">
         <Variable.Default>
-          <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">2*1024*1024-1024</mca:CSharpValue>
+          <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34">100*1024-1024</mca:CSharpValue>
         </Variable.Default>
       </Variable>
     </Sequence.Variables>
@@ -99,7 +100,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign DisplayName="Initialize Context" sap:VirtualizedContainerService.HintSize="564,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign DisplayName="Initialize Context" sap:VirtualizedContainerService.HintSize="1040,60" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">
           <mca:CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">context</mca:CSharpReference>
@@ -111,7 +112,7 @@
         </InArgument>
       </Assign.Value>
     </Assign>
-    <Assign DisplayName="Initialize Data" sap:VirtualizedContainerService.HintSize="564,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+    <Assign DisplayName="Initialize Data" sap:VirtualizedContainerService.HintSize="1040,60" sap2010:WorkflowViewState.IdRef="Assign_2">
       <Assign.To>
         <OutArgument x:TypeArguments="scg:List(x:Object)">
           <mca:CSharpReference x:TypeArguments="scg:List(x:Object)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">data</mca:CSharpReference>
@@ -123,20 +124,20 @@
         </InArgument>
       </Assign.Value>
     </Assign>
-    <ui:InvokeCode ContinueOnError="{x:Null}" Code="Func&lt;string&gt; getTempFolderGuid = () =&gt; {&#xA;   string folder=null;&#xA;&#x9;do&#xA;&#x9;{&#xA;&#x9;&#x9;folder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());&#xA;&#x9;}&#xA;&#x9;while(Directory.Exists(folder) || File.Exists(folder));&#xA;    &#xA;    return folder;&#xA;};&#xA; &#xA;try&#xA;{&#xA;&#x9;tempFolderOut = getTempFolderGuid();&#xA;&#x9;Directory.CreateDirectory(tempFolderOut);&#xA;}&#xA;catch{&#xA;&#x9;//try again&#xA;&#x9;tempFolderOut = getTempFolderGuid();&#xA;&#x9;Directory.CreateDirectory(tempFolderOut);&#xA;}&#xA;&#xA;&#xA; " DisplayName="Create temp folder" sap:VirtualizedContainerService.HintSize="564,164" sap2010:WorkflowViewState.IdRef="InvokeCode_5" Language="CSharp">
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="Func&lt;string&gt; getTempFolderGuid = () =&gt; {&#xA;   string folder=null;&#xA;&#x9;do&#xA;&#x9;{&#xA;&#x9;&#x9;folder = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());&#xA;&#x9;}&#xA;&#x9;while(Directory.Exists(folder) || File.Exists(folder));&#xA;    &#xA;    return folder;&#xA;};&#xA; &#xA;try&#xA;{&#xA;&#x9;tempFolderOut = getTempFolderGuid();&#xA;&#x9;Directory.CreateDirectory(tempFolderOut);&#xA;}&#xA;catch{&#xA;&#x9;//try again&#xA;&#x9;tempFolderOut = getTempFolderGuid();&#xA;&#x9;Directory.CreateDirectory(tempFolderOut);&#xA;}&#xA;&#xA;&#xA; " DisplayName="Create temp folder" sap:VirtualizedContainerService.HintSize="1040,164" sap2010:WorkflowViewState.IdRef="InvokeCode_5" Language="CSharp">
       <ui:InvokeCode.Arguments>
         <OutArgument x:TypeArguments="x:String" x:Key="tempFolderOut">
           <mca:CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">tempFolderPath</mca:CSharpReference>
         </OutArgument>
       </ui:InvokeCode.Arguments>
     </ui:InvokeCode>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="564,1214" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="1040,838" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <Parallel sap:VirtualizedContainerService.HintSize="1002,664" sap2010:WorkflowViewState.IdRef="Parallel_1">
+        <Parallel sap:VirtualizedContainerService.HintSize="1002,611" sap2010:WorkflowViewState.IdRef="Parallel_1">
           <Parallel.CompletionCondition>
             <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">finished</mca:CSharpValue>
           </Parallel.CompletionCondition>
-          <ui:TriggerScope DisplayName="Trigger Scope" sap:VirtualizedContainerService.HintSize="452,618" sap2010:WorkflowViewState.IdRef="TriggerScope_1" SchedulingMode="Sequential">
+          <ui:TriggerScope DisplayName="Trigger Scope" sap:VirtualizedContainerService.HintSize="452,565" sap2010:WorkflowViewState.IdRef="TriggerScope_1" SchedulingMode="Sequential">
             <ui:TriggerScope.Action>
               <ActivityAction x:TypeArguments="ui:EventInfoTriggerArgs">
                 <ActivityAction.Argument>
@@ -172,17 +173,17 @@
             </ui:TriggerScope.Action>
             <ui:TriggerScope.Triggers>
               <scg:List x:TypeArguments="Activity" Capacity="4">
-                <ui:SapSessionTrigger DisplayName="SAP Session Attributes Trigger" sap:VirtualizedContainerService.HintSize="416,132" sap2010:WorkflowViewState.IdRef="SapSessionTrigger_1" SessionFilter="*">
+                <ui:SapSessionTrigger DisplayName="SAP Session Attributes Change Trigger" sap:VirtualizedContainerService.HintSize="416,79" sap2010:WorkflowViewState.IdRef="SapSessionTrigger_1">
                   <ui:SapSessionTrigger.Attributes>
                     <InArgument x:TypeArguments="s:String[]">
-                      <mca:CSharpValue x:TypeArguments="s:String[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">new string[]{ "sapTransaction", "sapProgram" }</mca:CSharpValue>
+                      <mca:CSharpValue x:TypeArguments="s:String[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">new []{ "sapTransaction", "sapProgram" }</mca:CSharpValue>
                     </InArgument>
                   </ui:SapSessionTrigger.Attributes>
                 </ui:SapSessionTrigger>
               </scg:List>
             </ui:TriggerScope.Triggers>
           </ui:TriggerScope>
-          <Sequence DisplayName="Execution" sap:VirtualizedContainerService.HintSize="376,618" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Execution" sap:VirtualizedContainerService.HintSize="376,565" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -203,7 +204,7 @@
         </Parallel>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="530,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="1006,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -239,7 +240,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:InvokeCode ContinueOnError="{x:Null}" Code="//set context&#xD;&#xA;if(finished) {&#xD;&#xA;&#x9;context[&quot;finished&quot;]=&quot;True&quot;;&#xD;&#xA;}&#xD;&#xA;context.Add(&quot;endTime&quot;,DateTime.UtcNow.ToString());&#xD;&#xA;&#xD;&#xA;//serialize last data file&#xD;&#xA;if(filesCounter==0 || data.Count&gt;0){&#xD;&#xA;&#x9;var dataJson = JsonConvert.SerializeObject(data);&#xD;&#xA;&#x9;filesCounter++;&#xD;&#xA;&#x9;File.WriteAllText(Path.Combine(tempFolderPath,string.Format(&quot;data{0}.json&quot;,filesCounter)),dataJson);&#xD;&#xA;}&#xD;&#xA;&#xD;&#xA;impactFiles=new List&lt;string&gt;();&#xD;&#xA;//create impact.json files&#xD;&#xA;for(var counter=1;counter&lt;=filesCounter;counter++){&#xD;&#xA;&#x9;var dataContent=File.ReadAllText(Path.Combine(tempFolderPath,string.Format(&quot;data{0}.json&quot;,counter)));&#xD;&#xA;&#x9;var dataObject=JArray.Parse(dataContent);&#xD;&#xA;&#x9;var finalResult = new Dictionary&lt;string,object&gt;();&#xD;&#xA;&#x9;finalResult.Add(&quot;context&quot;,context);&#xD;&#xA;&#x9;finalResult.Add(&quot;data&quot;,dataObject);&#xD;&#xA;&#x9;var finalJson = JsonConvert.SerializeObject(finalResult);&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;var impactFilePath=Path.Combine(tempFolderPath,string.Format(&quot;{0}{1}.json&quot;,fileName,counter));&#xD;&#xA;&#x9;impactFiles.Add(impactFilePath);&#xD;&#xA;&#x9;//create impact{counter}.json&#xD;&#xA;&#x9;File.WriteAllText(impactFilePath,finalJson);&#xD;&#xA;}" DisplayName="Set context and create impact files" sap:VirtualizedContainerService.HintSize="484,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2" Language="CSharp">
+          <ui:InvokeCode ContinueOnError="{x:Null}" Code="//set context&#xA;if(finished) {&#xA;&#x9;context[&quot;finished&quot;]=&quot;True&quot;;&#xA;}&#xA;context.Add(&quot;endTime&quot;,DateTime.UtcNow.ToString());&#xA;&#xA;//serialize last data file&#xA;if(filesCounter==0 || data.Count&gt;0){&#xA;&#x9;var dataJson = JsonConvert.SerializeObject(data);&#xA;&#x9;filesCounter++;&#xA;&#x9;File.WriteAllText(Path.Combine(tempFolderPath,string.Format(&quot;data{0}.json&quot;,filesCounter)),dataJson);&#xA;}&#xA;&#xA;impactFiles=new List&lt;string&gt;();&#xA;//create impact.json files&#xA;for(var counter=1;counter&lt;=filesCounter;counter++){&#xA;&#x9;var dataContent=File.ReadAllText(Path.Combine(tempFolderPath,string.Format(&quot;data{0}.json&quot;,counter)));&#xA;&#x9;var dataObject=JArray.Parse(dataContent);&#xA;&#x9;var finalResult = new Dictionary&lt;string,object&gt;();&#xA;&#x9;finalResult.Add(&quot;context&quot;,context);&#xA;&#x9;finalResult.Add(&quot;data&quot;,dataObject);&#xA;&#x9;var finalJson = JsonConvert.SerializeObject(finalResult);&#xA;&#x9;&#xA;&#x9;var impactFilePath=Path.Combine(tempFolderPath,string.Format(&quot;{0}{1}.json&quot;,fileName,counter));&#xA;&#x9;impactFiles.Add(impactFilePath);&#xA;&#x9;//create impact{counter}.json&#xA;&#x9;File.WriteAllText(impactFilePath,finalJson);&#xA;}" DisplayName="Set context and create impact files" sap:VirtualizedContainerService.HintSize="484,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2" Language="CSharp">
             <ui:InvokeCode.Arguments>
               <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="context">
                 <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">context</mca:CSharpValue>
