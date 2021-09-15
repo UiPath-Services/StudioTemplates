@@ -30,19 +30,33 @@ jobs:
     - task: NuGetToolInstaller@1
       displayName: "Install nuget"
 
-    - task: PowerShell@2
-      inputs:
-        targetType: 'filePath'
-        filePath: $(System.DefaultWorkingDirectory)\.pipelines\azure-pipelines\DecideTemplatesToPack.ps1
-        arguments:
-          -outputDirectory '${{ variables.outputDirectory }}'
-          -commitHash $(Build.SourceVersion)
-          -buildReason $(Build.Reason)
-          -buildSourcesDirectory $(Build.SourcesDirectory)
-          -systemPullRequestSourceBranch $(System.PullRequest.SourceBranch)
-          -systemPullRequestTargetBranch $(System.PullRequest.TargetBranch)
-          -shouldGetTemplatesFromConfig $$(shouldGetTemplatesFromConfig)
-      displayName: "Pack modified templates"
+    - ${{if eq(variables['Build.Reason'],'PullRequest')}}:
+      - task: PowerShell@2
+        inputs:
+          targetType: 'filePath'
+          filePath: $(System.DefaultWorkingDirectory)\.pipelines\azure-pipelines\DecideTemplatesToPack.ps1
+          arguments:
+            -outputDirectory '${{ variables.outputDirectory }}'
+            -commitHash $(Build.SourceVersion)
+            -buildReason $(Build.Reason)
+            -buildSourcesDirectory $(Build.SourcesDirectory)
+            -systemPullRequestSourceBranch $(System.PullRequest.SourceBranch)
+            -systemPullRequestTargetBranch $(System.PullRequest.TargetBranch)
+            -shouldGetTemplatesFromConfig $$(shouldGetTemplatesFromConfig)
+        displayName: "Pack modified templates"
+
+    - ${{if ne(variables['Build.Reason'],'PullRequest')}}:
+      - task: PowerShell@2
+        inputs:
+          targetType: 'filePath'
+          filePath: $(System.DefaultWorkingDirectory)\.pipelines\azure-pipelines\DecideTemplatesToPack.ps1
+          arguments:
+            -outputDirectory '${{ variables.outputDirectory }}'
+            -commitHash $(Build.SourceVersion)
+            -buildReason $(Build.Reason)
+            -buildSourcesDirectory $(Build.SourcesDirectory)
+            -shouldGetTemplatesFromConfig $$(shouldGetTemplatesFromConfig)
+        displayName: "Pack modified templates"
 
     - task: PublishBuildArtifacts@1
       displayName: "Upload Artifacts"
