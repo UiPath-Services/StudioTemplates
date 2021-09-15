@@ -9,9 +9,9 @@ param(
 
     [string] $buildSourcesDirectory,
 
-    [string] $systemPullRequestSourceBranch,
+    [string] $systemPullRequestSourceBranch = "",
 
-    [string] $systemPullRequestTargetBranch,
+    [string] $systemPullRequestTargetBranch = "",
 
     [string] $outputDirectory
 )
