@@ -101,7 +101,6 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Main Sequence - Attended" sap:VirtualizedContainerService.HintSize="712,1359.2" sap2010:WorkflowViewState.IdRef="Sequence_9">
@@ -308,7 +307,7 @@
                                         <av:PointCollection x:Key="ConnectorLocation">190,646.4 190,668.8</av:PointCollection>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Process all documents within the input file" DisplayName="Process Each Document" sap:VirtualizedContainerService.HintSize="705.6,1002.4" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
+                                    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="Process all documents within the input file" DisplayName="Process Each Document" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
                                       <ui:ForEach.Body>
                                         <ActivityAction x:TypeArguments="p2:ClassificationResult">
                                           <ActivityAction.Argument>
@@ -427,7 +426,7 @@
                                                                   <av:PointCollection x:Key="ConnectorLocation">450,335.8 450,390.9 350,390.9</av:PointCollection>
                                                                 </scg:Dictionary>
                                                               </sap:WorkflowViewStateService.ViewState>
-                                                              <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="420,1281.6" sap2010:WorkflowViewState.IdRef="Sequence_65">
+                                                              <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="420,1325.6" sap2010:WorkflowViewState.IdRef="Sequence_65">
                                                                 <Sequence.Variables>
                                                                   <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="Human validated extraction results used for training." Name="validatedExtractionResults" />
                                                                 </Sequence.Variables>
@@ -454,7 +453,13 @@
                                                                     </scg:Dictionary>
                                                                   </sap:WorkflowViewStateService.ViewState>
                                                                 </ui:LogMessage>
-                                                                <p3:PresentValidationStation AutomaticExtractionResults="[extractionResults]" DisplayName="Present Validation Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" sap:VirtualizedContainerService.HintSize="378.4,372" sap2010:WorkflowViewState.IdRef="PresentValidationStation_18" ShowOnlyRelevantPageRange="True" Taxonomy="[docTaxonomy]" ValidatedExtractionResults="[validatedExtractionResults]" />
+                                                                <p3:PresentValidationStation sap2010:Annotation.AnnotationText="Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." AutomaticExtractionResults="[extractionResults]" DisplayName="Present Validation Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" sap:VirtualizedContainerService.HintSize="378.4,416" sap2010:WorkflowViewState.IdRef="PresentValidationStation_18" ShowOnlyRelevantPageRange="True" Taxonomy="[docTaxonomy]" ValidatedExtractionResults="[validatedExtractionResults]">
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                </p3:PresentValidationStation>
                                                                 <Assign sap2010:Annotation.AnnotationText="DocumentId coming from the Validation Station is missing the file extension" DisplayName="Assign - Workaround for missing extension" sap:VirtualizedContainerService.HintSize="378.4,104" sap2010:WorkflowViewState.IdRef="Assign_30">
                                                                   <Assign.To>
                                                                     <OutArgument x:TypeArguments="x:String">[validatedExtractionResults.DocumentId]</OutArgument>
@@ -534,7 +539,7 @@
                                                       <ui:InvokeWorkflowFile.Arguments>
                                                         <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">[in_TargetFile]</InArgument>
                                                         <InArgument x:TypeArguments="x:String" x:Key="in_PageRange">[(classificationResult.DocumentBounds.StartPage + 1).ToString + "-"+(classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString]</InArgument>
-                                                        <InArgument x:TypeArguments="x:String" x:Key="in_ErrorMessage">[exception.ToString]</InArgument>
+                                                        <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[exception]</InArgument>
                                                         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
                                                       </ui:InvokeWorkflowFile.Arguments>
                                                     </ui:InvokeWorkflowFile>
@@ -586,7 +591,7 @@
                                         <av:PointCollection x:Key="ConnectorLocation">420.8,564 420.8,620 290,620</av:PointCollection>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <Sequence sap2010:Annotation.AnnotationText="Classification Validation&#xA;&amp; Classifier training" DisplayName="Validate &amp; Train Classifiers" sap:VirtualizedContainerService.HintSize="200,68.8" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                                    <Sequence sap2010:Annotation.AnnotationText="Classification Validation&#xA;&amp; Classifier training" DisplayName="Validate &amp; Train Classifiers" sap:VirtualizedContainerService.HintSize="420,1181.6" sap2010:WorkflowViewState.IdRef="Sequence_51">
                                       <Sequence.Variables>
                                         <Variable x:TypeArguments="p2:ClassificationResult[]" sap2010:Annotation.AnnotationText="Human validated classification results used for training." Name="validatedClassificationResults" />
                                       </Sequence.Variables>
@@ -613,7 +618,13 @@
                                           </scg:Dictionary>
                                         </sap:WorkflowViewStateService.ViewState>
                                       </ui:LogMessage>
-                                      <p4:PresentClassificationStation AutomaticClassificationResults="[classificationResultsArray]" DisplayName="Present Classification Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" sap:VirtualizedContainerService.HintSize="378.4,372" sap2010:WorkflowViewState.IdRef="PresentClassificationStation_2" Taxonomy="[docTaxonomy]" ValidatedClassificationResults="[validatedClassificationResults]" />
+                                      <p4:PresentClassificationStation sap2010:Annotation.AnnotationText="Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." AutomaticClassificationResults="[classificationResultsArray]" DisplayName="Present Classification Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" sap:VirtualizedContainerService.HintSize="378.4,416" sap2010:WorkflowViewState.IdRef="PresentClassificationStation_2" Taxonomy="[docTaxonomy]" ValidatedClassificationResults="[validatedClassificationResults]">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </p4:PresentClassificationStation>
                                       <ui:LogMessage DisplayName="Log Message - ClassificationValidation Resume" sap:VirtualizedContainerService.HintSize="378.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_72" Message="[config(&quot;LogMessage_ResumeAfterClassificationValidation&quot;) + &quot; &quot; + string.Join(&quot; | &quot;, validatedClassificationResults.Select(function(cResult) cResult.DocumentTypeId)) + Environment.NewLine + config(&quot;logKey&quot;)]" />
                                       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="378.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_66" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\40_TrainClassifiers.xaml">
                                         <ui:InvokeWorkflowFile.Arguments>
@@ -719,7 +730,7 @@
               </sap:WorkflowViewStateService.ViewState>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ERR_AbortProcess workflow" sap:VirtualizedContainerService.HintSize="378.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_79" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ERR_AbortProcess.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="x:String" x:Key="in_AbortMessage">[exception.ToString]</InArgument>
+                  <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">[exception]</InArgument>
                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
