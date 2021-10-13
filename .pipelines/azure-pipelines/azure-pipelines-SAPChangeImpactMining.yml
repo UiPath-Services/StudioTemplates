@@ -1,0 +1,26 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - develop
+    - master/SAPChangeImpactMining*
+  paths:
+    include:
+    - SAPChangeImpactMining/*
+    - .pipelines/*
+
+pr: none
+
+variables:
+  - template: ../variables/common.yml
+  - name: projectPath
+    value: 'SAPChangeImpactMining'
+  - name: projectNuspec
+    value: 'UiPath.Template.SAPTestingProject.nuspec'
+
+jobs:
+  - template: ../jobs/ci.yml
+    parameters: 
+      projectPath: ${{ variables.projectPath }}
+      projectNuspec: ${{ variables.projectNuspec }}
+
