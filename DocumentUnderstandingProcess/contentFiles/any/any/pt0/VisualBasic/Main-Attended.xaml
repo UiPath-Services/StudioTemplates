@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
 <Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="False" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p3="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p4="http://schemas.uipath.com/workflow/activities/intelligentocr/classification" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
@@ -7,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>702.666666666667,1429.33333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>889.333333333333,1429.33333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Main_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="45">
@@ -102,7 +101,6 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
       <AssemblyReference>System.Collections.Immutable</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Main Sequence - Attended" sap:VirtualizedContainerService.HintSize="712.888888888889,1364.44444444444" sap2010:WorkflowViewState.IdRef="Sequence_9">
@@ -160,7 +158,6 @@
             <Variable x:TypeArguments="p1:Document" sap2010:Annotation.AnnotationText="The Document Object Model (DOM) of the target document." Name="dom" />
             <Variable x:TypeArguments="p2:ClassificationResult[]" sap2010:Annotation.AnnotationText="Classification results given by running the chosen classifier over the target document." Name="classificationResultsArray" />
             <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the classification process." Name="classificationSuccessFlag" />
-            <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
           </Flowchart.Variables>
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -317,11 +314,8 @@
                                           </ActivityAction.Argument>
                                           <TryCatch DisplayName="Try Catch - Process Each Document" sap:VirtualizedContainerService.HintSize="671.111111111111,870.222222222222" sap2010:WorkflowViewState.IdRef="TryCatch_6">
                                             <TryCatch.Variables>
-                                              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located" Name="currentPageRange">
-                                                <Variable.Default>
-                                                  <mva:VisualBasicValue x:TypeArguments="x:String" ExpressionText="(classificationResult.DocumentBounds.StartPage + 1).ToString + &quot;-&quot; + (classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString" />
-                                                </Variable.Default>
-                                              </Variable>
+                                              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located" Default="[(classificationResult.DocumentBounds.StartPage + 1).ToString + &quot;-&quot; + (classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString]" Name="currentPageRange" />
+                                              <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
                                             </TryCatch.Variables>
                                             <TryCatch.Try>
                                               <Flowchart DisplayName="Process Each Document - Flowchart" sap:VirtualizedContainerService.HintSize="633.777777777778,636.444444444444" sap2010:WorkflowViewState.IdRef="Flowchart_13">
