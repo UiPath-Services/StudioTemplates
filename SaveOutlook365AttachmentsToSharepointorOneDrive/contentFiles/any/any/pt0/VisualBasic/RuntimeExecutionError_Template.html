@@ -1,0 +1,323 @@
+<!-- saved from url=(0016)http://localhost -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Runtime execution error</title>
+
+	<style>
+		body {
+			font-family: Segoe UI;
+			margin: 0;
+			border-top: 1px solid #d9d9d9;
+		}
+		img#warning {
+			float: left;
+			width: 28pt;
+		}
+		div#header {
+			min-height: 80pt;
+			max-height: 290pt;
+			margin: 16pt;
+			margin-top: 8pt;
+		}
+		p {
+			margin: 0pt;
+		}
+
+		div.action_info {
+			overflow: hidden;
+			border-top: 1px solid #d9d9d9;
+			width: 100%;
+			position:absolute;
+			bottom:0;
+			background-color: #f5f5f5;
+		}
+		p.action_info {
+			float: left;
+			margin: 8pt;
+			margin-left: 44pt;
+		}
+		
+		.btn {
+			cursor:pointer;
+    		display: inline-block;
+    		font-weight: 400;
+    		color: #242424;
+		    background-color: #e8e8e8;
+		    border-color: #c5c5c5;
+		    text-align: center;
+		    vertical-align: middle;
+		    -webkit-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+		    border: 1px solid;
+			padding: 2pt;
+    
+		    line-height: 1.5;
+		    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+		}
+		.btn-primary {
+		    border-color: #0073ce;
+		}
+
+		.img-resize{
+			height: 75px;
+			width: 210px;
+			overflow: hidden;
+			border: 1px solid #c5c5c5;
+		}
+
+		.img-resize img{
+			max-width: 100%;
+			object-fit: cover;
+		}
+		
+		#problem-element-image-container {
+			align-items: center;
+			display: flex;
+		}
+
+		#action_info_text{
+			overflow: hidden;
+			position:absolute;
+			bottom:44pt;
+			left: 16pt;
+			color: #707070;
+			background-color: #FFF;
+		}
+
+		#buttons_master_container{
+			width: 80%;
+			float:right;
+			margin: 8pt;
+			margin-right: 12pt;
+		}
+
+
+		div.ImageClear{
+			clear:both;
+		}
+
+		#appImagesContainer{
+			display: flex;
+		}
+
+		div#buttons_container {
+			clear: both;
+		}
+		
+		#buttons_container input {
+			float: right;
+			margin-left: 8pt;
+			padding-left: 5px;
+    		padding-right: 5px;
+		}
+
+		div#arrow-container {
+			width: 48px;
+		}
+		
+		div.center-align {
+			position: relative;
+		}
+		
+		div.center-align img{
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			left: 0;
+			right: 0;
+		}
+		
+
+		.modal-image {
+		  border-radius: 5px;
+		  cursor: pointer;
+		  transition: 0.3s;
+		}
+
+		.modal-image:hover {opacity: 0.7;}
+
+		.modal {
+		  display: none;
+		  position: fixed;
+		  z-index: 1;
+		  padding-top: 100px;
+		  left: 0;
+		  top: 0;
+		  width: 100%;
+		  height: 100%;
+		  overflow: auto;
+		  background-color: rgb(0,0,0);
+		  background-color: rgba(0,0,0,0.9);
+		}
+		
+		.modal-content {
+		  margin: auto;
+		  display: block;
+		  max-width: 700px;
+		}
+
+		#caption {
+		  margin: auto;
+		  display: block;
+		  width: 80%;
+		  max-width: 700px;
+		  text-align: center;
+		  color: #ccc;
+		  padding: 10px 0;
+		  height: 150px;
+		}
+
+		.modal-content, #caption {
+		  animation-name: zoom;
+		  animation-duration: 0.6s;
+		}
+
+		@keyframes zoom {
+		  from {transform:scale(0)}
+		  to {transform:scale(1)}
+		}
+
+		.close {
+		  position: absolute;
+		  top: 15px;
+		  right: 35px;
+		  color: #f1f1f1;
+		  font-size: 40px;
+		  font-weight: bold;
+		  transition: 0.3s;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: #bbb;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+
+		@media only screen and (max-width: 700px){
+		  .modal-content {
+		    width: 100%;
+		  }
+		}
+
+		#SkipIterationContainer {
+			/* display: none; */
+			[SKIPITERATION_VIS_PLACEHOLDER]
+		}			
+
+
+		#ExcelCardDetailsContainer {
+			/* display: none; */
+			[EXCEL_CONTAINER_VIS_PLACEHOLDER]
+		}	
+
+		#EmailCardDetailsContainer {
+			/* display: none; */
+			[EMAIL_CONTAINER_VIS_PLACEHOLDER]
+		}	
+
+		#ApplicationCardOnlyDetailsContainer {
+			/* display: none; */
+			[APPCARD_CONTAINER_VIS_PLACEHOLDER]
+		}	
+
+		#ApplicationCardWithElementDetailsContainer {
+			/* display: none; */
+			[APPCARDELEMENT_CONTAINER_VIS_PLACEHOLDER]
+		}	
+
+		.scrollable
+		{
+			overflow-y: auto;
+		}
+
+		.unscrollable
+		{
+			overflow: hidden;
+		}
+
+		#problem-desc {
+				white-space: pre; 
+		}
+
+	</style>
+
+	<script type="text/javascript">
+		function Submit(actionValue) {
+			window.external.setResult(actionValue);
+			return true;
+		}
+        
+        function ShowModal(imageObj){
+			var modal = document.getElementById("myModal");
+			var modalImg = document.getElementById("img01");
+			var captionText = document.getElementById("caption");
+			modal.style.display = "block";
+			modalImg.src = imageObj.src;
+			captionText.innerHTML = imageObj.alt;
+		}
+			
+		window.onload = function() {			
+			// Get the <span> element that closes the modal
+			var span = document.getElementsByClassName("close")[0];
+
+			// When the user clicks on <span> (x), close the modal
+			span.onclick = function() {
+				var modal = document.getElementById("myModal");
+				modal.style.display = "none";
+			}
+		}
+    </script>
+</head>
+
+<body class="unscrollable">
+	<div class="scrollable" id="header">
+		<img id="warning" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAA+BJREFUeAHtm79u1DAcx3/OHRsLS0GiVREgwYBAQogBRpDQDYzwCHCFFyhi6VK1L1CoeAQ6MnSBsQwMsIDEwJ9WvQEY6ANwF+NvrhF27FycxIkTmp90F9tx7N/3E9+dHf+OqLOOQEfgKBNgzsUv7d0jzu8SpxtE/Jyb9tlXYvSWGHtFzxe33LQ5bcUdgEf752ky2RSib7l0UG+LvaFeb0jPFr7o5/KXuAHwePcqTei1uPMn8rtQ4ArGDqhHt2njzPsCVyuXlAdQt/jYfUcQygFIE8/oJbH+Kp2c/0grLIx9LnRc4QH9HF0iPn4qvlfuK204gFAcQKr4YJ02F58ojrrKDPfWiIfLSnOMfhELLoovxwOl3DITWNZTq/kQDw8AlgnAsnGao5CuyUV50vkB+BIfqwKEIFiLs0TsNx0/9uFfPl8q30fAt3hZ29LuQIi/LIq2xPD/Jp/Kk7YH0CTxeRRm1LUD0BbxD0dXiMbrYtY4ph5bpo3FTxn6RdUsa4t46Bh+/yx+Ki9Ekix/Imd/CbZJ/FT16eiAN8xKMTuFhhmWDqB14iPVq4pWCwjmjwAWNuHknTa3x2+wo0nOeHBqwMPwBRxmQfCgv/1jW3G+aMY4WRJrh6B33bSAMo8ArOqSCxuH4qEN4jmn+eh1CKKoZuU642QJHwesVHXTAWA9n1zSOhYPNyA8dkdOx2WljiYI0BRpU1vWAeBhhmxY2Dga9nKzlacjCMJ32ZLaxDkdANFN+ZpoVacUtCiDFalqqjZxTgfA+VnlGixp22pJ35PajACSYsuu55Pt1Zm38F0fAXU62IC+OgANuAleXehGgFf8Dei8GwENuAleXehGgFf8Dei8GwENuAleXfA2AhijUaxcTsdldR39ARCPwSA8eol0XYKT/fSTBXXlD58BLtTVX1o/3kZAmkN1l2cDwP58W83Cd10cY+pGI4IT2mqa7yLYKmE6AKIdpQ4iMyow7Av8uTO3jxfSFXQhHj0nfEekWcJ0AAhFkw1hKdhscGyV7QvEfkYbJFpIjapN1NUBRHF4IhRNNoSlVABB7sJp2rQ7REKTIcZQBwBPEIeH3VXZHEPAdlgl8wCT+GinWGgymHlvEBXbuDmaKj49pjAdQNsgFBAPibMBtAVCQfF2AJoOoYR4ewBNhVBSfD4ATYPgQHx+AE2B4Eh8MQC+ITgUXxyALwiOxZcDMBPCUQiXBwBY2oxxera6d8tAyCwHsidCWS3gfN0QHImH6+bFEM7kMfx3B3F4WHFVbqIP9OXg/0Jw1c0IkEXHf5tDsJUhJkeuap2ePqXaqeJvc9Y+dBU7Ah2B/5LAX/vC6lHCoAxXAAAAAElFTkSuQmCC"/>
+
+		<div style="width: 80%; float:left; margin-left: 12pt;">
+			<p>
+				[LOCALIZATION_PLACEHOLDER_LINE1]
+				<br>[LOCALIZATION_PLACEHOLDER_LINE2]
+				<br><br><strong><i id="problem-desc">[PROBLEMDESC_PLACEHOLDER]</i></strong>
+				<br><br>[LOCALIZATION_PLACEHOLDER_LINE4]<br><strong>[ACTIVITYENCODEDID_PLACEHOLDER]</strong>
+			</p>
+		</div>
+	</div>
+
+	<div>
+		<div id="action_info_text">
+			<p class="action_info">
+			<span>[LOCALIZATION_PLACEHOLDER_ACTION1]</span>
+			<span>[LOCALIZATION_PLACEHOLDER_ACTION2]</span>
+			<span id="SkipIterationContainer">[LOCALIZATION_PLACEHOLDER_ACTION3]</span>
+			<span>[LOCALIZATION_PLACEHOLDER_ACTION4]</span>
+			</p>
+		</div>
+		<div class="action_info">
+			<div id="buttons_master_container">
+				<div id="buttons_container" >
+					<input type="submit" class="btn" name="Stop" value="[LOCALIZATION_PLACEHOLDER_BUTTON1]" onclick="Submit('Stop')" />
+					<div id="SkipIterationContainer"><input type="submit" class="btn" name="Skip Item" value="[LOCALIZATION_PLACEHOLDER_BUTTON2]" onclick="Submit('SkipIteration')" /></div>
+					<input type="submit" class="btn btn-primary" name="Skip" value="[LOCALIZATION_PLACEHOLDER_BUTTON3]" onclick="Submit('Skip')" />
+					<input type="submit" class="btn" name="Retry" value="[LOCALIZATION_PLACEHOLDER_BUTTON4]" onclick="Submit('Retry')" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="myModal" class="modal">
+			<!-- The Close Button -->
+			<span class="close">&times;</span>
+			<!-- Modal Content (The Image) -->
+			<img class="modal-content" id="img01">
+		<!-- Modal Caption (Image Text) -->
+		<div id="caption"></div>
+	</div>
+</body>
+</html> 
