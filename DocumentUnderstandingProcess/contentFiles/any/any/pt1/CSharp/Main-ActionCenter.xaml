@@ -1,10 +1,10 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="True" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p1="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p3="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uiaam="clr-namespace:UiPath.IntelligentOCR.Activities.Actions.Model;assembly=UiPath.IntelligentOCR.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="True" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:p1="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p3="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uiaam="clr-namespace:UiPath.IntelligentOCR.Activities.Actions.Model;assembly=UiPath.IntelligentOCR.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Variable that checks if the Document Understanding Process is using Orchestrator Queues or not." Name="in_UseQueue" Type="InArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1170.22222222222,1336.44444444444</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>829.6,1333.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -81,9 +81,20 @@
       <AssemblyReference>UiPath.IntelligentOCR.Activities</AssemblyReference>
       <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
       <AssemblyReference>System.Runtime.InteropServices.RuntimeInformation</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence - Action Center" sap:VirtualizedContainerService.HintSize="840.888888888889,1271.55555555556" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence - Action Center" sap:VirtualizedContainerService.HintSize="840,1268.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="config" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="maxAttempts" />
@@ -95,20 +106,20 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Read the config file first; all Log &amp; Exception messages are defined there" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="799.111111111111,83.5555555555556" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\\00_ReadConfigFile.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Read the config file first; all Log &amp; Exception messages are defined there" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="798.4,82.4" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\\00_ReadConfigFile.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
         <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">
-          <mca:CSharpValue x:TypeArguments="s:String[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">new string[]{"Settings", "Constants", "InvoicePostProcessing"}</mca:CSharpValue>
+          <CSharpValue x:TypeArguments="s:String[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">new string[]{"Settings", "Constants", "InvoicePostProcessing"}</CSharpValue>
         </InArgument>
         <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_Config">
-          <mca:CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">config</mca:CSharpReference>
+          <CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">config</CSharpReference>
         </OutArgument>
         <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxAttempts">
-          <mca:CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">maxAttempts</mca:CSharpReference>
+          <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">maxAttempts</CSharpReference>
         </OutArgument>
         <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">
-          <mca:CSharpReference x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">retryInterval</mca:CSharpReference>
+          <CSharpReference x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">retryInterval</CSharpReference>
         </OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
@@ -119,9 +130,9 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:InvokeWorkflowFile>
-    <TryCatch DisplayName="Try Catch - Process File" sap:VirtualizedContainerService.HintSize="799.111111111111,1055.55555555556" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+    <TryCatch DisplayName="Try Catch - Process File" sap:VirtualizedContainerService.HintSize="798.4,1053.6" sap2010:WorkflowViewState.IdRef="TryCatch_2">
       <TryCatch.Try>
-        <Flowchart DisplayName="File Processing Flowchart" sap:VirtualizedContainerService.HintSize="761.777777777778,821.777777777778" sap2010:WorkflowViewState.IdRef="Flowchart_2">
+        <Flowchart DisplayName="File Processing Flowchart" sap:VirtualizedContainerService.HintSize="761.6,822.4" sap2010:WorkflowViewState.IdRef="Flowchart_2">
           <Flowchart.Variables>
             <Variable x:TypeArguments="p3:DocumentTaxonomy" sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="docTaxonomy" />
             <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The text extracted from the target document." Name="docText" />
@@ -134,9 +145,9 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
               <av:Point x:Key="ShapeLocation">160,0</av:Point>
-              <av:Size x:Key="ShapeSize">60,75.1111111111111</av:Size>
+              <av:Size x:Key="ShapeSize">60,75.2</av:Size>
               <av:PointCollection x:Key="ConnectorLocation">190,74.6666666666667 190,93.6666666666667</av:PointCollection>
-              <x:Double x:Key="Height">785.33333333333337</x:Double>
+              <x:Double x:Key="Height">785.3333333333334</x:Double>
               <x:Double x:Key="Width">727.8</x:Double>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
@@ -147,14 +158,14 @@
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <av:Point x:Key="ShapeLocation">90,586</av:Point>
-                <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                 <av:PointCollection x:Key="ConnectorLocation">190,638 190,654</av:PointCollection>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ParallelForEach x:TypeArguments="p:ClassificationResult" sap2010:Annotation.AnnotationText="Process all documents within the input file" DisplayName="Process Each Document" sap:VirtualizedContainerService.HintSize="746.666666666667,1020" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_1">
+            <ParallelForEach x:TypeArguments="p:ClassificationResult" sap2010:Annotation.AnnotationText="Process all documents within the input file" DisplayName="Process Each Document" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_1">
               <ParallelForEach.Values>
                 <InArgument x:TypeArguments="scg:IEnumerable(p:ClassificationResult)">
-                  <mca:CSharpValue x:TypeArguments="scg:IEnumerable(p:ClassificationResult)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_56">classificationResultsArray</mca:CSharpValue>
+                  <CSharpValue x:TypeArguments="scg:IEnumerable(p:ClassificationResult)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_56">classificationResultsArray</CSharpValue>
                 </InArgument>
               </ParallelForEach.Values>
               <sap:WorkflowViewStateService.ViewState>
@@ -166,13 +177,17 @@
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="p:ClassificationResult" Name="classificationResult" />
                 </ActivityAction.Argument>
-                <TryCatch DisplayName="Try Catch - Process Each Document" sap:VirtualizedContainerService.HintSize="696.888888888889,870.222222222222" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                <TryCatch DisplayName="Try Catch - Process Each Document" sap:VirtualizedContainerService.HintSize="696,868" sap2010:WorkflowViewState.IdRef="TryCatch_1">
                   <TryCatch.Variables>
-                    <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located (based on classification)" Default="[(classificationResult.DocumentBounds.StartPage + 1).ToString + &quot;-&quot; + (classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString]" Name="currentPageRange" />
+                    <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located (based on classification)" Name="currentPageRange">
+                      <Variable.Default>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_128">(classificationResult.DocumentBounds.StartPage + 1).ToString() + "-" + (classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString()</CSharpValue>
+                      </Variable.Default>
+                    </Variable>
                     <Variable x:TypeArguments="p:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
                   </TryCatch.Variables>
                   <TryCatch.Try>
-                    <Flowchart DisplayName="Process Each Document - Flowchart" sap:VirtualizedContainerService.HintSize="659.555555555556,636.444444444444" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+                    <Flowchart DisplayName="Process Each Document - Flowchart" sap:VirtualizedContainerService.HintSize="659.2,636.8" sap2010:WorkflowViewState.IdRef="Flowchart_1">
                       <Flowchart.Variables>
                         <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the extraction process." Name="extractionSuccessFlag" />
                       </Flowchart.Variables>
@@ -181,23 +196,23 @@
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                           <av:Point x:Key="ShapeLocation">220,2.5</av:Point>
-                          <av:Size x:Key="ShapeSize">60,75.1111111111111</av:Size>
-                          <x:Double x:Key="Width">625.99999999999989</x:Double>
+                          <av:Size x:Key="ShapeSize">60,75.2</av:Size>
+                          <x:Double x:Key="Width">625.9999999999999</x:Double>
                           <av:PointCollection x:Key="ConnectorLocation">250,77.1666666666667 250,93.6666666666667</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <Flowchart.StartNode>
                         <x:Reference>__ReferenceID4</x:Reference>
                       </Flowchart.StartNode>
-                      <FlowDecision x:Name="__ReferenceID1" DisplayName="Successul?" sap:VirtualizedContainerService.HintSize="70.2222222222222,87.1111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                      <FlowDecision x:Name="__ReferenceID1" DisplayName="Successul?" sap:VirtualizedContainerService.HintSize="70.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
                         <FlowDecision.Condition>
-                          <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_119">extractionSuccessFlag</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_119">extractionSuccessFlag</CSharpValue>
                         </FlowDecision.Condition>
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             <av:Point x:Key="ShapeLocation">214.8,256.4</av:Point>
-                            <av:Size x:Key="ShapeSize">70.2222222222222,87.1111111111111</av:Size>
+                            <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
                             <av:PointCollection x:Key="FalseConnector">284.8,299.733333333333 314.8,299.733333333333 314.8,300 350,300</av:PointCollection>
                             <av:PointCollection x:Key="TrueConnector">214.8,299.733333333333 120,299.733333333333 120,430 150,430</av:PointCollection>
                           </scg:Dictionary>
@@ -207,22 +222,22 @@
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <av:Point x:Key="ShapeLocation">150,403.666666666667</av:Point>
-                                <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                                <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Post-extraction &amp;&#xA;Data Export" DisplayName="Export" sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_38" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\70_Export.xaml">
+                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Post-extraction &amp;&#xA;Data Export" DisplayName="Export" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_38" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\70_Export.xaml">
                               <ui:InvokeWorkflowFile.Arguments>
                                 <InArgument x:TypeArguments="p:ExtractionResult" x:Key="in_ExtractionResults">
-                                  <mca:CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_101">extractionResults</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_101">extractionResults</CSharpValue>
                                 </InArgument>
                                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                  <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_100">config</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_100">config</CSharpValue>
                                 </InArgument>
                                 <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                                  <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_99">maxAttempts</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_99">maxAttempts</CSharpValue>
                                 </InArgument>
                                 <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                                  <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_98">retryInterval</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_98">retryInterval</CSharpValue>
                                 </InArgument>
                               </ui:InvokeWorkflowFile.Arguments>
                               <sap:WorkflowViewStateService.ViewState>
@@ -239,11 +254,11 @@
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <av:Point x:Key="ShapeLocation">350,265.333333333333</av:Point>
-                                <av:Size x:Key="ShapeSize">200,69.3333333333333</av:Size>
+                                <av:Size x:Key="ShapeSize">200,68.8</av:Size>
                                 <av:PointCollection x:Key="ConnectorLocation">450,334.666666666667 450,430 350,430</av:PointCollection>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="200,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                            <Sequence sap2010:Annotation.AnnotationText="Extraction Validation &amp; Extractor training" DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="524.8,2288.8" sap2010:WorkflowViewState.IdRef="Sequence_7">
                               <Sequence.Variables>
                                 <Variable x:TypeArguments="p:ExtractionResult" sap2010:Annotation.AnnotationText="Human validated extraction results used for training." Name="validatedExtractionResults" />
                                 <Variable x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:Annotation.AnnotationText="Orchestrator Validation Action that needs to be human-handled in order to continue the process." Name="validationAction" />
@@ -254,67 +269,67 @@
                                   <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ui:LogMessage DisplayName="Log Message -  Create HitL Validation Action" sap:VirtualizedContainerService.HintSize="484,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_4">
+                              <ui:LogMessage DisplayName="Log Message -  Create HitL Validation Action" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4">
                                 <ui:LogMessage.Message>
                                   <InArgument x:TypeArguments="x:Object">
-                                    <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_68" xml:space="preserve">config["LogMessage_CreateValidationAction"] + " " + extractionResults.ResultsDocument.DocumentTypeId + " (pag " +  currentPageRange +")" + Environment.NewLine + config["logKey"]</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_68" xml:space="preserve">config["LogMessage_CreateValidationAction"] + " " + extractionResults.ResultsDocument.DocumentTypeId + " (pag " +  currentPageRange +")" + Environment.NewLine + config["logKey"]</CSharpValue>
                                   </InArgument>
                                 </ui:LogMessage.Message>
                               </ui:LogMessage>
-                              <p1:CreateDocumentValidationAction TimeoutMs="{x:Null}" ActionPriority="Medium" DisplayName="Create Document Data Validation Action" sap:VirtualizedContainerService.HintSize="484,380.666666666667" sap2010:WorkflowViewState.IdRef="CreateDocumentValidationAction_1" ShowOnlyRelevantPageRange="True">
+                              <p1:CreateDocumentValidationAction TimeoutMs="{x:Null}" ActionPriority="Medium" DisplayName="Create Document Data Validation Action" sap:VirtualizedContainerService.HintSize="483.2,372" sap2010:WorkflowViewState.IdRef="CreateDocumentValidationAction_1" ShowOnlyRelevantPageRange="True">
                                 <p1:CreateDocumentValidationAction.ActionCatalog>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_71">config["ActionCatalog"]</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_71">config["ActionCatalog"]</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.ActionCatalog>
                                 <p1:CreateDocumentValidationAction.ActionOutput>
                                   <OutArgument x:TypeArguments="uiaam:DocumentValidationActionData">
-                                    <mca:CSharpReference x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_20">validationAction</mca:CSharpReference>
+                                    <CSharpReference x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_20">validationAction</CSharpReference>
                                   </OutArgument>
                                 </p1:CreateDocumentValidationAction.ActionOutput>
                                 <p1:CreateDocumentValidationAction.ActionTitle>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_70">config["ValidationActionTitle"] + " " + extractionResults.ResultsDocument.DocumentTypeName</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_70">config["ValidationActionTitle"] + " " + extractionResults.ResultsDocument.DocumentTypeName</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.ActionTitle>
                                 <p1:CreateDocumentValidationAction.AutomaticExtractionResults>
                                   <InArgument x:TypeArguments="p:ExtractionResult">
-                                    <mca:CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_69">extractionResults</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_69">extractionResults</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.AutomaticExtractionResults>
                                 <p1:CreateDocumentValidationAction.BucketFolderPath>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_73">config["StorageBucketDirectoryPath"]</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_73">config["StorageBucketDirectoryPath"]</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.BucketFolderPath>
                                 <p1:CreateDocumentValidationAction.BucketName>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_72">config["StorageBucketName"]</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_72">config["StorageBucketName"]</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.BucketName>
                                 <p1:CreateDocumentValidationAction.DocumentObjectModel>
                                   <InArgument x:TypeArguments="p2:Document">
-                                    <mca:CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_76">dom</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_76">dom</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.DocumentObjectModel>
                                 <p1:CreateDocumentValidationAction.DocumentPath>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_74">in_TargetFile</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_74">in_TargetFile</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.DocumentPath>
                                 <p1:CreateDocumentValidationAction.DocumentText>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_75">docText</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_75">docText</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.DocumentText>
                                 <p1:CreateDocumentValidationAction.FolderPath>
                                   <InArgument x:TypeArguments="x:String">
-                                    <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_78">config["ActionFolderPath"]</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_78">config["ActionFolderPath"]</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.FolderPath>
                                 <p1:CreateDocumentValidationAction.Taxonomy>
                                   <InArgument x:TypeArguments="p3:DocumentTaxonomy">
-                                    <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_77">docTaxonomy</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_77">docTaxonomy</CSharpValue>
                                   </InArgument>
                                 </p1:CreateDocumentValidationAction.Taxonomy>
                                 <sap:WorkflowViewStateService.ViewState>
@@ -324,10 +339,10 @@
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
                               </p1:CreateDocumentValidationAction>
-                              <If DisplayName="If Valid Transaction Item - Set Data Validation Status" sap:VirtualizedContainerService.HintSize="484,298.666666666667" sap2010:WorkflowViewState.IdRef="If_3">
+                              <If DisplayName="If Valid Transaction Item - Set Data Validation Status" sap:VirtualizedContainerService.HintSize="483.2,302.4" sap2010:WorkflowViewState.IdRef="If_3">
                                 <If.Condition>
                                   <InArgument x:TypeArguments="x:Boolean">
-                                    <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_79">TransactionItem != null</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_79">TransactionItem != null</CSharpValue>
                                   </InArgument>
                                 </If.Condition>
                                 <sap:WorkflowViewStateService.ViewState>
@@ -337,48 +352,48 @@
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
                                 <If.Then>
-                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SetTransactionProgress - Extraction Validation" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_36" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\SetTransactionProgress.xaml">
+                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SetTransactionProgress - Extraction Validation" sap:VirtualizedContainerService.HintSize="378.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_36" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\SetTransactionProgress.xaml">
                                     <ui:InvokeWorkflowFile.Arguments>
                                       <InArgument x:TypeArguments="x:String" x:Key="in_Progress">
-                                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_84">config["TransactionProgress_ExtractionValidation"]</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_84">config["TransactionProgress_ExtractionValidation"]</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
-                                        <mca:CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_83">TransactionItem</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_83">TransactionItem</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                        <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_82">config</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_82">config</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                                        <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_81">maxAttempts</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_81">maxAttempts</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                                        <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_80">retryInterval</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_80">retryInterval</CSharpValue>
                                       </InArgument>
                                     </ui:InvokeWorkflowFile.Arguments>
                                   </ui:InvokeWorkflowFile>
                                 </If.Then>
                               </If>
-                              <ui:LogMessage DisplayName="Log Message - Wait On HitL Validation Action" sap:VirtualizedContainerService.HintSize="484,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_5">
+                              <ui:LogMessage DisplayName="Log Message - Wait On HitL Validation Action" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5">
                                 <ui:LogMessage.Message>
                                   <InArgument x:TypeArguments="x:Object">
-                                    <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_106">config["LogMessage_WaitOnValidationAction"] + validationAction.Id.Value.ToString() + Environment.NewLine + config["logKey"]</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_106">config["LogMessage_WaitOnValidationAction"] + validationAction.Id.Value.ToString() + Environment.NewLine + config["logKey"]</CSharpValue>
                                   </InArgument>
                                 </ui:LogMessage.Message>
                               </ui:LogMessage>
-                              <p1:WaitForDocumentValidationActionAndResume AutomaticExtractionResults="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" DownloadFolderPath="{x:Null}" StatusMessage="{x:Null}" Taxonomy="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" sap2010:Annotation.AnnotationText="Take note that, by default, the activity does NOT download the file from the storage bucket. &#xA;&#xA;If downloading the file is required after the job resumes, make sure to fill in the arguments as follows:&#xA;Download Directory Path = config(&quot;TemporaryLocalFolder&quot;)&#xA;Document Path arguments = in_TargetFile&#xA;&#xA;Note that, when going into production, you might want to disable the &quot;Remove Data from Storage&quot;, for auditing reasons. Should this be the case, a separate cleanup of storage bucket data should be considered.&#xA;&#xA;Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." DisplayName="Wait For Document Data Validation Action And Resume" sap:VirtualizedContainerService.HintSize="484,617.333333333333" sap2010:WorkflowViewState.IdRef="WaitForDocumentValidationActionAndResume_1" RemoveDataFromStorage="True">
+                              <p1:WaitForDocumentValidationActionAndResume AutomaticExtractionResults="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" DownloadFolderPath="{x:Null}" StatusMessage="{x:Null}" Taxonomy="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" sap2010:Annotation.AnnotationText="Take note that, by default, the activity does NOT download the file from the storage bucket. &#xA;&#xA;If downloading the file is required after the job resumes, make sure to fill in the arguments as follows:&#xA;Download Directory Path = config(&quot;TemporaryLocalFolder&quot;)&#xA;Document Path arguments = in_TargetFile&#xA;&#xA;Note that, when going into production, you might want to disable the &quot;Remove Data from Storage&quot;, for auditing reasons. Should this be the case, a separate cleanup of storage bucket data should be considered.&#xA;&#xA;Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." DisplayName="Wait For Document Data Validation Action And Resume" sap:VirtualizedContainerService.HintSize="483.2,600.8" sap2010:WorkflowViewState.IdRef="WaitForDocumentValidationActionAndResume_1" RemoveDataFromStorage="True">
                                 <p1:WaitForDocumentValidationActionAndResume.ActionInput>
                                   <InArgument x:TypeArguments="uiaam:DocumentValidationActionData">
-                                    <mca:CSharpValue x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:WorkflowViewState.IdRef="CSharpValue`1_86">validationAction</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:WorkflowViewState.IdRef="CSharpValue`1_86">validationAction</CSharpValue>
                                   </InArgument>
                                 </p1:WaitForDocumentValidationActionAndResume.ActionInput>
                                 <p1:WaitForDocumentValidationActionAndResume.ActionOutput>
                                   <OutArgument x:TypeArguments="uiaam:DocumentValidationActionData">
-                                    <mca:CSharpReference x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_22">validationAction</mca:CSharpReference>
+                                    <CSharpReference x:TypeArguments="uiaam:DocumentValidationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_22">validationAction</CSharpReference>
                                   </OutArgument>
                                 </p1:WaitForDocumentValidationActionAndResume.ActionOutput>
                                 <p1:WaitForDocumentValidationActionAndResume.ValidatedExtractionResults>
                                   <OutArgument x:TypeArguments="p:ExtractionResult">
-                                    <mca:CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_21">validatedExtractionResults</mca:CSharpReference>
+                                    <CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_21">validatedExtractionResults</CSharpReference>
                                   </OutArgument>
                                 </p1:WaitForDocumentValidationActionAndResume.ValidatedExtractionResults>
                                 <sap:WorkflowViewStateService.ViewState>
@@ -389,45 +404,45 @@
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
                               </p1:WaitForDocumentValidationActionAndResume>
-                              <ui:LogMessage DisplayName="Log Message - DataValidation Resume" sap:VirtualizedContainerService.HintSize="484,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_6">
+                              <ui:LogMessage DisplayName="Log Message - DataValidation Resume" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_6">
                                 <ui:LogMessage.Message>
                                   <InArgument x:TypeArguments="x:Object">
-                                    <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_87" xml:space="preserve">String.Format(config["LogMessage_ResumeAfterDataValidation"], validationAction.Id.Value.ToString(), validatedExtractionResults.ResultsDocument.DocumentTypeId + " (pag " +  currentPageRange +")"+ Environment.NewLine + config["logKey"])</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_87" xml:space="preserve">String.Format(config["LogMessage_ResumeAfterDataValidation"], validationAction.Id.Value.ToString(), validatedExtractionResults.ResultsDocument.DocumentTypeId + " (pag " +  currentPageRange +")"+ Environment.NewLine + config["logKey"])</CSharpValue>
                                   </InArgument>
                                 </ui:LogMessage.Message>
                               </ui:LogMessage>
-                              <If DisplayName="If - Train Extractors?" sap:VirtualizedContainerService.HintSize="484,298.666666666667" sap2010:WorkflowViewState.IdRef="If_4">
+                              <If DisplayName="If - Train Extractors?" sap:VirtualizedContainerService.HintSize="483.2,302.4" sap2010:WorkflowViewState.IdRef="If_4">
                                 <If.Condition>
                                   <InArgument x:TypeArguments="x:Boolean">
-                                    <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_88">!Convert.ToBoolean(config["SkipExtractorTraining"])</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_88">!Convert.ToBoolean(config["SkipExtractorTraining"])</CSharpValue>
                                   </InArgument>
                                 </If.Condition>
                                 <If.Then>
-                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TrainExtractors" sap:VirtualizedContainerService.HintSize="334,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_37" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\60_TrainExtractors.xaml">
+                                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TrainExtractors" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_37" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\60_TrainExtractors.xaml">
                                     <ui:InvokeWorkflowFile.Arguments>
                                       <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_96">in_TargetFile</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_96">in_TargetFile</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                                        <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_95">docTaxonomy</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_95">docTaxonomy</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="p2:Document" x:Key="in_DOM">
-                                        <mca:CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_94">dom</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_94">dom</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
-                                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_93">docText</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_93">docText</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="p:ExtractionResult" x:Key="in_ValidatedExtractionResults">
-                                        <mca:CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_92">validatedExtractionResults</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_92">validatedExtractionResults</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                        <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_91">config</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_91">config</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                                        <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_90">maxAttempts</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_90">maxAttempts</CSharpValue>
                                       </InArgument>
                                       <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                                        <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_89">retryInterval</mca:CSharpValue>
+                                        <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_89">retryInterval</CSharpValue>
                                       </InArgument>
                                     </ui:InvokeWorkflowFile.Arguments>
                                     <sap:WorkflowViewStateService.ViewState>
@@ -438,15 +453,15 @@
                                   </ui:InvokeWorkflowFile>
                                 </If.Then>
                               </If>
-                              <Assign DisplayName="Assign Extraction Result" sap:VirtualizedContainerService.HintSize="484,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+                              <Assign DisplayName="Assign Extraction Result" sap:VirtualizedContainerService.HintSize="483.2,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                                 <Assign.To>
                                   <OutArgument x:TypeArguments="p:ExtractionResult">
-                                    <mca:CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_24">extractionResults</mca:CSharpReference>
+                                    <CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_24">extractionResults</CSharpReference>
                                   </OutArgument>
                                 </Assign.To>
                                 <Assign.Value>
                                   <InArgument x:TypeArguments="p:ExtractionResult">
-                                    <mca:CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_97">validatedExtractionResults</mca:CSharpValue>
+                                    <CSharpValue x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_97">validatedExtractionResults</CSharpValue>
                                   </InArgument>
                                 </Assign.Value>
                               </Assign>
@@ -461,38 +476,38 @@
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <av:Point x:Key="ShapeLocation">150,93.6666666666667</av:Point>
-                            <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                             <av:PointCollection x:Key="ConnectorLocation">250,146.333333333333 250,163.666666666667</av:PointCollection>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Pre-extraction &amp;&#xA;Data Extraction" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_34" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Pre-extraction &amp;&#xA;Data Extraction" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_34" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
                           <ui:InvokeWorkflowFile.Arguments>
                             <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                              <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_64">in_TargetFile</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_64">in_TargetFile</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                              <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_63">docTaxonomy</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_63">docTaxonomy</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="p2:Document" x:Key="in_DOM">
-                              <mca:CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_62">dom</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_62">dom</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
-                              <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_61">docText</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_61">docText</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="p:ClassificationResult" x:Key="in_ClassificationResult">
-                              <mca:CSharpValue x:TypeArguments="p:ClassificationResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_60">classificationResult</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="p:ClassificationResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_60">classificationResult</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                              <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_59">config</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_59">config</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                              <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_58">maxAttempts</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_58">maxAttempts</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                              <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_57">retryInterval</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_57">retryInterval</CSharpValue>
                             </InArgument>
                             <OutArgument x:TypeArguments="p:ExtractionResult" x:Key="out_ExtractionResults">
-                              <mca:CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_17">extractionResults</mca:CSharpReference>
+                              <CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_17">extractionResults</CSharpReference>
                             </OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                           <sap:WorkflowViewStateService.ViewState>
@@ -507,26 +522,26 @@
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <av:Point x:Key="ShapeLocation">150,163.666666666667</av:Point>
-                                <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                                <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                                 <av:PointCollection x:Key="ConnectorLocation">250,216.333333333333 250,246.333333333333 249.8,246.333333333333 249.8,256.4</av:PointCollection>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Extraction Bussiness Rule Validation&#xA;" DisplayName="Extraction Rules Check" sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_35" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBusinessRuleValidation.xaml">
+                            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Extraction Bussiness Rule Validation&#xA;" DisplayName="Extraction Rules Check" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_35" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBusinessRuleValidation.xaml">
                               <ui:InvokeWorkflowFile.Arguments>
                                 <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                                  <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_67">in_TargetFile</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_67">in_TargetFile</CSharpValue>
                                 </InArgument>
                                 <InArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                                  <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_66">docTaxonomy</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_66">docTaxonomy</CSharpValue>
                                 </InArgument>
                                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                  <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_65">config</mca:CSharpValue>
+                                  <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_65">config</CSharpValue>
                                 </InArgument>
                                 <InOutArgument x:TypeArguments="p:ExtractionResult" x:Key="io_ExtractionResults">
-                                  <mca:CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_19">extractionResults</mca:CSharpReference>
+                                  <CSharpReference x:TypeArguments="p:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_19">extractionResults</CSharpReference>
                                 </InOutArgument>
                                 <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">
-                                  <mca:CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_18">extractionSuccessFlag</mca:CSharpReference>
+                                  <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_18">extractionSuccessFlag</CSharpReference>
                                 </OutArgument>
                               </ui:InvokeWorkflowFile.Arguments>
                               <sap:WorkflowViewStateService.ViewState>
@@ -547,7 +562,7 @@
                     </Flowchart>
                   </TryCatch.Try>
                   <TryCatch.Catches>
-                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="663.111111111111,22.6666666666667" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="662.4,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_1">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -558,7 +573,7 @@
                         <ActivityAction.Argument>
                           <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                         </ActivityAction.Argument>
-                        <Sequence DisplayName="CatchDocumentExceptionSequence" sap:VirtualizedContainerService.HintSize="388.444444444444,456.888888888889" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                        <Sequence DisplayName="CatchDocumentExceptionSequence" sap:VirtualizedContainerService.HintSize="388,459.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -568,16 +583,16 @@
                           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ERR_HandleDocumentError workflow" sap:VirtualizedContainerService.HintSize="346.666666666667,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_27" UnSafe="False" WorkflowFileName="Framework\\ERR_HandleDocumentError.xaml">
                             <ui:InvokeWorkflowFile.Arguments>
                               <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
-                                <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_105">in_TargetFile</mca:CSharpValue>
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_105">in_TargetFile</CSharpValue>
                               </InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="in_PageRange">
-                                <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_104">currentPageRange</mca:CSharpValue>
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_104">currentPageRange</CSharpValue>
                               </InArgument>
                               <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">
-                                <mca:CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_103">exception</mca:CSharpValue>
+                                <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_103">exception</CSharpValue>
                               </InArgument>
                               <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                                <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_102">config</mca:CSharpValue>
+                                <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_102">config</CSharpValue>
                               </InArgument>
                             </ui:InvokeWorkflowFile.Arguments>
                           </ui:InvokeWorkflowFile>
@@ -593,22 +608,22 @@
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <av:Point x:Key="ShapeLocation">90,654</av:Point>
-                    <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                    <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Post-export &amp;&#xA;Set Transaction Status (Success) &amp;&#xA;Process Cleanup" DisplayName="End Process " sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_28" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\80_EndProcess.xaml">
+                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Post-export &amp;&#xA;Set Transaction Status (Success) &amp;&#xA;Process Cleanup" DisplayName="End Process " sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_28" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\80_EndProcess.xaml">
                   <ui:InvokeWorkflowFile.Arguments>
                     <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
-                      <mca:CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_110">TransactionItem</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_110">TransactionItem</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                      <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_109">config</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_109">config</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                      <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_108">maxAttempts</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_108">maxAttempts</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                      <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_107">retryInterval</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_107">retryInterval</CSharpValue>
                     </InArgument>
                   </ui:InvokeWorkflowFile.Arguments>
                   <sap:WorkflowViewStateService.ViewState>
@@ -621,15 +636,15 @@
               </FlowStep>
             </FlowStep.Next>
           </FlowStep>
-          <FlowDecision x:Name="__ReferenceID6" DisplayName="Successful?" sap:VirtualizedContainerService.HintSize="70.2222222222222,87.1111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+          <FlowDecision x:Name="__ReferenceID6" DisplayName="Successful?" sap:VirtualizedContainerService.HintSize="70.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
             <FlowDecision.Condition>
-              <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_25">classificationSuccessFlag</mca:CSharpValue>
+              <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_25">classificationSuccessFlag</CSharpValue>
             </FlowDecision.Condition>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <av:Point x:Key="ShapeLocation">154.8,486</av:Point>
-                <av:Size x:Key="ShapeSize">70.2222222222222,87.1111111111111</av:Size>
+                <av:Size x:Key="ShapeSize">70.4,87.2</av:Size>
                 <av:PointCollection x:Key="TrueConnector">154.8,529.5 60,529.5 60,611.5 90,611.5</av:PointCollection>
                 <av:PointCollection x:Key="FalseConnector">224.8,529.333333333333 254.8,529.333333333333 254.8,530 400,530</av:PointCollection>
               </scg:Dictionary>
@@ -642,11 +657,11 @@
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <av:Point x:Key="ShapeLocation">400,495.333333333333</av:Point>
-                    <av:Size x:Key="ShapeSize">200,69.3333333333333</av:Size>
+                    <av:Size x:Key="ShapeSize">200,68.8</av:Size>
                     <av:PointCollection x:Key="ConnectorLocation">500,564.666666666667 500,612.333333333333 290,612.333333333333</av:PointCollection>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <Sequence sap2010:Annotation.AnnotationText="Classification Validation&#xA;&amp; Classifier training" DisplayName="Validate &amp; Train Classifiers" sap:VirtualizedContainerService.HintSize="567.111111111111,2309.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                <Sequence sap2010:Annotation.AnnotationText="Classification Validation&#xA;&amp; Classifier training" DisplayName="Validate &amp; Train Classifiers" sap:VirtualizedContainerService.HintSize="524.8,2288.8" sap2010:WorkflowViewState.IdRef="Sequence_6">
                   <Sequence.Variables>
                     <Variable x:TypeArguments="p:ClassificationResult[]" sap2010:Annotation.AnnotationText="Human validated classification results used for training." Name="validatedClassificationResults" />
                     <Variable x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:Annotation.AnnotationText="Orchestrator Classification Action that needs to be human-handled in order to continue the process." Name="classificationAction" />
@@ -657,74 +672,74 @@
                       <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Log Message - Create Classification Validation Action" sap:VirtualizedContainerService.HintSize="525.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+                  <ui:LogMessage DisplayName="Log Message - Create Classification Validation Action" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1">
                     <ui:LogMessage.Message>
                       <InArgument x:TypeArguments="x:Object">
-                        <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_26">config["LogMessage_CreateClassificationAction"] + Environment.NewLine + config["logKey"]</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_26">config["LogMessage_CreateClassificationAction"] + Environment.NewLine + config["logKey"]</CSharpValue>
                       </InArgument>
                     </ui:LogMessage.Message>
                   </ui:LogMessage>
-                  <p1:CreateDocumentClassificationAction TimeoutMs="{x:Null}" ActionPriority="Medium" DisplayName="Create Document Classification Action - Main " sap:VirtualizedContainerService.HintSize="525.333333333333,376" sap2010:WorkflowViewState.IdRef="CreateDocumentClassificationAction_1">
+                  <p1:CreateDocumentClassificationAction TimeoutMs="{x:Null}" ActionPriority="Medium" DisplayName="Create Document Classification Action - Main " sap:VirtualizedContainerService.HintSize="483.2,372" sap2010:WorkflowViewState.IdRef="CreateDocumentClassificationAction_1">
                     <p1:CreateDocumentClassificationAction.ActionCatalog>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">config["ActionCatalog"]</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_29">config["ActionCatalog"]</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.ActionCatalog>
                     <p1:CreateDocumentClassificationAction.ActionOutput>
                       <OutArgument x:TypeArguments="uiaam:DocumentClassificationActionData">
-                        <mca:CSharpReference x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">classificationAction</mca:CSharpReference>
+                        <CSharpReference x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">classificationAction</CSharpReference>
                       </OutArgument>
                     </p1:CreateDocumentClassificationAction.ActionOutput>
                     <p1:CreateDocumentClassificationAction.ActionTitle>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">config["ClassificationActionTitle"] + " " + Path.GetFileName(in_TargetFile)</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_28">config["ClassificationActionTitle"] + " " + Path.GetFileName(in_TargetFile)</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.ActionTitle>
                     <p1:CreateDocumentClassificationAction.AutomaticClassificationResults>
                       <InArgument x:TypeArguments="p:ClassificationResult[]">
-                        <mca:CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_27">classificationResultsArray</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_27">classificationResultsArray</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.AutomaticClassificationResults>
                     <p1:CreateDocumentClassificationAction.BucketFolderPath>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">config["StorageBucketDirectoryPath"]</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_31">config["StorageBucketDirectoryPath"]</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.BucketFolderPath>
                     <p1:CreateDocumentClassificationAction.BucketName>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_30">config["StorageBucketName"]</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_30">config["StorageBucketName"]</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.BucketName>
                     <p1:CreateDocumentClassificationAction.DocumentObjectModel>
                       <InArgument x:TypeArguments="p2:Document">
-                        <mca:CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34">dom</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34">dom</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.DocumentObjectModel>
                     <p1:CreateDocumentClassificationAction.DocumentPath>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">in_TargetFile</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_32">in_TargetFile</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.DocumentPath>
                     <p1:CreateDocumentClassificationAction.DocumentText>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">docText</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">docText</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.DocumentText>
                     <p1:CreateDocumentClassificationAction.FolderPath>
                       <InArgument x:TypeArguments="x:String">
-                        <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">config["ActionFolderPath"]</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">config["ActionFolderPath"]</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.FolderPath>
                     <p1:CreateDocumentClassificationAction.Taxonomy>
                       <InArgument x:TypeArguments="p3:DocumentTaxonomy">
-                        <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">docTaxonomy</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">docTaxonomy</CSharpValue>
                       </InArgument>
                     </p1:CreateDocumentClassificationAction.Taxonomy>
                   </p1:CreateDocumentClassificationAction>
-                  <If DisplayName="If Valid Transaction Item - Set Classification Validation Status" sap:VirtualizedContainerService.HintSize="525.333333333333,298.666666666667" sap2010:WorkflowViewState.IdRef="If_1">
+                  <If DisplayName="If Valid Transaction Item - Set Classification Validation Status" sap:VirtualizedContainerService.HintSize="483.2,302.4" sap2010:WorkflowViewState.IdRef="If_1">
                     <If.Condition>
                       <InArgument x:TypeArguments="x:Boolean">
-                        <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37">TransactionItem != null</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37">TransactionItem != null</CSharpValue>
                       </InArgument>
                     </If.Condition>
                     <sap:WorkflowViewStateService.ViewState>
@@ -734,48 +749,48 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                     <If.Then>
-                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SetTransactionProgress - Classification Validation" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_32" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\SetTransactionProgress.xaml">
+                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="SetTransactionProgress - Classification Validation" sap:VirtualizedContainerService.HintSize="378.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_32" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\SetTransactionProgress.xaml">
                         <ui:InvokeWorkflowFile.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="in_Progress">
-                            <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_42">config["TransactionProgress_ClassificationValidation"]</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_42">config["TransactionProgress_ClassificationValidation"]</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
-                            <mca:CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_41">TransactionItem</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_41">TransactionItem</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                            <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_40">config</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_40">config</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                            <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_39">maxAttempts</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_39">maxAttempts</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                            <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_38">retryInterval</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_38">retryInterval</CSharpValue>
                           </InArgument>
                         </ui:InvokeWorkflowFile.Arguments>
                       </ui:InvokeWorkflowFile>
                     </If.Then>
                   </If>
-                  <ui:LogMessage DisplayName="Log Message - Wait On Classification Validation Action" sap:VirtualizedContainerService.HintSize="525.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2">
+                  <ui:LogMessage DisplayName="Log Message - Wait On Classification Validation Action" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2">
                     <ui:LogMessage.Message>
                       <InArgument x:TypeArguments="x:Object">
-                        <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_43">config["LogMessage_WaitOnClassificationAction"] + classificationAction.Id.Value.ToString() + Environment.NewLine + config["logKey"]</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_43">config["LogMessage_WaitOnClassificationAction"] + classificationAction.Id.Value.ToString() + Environment.NewLine + config["logKey"]</CSharpValue>
                       </InArgument>
                     </ui:LogMessage.Message>
                   </ui:LogMessage>
-                  <p1:WaitForDocumentClassificationActionAndResume AutomaticClassificationResults="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" DownloadFolderPath="{x:Null}" StatusMessage="{x:Null}" Taxonomy="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" sap2010:Annotation.AnnotationText="Take note that, by default, the activity does NOT download the file from the storage bucket. &#xA;&#xA;If downloading the file is required after the job resumes, make sure to fill in the arguments as follows:&#xA;Download Directory Path = config(&quot;TemporaryLocalFolder&quot;)&#xA;Document Path arguments = in_TargetFile&#xA;&#xA;Note that, when going into production, you might want to disable the &quot;Remove Data from Storage&quot;, for auditing reasons. Should this be the case, a separate cleanup of storage bucket data should be considered.&#xA;&#xA;Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." DisplayName="Wait For Document Classification Action And Resume - Main" sap:VirtualizedContainerService.HintSize="525.333333333333,617.333333333333" sap2010:WorkflowViewState.IdRef="WaitForDocumentClassificationActionAndResume_1" RemoveDataFromStorage="True">
+                  <p1:WaitForDocumentClassificationActionAndResume AutomaticClassificationResults="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" DownloadFolderPath="{x:Null}" StatusMessage="{x:Null}" Taxonomy="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" sap2010:Annotation.AnnotationText="Take note that, by default, the activity does NOT download the file from the storage bucket. &#xA;&#xA;If downloading the file is required after the job resumes, make sure to fill in the arguments as follows:&#xA;Download Directory Path = config(&quot;TemporaryLocalFolder&quot;)&#xA;Document Path arguments = in_TargetFile&#xA;&#xA;Note that, when going into production, you might want to disable the &quot;Remove Data from Storage&quot;, for auditing reasons. Should this be the case, a separate cleanup of storage bucket data should be considered.&#xA;&#xA;Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." DisplayName="Wait For Document Classification Action And Resume - Main" sap:VirtualizedContainerService.HintSize="483.2,600.8" sap2010:WorkflowViewState.IdRef="WaitForDocumentClassificationActionAndResume_1" RemoveDataFromStorage="True">
                     <p1:WaitForDocumentClassificationActionAndResume.ActionInput>
                       <InArgument x:TypeArguments="uiaam:DocumentClassificationActionData">
-                        <mca:CSharpValue x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:WorkflowViewState.IdRef="CSharpValue`1_44">classificationAction</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:WorkflowViewState.IdRef="CSharpValue`1_44">classificationAction</CSharpValue>
                       </InArgument>
                     </p1:WaitForDocumentClassificationActionAndResume.ActionInput>
                     <p1:WaitForDocumentClassificationActionAndResume.ActionOutput>
                       <OutArgument x:TypeArguments="uiaam:DocumentClassificationActionData">
-                        <mca:CSharpReference x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_15">classificationAction</mca:CSharpReference>
+                        <CSharpReference x:TypeArguments="uiaam:DocumentClassificationActionData" sap2010:WorkflowViewState.IdRef="CSharpReference`1_15">classificationAction</CSharpReference>
                       </OutArgument>
                     </p1:WaitForDocumentClassificationActionAndResume.ActionOutput>
                     <p1:WaitForDocumentClassificationActionAndResume.ValidatedClassificationResults>
                       <OutArgument x:TypeArguments="p:ClassificationResult[]">
-                        <mca:CSharpReference x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">validatedClassificationResults</mca:CSharpReference>
+                        <CSharpReference x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">validatedClassificationResults</CSharpReference>
                       </OutArgument>
                     </p1:WaitForDocumentClassificationActionAndResume.ValidatedClassificationResults>
                     <sap:WorkflowViewStateService.ViewState>
@@ -784,65 +799,59 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                   </p1:WaitForDocumentClassificationActionAndResume>
-                  <ui:LogMessage DisplayName="Log Message - ClassificationValidation Resume" sap:VirtualizedContainerService.HintSize="525.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3">
+                  <ui:LogMessage DisplayName="Log Message - ClassificationValidation Resume" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3">
                     <ui:LogMessage.Message>
                       <InArgument x:TypeArguments="x:Object">
-                        <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_45">String.Format(config["LogMessage_ResumeAfterClassificationValidation"], classificationAction.Id.Value.ToString(), String.Join(" | ", validatedClassificationResults.Select(cResult =&gt; cResult.DocumentTypeId)) + Environment.NewLine + config["logKey"])</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_45">String.Format(config["LogMessage_ResumeAfterClassificationValidation"], classificationAction.Id.Value.ToString(), String.Join(" | ", validatedClassificationResults.Select(cResult =&gt; cResult.DocumentTypeId)) + Environment.NewLine + config["logKey"])</CSharpValue>
                       </InArgument>
                     </ui:LogMessage.Message>
                   </ui:LogMessage>
-                  <If DisplayName="If - Train Classifiers?" sap:VirtualizedContainerService.HintSize="525.333333333333,298.666666666667" sap2010:WorkflowViewState.IdRef="If_2">
+                  <If DisplayName="If - Train Classifiers?" sap:VirtualizedContainerService.HintSize="483.2,302.4" sap2010:WorkflowViewState.IdRef="If_2">
                     <If.Condition>
                       <InArgument x:TypeArguments="x:Boolean">
-                        <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_46">! Convert.ToBoolean(config["SkipClassifierTraining"])</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_46">! Convert.ToBoolean(config["SkipClassifierTraining"])</CSharpValue>
                       </InArgument>
                     </If.Condition>
                     <If.Then>
-                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="334,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_33" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\40_TrainClassifiers.xaml">
+                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_39" UnSafe="False" WorkflowFileName="Framework\\40_TrainClassifiers.xaml">
                         <ui:InvokeWorkflowFile.Arguments>
                           <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                            <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_54">in_TargetFile</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_127">in_TargetFile</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                            <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_53">docTaxonomy</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_126">docTaxonomy</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="p2:Document" x:Key="in_DOM">
-                            <mca:CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_52">dom</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_125">dom</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
-                            <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_51">docText</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_124">docText</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="p:ClassificationResult[]" x:Key="in_ValidatedClassificationResults">
-                            <mca:CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_50">validatedClassificationResults</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_123">validatedClassificationResults</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                            <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_49">config</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_122">config</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                            <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_48">maxAttempts</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_121">maxAttempts</CSharpValue>
                           </InArgument>
                           <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                            <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_47">retryInterval</mca:CSharpValue>
+                            <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_120">retryInterval</CSharpValue>
                           </InArgument>
                         </ui:InvokeWorkflowFile.Arguments>
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
                       </ui:InvokeWorkflowFile>
                     </If.Then>
                   </If>
-                  <Assign DisplayName="Assign Classification Result" sap:VirtualizedContainerService.HintSize="525.333333333333,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign DisplayName="Assign Classification Result" sap:VirtualizedContainerService.HintSize="483.2,60" sap2010:WorkflowViewState.IdRef="Assign_1">
                     <Assign.To>
                       <OutArgument x:TypeArguments="p:ClassificationResult[]">
-                        <mca:CSharpReference x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_16">classificationResultsArray</mca:CSharpReference>
+                        <CSharpReference x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_16">classificationResultsArray</CSharpReference>
                       </OutArgument>
                     </Assign.To>
                     <Assign.Value>
                       <InArgument x:TypeArguments="p:ClassificationResult[]">
-                        <mca:CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_55">validatedClassificationResults</mca:CSharpValue>
+                        <CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_55">validatedClassificationResults</CSharpValue>
                       </InArgument>
                     </Assign.Value>
                   </Assign>
@@ -853,19 +862,19 @@
               </FlowStep>
             </FlowDecision.False>
           </FlowDecision>
-          <FlowDecision x:Name="__ReferenceID8" DisplayName="Using Queue?" sap:VirtualizedContainerService.HintSize="79.1111111111111,87.1111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+          <FlowDecision x:Name="__ReferenceID8" DisplayName="Using Queue?" sap:VirtualizedContainerService.HintSize="78.4,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
             <FlowDecision.Condition>
-              <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">!in_UseQueue</mca:CSharpValue>
+              <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">!in_UseQueue</CSharpValue>
             </FlowDecision.Condition>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <av:Point x:Key="ShapeLocation">150.333333333333,166.666666666667</av:Point>
-                <av:Size x:Key="ShapeSize">79.1111111111111,87.1111111111111</av:Size>
+                <av:Size x:Key="ShapeSize">78.4,87.2</av:Size>
                 <av:PointCollection x:Key="TrueConnector">150.333333333333,210 60,210 60,300 90,300</av:PointCollection>
                 <x:String x:Key="TrueLabel">No</x:String>
                 <x:String x:Key="FalseLabel">Yes</x:String>
-                <av:PointCollection x:Key="FalseConnector">229.666666666667,210 300,210</av:PointCollection>
+                <av:PointCollection x:Key="FalseConnector">228.733333333333,210.266666666667 258.733333333333,210.266666666667 258.733333333333,210.066666666667 300,210.066666666667</av:PointCollection>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <FlowDecision.True>
@@ -873,29 +882,29 @@
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <av:Point x:Key="ShapeLocation">90,273.666666666667</av:Point>
-                    <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                    <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                     <av:PointCollection x:Key="ConnectorLocation">190,326.333333333334 190,344</av:PointCollection>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Pre-digitization &amp; digitization " DisplayName="Digitize " sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\20_Digitize.xaml">
+                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Pre-digitization &amp; digitization " DisplayName="Digitize " sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_19" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\20_Digitize.xaml">
                   <ui:InvokeWorkflowFile.Arguments>
                     <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                      <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">in_TargetFile</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">in_TargetFile</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                      <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">config</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">config</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                      <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">maxAttempts</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">maxAttempts</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                      <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">retryInterval</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">retryInterval</CSharpValue>
                     </InArgument>
                     <OutArgument x:TypeArguments="p2:Document" x:Key="out_DOM">
-                      <mca:CSharpReference x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">dom</mca:CSharpReference>
+                      <CSharpReference x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">dom</CSharpReference>
                     </OutArgument>
                     <OutArgument x:TypeArguments="x:String" x:Key="out_DocText">
-                      <mca:CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">docText</mca:CSharpReference>
+                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">docText</CSharpReference>
                     </OutArgument>
                   </ui:InvokeWorkflowFile.Arguments>
                   <sap:WorkflowViewStateService.ViewState>
@@ -910,38 +919,38 @@
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <av:Point x:Key="ShapeLocation">90,344</av:Point>
-                        <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                        <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                         <av:PointCollection x:Key="ConnectorLocation">190,396.666666666667 190,413.666666666667</av:PointCollection>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Classify documents &amp; check if human intervention is needed" DisplayName="Classify " sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_20" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\30_Classify.xaml">
+                    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Classify documents &amp; check if human intervention is needed" DisplayName="Classify " sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_20" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\30_Classify.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
                         <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                          <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">in_TargetFile</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">in_TargetFile</CSharpValue>
                         </InArgument>
                         <InArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                          <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">docTaxonomy</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">docTaxonomy</CSharpValue>
                         </InArgument>
                         <InArgument x:TypeArguments="p2:Document" x:Key="in_DOM">
-                          <mca:CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_18">dom</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="p2:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_18">dom</CSharpValue>
                         </InArgument>
                         <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
-                          <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">docText</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">docText</CSharpValue>
                         </InArgument>
                         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                          <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_16">config</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_16">config</CSharpValue>
                         </InArgument>
                         <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                          <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">maxAttempts</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">maxAttempts</CSharpValue>
                         </InArgument>
                         <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                          <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">retryInterval</mca:CSharpValue>
+                          <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">retryInterval</CSharpValue>
                         </InArgument>
                         <OutArgument x:TypeArguments="p:ClassificationResult[]" x:Key="out_ClassificationResults">
-                          <mca:CSharpReference x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">classificationResultsArray</mca:CSharpReference>
+                          <CSharpReference x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">classificationResultsArray</CSharpReference>
                         </OutArgument>
                         <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoClassificationSuccess">
-                          <mca:CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">classificationSuccessFlag</mca:CSharpReference>
+                          <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">classificationSuccessFlag</CSharpReference>
                         </OutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                       <sap:WorkflowViewStateService.ViewState>
@@ -956,26 +965,26 @@
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <av:Point x:Key="ShapeLocation">90,413.666666666667</av:Point>
-                            <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                            <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                             <av:PointCollection x:Key="ConnectorLocation">190,466.333333333333 189.8,466.333333333333 189.8,486</av:PointCollection>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Classification Business Rule Validation" DisplayName="Classification Rules Check" sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_31" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\35_ClassificationBusinessRuleValidation.xaml">
+                        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Classification Business Rule Validation" DisplayName="Classification Rules Check" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_31" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\35_ClassificationBusinessRuleValidation.xaml">
                           <ui:InvokeWorkflowFile.Arguments>
                             <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-                              <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_24">in_TargetFile</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_24">in_TargetFile</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-                              <mca:CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_23">docTaxonomy</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_23">docTaxonomy</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="p:ClassificationResult[]" x:Key="in_ClassificationResults">
-                              <mca:CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22">classificationResultsArray</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="p:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22">classificationResultsArray</CSharpValue>
                             </InArgument>
                             <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                              <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">config</mca:CSharpValue>
+                              <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_21">config</CSharpValue>
                             </InArgument>
                             <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoClassificationSuccess">
-                              <mca:CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">classificationSuccessFlag</mca:CSharpReference>
+                              <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">classificationSuccessFlag</CSharpReference>
                             </OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                           <sap:WorkflowViewStateService.ViewState>
@@ -999,26 +1008,26 @@
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <av:Point x:Key="ShapeLocation">300,183.666666666667</av:Point>
-                    <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                    <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                     <av:PointCollection x:Key="ConnectorLocation">400,236.333333333333 400,300 290,300</av:PointCollection>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Get the TransactionItem" DisplayName="GetTransactionItem " sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\15_GetTransactionItem.xaml">
+                <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Get the TransactionItem" DisplayName="GetTransactionItem " sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\\15_GetTransactionItem.xaml">
                   <ui:InvokeWorkflowFile.Arguments>
                     <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                      <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">config</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">config</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                      <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">maxAttempts</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">maxAttempts</CSharpValue>
                     </InArgument>
                     <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                      <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">retryInterval</mca:CSharpValue>
+                      <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">retryInterval</CSharpValue>
                     </InArgument>
                     <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFile">
-                      <mca:CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">in_TargetFile</mca:CSharpReference>
+                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">in_TargetFile</CSharpReference>
                     </OutArgument>
                     <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">
-                      <mca:CSharpReference x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">TransactionItem</mca:CSharpReference>
+                      <CSharpReference x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">TransactionItem</CSharpReference>
                     </OutArgument>
                   </ui:InvokeWorkflowFile.Arguments>
                   <sap:WorkflowViewStateService.ViewState>
@@ -1038,37 +1047,27 @@
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <av:Point x:Key="ShapeLocation">90,93.6666666666667</av:Point>
-                <av:Size x:Key="ShapeSize">200,52.8888888888889</av:Size>
+                <av:Size x:Key="ShapeSize">200,52.8</av:Size>
                 <av:PointCollection x:Key="ConnectorLocation">190,146.333333333333 190,166.666666666667</av:PointCollection>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Loads Orchestrator assets and executes logic for process-specific &amp; Document Understanding Initialization" DisplayName="Initialize Process " sap:VirtualizedContainerService.HintSize="200,52.8888888888889" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Framework\\10_InitializeProcess.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Loads Orchestrator assets and executes logic for process-specific &amp; Document Understanding Initialization" DisplayName="Initialize Process " sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Framework\\10_InitializeProcess.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="in_AssetSheet">Assets</InArgument>
                 <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
                 <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                  <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">maxAttempts</mca:CSharpValue>
+                  <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">maxAttempts</CSharpValue>
                 </InArgument>
                 <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                  <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">retryInterval</mca:CSharpValue>
+                  <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">retryInterval</CSharpValue>
                 </InArgument>
                 <InOutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="io_Config">
-                  <mca:CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">config</mca:CSharpReference>
+                  <CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">config</CSharpReference>
                 </InOutArgument>
                 <OutArgument x:TypeArguments="p3:DocumentTaxonomy" x:Key="out_DocTaxonomy">
-                  <mca:CSharpReference x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">docTaxonomy</mca:CSharpReference>
+                  <CSharpReference x:TypeArguments="p3:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">docTaxonomy</CSharpReference>
                 </OutArgument>
               </ui:InvokeWorkflowFile.Arguments>
-              <ui:InvokeWorkflowFile.LogEntry>
-                <InArgument x:TypeArguments="ui:LogEntryType">
-                  <mca:CSharpValue x:TypeArguments="ui:LogEntryType" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">LogEntryType.No</mca:CSharpValue>
-                </InArgument>
-              </ui:InvokeWorkflowFile.LogEntry>
-              <ui:InvokeWorkflowFile.LogExit>
-                <InArgument x:TypeArguments="ui:LogExitType">
-                  <mca:CSharpValue x:TypeArguments="ui:LogExitType" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">LogExitType.No</mca:CSharpValue>
-                </InArgument>
-              </ui:InvokeWorkflowFile.LogExit>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1089,7 +1088,7 @@
         </Flowchart>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="765.333333333333,22.6666666666667" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="764.8,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -1100,39 +1099,39 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="AbortSequence" sap:VirtualizedContainerService.HintSize="420.888888888889,422.222222222222" sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <Sequence DisplayName="AbortSequence" sap:VirtualizedContainerService.HintSize="420.8,422.4" sap2010:WorkflowViewState.IdRef="Sequence_5">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ERR_AbortProcess workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_29" UnSafe="False" WorkflowFileName="Framework\\ERR_AbortProcess.xaml">
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ERR_AbortProcess workflow" sap:VirtualizedContainerService.HintSize="379.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_29" UnSafe="False" WorkflowFileName="Framework\\ERR_AbortProcess.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
                   <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">
-                    <mca:CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_112">exception</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_112">exception</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                    <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_111">config</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_111">config</CSharpValue>
                   </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke SetTransactionStatus workflow" sap:VirtualizedContainerService.HintSize="379.333333333333,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_30" UnSafe="False" WorkflowFileName="Framework\\ReusableWorkflows\\SetTransactionStatus.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
                   <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
-                    <mca:CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_115">TransactionItem</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_115">TransactionItem</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">
-                    <mca:CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_114">exception</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_114">exception</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                    <mca:CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_118">config</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_118">config</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                    <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_117">maxAttempts</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_117">maxAttempts</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                    <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_116">retryInterval</mca:CSharpValue>
+                    <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_116">retryInterval</CSharpValue>
                   </InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
