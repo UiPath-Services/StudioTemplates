@@ -41,7 +41,7 @@ if ($shouldGetTemplatesFromConfig -eq $true) {
     } else {
         Write-Host "Checking the commit difference for $commitHash"
         # get changed files from last commit
-        $files=$(git diff-tree --no-commit-id --name-only -r $commitHash)
+        $files=$(git diff-tree --no-commit-id --name-only -r $commitHash $commitHash^1)
     }
 
     $list=$files -split ' '
