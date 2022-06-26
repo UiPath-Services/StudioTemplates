@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_00_ReadConfigFile" this:_00_ReadConfigFile.in_ConfigFile="Data\Config.xlsx" this:_00_ReadConfigFile.in_ConfigSheets="[{&quot;Settings&quot;, &quot;Constants&quot;}]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_00_ReadConfigFile" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Path to the configuration file that defines settings, constants and assets." Name="in_ConfigFile" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Names of the sheets corresponding to settings and constants in the configuration file." Name="in_ConfigSheets" Type="InArgument(s:String[])" />
@@ -6,10 +6,10 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="out_MaxAttempts" Type="OutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="out_RetryInterval" Type="OutArgument(x:TimeSpan)" />
   </x:Members>
-  <mva:VisualBasic.Settings>
+  <VisualBasic.Settings>
     <x:Null />
-  </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>879.333333333333,1443.33333333333</sap:VirtualizedContainerService.HintSize>
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1088.8,1436</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_00_ReadConfigFile_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -77,17 +77,25 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Loading the settings from the Config File.&#xA;&#xA;The file should be accessible - no retry mechanisms are used here!" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="651.333333333333,1378.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence sap2010:Annotation.AnnotationText="Loading the settings from the Config File.&#xA;&#xA;The file should be accessible - no retry mechanisms are used here!" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="635.2,1371.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Read Config File" sap:VirtualizedContainerService.HintSize="609.333333333333,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Process started. Reading Config File...&quot;]" />
-    <ui:MultipleAssign DisplayName="Assign - Initialize Config and LogKey" sap:VirtualizedContainerService.HintSize="609.333333333333,128" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+    <ui:LogMessage DisplayName="Log Message - Read Config File" sap:VirtualizedContainerService.HintSize="593.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Process started. Reading Config File...&quot;]" />
+    <ui:MultipleAssign DisplayName="Assign - Initialize Config and LogKey" sap:VirtualizedContainerService.HintSize="593.6,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
@@ -109,13 +117,13 @@
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each - Input Sheet" sap:VirtualizedContainerService.HintSize="609.333333333333,720.666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[in_ConfigSheets]">
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="593.6,710.4" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[in_ConfigSheets]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:String" Name="sheet" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="559.333333333333,582" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="558.4,585.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="Intermediary DataTable structure used for reading from the configuration file." Name="configDT" />
             </Sequence.Variables>
@@ -124,14 +132,14 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[configDT]" DisplayName="Read range settings" sap:VirtualizedContainerService.HintSize="517.333333333333,86.6666666666667" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[sheet]" WorkbookPath="[in_ConfigFile]" />
-            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[configDT]" DisplayName="For each row" sap:VirtualizedContainerService.HintSize="517.333333333333,363.333333333333" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[configDT]" DisplayName="Read range settings" sap:VirtualizedContainerService.HintSize="516.8,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[sheet]" WorkbookPath="[in_ConfigFile]" />
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[configDT]" DisplayName="For each row" sap:VirtualizedContainerService.HintSize="516.8,364.8" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
                   </ActivityAction.Argument>
-                  <If Condition="[NOT String.IsNullOrWhiteSpace(row(&quot;Name&quot;).ToString)]" DisplayName="If empty row, skip" sap:VirtualizedContainerService.HintSize="483.2,239.2" sap2010:WorkflowViewState.IdRef="If_1">
+                  <If Condition="[NOT String.IsNullOrWhiteSpace(row(&quot;Name&quot;).ToString)]" DisplayName="If empty row, skip" sap:VirtualizedContainerService.HintSize="483.2,248.8" sap2010:WorkflowViewState.IdRef="If_1">
                     <If.Then>
                       <Assign DisplayName="Add key/value pair" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                         <Assign.To>
@@ -155,14 +163,8 @@
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <ui:MultipleAssign sap2010:Annotation.AnnotationText="out_MaxAttempts value cannot be lower than 1" DisplayName="Assign MaxExecutionAttempts and RetryInterval" sap:VirtualizedContainerService.HintSize="609.6,161.6" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+    <ui:MultipleAssign sap2010:Annotation.AnnotationText="out_MaxAttempts value cannot be lower than 1" DisplayName="Assign MaxExecutionAttempts and RetryInterval" sap:VirtualizedContainerService.HintSize="593.6,163.2" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
