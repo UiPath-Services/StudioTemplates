@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1317.6,2065.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1287.2,2065.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ExportTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="33">
@@ -103,7 +103,6 @@
       <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
       <Variable x:TypeArguments="x:String" Name="fileName" />
       <Variable x:TypeArguments="x:Int32" Name="index" />
-      <Variable x:TypeArguments="x:String" Name="indexString" />
       <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResults" />
       <Variable x:TypeArguments="x:String" Name="extractionResultsString" />
       <Variable x:TypeArguments="x:Int32" Name="numberOfDocuments" />
@@ -125,6 +124,7 @@
         <ui:InvokeWorkflowFile.Arguments>
           <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFile">[in_TargetFile]</OutArgument>
           <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_Config">[config]</OutArgument>
+          <OutArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="out_DocTaxonomy">[docTaxonomy]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
       <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="340,22.4" sap2010:WorkflowViewState.IdRef="CommentOut_1">
@@ -236,9 +236,18 @@
             </sap:WorkflowViewStateService.ViewState>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke CompareExportResults workflow" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_14" UnSafe="False" WorkflowFileName="Tests\Export\CompareExportResults.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">[in_TargetFile]</InArgument>
-                <InArgument x:TypeArguments="x:Int32" x:Key="in_Index">[index]</InArgument>
-                <InArgument x:TypeArguments="s:String[]" x:Key="in_ExportSheets">[{"Simple Fields", "Simple Fields - Formatted"}]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TargetFile" />
+                </InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_Index">
+                  <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="index" />
+                </InArgument>
+                <InArgument x:TypeArguments="s:String[]" x:Key="in_ExportSheets">
+                  <VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{&quot;Simple Fields&quot;, &quot;Simple Fields - Formatted&quot;}" />
+                </InArgument>
+                <InArgument x:TypeArguments="p1:ExtractionResult" x:Key="in_ExtractionResults">
+                  <VisualBasicValue x:TypeArguments="p1:ExtractionResult" ExpressionText="extractionResults" />
+                </InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>

@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="ReadConfigFileTestCase" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1208,1620" sap2010:WorkflowViewState.IdRef="TestCase_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="ReadConfigFileTestCase" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1079.2,1616" sap2010:WorkflowViewState.IdRef="TestCase_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
       <x:String>System.Activities</x:String>
@@ -78,16 +78,13 @@
       <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ReadConfigFileTestCase" sap:VirtualizedContainerService.HintSize="616.8,1555.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="ReadConfigFileTestCase" sap:VirtualizedContainerService.HintSize="616.8,1551.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
       <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
       <Variable x:TypeArguments="x:String" Name="configString" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="expectedConfig" />
-      <Variable x:TypeArguments="x:Boolean" Name="value" />
-      <Variable x:TypeArguments="x:String" Name="temp" />
-      <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
+      <Variable x:TypeArguments="x:String" Name="expectedConfigString" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -111,29 +108,15 @@
       </sap:WorkflowViewStateService.ViewState>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 00_ReadConfigFile workflow" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">
-            <Literal x:TypeArguments="x:String">Data\Config.xlsx</Literal>
-          </InArgument>
-          <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">
-            <VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{&quot;Settings&quot;, &quot;Constants&quot;, &quot;InvoicePostProcessing&quot;}" />
-          </InArgument>
-          <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_Config">
-            <VisualBasicReference x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
-          </OutArgument>
-          <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxAttempts">
-            <VisualBasicReference x:TypeArguments="x:Int32" ExpressionText="maxAttempts" />
-          </OutArgument>
-          <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">
-            <VisualBasicReference x:TypeArguments="x:TimeSpan" ExpressionText="retryInterval" />
-          </OutArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
+          <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants", "InvoicePostProcessing"}]</InArgument>
+          <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_Config">[config]</OutArgument>
+          <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxAttempts">[maxAttempts]</OutArgument>
+          <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[retryInterval]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="575.2,761.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="temp2" />
-        <Variable x:TypeArguments="x:String" Name="expectedConfigString" />
-      </Sequence.Variables>
+    <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="575.2,757.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -146,7 +129,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ReadTextFile>
-      <Assign sap2010:Annotation.AnnotationText="Remove logkey&#xD;&#xA;since it changes from run to run" sap:VirtualizedContainerService.HintSize="533.6,108" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign sap2010:Annotation.AnnotationText="Remove logkey&#xA;since it changes from run to run" sap:VirtualizedContainerService.HintSize="533.6,104" sap2010:WorkflowViewState.IdRef="Assign_2">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[expectedConfigString]</OutArgument>
         </Assign.To>
@@ -197,7 +180,7 @@
           <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(config)]</InArgument>
         </Assign.Value>
       </Assign>
-      <Assign sap2010:Annotation.AnnotationText="Remove logkey&#xD;&#xA;since it changes from run to run" sap:VirtualizedContainerService.HintSize="533.6,104" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign sap2010:Annotation.AnnotationText="Remove logkey&#xA;since it changes from run to run" sap:VirtualizedContainerService.HintSize="533.6,104" sap2010:WorkflowViewState.IdRef="Assign_5">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[configString]</OutArgument>
         </Assign.To>
@@ -215,7 +198,7 @@
           <InArgument x:TypeArguments="x:Boolean">[expectedConfigString.Equals(configString)]</InArgument>
         </uta:VerifyExpressionWithOperator.FirstExpression>
         <uta:VerifyExpressionWithOperator.SecondExpression>
-          <InArgument x:TypeArguments="x:Boolean">[True]</InArgument>
+          <InArgument x:TypeArguments="x:Boolean">[true]</InArgument>
         </uta:VerifyExpressionWithOperator.SecondExpression>
       </uta:VerifyExpressionWithOperator>
     </Sequence>
