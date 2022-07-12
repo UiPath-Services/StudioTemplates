@@ -9,7 +9,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>972.8,1187.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1219.2,908</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ReadConfigFile_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="56">
@@ -88,7 +88,7 @@
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Instead of calling 00_ReadConfigFile and 10_InitializeProcess for every test case, read the config from a *.json file" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="553.6,1122.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Instead of calling 00_ReadConfigFile and 10_InitializeProcess for every test case, read the config from a *.json file" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="475.2,464.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="configFile" />
     </Sequence.Variables>
@@ -98,15 +98,15 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="512,985.6" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="433.6,328" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <Sequence sap:VirtualizedContainerService.HintSize="475.2,754.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence sap:VirtualizedContainerService.HintSize="475.2,654.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign sap2010:Annotation.AnnotationText="Hardcoded TargetFile" sap:VirtualizedContainerService.HintSize="433.6,91.2" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign sap2010:Annotation.AnnotationText="Hardcoded TargetFile" DisplayName="Assign - Target File" sap:VirtualizedContainerService.HintSize="433.6,91.2" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="x:String">[out_TargetFile]</OutArgument>
             </Assign.To>
@@ -119,16 +119,8 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </Assign>
-          <ui:ReadTextFile File="{x:Null}" Content="[configFile]" DisplayName="Read Config file" FileName="Tests\Cache\Config.json" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-          <Assign DisplayName="Assign out_Config" sap:VirtualizedContainerService.HintSize="433.6,60" sap2010:WorkflowViewState.IdRef="Assign_2">
-            <Assign.To>
-              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[out_Config]</OutArgument>
-            </Assign.To>
-            <Assign.Value>
-              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(configFile)]</InArgument>
-            </Assign.Value>
-          </Assign>
-          <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="433.6,164" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+          <ui:ReadTextFile File="{x:Null}" Content="[configFile]" DisplayName="Read config file" FileName="Tests\Cache\Config.json" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+          <ui:MultipleAssign DisplayName="Multiple Assign - deserialize config, read maxAttempts, read retryInterval" sap:VirtualizedContainerService.HintSize="433.6,164" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -158,14 +150,14 @@
               </scg:List>
             </ui:MultipleAssign.AssignOperations>
           </ui:MultipleAssign>
-          <p1:LoadTaxonomy DisplayName="Load Taxonomy of Project" sap:VirtualizedContainerService.HintSize="433.6,105.6" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[out_DocTaxonomy]" />
+          <p1:LoadTaxonomy DisplayName="Load Taxonomy" sap:VirtualizedContainerService.HintSize="433.6,105.6" sap2010:WorkflowViewState.IdRef="LoadTaxonomy_1" Taxonomy="[out_DocTaxonomy]" />
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="478.4,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,163.2" sap2010:WorkflowViewState.IdRef="Catch`1_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
@@ -173,7 +165,7 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[&quot;config.json not found in Tests\Cache folder.&quot;+Environment.NewLine+&quot;Run CreateAndSaveConfigFile.xaml before running any tests!&quot;]" />
+            <ui:LogMessage DisplayName="Log Message - exception read config file" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[&quot;config.json not found in Tests\Cache folder.&quot;+Environment.NewLine+&quot;Run CreateAndSaveConfigFile.xaml before running any tests!&quot;]" />
           </ActivityAction>
         </Catch>
       </TryCatch.Catches>

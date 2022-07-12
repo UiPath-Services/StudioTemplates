@@ -1,14 +1,13 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="CompareExportResults" this:CompareExportResults.in_ExportSheets="[{&quot;Simple Fields&quot;, &quot;Simple Fields - Formatted&quot;}]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="CompareExportResults" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
     <x:Property Name="in_Index" Type="InArgument(x:Int32)" />
-    <x:Property Name="in_ExportSheets" Type="InArgument(s:String[])" />
     <x:Property Name="in_ExtractionResults" Type="InArgument(p:ExtractionResult)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1152,2018.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1072,2018.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CompareExportResults_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="35">
@@ -122,7 +121,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap:VirtualizedContainerService.HintSize="836,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+    <Assign DisplayName="Assign - file name" sap:VirtualizedContainerService.HintSize="836,60" sap2010:WorkflowViewState.IdRef="Assign_9">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[fileName]</OutArgument>
       </Assign.To>
@@ -143,7 +142,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <ui:ExcelGetWorkbookSheets DisplayName="Get Workbook Sheets" sap:VirtualizedContainerService.HintSize="760.8,22.4" sap2010:WorkflowViewState.IdRef="ExcelGetWorkbookSheets_1" Sheets="[exportSheets]" />
-            <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="760.8,1496" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[exportSheets]">
+            <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each sheet in the expected result" sap:VirtualizedContainerService.HintSize="760.8,1496" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[exportSheets]">
               <ui:ForEach.Body>
                 <ActivityAction x:TypeArguments="x:String">
                   <ActivityAction.Argument>
@@ -155,14 +154,14 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:ExcelReadRange AddHeaders="True" DataTable="[expectedExportResults]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="684,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" SheetName="[sheet]">
+                    <ui:ExcelReadRange AddHeaders="True" DataTable="[expectedExportResults]" DisplayName="Read expected results" sap:VirtualizedContainerService.HintSize="684,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_3" SheetName="[sheet]">
                       <ui:ExcelReadRange.Range>
                         <InArgument x:TypeArguments="x:String">
                           <Literal x:TypeArguments="x:String" Value="" />
                         </InArgument>
                       </ui:ExcelReadRange.Range>
                     </ui:ExcelReadRange>
-                    <Assign sap:VirtualizedContainerService.HintSize="684,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                    <Assign DisplayName="Assign - number of columns" sap:VirtualizedContainerService.HintSize="684,60" sap2010:WorkflowViewState.IdRef="Assign_3">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:Int32">[expectedResultsColumnCount]</OutArgument>
                       </Assign.To>
@@ -170,7 +169,7 @@
                         <InArgument x:TypeArguments="x:Int32">[expectedExportResults.ColumnCount]</InArgument>
                       </Assign.Value>
                     </Assign>
-                    <Assign sap:VirtualizedContainerService.HintSize="684,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                    <Assign DisplayName="Assign - number of rows" sap:VirtualizedContainerService.HintSize="684,60" sap2010:WorkflowViewState.IdRef="Assign_7">
                       <Assign.To>
                         <OutArgument x:TypeArguments="x:Int32">[expectedResultsRowCount]</OutArgument>
                       </Assign.To>
@@ -190,14 +189,14 @@
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:ExcelReadRange AddHeaders="True" DataTable="[exportResults]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="608.8,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_4" SheetName="[sheet]">
+                            <ui:ExcelReadRange AddHeaders="True" DataTable="[exportResults]" DisplayName="Read results" sap:VirtualizedContainerService.HintSize="608.8,60" sap2010:WorkflowViewState.IdRef="ExcelReadRange_4" SheetName="[sheet]">
                               <ui:ExcelReadRange.Range>
                                 <InArgument x:TypeArguments="x:String">
                                   <Literal x:TypeArguments="x:String" Value="" />
                                 </InArgument>
                               </ui:ExcelReadRange.Range>
                             </ui:ExcelReadRange>
-                            <Assign sap:VirtualizedContainerService.HintSize="608.8,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                            <Assign DisplayName="Assign - number of columns" sap:VirtualizedContainerService.HintSize="608.8,60" sap2010:WorkflowViewState.IdRef="Assign_4">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:Int32">[exportResultsColumnCount]</OutArgument>
                               </Assign.To>
@@ -205,7 +204,7 @@
                                 <InArgument x:TypeArguments="x:Int32">[exportResults.ColumnCount]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <Assign sap:VirtualizedContainerService.HintSize="608.8,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                            <Assign DisplayName="Assign - number of rows" sap:VirtualizedContainerService.HintSize="608.8,60" sap2010:WorkflowViewState.IdRef="Assign_8">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:Int32">[exportResultsRowCount]</OutArgument>
                               </Assign.To>
@@ -213,7 +212,7 @@
                                 <InArgument x:TypeArguments="x:Int32">[exportResults.RowCount]</InArgument>
                               </Assign.Value>
                             </Assign>
-                            <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression with Operator" sap:VirtualizedContainerService.HintSize="608.8,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_1" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                            <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - number of columns compare" sap:VirtualizedContainerService.HintSize="608.8,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_1" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                               <uta:VerifyExpressionWithOperator.FirstExpression>
                                 <InArgument x:TypeArguments="x:Int32">[expectedResultsColumnCount]</InArgument>
                               </uta:VerifyExpressionWithOperator.FirstExpression>
@@ -221,7 +220,7 @@
                                 <InArgument x:TypeArguments="x:Int32">[exportResultsColumnCount]</InArgument>
                               </uta:VerifyExpressionWithOperator.SecondExpression>
                             </uta:VerifyExpressionWithOperator>
-                            <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression with Operator" sap:VirtualizedContainerService.HintSize="608.8,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_2" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                            <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - number of rows compare" sap:VirtualizedContainerService.HintSize="608.8,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_2" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                               <uta:VerifyExpressionWithOperator.FirstExpression>
                                 <InArgument x:TypeArguments="x:Int32">[expectedResultsRowCount]</InArgument>
                               </uta:VerifyExpressionWithOperator.FirstExpression>
@@ -241,7 +240,7 @@
                                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression with Operator" sap:VirtualizedContainerService.HintSize="533.6,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_3" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                                    <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - compare data tables row by row" sap:VirtualizedContainerService.HintSize="533.6,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_3" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                                       <uta:VerifyExpressionWithOperator.FirstExpression>
                                         <InArgument x:TypeArguments="x:Boolean">[CurrentRow.ItemArray.SequenceEqual(exportResults.Rows(indexDataTable).ItemArray)]</InArgument>
                                       </uta:VerifyExpressionWithOperator.FirstExpression>
