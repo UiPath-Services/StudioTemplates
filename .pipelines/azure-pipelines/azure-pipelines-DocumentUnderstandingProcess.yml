@@ -26,10 +26,40 @@ variables:
     value: 'DocumentUnderstandingProcess'
   - name: projectNuspec
     value: 'UiPath.Template.DocumentUnderstandingProcess.nuspec'
+  - name: UIPCLIDirectory
+    value: "$(Agent.ToolsDirectory)\\uipcli"
+  - name: isTemplate
+    value: false
+  - name: templateProjectData
+    value: "{}"
+  - name: projectPath
+    value: '${{ variables.projectPath }}\contentFiles\any\any\pt0\VisualBasic'  
+  - name: resultPath
+    value: '${{ variables.projectPath }}\Results'
 
 jobs:
-  - template: ../jobs/ci.yml
-    parameters: 
-      projectPath: ${{ variables.projectPath }}
-      projectNuspec: ${{ variables.projectNuspec }}
-
+  - job: RunRPATests
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - task: DownloadPackage@1
+        inputs:
+          packageType: 'nuget'
+          feed: '5b98d55c-1b14-4a03-893f-7a59746f1246/1c781268-d43d-45ab-9dfc-0151a1c740b7'
+          view: 'ff65a51c-1b82-4f66-b9e7-0f06862b5527'
+          definition: 'cfbaef4d-30cf-4387-817a-c5ee1000778b'
+          version: '22.4.8242.13090'
+          extract: true
+          downloadPath: '$(Build.SourcesDirectory)\uipcli'
+       
+      
+      - task: FileTransform@1
+        displayName: "Transform Template to Project"
+        inputs:
+          folderPath: '$(Build.SourcesDirectory)\DocumentUnderstandingProcess\'
+          fileType: 'json'
+          targetFiles: '**/project.json'
+            
+      - task: CmdLine@2
+        inputs:
+          script: '$(Build.SourcesDirectory)\\uipcli\\tools\\uipcli.exe test run "https://cloud.uipath.com" "DefaultTenant" --project-path "$(Build.SourcesDirectory)\DocumentUnderstandingProcess\\contentFiles\\any\\any\\pt0\\VisualBasic\\project.json"  --result_path "$(Build.SourcesDirectory)\DocumentUnderstandingProcess\\Results"  --accountForApp myorggxpsdbv --applicationId 4c63e81b-d4c1-45d3-8c43-4cc8aa96ff8e --applicationSecret 7NFe6#hx$#spw2yl --applicationScope "OR.Assets OR.BackgroundTasks OR.Execution OR.Folders OR.Jobs OR.Machines.Read OR.Monitoring OR.Robots.Read OR.Settings.Read OR.TestSetExecutions OR.TestSets OR.TestSetSchedules OR.Users.Read" --organizationUnit "Sales"'
