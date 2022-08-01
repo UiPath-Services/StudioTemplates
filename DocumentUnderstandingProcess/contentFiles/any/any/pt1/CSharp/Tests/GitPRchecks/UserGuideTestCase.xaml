@@ -1,6 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="UserGuideTestCase" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap:VirtualizedContainerService.HintSize="896,1230.4" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="UserGuideTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap:VirtualizedContainerService.HintSize>648,1264.8</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="44">
+    <scg:List x:TypeArguments="x:String" Capacity="28">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -28,10 +34,11 @@
       <x:String>UiPath.Testing</x:String>
       <x:String>UiPath.Testing.Activities</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <sco:Collection x:TypeArguments="AssemblyReference">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="46">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
@@ -76,12 +83,18 @@
       <AssemblyReference>UiPath.IntelligentOCR.Activities</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-    </sco:Collection>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
+    </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Check that the User Guide has been updated to reflect the latest release version" DisplayName="UserGuideTestCase" sap:VirtualizedContainerService.HintSize="616.8,1165.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Check that the User Guide has been updated to reflect the latest release version" DisplayName="UserGuideTestCase" sap:VirtualizedContainerService.HintSize="616.8,1200" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="releaseVersion" />
       <Variable x:TypeArguments="x:Boolean" Name="releaseVersionFound" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
+      <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
+      <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
+      <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -96,19 +109,53 @@
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575.2,334.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575.2,368.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="scg:Dictionary(x:String, x:Object)" Name="testData" />
+      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="333.6,241.6" sap2010:WorkflowViewState.IdRef="InputDialog_1" IsPassword="False" Label="Please give the current release version." Title="Release Version">
-        <ui:InputDialog.Result>
-          <OutArgument x:TypeArguments="x:String">
-            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">releaseVersion</CSharpReference>
+      <uta:GetTestDataQueueItem DisplayName="Get Test Data Queue Item" sap:VirtualizedContainerService.HintSize="349.6,22.4" sap2010:WorkflowViewState.IdRef="GetTestDataQueueItem_1" MarkConsumed="True" QueueName="TestDataQueueDU">
+        <uta:GetTestDataQueueItem.Output>
+          <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)">
+            <CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:Object)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">testData</CSharpReference>
           </OutArgument>
-        </ui:InputDialog.Result>
-      </ui:InputDialog>
+        </uta:GetTestDataQueueItem.Output>
+      </uta:GetTestDataQueueItem>
+      <Assign sap:VirtualizedContainerService.HintSize="349.6,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">releaseVersion</CSharpReference>
+          </OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">testData["ReleaseVersion"].ToString()</CSharpValue>
+          </InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke ReadConfigFile workflow" sap:VirtualizedContainerService.HintSize="349.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Tests\\WorkflowHelpers\\ReadConfigFile.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFile">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">in_TargetFile</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="out_Config">
+            <CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">config</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="out_DocTaxonomy">
+            <CSharpReference x:TypeArguments="p:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">docTaxonomy</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxAttempts">
+            <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">maxAttempts</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">
+            <CSharpReference x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">retryInterval</CSharpReference>
+          </OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
     </Sequence>
     <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="575.2,206.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
@@ -123,6 +170,9 @@
           </OutArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_ReleaseVersion">
             <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">releaseVersion</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">config</CSharpValue>
           </InArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>

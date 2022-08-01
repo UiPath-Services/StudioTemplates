@@ -1,15 +1,16 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="CheckReleaseVersionUserGuide" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="CheckReleaseVersionUserGuide" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:p1="http://schemas.uipath.com/workflow/activities/ocr" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="out_ReleaseVersionsFound" Type="OutArgument(x:Boolean)" />
     <x:Property Name="in_ReleaseVersion" Type="InArgument(x:String)" />
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1219.2,908</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>978.4,807.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CheckReleaseVersionUserGuide_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="32">
+    <scg:List x:TypeArguments="x:String" Capacity="64">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -42,10 +43,16 @@
       <x:String>System.ComponentModel</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>UiPath.PDF.Activities</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
+      <x:String>UiPath.IntelligentOCR.Activities.Digitization</x:String>
+      <x:String>UiPath.Vision.OCR</x:String>
+      <x:String>UiPath.OCR.Contracts</x:String>
+      <x:String>UiPath.OCR.Activities</x:String>
+      <x:String>UiPath.OCR.Contracts.Activities</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="42">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="84">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -88,19 +95,37 @@
       <AssemblyReference>System.Security.Permissions</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>UiPath.PDF.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
+      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Contracts</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="CheckReleaseVersionUserGuide" sap:VirtualizedContainerService.HintSize="693.6,504.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="CheckReleaseVersionUserGuide" sap:VirtualizedContainerService.HintSize="693.6,742.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="outputPDF" />
+      <Variable x:TypeArguments="x:String" Name="outputDocText" />
+      <Variable x:TypeArguments="p2:Document" Name="outputDOM" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ReadPDFText PreserveFormatting="{x:Null}" DisplayName="Read User Guide" FileName="UserGuide\Document Understanding Process - User Guide.pdf" sap:VirtualizedContainerService.HintSize="652,60" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[outputPDF]" />
-    <If Condition="[outputPDF.IndexOf(in_ReleaseVersion) = -1]" sap:VirtualizedContainerService.HintSize="652,312" sap2010:WorkflowViewState.IdRef="If_1">
+    <p:DigitizeDocument ApplyOcrMigrated="False" ApplyOcrOnPdf="[ApplyOcrOnPdfArgument.No]" DegreeOfParallelism="-1" DetectCheckboxes="True" DisplayName="Digitize Document" DocumentObjectModel="[outputDOM]" DocumentPath="UserGuide\Document Understanding Process - User Guide.pdf" DocumentText="[outputDocText]" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="652,297.6" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
+      <p:DigitizeDocument.OCREngine>
+        <ActivityFunc x:TypeArguments="sd:Image, x:String, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
+          <ActivityFunc.Argument1>
+            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+          </ActivityFunc.Argument1>
+          <ActivityFunc.Argument2>
+            <DelegateInArgument x:TypeArguments="x:String" Name="PredictionId" />
+          </ActivityFunc.Argument2>
+          <p1:UiPathDocumentOCR Output="{x:Null}" Text="{x:Null}" UseLocalServer="{x:Null}" ApiKey="[in_Config(&quot;ApiKey&quot;)]" ComputeSkewAngle="False" DisplayName="UiPath Document OCR" Endpoint="[in_Config(&quot;UiPathOcrEndpoint&quot;)]" ExtractWords="True" sap:VirtualizedContainerService.HintSize="312,22.4" sap2010:WorkflowViewState.IdRef="UiPathDocumentOCR_1" Image="[Image]" Language="auto" PredictionId="[PredictionId]" Profile="None" Scale="1" Timeout="100000" />
+        </ActivityFunc>
+      </p:DigitizeDocument.OCREngine>
+    </p:DigitizeDocument>
+    <If Condition="[outputDocText.Contains(in_ReleaseVersion)]" sap:VirtualizedContainerService.HintSize="652,312" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence sap:VirtualizedContainerService.HintSize="304,152.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
           <sap:WorkflowViewStateService.ViewState>
@@ -108,12 +133,12 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="Assign - release version not found" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+          <Assign DisplayName="Assign - release version found" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_5">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Boolean">[out_ReleaseVersionsFound]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
             </Assign.Value>
           </Assign>
         </Sequence>
@@ -125,12 +150,12 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="Assign - release version found" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+          <Assign DisplayName="Assign - release version not found" sap:VirtualizedContainerService.HintSize="262.4,60" sap2010:WorkflowViewState.IdRef="Assign_6">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Boolean">[out_ReleaseVersionsFound]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+              <InArgument x:TypeArguments="x:Boolean">False</InArgument>
             </Assign.Value>
           </Assign>
         </Sequence>
