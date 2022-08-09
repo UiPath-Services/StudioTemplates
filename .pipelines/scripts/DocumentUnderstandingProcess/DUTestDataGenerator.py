@@ -102,17 +102,24 @@ csharp_save_location_config = csharp_save_location_project + ".variations/"
 # Read Data
 test_data = read_yaml("DocumentUnderstandingTestData.yaml")
 vb_project_json = read_json(vb_save_location_project + "project.json")
-# csharp_project_json = read_json(csharp_save_location_project + "project.json")
+csharp_project_json = read_json(csharp_save_location_project + "project.json")
 
 # Config File Generation
 config_file = generate_config_file(test_data)
 write_json_file(config_file, vb_save_location_config, "config.json")
+write_json_file(config_file, csharp_save_location_config, "config.json")
 
 # Test Variation File Generation
 for test in test_data["TestCaseDataGeneration"]:
-    test_variation_data = generate_test_variation(test_data, test + ".json")
+    test_variation_data = generate_test_variation(test_data, test)
     write_json_file(test_variation_data, vb_save_location_config, test + ".json")
+    write_json_file(test_variation_data, csharp_save_location_config, test + ".json")
 
-# Project File Update with Test Variation Data
+
+# Project File Update with Test Variation Data VB
 vb_project_json = update_project_file(vb_project_json, test_data)
 write_json_file(vb_project_json, vb_save_location_project, "project.json")
+
+# Project File Update with Test Variation Data CSharp
+csharp_project_json = update_project_file(csharp_project_json, test_data)
+write_json_file(csharp_project_json, vb_save_location_project, "project.json")
