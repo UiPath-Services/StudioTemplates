@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1267.2,2831.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>861.6,2775.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ClassifyTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="72">
@@ -104,7 +104,7 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ClassifyTestCase" sap:VirtualizedContainerService.HintSize="735.2,2766.4" sap2010:WorkflowViewState.IdRef="Sequence_14">
+  <Sequence DisplayName="ClassifyTestCase" sap:VirtualizedContainerService.HintSize="735.2,2710.4" sap2010:WorkflowViewState.IdRef="Sequence_14">
     <Sequence.Variables>
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
       <Variable x:TypeArguments="p1:Document" Name="dom" />
@@ -195,7 +195,7 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="693.6,1220" sap2010:WorkflowViewState.IdRef="Sequence_13">
+    <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="693.6,1164" sap2010:WorkflowViewState.IdRef="Sequence_13">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Int32" Name="index" />
         <Variable x:TypeArguments="x:String" Name="expectedClassificationResultString" />
@@ -206,13 +206,13 @@
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="652,1127.2" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
+      <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="652,1071.2" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
         <ui:ForEach.Body>
           <ActivityAction x:TypeArguments="p2:ClassificationResult">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="p2:ClassificationResult" Name="classificationResult" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="616.8,1002.4" sap2010:WorkflowViewState.IdRef="Sequence_21">
+            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="616.8,946.4" sap2010:WorkflowViewState.IdRef="Sequence_21">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:String" Name="documentTypeID" />
                 <Variable x:TypeArguments="x:Boolean" Name="resultDocumentTypeId" />
@@ -235,28 +235,34 @@
                   <InArgument x:TypeArguments="p2:ClassificationResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ClassificationResult)(expectedClassificationResultString)]</InArgument>
                 </Assign.Value>
               </Assign>
-              <Sequence DisplayName="Verification" sap:VirtualizedContainerService.HintSize="575.2,688.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
+              <Sequence DisplayName="Verification" sap:VirtualizedContainerService.HintSize="575.2,632.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <Assign sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="Assign_13">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[resultDocTypeId]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[classificationResult.DocumentTypeId]</InArgument>
-                  </Assign.Value>
-                </Assign>
-                <Assign sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="Assign_12">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[expectDocTypeId]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[expectedClassificationResult.DocumentTypeId]</InArgument>
-                  </Assign.Value>
-                </Assign>
+                <ui:MultipleAssign DisplayName="Multiple Assign - get DocumentTypeId" sap:VirtualizedContainerService.HintSize="533.6,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                  <ui:MultipleAssign.AssignOperations>
+                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:String">[resultDocTypeId]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:String">[classificationResult.DocumentTypeId]</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:String">[expectDocTypeId]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:String">[expectedClassificationResult.DocumentTypeId]</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                    </scg:List>
+                  </ui:MultipleAssign.AssignOperations>
+                </ui:MultipleAssign>
                 <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" ScreenshotsPath="{x:Null}" sap2010:Annotation.AnnotationText="Check the DocumentTypeId" ContinueOnFailure="True" DisplayName="Verify - DocumentTypeId compare" sap:VirtualizedContainerService.HintSize="533.6,93.6" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_1" Operator="Equality" Result="[resultDocumentTypeId]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                   <uta:VerifyExpressionWithOperator.FirstExpression>
                     <InArgument x:TypeArguments="x:String">[resultDocTypeId]</InArgument>
@@ -270,22 +276,28 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </uta:VerifyExpressionWithOperator>
-                <Assign sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="Assign_11">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[resultDocBounds]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectedClassificationResult.DocumentBounds).ToLower]</InArgument>
-                  </Assign.Value>
-                </Assign>
-                <Assign sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="Assign_10">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[expectDocBounds]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectedClassificationResult.DocumentBounds).ToLower]</InArgument>
-                  </Assign.Value>
-                </Assign>
+                <ui:MultipleAssign DisplayName="Multiple Assign - get DocumentBounds" sap:VirtualizedContainerService.HintSize="533.6,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+                  <ui:MultipleAssign.AssignOperations>
+                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:String">[resultDocBounds]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectedClassificationResult.DocumentBounds).ToLower]</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+                        <ui:AssignOperation.To>
+                          <OutArgument x:TypeArguments="x:String">[expectDocBounds]</OutArgument>
+                        </ui:AssignOperation.To>
+                        <ui:AssignOperation.Value>
+                          <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectedClassificationResult.DocumentBounds).ToLower]</InArgument>
+                        </ui:AssignOperation.Value>
+                      </ui:AssignOperation>
+                    </scg:List>
+                  </ui:MultipleAssign.AssignOperations>
+                </ui:MultipleAssign>
                 <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" OutputMessageFormat="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - DocumentBounds compare" sap:VirtualizedContainerService.HintSize="533.6,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_2" Operator="Equality" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                   <uta:VerifyExpressionWithOperator.FirstExpression>
                     <InArgument x:TypeArguments="x:String">[resultDocBounds]</InArgument>
