@@ -122,4 +122,4 @@ write_json_file(vb_project_json, vb_save_location_project, "project.json")
 
 # Project File Update with Test Variation Data CSharp
 csharp_project_json = update_project_file(csharp_project_json, test_data)
-write_json_file(csharp_project_json, vb_save_location_project, "project.json")
+write_json_file(csharp_project_json, csharp_save_location_project, "project.json")
