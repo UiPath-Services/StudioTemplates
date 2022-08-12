@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>964,4213.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1012.8,4430.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ExtractionTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="36">
@@ -106,7 +106,7 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Currently this test is just a placeholder for future use.&#xA;Comparing extraction results is very difficut and unreliable. We are depending on the export test for the moment." DisplayName="ExtractionTestCase" sap:VirtualizedContainerService.HintSize="888.8,4148.8" sap2010:WorkflowViewState.IdRef="Sequence_14">
+  <Sequence sap2010:Annotation.AnnotationText="Currently this test is just a placeholder for future use.&#xA;Comparing extraction results is very difficut and unreliable. We are depending on the export test for the moment.&#xA;&#xA;Compares the output of the Extraction workflow with a saved extraction result based on the default input file MergedDocuments.pdf" DisplayName="ExtractionTestCase" sap:VirtualizedContainerService.HintSize="888.8,4365.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
     <Sequence.Variables>
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
       <Variable x:TypeArguments="p1:Document" Name="dom" />
@@ -128,14 +128,15 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - ExtractionTestCase" sap:VirtualizedContainerService.HintSize="847.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;ExtractionTestCase started.&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="847.2,973.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
+    <ui:LogMessage DisplayName="ExtractionTestCase started" sap:VirtualizedContainerService.HintSize="847.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;ExtractionTestCase started.&quot;]" />
+    <Sequence sap2010:Annotation.AnnotationText="Read Config file&#xA;Get the target file&#xA;Read the digitization output" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="847.2,1033.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 00_ReadConfigFile workflow" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
           <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants"}]</InArgument>
@@ -144,7 +145,7 @@
           <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[retryInterval]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 10_InitializeProcess workflow" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_AssetsSheet">Assets</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
@@ -195,9 +196,9 @@
         </Assign.Value>
       </Assign>
     </Sequence>
-    <ui:InterruptibleWhile CurrentIndex="[index]" DisplayName="Iterate over each classification result" sap:VirtualizedContainerService.HintSize="847.2,2732.8" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="Load each classification result" Condition="[index&lt;numberOfDocuments]" CurrentIndex="[index]" DisplayName="Iterate over each classification result" sap:VirtualizedContainerService.HintSize="847.2,2857.6" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
       <ui:InterruptibleWhile.Body>
-        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="812,2565.6" sap2010:WorkflowViewState.IdRef="Sequence_16">
+        <Sequence DisplayName="Body - Iterate over each classification result" sap:VirtualizedContainerService.HintSize="812,2659.2" sap2010:WorkflowViewState.IdRef="Sequence_16">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -212,13 +213,14 @@
               <InArgument x:TypeArguments="p2:ClassificationResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ClassificationResult)(classificationResultString)]</InArgument>
             </Assign.Value>
           </Assign>
-          <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="770.4,206.4" sap2010:WorkflowViewState.IdRef="Sequence_12">
+          <Sequence sap2010:Annotation.AnnotationText="Run extraction workflow for each classification result" DisplayName="... When" sap:VirtualizedContainerService.HintSize="770.4,237.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 50_Extract workflow" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
+            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_11" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
               <ui:InvokeWorkflowFile.Arguments>
                 <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[in_TargetFile]</InArgument>
                 <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
@@ -232,27 +234,27 @@
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
-          <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="770.4,2005.6" sap2010:WorkflowViewState.IdRef="Sequence_13">
+          <Sequence sap2010:Annotation.AnnotationText="Compare the output of the extraction with a presaved extraction result" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="770.4,2068" sap2010:WorkflowViewState.IdRef="Sequence_13">
             <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Name="expectedExtractionResultsString" />
-              <Variable x:TypeArguments="p2:ExtractionResult" Name="expectedExtractionResults" />
-              <Variable x:TypeArguments="x:String" Name="extract" />
+              <Variable x:TypeArguments="x:String" Name="expectedExtractResultsString" />
+              <Variable x:TypeArguments="p2:ExtractionResult" Name="expectedExtractResults" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadTextFile File="{x:Null}" Content="[expectedExtractionResultsString]" DisplayName="Read expected Extraction result" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;ExtractionDocument_&quot;+fileName+&quot;_&quot;+(index+1).ToString+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="728.8,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_8" />
+            <ui:ReadTextFile File="{x:Null}" Content="[expectedExtractResultsString]" DisplayName="Read expected Extraction result" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;ExtractionDocument_&quot;+fileName+&quot;_&quot;+(index+1).ToString+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="728.8,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_8" />
             <Assign DisplayName="Assign - deserialize expected extraction" sap:VirtualizedContainerService.HintSize="728.8,60" sap2010:WorkflowViewState.IdRef="Assign_16">
               <Assign.To>
-                <OutArgument x:TypeArguments="p2:ExtractionResult">[expectedExtractionResults]</OutArgument>
+                <OutArgument x:TypeArguments="p2:ExtractionResult">[expectedExtractResults]</OutArgument>
               </Assign.To>
               <Assign.Value>
-                <InArgument x:TypeArguments="p2:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(expectedExtractionResultsString)]</InArgument>
+                <InArgument x:TypeArguments="p2:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(expectedExtractResultsString)]</InArgument>
               </Assign.Value>
             </Assign>
-            <Sequence DisplayName="Verification" sap:VirtualizedContainerService.HintSize="728.8,1692" sap2010:WorkflowViewState.IdRef="Sequence_22">
+            <Sequence DisplayName="Verification - check fields" sap:VirtualizedContainerService.HintSize="728.8,1723.2" sap2010:WorkflowViewState.IdRef="Sequence_22">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:String" Name="extractFieldId" />
                 <Variable x:TypeArguments="x:String" Name="expectFieldId" />
@@ -284,7 +286,7 @@
                         <OutArgument x:TypeArguments="x:String">[expectFieldId]</OutArgument>
                       </ui:AssignOperation.To>
                       <ui:AssignOperation.Value>
-                        <InArgument x:TypeArguments="x:String">[expectedExtractionResults.ResultsDocument.Fields(0).FieldId]</InArgument>
+                        <InArgument x:TypeArguments="x:String">[expectedExtractResults.ResultsDocument.Fields(0).FieldId]</InArgument>
                       </ui:AssignOperation.Value>
                     </ui:AssignOperation>
                   </scg:List>
@@ -314,13 +316,13 @@
                         <OutArgument x:TypeArguments="x:String">[expectDocTypeField]</OutArgument>
                       </ui:AssignOperation.To>
                       <ui:AssignOperation.Value>
-                        <InArgument x:TypeArguments="x:String">[expectedExtractionResults.ResultsDocument.DocumentTypeField.Value]</InArgument>
+                        <InArgument x:TypeArguments="x:String">[expectedExtractResults.ResultsDocument.DocumentTypeField.Value]</InArgument>
                       </ui:AssignOperation.Value>
                     </ui:AssignOperation>
                   </scg:List>
                 </ui:MultipleAssign.AssignOperations>
               </ui:MultipleAssign>
-              <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - comapre DocumentTypeField value" sap:VirtualizedContainerService.HintSize="687.2,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_2" Operator="Equality" OutputMessageFormat="[extractDocTypeField +&quot; is equal to &quot;+ expectDocTypeField + &quot; - &quot; + (extractDocTypeField.Equals(expectDocTypeField)).ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+              <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - compare DocumentTypeField value" sap:VirtualizedContainerService.HintSize="687.2,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_2" Operator="Equality" OutputMessageFormat="[extractDocTypeField +&quot; is equal to &quot;+ expectDocTypeField + &quot; - &quot; + (extractDocTypeField.Equals(expectDocTypeField)).ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                 <uta:VerifyExpressionWithOperator.FirstExpression>
                   <InArgument x:TypeArguments="x:String">[extractDocTypeField]</InArgument>
                 </uta:VerifyExpressionWithOperator.FirstExpression>
@@ -328,7 +330,7 @@
                   <InArgument x:TypeArguments="x:String">[expectDocTypeField]</InArgument>
                 </uta:VerifyExpressionWithOperator.SecondExpression>
               </uta:VerifyExpressionWithOperator>
-              <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="687.2,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
+              <ui:MultipleAssign DisplayName="Multiple Assign - nr of fields" sap:VirtualizedContainerService.HintSize="687.2,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
                 <ui:MultipleAssign.AssignOperations>
                   <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                     <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
@@ -344,13 +346,13 @@
                         <OutArgument x:TypeArguments="x:Int32">[expectNrOfFields]</OutArgument>
                       </ui:AssignOperation.To>
                       <ui:AssignOperation.Value>
-                        <InArgument x:TypeArguments="x:Int32">[expectedExtractionResults.ResultsDocument.Fields.Count]</InArgument>
+                        <InArgument x:TypeArguments="x:Int32">[expectedExtractResults.ResultsDocument.Fields.Count]</InArgument>
                       </ui:AssignOperation.Value>
                     </ui:AssignOperation>
                   </scg:List>
                 </ui:MultipleAssign.AssignOperations>
               </ui:MultipleAssign>
-              <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression with Operator" sap:VirtualizedContainerService.HintSize="687.2,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_5" Operator="Equality" OutputMessageFormat="[&quot;Extracted numerber of Fields &quot; + extractNrOfFields.ToString + &quot; is equal to expected number of fields &quot; + expectNrOfFields.ToString + &quot; - &quot; + (extractNrOfFields.equals(expectNrOfFields)).ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+              <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - nr of fields" sap:VirtualizedContainerService.HintSize="687.2,62.4" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_5" Operator="Equality" OutputMessageFormat="[&quot;Extracted numerber of Fields &quot; + extractNrOfFields.ToString + &quot; is equal to expected number of fields &quot; + expectNrOfFields.ToString + &quot; - &quot; + (extractNrOfFields.equals(expectNrOfFields)).ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                 <uta:VerifyExpressionWithOperator.FirstExpression>
                   <InArgument x:TypeArguments="x:Int32">[extractNrOfFields]</InArgument>
                 </uta:VerifyExpressionWithOperator.FirstExpression>
@@ -358,9 +360,14 @@
                   <InArgument x:TypeArguments="x:Int32">[expectNrOfFields]</InArgument>
                 </uta:VerifyExpressionWithOperator.SecondExpression>
               </uta:VerifyExpressionWithOperator>
-              <If Condition="[extractNrOfFields=expectNrOfFields]" sap:VirtualizedContainerService.HintSize="687.2,776" sap2010:WorkflowViewState.IdRef="If_1">
+              <If sap2010:Annotation.AnnotationText="Are the number of extracted fields equal between the two extractions" Condition="[extractNrOfFields=expectNrOfFields]" DisplayName="Compare extracted fields equal between the two extractions" sap:VirtualizedContainerService.HintSize="687.2,807.2" sap2010:WorkflowViewState.IdRef="If_1">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
                 <If.Then>
-                  <Sequence sap:VirtualizedContainerService.HintSize="652,587.2" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                  <Sequence DisplayName="Sequence  - check all of the Fields that were extracted" sap:VirtualizedContainerService.HintSize="652,587.2" sap2010:WorkflowViewState.IdRef="Sequence_25">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:Int32" Name="item" />
                     </Sequence.Variables>
@@ -369,9 +376,9 @@
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <ui:InterruptibleWhile Condition="[item&lt;expectNrOfFields]" CurrentIndex="[item]" DisplayName="While" sap:VirtualizedContainerService.HintSize="610.4,494.4" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
+                    <ui:InterruptibleWhile Condition="[item&lt;expectNrOfFields]" CurrentIndex="[item]" DisplayName="While - check all of the Fields that were extracted" sap:VirtualizedContainerService.HintSize="610.4,494.4" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
                       <ui:InterruptibleWhile.Body>
-                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="575.2,327.2" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                        <Sequence DisplayName="Body - compare all of the Fields that were extracted" sap:VirtualizedContainerService.HintSize="575.2,327.2" sap2010:WorkflowViewState.IdRef="Sequence_27">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -393,7 +400,7 @@
                                     <OutArgument x:TypeArguments="x:String">[expectFieldName]</OutArgument>
                                   </ui:AssignOperation.To>
                                   <ui:AssignOperation.Value>
-                                    <InArgument x:TypeArguments="x:String">[expectedExtractionResults.ResultsDocument.Fields(item).FieldName]</InArgument>
+                                    <InArgument x:TypeArguments="x:String">[expectedExtractResults.ResultsDocument.Fields(item).FieldName]</InArgument>
                                   </ui:AssignOperation.Value>
                                 </ui:AssignOperation>
                               </scg:List>
@@ -426,10 +433,12 @@
           </Sequence>
         </Sequence>
       </ui:InterruptibleWhile.Body>
-      <ui:InterruptibleWhile.Condition>
-        <VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="index&lt;numberOfDocuments" />
-      </ui:InterruptibleWhile.Condition>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:InterruptibleWhile>
-    <ui:LogMessage DisplayName="Log Message - ExtractionTestCase" sap:VirtualizedContainerService.HintSize="847.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;ExtractionTestCase finished.&quot;]" />
+    <ui:LogMessage DisplayName="ExtractionTestCase ended" sap:VirtualizedContainerService.HintSize="847.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;ExtractionTestCase finished.&quot;]" />
   </Sequence>
 </Activity>

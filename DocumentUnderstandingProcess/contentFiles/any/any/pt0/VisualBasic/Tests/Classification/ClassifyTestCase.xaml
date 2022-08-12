@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>861.6,2775.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1012.8,2941.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ClassifyTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="72">
@@ -104,7 +104,7 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ClassifyTestCase" sap:VirtualizedContainerService.HintSize="735.2,2710.4" sap2010:WorkflowViewState.IdRef="Sequence_14">
+  <Sequence sap2010:Annotation.AnnotationText="Compare the output of the Classification workflow with a presaved classification result based on the default input file MergedDocuments.pdf" DisplayName="ClassifyTestCase" sap:VirtualizedContainerService.HintSize="735.2,2876.8" sap2010:WorkflowViewState.IdRef="Sequence_14">
     <Sequence.Variables>
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
       <Variable x:TypeArguments="p1:Document" Name="dom" />
@@ -120,16 +120,18 @@
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - ClassifyTestCase" sap:VirtualizedContainerService.HintSize="693.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;ClassifyTestCase started.&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="693.6,901.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
+    <ui:LogMessage DisplayName="ClassifyTestCase started" sap:VirtualizedContainerService.HintSize="693.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;ClassifyTestCase started.&quot;]" />
+    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file&#xA;Load the output of the digitization" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="693.6,961.6" sap2010:WorkflowViewState.IdRef="Sequence_11">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 00_ReadConfigFile workflow" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
           <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants"}]</InArgument>
@@ -138,7 +140,7 @@
           <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[retryInterval]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <Assign sap:VirtualizedContainerService.HintSize="433.6,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign DisplayName="Assign - target file" sap:VirtualizedContainerService.HintSize="433.6,60" sap2010:WorkflowViewState.IdRef="Assign_4">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[in_TargetFile]</OutArgument>
         </Assign.To>
@@ -146,7 +148,7 @@
           <InArgument x:TypeArguments="x:String">Data\ExampleDocuments\MergedDocuments.pdf</InArgument>
         </Assign.Value>
       </Assign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 10_InitializeProcess workflow" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_AssetsSheet">Assets</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
@@ -175,13 +177,14 @@
       </Assign>
       <ui:ReadTextFile File="{x:Null}" Content="[docText]" DisplayName="Read doc text File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;DigitizeDocument_&quot;+fileName+&quot;_Text.txt&quot;)]" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_4" />
     </Sequence>
-    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="693.6,206.4" sap2010:WorkflowViewState.IdRef="Sequence_12">
+    <Sequence sap2010:Annotation.AnnotationText="Classify based on the given digitization and target file" DisplayName="... When" sap:VirtualizedContainerService.HintSize="693.6,237.6" sap2010:WorkflowViewState.IdRef="Sequence_12">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 30_Classify workflow" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Framework\30_Classify.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Classify" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="Framework\30_Classify.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[in_TargetFile]</InArgument>
           <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
@@ -195,24 +198,25 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="693.6,1164" sap2010:WorkflowViewState.IdRef="Sequence_13">
+    <Sequence sap2010:Annotation.AnnotationText="Compare the output of the classification with the presaved classification result" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="693.6,1195.2" sap2010:WorkflowViewState.IdRef="Sequence_13">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Int32" Name="index" />
-        <Variable x:TypeArguments="x:String" Name="expectedClassificationResultString" />
-        <Variable x:TypeArguments="p2:ClassificationResult" Name="expectedClassificationResult" />
+        <Variable x:TypeArguments="x:String" Name="expectClassifyResultString" />
+        <Variable x:TypeArguments="p2:ClassificationResult" Name="expectClassificationResult" />
       </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="652,1071.2" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
+      <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[index]" DisplayName="For Each classification result" sap:VirtualizedContainerService.HintSize="652,1071.2" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
         <ui:ForEach.Body>
           <ActivityAction x:TypeArguments="p2:ClassificationResult">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="p2:ClassificationResult" Name="classificationResult" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="616.8,946.4" sap2010:WorkflowViewState.IdRef="Sequence_21">
+            <Sequence DisplayName="Body - for each classification result" sap:VirtualizedContainerService.HintSize="616.8,946.4" sap2010:WorkflowViewState.IdRef="Sequence_21">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:String" Name="documentTypeID" />
                 <Variable x:TypeArguments="x:Boolean" Name="resultDocumentTypeId" />
@@ -226,16 +230,16 @@
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:ReadTextFile File="{x:Null}" Content="[expectedClassificationResultString]" DisplayName="Read expected Classification result" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;ClassifyDocument_&quot;+fileName+&quot;_&quot;+(index+1).ToString+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="575.2,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_5" />
+              <ui:ReadTextFile File="{x:Null}" Content="[expectClassifyResultString]" DisplayName="Read expected Classification result" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;ClassifyDocument_&quot;+fileName+&quot;_&quot;+(index+1).ToString+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="575.2,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_5" />
               <Assign DisplayName="Assign - deserialize expected classification" sap:VirtualizedContainerService.HintSize="575.2,60" sap2010:WorkflowViewState.IdRef="Assign_9">
                 <Assign.To>
-                  <OutArgument x:TypeArguments="p2:ClassificationResult">[expectedClassificationResult]</OutArgument>
+                  <OutArgument x:TypeArguments="p2:ClassificationResult">[expectClassificationResult]</OutArgument>
                 </Assign.To>
                 <Assign.Value>
-                  <InArgument x:TypeArguments="p2:ClassificationResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ClassificationResult)(expectedClassificationResultString)]</InArgument>
+                  <InArgument x:TypeArguments="p2:ClassificationResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ClassificationResult)(expectClassifyResultString)]</InArgument>
                 </Assign.Value>
               </Assign>
-              <Sequence DisplayName="Verification" sap:VirtualizedContainerService.HintSize="575.2,632.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
+              <Sequence DisplayName="Verification - compare classification result fields" sap:VirtualizedContainerService.HintSize="575.2,632.8" sap2010:WorkflowViewState.IdRef="Sequence_22">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -257,7 +261,7 @@
                           <OutArgument x:TypeArguments="x:String">[expectDocTypeId]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:String">[expectedClassificationResult.DocumentTypeId]</InArgument>
+                          <InArgument x:TypeArguments="x:String">[expectClassificationResult.DocumentTypeId]</InArgument>
                         </ui:AssignOperation.Value>
                       </ui:AssignOperation>
                     </scg:List>
@@ -284,7 +288,7 @@
                           <OutArgument x:TypeArguments="x:String">[resultDocBounds]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectedClassificationResult.DocumentBounds).ToLower]</InArgument>
+                          <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectClassificationResult.DocumentBounds).ToLower]</InArgument>
                         </ui:AssignOperation.Value>
                       </ui:AssignOperation>
                       <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
@@ -292,7 +296,7 @@
                           <OutArgument x:TypeArguments="x:String">[expectDocBounds]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectedClassificationResult.DocumentBounds).ToLower]</InArgument>
+                          <InArgument x:TypeArguments="x:String">[Newtonsoft.Json.JsonConvert.SerializeObject(expectClassificationResult.DocumentBounds).ToLower]</InArgument>
                         </ui:AssignOperation.Value>
                       </ui:AssignOperation>
                     </scg:List>
@@ -312,6 +316,6 @@
         </ui:ForEach.Body>
       </ui:ForEach>
     </Sequence>
-    <ui:LogMessage DisplayName="Log Message - ClassifyTestCase" sap:VirtualizedContainerService.HintSize="693.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;ClassifyTestCase finished.&quot;]" />
+    <ui:LogMessage DisplayName="ClassifyTestCase ended" sap:VirtualizedContainerService.HintSize="693.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;ClassifyTestCase finished.&quot;]" />
   </Sequence>
 </Activity>
