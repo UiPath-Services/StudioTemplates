@@ -1,0 +1,206 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="GetTaskBatches" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upaf="clr-namespace:UiPath.Persistence.Activities.FormTask;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_TaskList" Type="InArgument(scg:List(upaf:FormTaskData))" />
+    <x:Property Name="out_TaskBatches" Type="OutArgument(scg:List(scg:List(upaf:FormTaskData)))" />
+    <x:Property Name="in_TaskBatchSize" Type="InArgument(x:Int32)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap:VirtualizedContainerService.HintSize>905.333333333333,1275.33333333333</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.Persistence.Activities.FormTask</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Persistence.Activities.Model.Task</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Persistence.Activities</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Get Task Batches" sap:VirtualizedContainerService.HintSize="670.666666666667,1110.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="scg:List(upaf:FormTaskData)" Default="[new List(of FormTaskData)]" Name="TaskBatch" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign DisplayName="Assign (out_TaskBatches)" sap:VirtualizedContainerService.HintSize="628.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(scg:List(upaf:FormTaskData))">
+          <mca:CSharpReference x:TypeArguments="scg:List(scg:List(upaf:FormTaskData))" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">out_TaskBatches</mca:CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(scg:List(upaf:FormTaskData))">
+          <mca:CSharpValue x:TypeArguments="scg:List(scg:List(upaf:FormTaskData))" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">new List&lt;List&lt;FormTaskData&gt;&gt;()</mca:CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ForEach x:TypeArguments="upaf:FormTaskData" CurrentIndex="{x:Null}" DisplayName="For each task" sap:VirtualizedContainerService.HintSize="628.666666666667,662.666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_1">
+      <ui:ForEach.Body>
+        <ActivityAction x:TypeArguments="upaf:FormTaskData">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="upaf:FormTaskData" Name="task" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="Create task batch" sap:VirtualizedContainerService.HintSize="592,524" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If DisplayName="If task batch is full" sap:VirtualizedContainerService.HintSize="550,432" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Condition>
+                <InArgument x:TypeArguments="x:Boolean">
+                  <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">TaskBatch.Count==in_TaskBatchSize</mca:CSharpValue>
+                </InArgument>
+              </If.Condition>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Add task batch to batch list, reset task batch &amp; add task to batch" sap:VirtualizedContainerService.HintSize="304,278" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <AddToCollection x:TypeArguments="scg:List(upaf:FormTaskData)" DisplayName="Add task batch to batch list" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1">
+                    <AddToCollection.Item>
+                      <InArgument x:TypeArguments="scg:List(upaf:FormTaskData)">
+                        <mca:CSharpValue x:TypeArguments="scg:List(upaf:FormTaskData)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">TaskBatch</mca:CSharpValue>
+                      </InArgument>
+                    </AddToCollection.Item>
+                    <InArgument x:TypeArguments="scg:ICollection(scg:List(upaf:FormTaskData))">
+                      <mca:CSharpValue x:TypeArguments="scg:ICollection(scg:List(upaf:FormTaskData))" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">out_TaskBatches</mca:CSharpValue>
+                    </InArgument>
+                  </AddToCollection>
+                  <Assign DisplayName="Reset task btach" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="scg:List(upaf:FormTaskData)">
+                        <mca:CSharpReference x:TypeArguments="scg:List(upaf:FormTaskData)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">TaskBatch</mca:CSharpReference>
+                      </OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="scg:List(upaf:FormTaskData)">
+                        <mca:CSharpValue x:TypeArguments="scg:List(upaf:FormTaskData)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">new List&lt;FormTaskData&gt;()</mca:CSharpValue>
+                      </InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <AddToCollection x:TypeArguments="upaf:FormTaskData" DisplayName="Add task to new batch" sap:VirtualizedContainerService.HintSize="262,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2">
+                    <AddToCollection.Item>
+                      <InArgument x:TypeArguments="upaf:FormTaskData">
+                        <mca:CSharpValue x:TypeArguments="upaf:FormTaskData" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">task</mca:CSharpValue>
+                      </InArgument>
+                    </AddToCollection.Item>
+                    <InArgument x:TypeArguments="scg:ICollection(upaf:FormTaskData)">
+                      <mca:CSharpValue x:TypeArguments="scg:ICollection(upaf:FormTaskData)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">TaskBatch</mca:CSharpValue>
+                    </InArgument>
+                  </AddToCollection>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <AddToCollection x:TypeArguments="upaf:FormTaskData" DisplayName="Add task to batch" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_3">
+                  <AddToCollection.Item>
+                    <InArgument x:TypeArguments="upaf:FormTaskData">
+                      <mca:CSharpValue x:TypeArguments="upaf:FormTaskData" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">task</mca:CSharpValue>
+                    </InArgument>
+                  </AddToCollection.Item>
+                  <InArgument x:TypeArguments="scg:ICollection(upaf:FormTaskData)">
+                    <mca:CSharpValue x:TypeArguments="scg:ICollection(upaf:FormTaskData)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">TaskBatch</mca:CSharpValue>
+                  </InArgument>
+                </AddToCollection>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </ui:ForEach.Body>
+      <ui:ForEach.Values>
+        <InArgument x:TypeArguments="sc:IEnumerable">
+          <mca:CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_TaskList</mca:CSharpValue>
+        </InArgument>
+      </ui:ForEach.Values>
+    </ui:ForEach>
+    <If DisplayName="If task batch has task" sap:VirtualizedContainerService.HintSize="628.666666666667,214" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">TaskBatch.Count&gt;0</mca:CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <AddToCollection x:TypeArguments="scg:List(upaf:FormTaskData)" DisplayName="Add task btach to batch list" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_4">
+          <AddToCollection.Item>
+            <InArgument x:TypeArguments="scg:List(upaf:FormTaskData)">
+              <mca:CSharpValue x:TypeArguments="scg:List(upaf:FormTaskData)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">TaskBatch</mca:CSharpValue>
+            </InArgument>
+          </AddToCollection.Item>
+          <InArgument x:TypeArguments="scg:ICollection(scg:List(upaf:FormTaskData))">
+            <mca:CSharpValue x:TypeArguments="scg:ICollection(scg:List(upaf:FormTaskData))" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">out_TaskBatches</mca:CSharpValue>
+          </InArgument>
+        </AddToCollection>
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>
