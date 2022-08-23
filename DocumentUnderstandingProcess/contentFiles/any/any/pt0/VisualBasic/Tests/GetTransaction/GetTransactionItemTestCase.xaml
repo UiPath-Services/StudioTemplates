@@ -7,7 +7,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1580,2200</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1452,2680</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ClassificationBRValidationTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="33">
@@ -95,7 +95,7 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="GetTransactionItemTestCase" sap:VirtualizedContainerService.HintSize="1439,2515" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="GetTransactionItemTestCase" sap:VirtualizedContainerService.HintSize="1439,2615" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:String" Name="fileName" />
@@ -114,7 +114,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message - ClassificationBRValidationTestCase" sap:VirtualizedContainerService.HintSize="1397,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;GetTransactionItemTestCase started.&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="1397,775" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="1397,875" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -165,6 +165,14 @@
           <InArgument x:TypeArguments="p1:ClassificationResult[]">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ClassificationResult( ))(classificationResultsArrayString)]</InArgument>
         </Assign.Value>
       </Assign>
+      <Assign sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+        <Assign.To>
+          <OutArgument x:TypeArguments="ui:QueueItem">[TransactionItem]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="ui:QueueItem">[Nothing]</InArgument>
+        </Assign.Value>
+      </Assign>
     </Sequence>
     <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="1397,1346" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
@@ -183,24 +191,12 @@
             </sap:WorkflowViewStateService.ViewState>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 15_GetTransactionItem workflow" sap:VirtualizedContainerService.HintSize="334,112" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\15_GetTransactionItem.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-                  <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                  <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="maxAttempts" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                  <VisualBasicValue x:TypeArguments="x:TimeSpan" ExpressionText="retryInterval" />
-                </InArgument>
-                <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFile">
-                  <VisualBasicReference x:TypeArguments="x:String" ExpressionText="in_TargetFile" />
-                </OutArgument>
-                <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">
-                  <VisualBasicReference x:TypeArguments="ui:QueueItem" ExpressionText="TransactionItem" />
-                </OutArgument>
-                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_NoData">
-                  <VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="noData" />
-                </OutArgument>
+                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+                <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[maxAttempts]</InArgument>
+                <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[retryInterval]</InArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFile">[in_TargetFile]</OutArgument>
+                <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">[TransactionItem]</OutArgument>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_NoData">[noData]</OutArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
