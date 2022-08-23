@@ -46,11 +46,21 @@ def generate_test_variation(data, testcase):
     :return: Test Variation list. To be Written to a json file
     """
 
-    # Create an empty list which will then be populated by all the options in the Yaml Test Data File
-    test_variation = []
+    # Count number of variations
+    variation_nr = 0
     for data_point in data["TestCaseDataGeneration"][testcase]:
         for variation in data["TestCaseDataGeneration"][testcase][data_point]:
-            test_variation.append({data_point: variation})
+            variation_nr=variation_nr+1
+        break
+
+    # Create an empty list of dictionaries which will then be populated by all the options in the Yaml Test Data File
+    test_variation = [{} for times in range(variation_nr)]
+
+    for data_point in data["TestCaseDataGeneration"][testcase]:
+        position=0
+        for variation in data["TestCaseDataGeneration"][testcase][data_point]:
+            test_variation[position][data_point]=variation
+            position=position+1
 
     return test_variation
 
