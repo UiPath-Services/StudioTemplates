@@ -46,13 +46,34 @@ def generate_test_variation(data, testcase):
     :return: Test Variation list. To be Written to a json file
     """
 
-    # Create an empty list which will then be populated by all the options in the Yaml Test Data File
-    test_variation = []
-    for data_point in data["TestCaseDataGeneration"][testcase]:
-        for variation in data["TestCaseDataGeneration"][testcase][data_point]:
-            test_variation.append({data_point: variation})
+    """
+    Output example of the function 
+    [
+        {"in_ReleaseVersion": "22.10-preview17", "in_ExpectedResult": "failed"}, 
+        {"in_ReleaseVersion": "22.10", "in_ExpectedResult": "passed"}, 
+        {"in_ReleaseVersion": "22.6", "in_ExpectedResult": "failed"}
+    ]
+    """
 
-    return test_variation
+    yaml_testcase_dict = data["TestCaseDataGeneration"][testcase]
+    list_of_keys = list(yaml_testcase_dict.keys())
+
+    # Create an empty list of dictionaries which will then be populated by all the options in the Yaml Test Data File
+    test_datasets = [{} for _ in range(len(yaml_testcase_dict[list_of_keys[0]]))]
+
+    """
+    Populate the list of dictionaries
+    list_index = the index in the list
+    argument = dictionary key
+    data_point = dictionary value
+    """
+    for argument in yaml_testcase_dict:
+        list_index = 0
+        for data_point in yaml_testcase_dict[argument]:
+            test_datasets[list_index][argument] = data_point
+            list_index += 1
+
+    return test_datasets
 
 
 def update_project_file(json_data, yaml_data):
