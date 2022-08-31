@@ -26,10 +26,27 @@ variables:
     value: 'DocumentUnderstandingProcess'
   - name: projectNuspec
     value: 'UiPath.Template.DocumentUnderstandingProcess.nuspec'
+  - name: UIPCLIDirectory
+    value: "$(Agent.ToolsDirectory)\\uipcli"
 
-jobs:
-  - template: ../jobs/ci.yml
-    parameters: 
-      projectPath: ${{ variables.projectPath }}
-      projectNuspec: ${{ variables.projectNuspec }}
+stages:
+- stage: Test
+  jobs:
+    - template: ../jobs/DU-Test.yml
+      parameters: 
+        projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt0\VisualBasic'
+        name: 'VisualBasic'
+        orchestratorConnection: 'TeodoraOr'
+    - template: ../jobs/DU-Test.yml
+      parameters: 
+        projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt1\CSharp'
+        name: 'CSharp'
+        orchestratorConnection: 'TeodoraOr'
 
+- stage: Build
+  dependsOn: Test
+  jobs:
+    - template: ../jobs/ci.yml
+      parameters: 
+        projectPath: ${{ variables.projectPath }}
+        projectNuspec: ${{ variables.projectNuspec }}
