@@ -122,7 +122,7 @@ csharp_save_location_config = csharp_save_location_project + ".variations/"
 
 # Read Data
 test_data = read_yaml(
-    "../../../DocumentUnderstandingProcess/TestDataGeneration/DocumentUnderstandingTestData.yaml")
+    "../../../DocumentUnderstandingProcess/Tests/TestDataGeneration/DocumentUnderstandingTestData.yaml")
 vb_project_json = read_json(vb_save_location_project + "project.json")
 csharp_project_json = read_json(csharp_save_location_project + "project.json")
 
