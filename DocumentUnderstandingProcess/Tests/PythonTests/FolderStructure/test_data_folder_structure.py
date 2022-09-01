@@ -8,6 +8,9 @@ import yaml
 @mark.smoke
 @mark.folder_structure
 class DataFolderVBTests:
+    # todo: Resolve the code duplication. Only differences are the constants being sent.
+    def __init__(self):
+        self.expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
 
     def test_data_folder_structure_vb(self):
         """
@@ -17,8 +20,7 @@ class DataFolderVBTests:
         num_files = len(os.listdir(constants.VB_DATA_FOLDER))
 
         # expected folders/files count in Data folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['DataFolderFileCount'][0]
+        expected_file_count = self.expected_results['DataFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
@@ -30,11 +32,8 @@ class DataFolderVBTests:
         # get the folder content
         files = os.listdir(constants.VB_DATA_FOLDER)
 
-        # expected folders/files in Data folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['DataFolderFiles'])
+        assert all(file in files for file in self.expected_results['DataFolderFiles'])
 
     def test_example_documents_folder_structure_vb(self):
         """
@@ -44,24 +43,20 @@ class DataFolderVBTests:
         num_files = len(os.listdir(constants.VB_DATA_EXAMPLE_DOCS))
 
         # expected folders/files count in ExampleDocuments folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['ExampleDocumentsFolderFileCount'][0]
+        expected_file_count = self.expected_results['ExampleDocumentsFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
 
-    def test_exampled_ocuments_folder_content_vb(self):
+    def test_example_documents_folder_content_vb(self):
         """
         Check the content of the ExampleDocuments folder.
         """
         # get the folder content
         files = os.listdir(constants.VB_DATA_EXAMPLE_DOCS)
 
-        # expected folders/files in ExampleDocuments folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['ExampleDocumentsFolderFiles'])
+        assert all(file in files for file in self.expected_results['ExampleDocumentsFolderFiles'])
 
     def test_exports_folder_structure_vb(self):
         """
@@ -71,8 +66,7 @@ class DataFolderVBTests:
         num_files = len(os.listdir(constants.VB_DATA_EXPORTS))
 
         # expected folders/files count in Exports folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['ExportsFolderFileCount'][0]
+        expected_file_count = self.expected_results['ExportsFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
@@ -84,11 +78,8 @@ class DataFolderVBTests:
         # get the folder content
         files = os.listdir(constants.VB_DATA_EXPORTS)
 
-        # expected folders/files in Exports folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['ExportsFolderFiles'])
+        assert all(file in files for file in self.expected_results['ExportsFolderFiles'])
 
     def test_tempfolder_folder_structure_vb(self):
         """
@@ -98,8 +89,7 @@ class DataFolderVBTests:
         num_files = len(os.listdir(constants.VB_DATA_TEMP_FOLDER))
 
         # expected folders/files count in TempFolder folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['TempfolderFolderFileCount'][0]
+        expected_file_count = self.expected_results['TempfolderFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
@@ -111,17 +101,16 @@ class DataFolderVBTests:
         # get the folder content
         files = os.listdir(constants.VB_DATA_TEMP_FOLDER)
 
-        # expected folders/files in TempFolder folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['TempfolderFolderFiles'])
+        assert all(file in files for file in self.expected_results['TempfolderFolderFiles'])
 
 
 @mark.csharp
 @mark.smoke
 @mark.folder_structure
 class DataFolderCsharpTests:
+    def __init__(self):
+        self.expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
 
     def test_data_folder_structure_csharp(self):
         """
@@ -131,8 +120,7 @@ class DataFolderCsharpTests:
         num_files = len(os.listdir(constants.CSHARP_DATA_FOLDER))
 
         # expected folders/files count in Data folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['DataFolderFileCount'][0]
+        expected_file_count = self.expected_results['DataFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
@@ -144,13 +132,10 @@ class DataFolderCsharpTests:
         # get the folder content
         files = os.listdir(constants.CSHARP_DATA_FOLDER)
 
-        # expected folders/files in Data folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['DataFolderFiles'])
+        assert all(file in files for file in self.expected_results['DataFolderFiles'])
 
-    def test_exampledocuments_folder_structure_csharp(self):
+    def test_example_documents_folder_structure_csharp(self):
         """
         Check the content and structure of the ExampleDocuments folder.
         """
@@ -158,24 +143,20 @@ class DataFolderCsharpTests:
         num_files = len(os.listdir(constants.CSHARP_DATA_EXAMPLE_DOCS))
 
         # expected folders/files count in ExampleDocuments folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['ExampleDocumentsFolderFileCount'][0]
+        expected_file_count = self.expected_results['ExampleDocumentsFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
 
-    def test_exampledocuments_folder_content_csharp(self):
+    def test_example_documents_folder_content_csharp(self):
         """
         Check the content of the ExampleDocuments folder.
         """
         # get the folder content
         files = os.listdir(constants.CSHARP_DATA_EXAMPLE_DOCS)
 
-        # expected folders/files in ExampleDocuments folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['ExampleDocumentsFolderFiles'])
+        assert all(file in files for file in self.expected_results['ExampleDocumentsFolderFiles'])
 
     def test_exports_folder_structure_csharp(self):
         """
@@ -185,8 +166,7 @@ class DataFolderCsharpTests:
         num_files = len(os.listdir(constants.CSHARP_DATA_EXPORTS))
 
         # expected folders/files count in Exports folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['ExportsFolderFileCount'][0]
+        expected_file_count = self.expected_results['ExportsFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
@@ -198,11 +178,8 @@ class DataFolderCsharpTests:
         # get the folder content
         files = os.listdir(constants.CSHARP_DATA_EXPORTS)
 
-        # expected folders/files in Exports folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['ExportsFolderFiles'])
+        assert all(file in files for file in self.expected_results['ExportsFolderFiles'])
 
     def test_tempfolder_folder_structure_csharp(self):
         """
@@ -212,8 +189,7 @@ class DataFolderCsharpTests:
         num_files = len(os.listdir(constants.CSHARP_DATA_TEMP_FOLDER))
 
         # expected folders/files count in TempFolder folder
-        expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-        expected_file_count = expected_results['TempfolderFolderFileCount'][0]
+        expected_file_count = self.expected_results['TempfolderFolderFileCount'][0]
 
         # compare number of files with expected number of files
         assert True if num_files == expected_file_count else False
@@ -225,8 +201,5 @@ class DataFolderCsharpTests:
         # get the folder content
         files = os.listdir(constants.CSHARP_DATA_TEMP_FOLDER)
 
-        # expected folders/files in TempFolder folder
-        expected_files = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
         # compare folder content with the expected files
-        assert all(file in files for file in expected_files['TempfolderFolderFiles'])
+        assert all(file in files for file in self.expected_results['TempfolderFolderFiles'])
