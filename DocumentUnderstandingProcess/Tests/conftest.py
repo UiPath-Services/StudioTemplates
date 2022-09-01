@@ -3,7 +3,6 @@ from PythonTests import constants
 import json
 import xml.etree.ElementTree as ET
 import PyPDF2
-import os
 
 
 @fixture(scope='function')
@@ -136,39 +135,3 @@ def read_pdf():
 
     return method
 
-
-@fixture(scope='function')
-def count_files():
-    def method(path):
-        count = len(os.listdir(path))
-        return count
-
-    return method
-
-@fixture(scope='function')
-def comp_file_count():
-    def method(num_files, expected_count):
-        if num_files != expected_count:
-            return False
-        else:
-            return True
-
-    return method
-
-@fixture(scope='function')
-def get_files():
-    def method(path):
-        file_list = os.listdir(path)
-        return file_list
-
-    return method
-
-@fixture(scope='function')
-def comp_files():
-    def method(files, expected_files):
-        for file in expected_files:
-            if not (file in files):
-                return False
-        return True
-
-    return method
