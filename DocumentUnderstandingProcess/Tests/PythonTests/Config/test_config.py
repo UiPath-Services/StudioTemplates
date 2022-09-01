@@ -1,10 +1,12 @@
 from pytest import mark
+from .. import constants
 
 
 @mark.smoke
 @mark.config
 class ConfigTests:
 
-    def test_config_functions_as_expected(self):
+    @staticmethod
+    def test_config_functions_as_expected():
         assert True
 

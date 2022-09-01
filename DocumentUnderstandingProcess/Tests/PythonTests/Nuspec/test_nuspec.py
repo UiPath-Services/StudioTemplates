@@ -1,3 +1,4 @@
+from .. import constants
 from pytest import mark
 
 
@@ -5,12 +6,14 @@ from pytest import mark
 @mark.nuspec
 class NuspecTests:
 
-    def test_nuspec_version_as_expected(self, read_xml, test_data):
+    @staticmethod
+    def test_nuspec_version_as_expected(read_xml, test_data):
         """
         Check the *.nuspec file for the correct value in the version field.
         Test with multiple values, which are saved in test_data.json
         """
-        nuspec_xml = read_xml("../../../DocumentUnderstandingProcess/UiPath.Template.DocumentUnderstandingProcess.nuspec")
+        nuspec_xml = read_xml(constants.NUSPEC)
+        release_version = ""
 
         # for each element in the xml
         for element in nuspec_xml[0]:

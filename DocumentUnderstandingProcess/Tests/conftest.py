@@ -1,4 +1,5 @@
 from pytest import fixture
+from PythonTests import constants
 import json
 import xml.etree.ElementTree as ET
 import PyPDF2
@@ -80,7 +81,7 @@ end for try
 
 # full path for the test data file for the nuspec test
 # data_path = '../PythonTests/Nuspec/test_data.json'
-data_path = '../PythonTests/UserGuide/test_data.json'
+data_path = 'PythonTests/UserGuide/test_data.json'
 
 def load_test_data(path):
     """
