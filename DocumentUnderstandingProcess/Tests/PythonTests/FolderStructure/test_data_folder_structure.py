@@ -33,7 +33,7 @@ class DataFolderVBTests:
         # compare folder content with the expected files
         assert comp_files(files, expected_files)
 
-    def test_exampledocuments_folder_structure_vb(self,count_files, comp_file_count):
+    def test_example_documents_folder_structure_vb(self, count_files, comp_file_count):
         """
         Check the content and structure of the ExampleDocuments folder.
         """
@@ -46,7 +46,7 @@ class DataFolderVBTests:
         # compare number of files with expected number of files
         assert comp_file_count(num_files, expected_file_count)
 
-    def test_exampledocuments_folder_content_vb(self, get_files, comp_files):
+    def test_exampled_ocuments_folder_content_vb(self, get_files, comp_files):
         """
         Check the content of the ExampleDocuments folder.
         """
