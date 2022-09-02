@@ -10,7 +10,7 @@ class NuspecTests:
     def test_nuspec_version_as_expected(read_xml, test_data):
         """
         Check the *.nuspec file for the correct value in the version field.
-        Test with multiple values, which are saved in test_data.json
+        Test with multiple values, which are saved in Nuspec_test_data.yaml
         """
         nuspec_xml = read_xml(constants.NUSPEC)
         release_version = ""

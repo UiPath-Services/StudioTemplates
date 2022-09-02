@@ -2,6 +2,6 @@ class Config:
     def __init__(self, tdata):
 
         self.test_data = {
-            'nuspec': '../PythonTests/Nuspec/test_data.json',
-            'user_guide': '../PythonTests/UserGuide/test_data.json'
+            'nuspec': '..TestDataGeneration/PythonTests/Nuspec_test_data.yaml',
+            'user_guide': '..TestDataGeneration/PythonTests/UserGuide_test_data.yaml'
         }[tdata]

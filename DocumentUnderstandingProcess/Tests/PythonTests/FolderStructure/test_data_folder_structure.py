@@ -3,8 +3,7 @@ from .. import constants
 import os
 import yaml
 
-expected_results = yaml.safe_load((open('PythonTests/FolderStructure/expected_data.yaml', 'r')))
-
+expected_results = yaml.safe_load((open('TestDataGeneration/PythonTests/FolderStructure_test_data.yaml', 'r')))
 
 @mark.vb
 @mark.smoke

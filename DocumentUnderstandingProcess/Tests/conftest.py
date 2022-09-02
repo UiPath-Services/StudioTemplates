@@ -3,6 +3,7 @@ from PythonTests import constants
 import json
 import xml.etree.ElementTree as ET
 import PyPDF2
+import yaml
 
 
 @fixture(scope='function')
@@ -79,22 +80,22 @@ end for try
 """
 
 # full path for the test data file for the nuspec test
-# data_path = '../PythonTests/Nuspec/test_data.json'
-data_path = 'PythonTests/UserGuide/test_data.json'
+data_path = 'TestDataGeneration/PythonTests/Nuspec_test_data.yaml'
+#data_path = 'TestDataGeneration/PythonTests/UserGuide_test_data.yaml'
 
 def load_test_data(path):
     """
     :param path: The full path of the file containing the test data
     :return: test data
     """
-    data = json.load(open(path, 'r'))
+    data = yaml.safe_load((open(path, 'r')))
     return data
-
 
 @fixture(params=load_test_data(data_path))
 def test_data(request):
     data = request.param
     return data
+
 
 @fixture(scope='function')
 def read_xml():
