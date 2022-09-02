@@ -1,5 +1,8 @@
 # General Constants ...
 NUSPEC = "../../DocumentUnderstandingProcess/UiPath.Template.DocumentUnderstandingProcess.nuspec"
+FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/FolderStructure_test_data.yaml"
+NUSPEC_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/Nuspec_test_data.yaml"
+USER_GUIDE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/UserGuide_test_data.yaml"
 
 # VB Constants ...
 VB_PROJECT = "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/VisualBasic/"

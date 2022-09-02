@@ -23,7 +23,6 @@ class UserGuideVBTests:
             text = page_obj.extract_text()
             if re.search(test_data["release_version"], text):
                 found = True
-                # print("Pattern Found on Page: " + str(i))
 
         if test_data["expected_result"] == "pass":
             assert found is True
@@ -52,7 +51,6 @@ class UserGuideCsharpTests:
             Text = PageObj.extract_text()
             if re.search(test_data["release_version"], Text):
                 found = True
-                # print("Pattern Found on Page: " + str(i))
 
         if test_data["expected_result"] == "pass":
             assert found == True

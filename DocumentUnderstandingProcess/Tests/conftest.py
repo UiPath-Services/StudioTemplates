@@ -6,37 +6,19 @@ import PyPDF2
 import yaml
 
 
-@fixture(scope='function')
-def read_file():
-    def method(filename):
-        """
-        Read the Json data
-        :param filename: - Path to the file location
-        :return: Json Data
-        """
-        file_content = json.load(open(filename, 'r'))
-        return file_content
-
-    return method
-
-
-@fixture(scope='function')
-def convert_to_lower():
-    def method(json_file):
-        """
-        The keys in the two files are not written in the same case, this function corrects this
-        :param json_file: the content of the json
-        :return: json_file: the content of the json in lower case keys
-        """
-        json_file = {key.lower() if type(key) == str else key: value for key, value in json_file.items()}
-        return json_file
-
-    return method
+def convert_to_lower(json_file):
+    """
+    The keys in the two files are not written in the same case, this function corrects this
+    :param json_file: the content of the json
+    :return: json_file: the content of the json in lower case keys
+    """
+    json_file = {key.lower() if type(key) == str else key: value for key, value in json_file.items()}
+    return json_file
 
 
 # function, class, module, package, session
 @fixture(scope='function')
-def dependency_check(read_file, convert_to_lower):
+def dependency_check():
     def method(proj_json, template_json):
         """
         Compare the "dependencies" field between project and template
@@ -45,8 +27,8 @@ def dependency_check(read_file, convert_to_lower):
         :return: the compare result of the "dependencies" field
         """
 
-        vb_project_json = read_file(proj_json)
-        vb_template_json = read_file(template_json)
+        vb_project_json = json.load(open(proj_json, 'r'))
+        vb_template_json = json.load(open(template_json, 'r'))
 
         vb_project_json = convert_to_lower(vb_project_json)
         vb_template_json = convert_to_lower(vb_template_json)
@@ -80,7 +62,7 @@ end for try
 """
 
 # full path for the test data file for the nuspec test
-data_path = 'TestDataGeneration/PythonTests/Nuspec_test_data.yaml'
+#data_path = 'TestDataGeneration/PythonTests/Nuspec_test_data.yaml'
 #data_path = 'TestDataGeneration/PythonTests/UserGuide_test_data.yaml'
 
 def load_test_data(path):
@@ -91,7 +73,12 @@ def load_test_data(path):
     data = yaml.safe_load((open(path, 'r')))
     return data
 
-@fixture(params=load_test_data(data_path))
+@fixture(params=load_test_data(constants.NUSPEC_TEST_DATA))
+def test_data_nuspec(request):
+    data = request.param
+    return data
+
+@fixture(params=load_test_data(constants.USER_GUIDE_TEST_DATA))
 def test_data(request):
     data = request.param
     return data

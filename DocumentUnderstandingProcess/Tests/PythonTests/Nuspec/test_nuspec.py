@@ -7,7 +7,7 @@ from pytest import mark
 class NuspecTests:
 
     @staticmethod
-    def test_nuspec_version_as_expected(read_xml, test_data):
+    def test_nuspec_version_as_expected(read_xml, test_data_nuspec):
         """
         Check the *.nuspec file for the correct value in the version field.
         Test with multiple values, which are saved in Nuspec_test_data.yaml
@@ -23,10 +23,10 @@ class NuspecTests:
                 release_version = element.text
 
         # asserting the text from tag <version> with the actual release version
-        if test_data["expected_result"] == "pass":
-            assert release_version == test_data["release_version"]
+        if test_data_nuspec["expected_result"] == "pass":
+            assert release_version == test_data_nuspec["release_version"]
         else:
-            assert release_version != test_data["release_version"]
+            assert release_version != test_data_nuspec["release_version"]
 
 
 
