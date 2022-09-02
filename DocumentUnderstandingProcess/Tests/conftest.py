@@ -136,3 +136,18 @@ def read_pdf():
 
     return method
 
+@fixture(scope='function')
+def compare_config():
+    def method(project_config, expected_config):
+        """
+        :param project_config: the content of the Config.xlsx
+        :param expected_config: the expected content of the Config.xlsx
+        :return: comparison result
+        """
+
+        for key in expected_config.keys():
+            if not expected_config[key].equals(project_config[key]):
+                return False
+        return True
+
+    return method
