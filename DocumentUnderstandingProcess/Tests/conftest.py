@@ -1,9 +1,34 @@
 from pytest import fixture
-from PythonTests import constants
+from constants import Constants
+
 import json
-import xml.etree.ElementTree as ET
 import PyPDF2
 import yaml
+import xml.etree.ElementTree as et
+
+# Test Data Paths
+FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/FolderStructure_test_data.yaml"
+NUSPEC_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/Nuspec_test_data.yaml"
+USER_GUIDE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/UserGuide_test_data.yaml"
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--env",
+        action="store",
+        help="Development language selection between VB/CSharp"
+    )
+
+
+@fixture(scope='session')
+def env(request):
+    return request.config.getoption("--env")
+
+
+@fixture(scope='session')
+def app_constants(env):
+    const = Constants(env)
+    return const
 
 
 def convert_to_lower(json_file):
@@ -38,32 +63,18 @@ def dependency_check():
     return method
 
 
-
-"""
-for try
-"""
-
-
-def pytest_addoption(parser):
-    parser.addoption(
-        "--tdata",
-        action="store",
-        help="test data"
-    )
-
-
-@fixture(scope='session')
-def tdata(request):
-    return request.config.getoption("--tdata")
-
-
-"""
-end for try
-"""
-
-# full path for the test data file for the nuspec test
-#data_path = 'TestDataGeneration/PythonTests/Nuspec_test_data.yaml'
-#data_path = 'TestDataGeneration/PythonTests/UserGuide_test_data.yaml'
+# @fixture(scope='function')
+# def load_test_data():
+#
+#     def method(path):
+#         """
+#         :param path: The full path of the file containing the test data
+#         :return: test data
+#         """
+#         data = yaml.safe_load((open(path, 'r')))
+#         return data
+#
+#     return method
 
 def load_test_data(path):
     """
@@ -73,15 +84,23 @@ def load_test_data(path):
     data = yaml.safe_load((open(path, 'r')))
     return data
 
-@fixture(params=load_test_data(constants.NUSPEC_TEST_DATA))
+
+@fixture(params=load_test_data(NUSPEC_TEST_DATA))
 def test_data_nuspec(request):
     data = request.param
     return data
 
-@fixture(params=load_test_data(constants.USER_GUIDE_TEST_DATA))
-def test_data(request):
+
+@fixture(params=load_test_data(USER_GUIDE_TEST_DATA))
+def test_data_user_guide(request):
     data = request.param
     return data
+
+
+# @fixture(params=load_test_data(FOLDER_STRUCTURE_TEST_DATA))
+# def test_data_folder_structure(request):
+#     data = request.param
+#     return data
 
 
 @fixture(scope='function')
@@ -94,7 +113,7 @@ def read_xml():
         """
 
         # Passing the path of the xml document to enable the parsing process
-        tree = ET.parse(nuspec_file)
+        tree = et.parse(nuspec_file)
 
         # getting the parent tag of the xml document
         root = tree.getroot()
@@ -114,14 +133,15 @@ def read_pdf():
         """
 
         # creating a pdf file object
-        pdfFileObj = open(user_guide_file, 'rb')
+        pdf_file_obj = open(user_guide_file, 'rb')
 
         # creating a pdf reader object
-        pdfReader = PyPDF2.PdfReader(pdfFileObj)
+        pdf_reader = PyPDF2.PdfReader(pdf_file_obj)
 
-        return pdfReader
+        return pdf_reader
 
     return method
+
 
 @fixture(scope='function')
 def compare_config():
