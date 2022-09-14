@@ -4,7 +4,7 @@
     <x:Property Name="in_UseQueue" Type="InArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1166.4,2941.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1136,3041.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="31">
@@ -93,7 +93,7 @@
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Compare the output of the Classification workflow with a presaved classification result based on the default input file MergedDocuments.pdf" DisplayName="ClassifyTestCase" sap:VirtualizedContainerService.HintSize="735.2,2876.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Compare the output of the Classification workflow with a presaved classification result based on the default input file MergedDocuments.pdf" DisplayName="ClassifyTestCase" sap:VirtualizedContainerService.HintSize="735.2,2976.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
@@ -119,7 +119,7 @@
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file&#xD;&#xA;Load the output of the digitization" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="693.6,961.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file&#xA;Load the output of the digitization" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="693.6,1061.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -219,6 +219,18 @@
           </InArgument>
         </ui:ReadTextFile.FileName>
       </ui:ReadTextFile>
+      <Assign DisplayName="Replace line ending" sap:VirtualizedContainerService.HintSize="433.6,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_26">docText</CSharpReference>
+          </OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">docText.Replace( "\r\n","\n")</CSharpValue>
+          </InArgument>
+        </Assign.Value>
+      </Assign>
     </Sequence>
     <Sequence sap2010:Annotation.AnnotationText="Classify based on the given digitization and target file" DisplayName="... When" sap:VirtualizedContainerService.HintSize="693.6,237.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
