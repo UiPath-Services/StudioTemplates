@@ -10,6 +10,7 @@ import xml.etree.ElementTree as et
 FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/FolderStructure_test_data.yaml"
 NUSPEC_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/Nuspec_test_data.yaml"
 USER_GUIDE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/UserGuide_test_data.yaml"
+PROJECT_JSON_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/Project_Json_test_data.yaml"
 
 
 def pytest_addoption(parser):
@@ -40,7 +41,7 @@ def convert_to_lower(json_file):
     json_file = {key.lower() if type(key) == str else key: value for key, value in json_file.items()}
     return json_file
 
-
+# TODO: Move the dependency check to the template test as it is related to that specifically
 # function, class, module, package, session
 @fixture(scope='function')
 def dependency_check():
@@ -76,6 +77,7 @@ def dependency_check():
 #
 #     return method
 
+# TODO: Let's find a way to make this a fixture
 def load_test_data(path):
     """
     :param path: The full path of the file containing the test data
@@ -91,11 +93,18 @@ def test_data_nuspec(request):
     return data
 
 
+@fixture(params=load_test_data(PROJECT_JSON_TEST_DATA))
+def test_data_project_json(request):
+    data = request.param
+    return data
+
+
 @fixture(params=load_test_data(USER_GUIDE_TEST_DATA))
 def test_data_user_guide(request):
     data = request.param
     return data
 
+# TODO: Should we use this than the way it is implemented now?
 
 # @fixture(params=load_test_data(FOLDER_STRUCTURE_TEST_DATA))
 # def test_data_folder_structure(request):
@@ -142,7 +151,7 @@ def read_pdf():
 
     return method
 
-
+# TODO: This should move to the actual test
 @fixture(scope='function')
 def compare_config():
     def method(project_config, expected_config):
