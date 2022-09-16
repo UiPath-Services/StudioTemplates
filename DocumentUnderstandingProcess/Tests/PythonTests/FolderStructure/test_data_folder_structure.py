@@ -98,6 +98,7 @@ class DataFolderTests:
         # compare number of files with expected number of files
         assert True if number_of_files == expected_file_count else False
 
+    # TODO: Check with @teodora if this actually works as intended. Probably not
     @staticmethod
     def test_tempfolder_folder_content(app_constants):
         """
@@ -108,3 +109,21 @@ class DataFolderTests:
 
         # compare folder content with the expected files
         assert all(file in files for file in expected_results['TempfolderFolderFiles'])
+
+    @staticmethod
+    def test_project_folder_structure(app_constants):
+        """
+        Check that the all the folders and files are correct in the project root
+        """
+
+        # get the root folder
+        files = os.listdir(app_constants.PROJECT)
+        for file in files:
+            if file not in expected_results['ProjectRootFolderStructure']:
+
+                # one of the folders/files is missing
+                assert False
+
+        # we found all folders/files
+        assert True
+
