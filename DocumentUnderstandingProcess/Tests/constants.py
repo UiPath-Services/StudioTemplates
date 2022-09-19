@@ -24,4 +24,6 @@ class Constants:
         self.PROJECT_CONFIG_FILE = self.DATA_FOLDER + "Config.xlsx"
         self.EXPECTED_CONFIG_FILE = self.PROJECT + "Tests/Cache/Config_Expected.xlsx"
         self.NUSPEC = "../../DocumentUnderstandingProcess/UiPath.Template.DocumentUnderstandingProcess.nuspec"
+        self.MAIN_ACTION_CENTER = "Main-ActionCenter.xaml"
+        self.MAIN_ATTENDED = "Main-Attended.xaml"
 
