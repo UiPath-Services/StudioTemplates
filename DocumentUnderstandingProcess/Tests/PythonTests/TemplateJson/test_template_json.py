@@ -3,6 +3,7 @@ from pytest import mark
 
 # TODO: Fix the yaml, use fixtures.
 
+
 @mark.smoke
 @mark.template_json
 class TemplateJsonTests:

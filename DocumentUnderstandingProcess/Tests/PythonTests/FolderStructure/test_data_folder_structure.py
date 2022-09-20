@@ -127,3 +127,46 @@ class DataFolderTests:
         # we found all folders/files
         assert True
 
+    @staticmethod
+    def test_project_mock_reusable_folder(app_constants):
+        """
+        Check that the all the folders and files are correct in the mock/reusableworkflows folder
+        """
+
+        # get the root folder
+        files = os.listdir(app_constants.MOCK_REUSABLE_FOLDER)
+
+        for file in files:
+            if file not in expected_results['MockReusableFolderStructure']:
+
+                # one of the folders/files is missing
+                assert False
+
+        # we found all folders/files
+        assert True
+
+    @staticmethod
+    def test_project_mock_config_check(app_constants):
+        """
+        Check that the all the mocks are in the config file
+        """
+
+        # get the filenames in the MOCK/Framework directory
+        filenames = []
+        for _, _, files in os.walk(app_constants.MOCK + "Framework"):
+            for name in files:
+                filenames.append(name)
+
+        # load the mock_config
+        mock_config = yaml.safe_load((open(app_constants.MOCK_CONFIG, 'r')))
+
+        file_found = False
+        for mock in mock_config['mockedWorkflows']:
+            for file in filenames:
+                if file in mock['mockFilePath']:
+                    file_found = True
+            if not file_found:
+                # one of the files is missing in the mock_config
+                assert False
+        # we found all folders/files
+        assert True

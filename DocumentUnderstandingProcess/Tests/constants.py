@@ -11,7 +11,7 @@ class Constants:
 
         self.TEMPLATE_JSON = {
             "vb": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/.local/template.json",
-            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/.local/template.json"
+            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/.local/template.json"
         }[env]
 
         # Project Constants
@@ -26,4 +26,7 @@ class Constants:
         self.NUSPEC = "../../DocumentUnderstandingProcess/UiPath.Template.DocumentUnderstandingProcess.nuspec"
         self.MAIN_ACTION_CENTER = "Main-ActionCenter.xaml"
         self.MAIN_ATTENDED = "Main-Attended.xaml"
+        self.MOCK = self.PROJECT + "Mocks/"
+        self.MOCK_CONFIG = self.PROJECT + "Mocks/mock_config.json"
+        self.MOCK_REUSABLE_FOLDER = self.PROJECT + "Mocks/Framework/ReusableWorkflows"
 
