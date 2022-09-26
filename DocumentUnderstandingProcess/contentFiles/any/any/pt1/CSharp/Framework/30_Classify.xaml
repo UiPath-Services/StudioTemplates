@@ -8,10 +8,9 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
     <x:Property sap2010:Annotation.AnnotationText="Classification results given by running the chosen classifier over the target document." Name="out_ClassificationResults" Type="OutArgument(p2:ClassificationResult[])" />
-    <x:Property Name="out_AutoClassificationSuccess" Type="OutArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>600.6666666666666,1444.6666666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>772,1440.888888888889</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -106,14 +105,14 @@
       <AssemblyReference>System.Collections</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Classification workflow. Classifiers are  process-dependant!&#xA;&#xA;Outputs whether the document was successfully classified or not." DisplayName="Classify" sap:VirtualizedContainerService.HintSize="562,1380" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Classification workflow. Classifiers are  process-dependant!&#xA;&#xA;Outputs whether the document was successfully classified or not." DisplayName="Classify" sap:VirtualizedContainerService.HintSize="561.3333333333334,1376" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - AutoClassificationStarted" sap:VirtualizedContainerService.HintSize="520,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:LogMessage DisplayName="Log Message - AutoClassificationStarted" sap:VirtualizedContainerService.HintSize="519.5555555555555,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">String.Format("{0}\n{1}", in_Config["LogMessage_AutoClassificationStarted"], in_Config["logKey"])</CSharpValue>
@@ -126,18 +125,18 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:LogMessage>
-    <ui:Comment DisplayName="Note About Retry Mechanism" sap:VirtualizedContainerService.HintSize="520,113.33333333333333" sap2010:WorkflowViewState.IdRef="Comment_1" Text="A Classifier that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Classifiers might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsClassify overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Classify" sap:VirtualizedContainerService.HintSize="520,803.3333333333334" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+    <ui:Comment DisplayName="Note About Retry Mechanism" sap:VirtualizedContainerService.HintSize="519.5555555555555,114.66666666666667" sap2010:WorkflowViewState.IdRef="Comment_1" Text="A Classifier that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Classifiers might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsClassify overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Classify" sap:VirtualizedContainerService.HintSize="519.5555555555555,798.2222222222222" sap2010:WorkflowViewState.IdRef="RetryScope_1">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <p3:ClassifyDocumentScope DisplayName="Classify Document Scope - Classify" sap:VirtualizedContainerService.HintSize="478,547.3333333333334" sap2010:WorkflowViewState.IdRef="ClassifyDocumentScope_1" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;Semi-StructuredDocuments.Financial.Receipt&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Receipt&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Semi-StructuredDocuments.Financial.Invoice&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Invoice&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;StructuredDocuments.LendingForms.W-9&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;StructuredDocuments.LendingForms.W-9&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Documents.Other.Certificate-of-filing&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Documents.Other.Certificate-of-filing&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true}}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{}}">
+          <p3:ClassifyDocumentScope DisplayName="Classify Document Scope - Classify" sap:VirtualizedContainerService.HintSize="477.77777777777777,543.1111111111111" sap2010:WorkflowViewState.IdRef="ClassifyDocumentScope_1" TaxonomyConfiguration="{}{&quot;TaxonomyMappings&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:{&quot;DocumentTypeMappings&quot;:{&quot;Semi-StructuredDocuments.Financial.Receipt&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Receipt&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Semi-StructuredDocuments.Financial.Invoice&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Semi-StructuredDocuments.Financial.Invoice&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;StructuredDocuments.LendingForms.W-9&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;StructuredDocuments.LendingForms.W-9&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true},&quot;Documents.Other.Certificate-of-filing&quot;:{&quot;OriginalDocumentTypeId&quot;:&quot;Documents.Other.Certificate-of-filing&quot;,&quot;ClassifierDocumentTypeId&quot;:null,&quot;IsDocumentTypeIdMapped&quot;:true}}}},&quot;ClassifierMinimumConfidence&quot;:{&quot;UI5533016733244eac811d80cb7db3878b&quot;:&quot;0&quot;},&quot;DocumentTypesByPersistenceId&quot;:{}}">
             <p3:ClassifyDocumentScope.ClassificationResults>
               <OutArgument x:TypeArguments="p2:ClassificationResult[]">
                 <CSharpReference x:TypeArguments="p2:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">out_ClassificationResults</CSharpReference>
               </OutArgument>
             </p3:ClassifyDocumentScope.ClassificationResults>
             <p3:ClassifyDocumentScope.Classifiers>
-              <p3:IntelligentKeywordClassifier LearningData="{x:Null}" DisplayName="Intelligent Keyword Classifier - Classify" sap:VirtualizedContainerService.HintSize="234,214.66666666666666" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifier_1" PersistenceId="UI5533016733244eac811d80cb7db3878b">
+              <p3:IntelligentKeywordClassifier LearningData="{x:Null}" DisplayName="Intelligent Keyword Classifier - Classify" sap:VirtualizedContainerService.HintSize="233.77777777777777,213.77777777777777" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifier_1" PersistenceId="UI5533016733244eac811d80cb7db3878b">
                 <p3:IntelligentKeywordClassifier.ApiKey>
                   <InArgument x:TypeArguments="x:String">
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">in_Config["ApiKey"]</CSharpValue>
@@ -146,7 +145,7 @@
                 <p3:IntelligentKeywordClassifier.ClassifierResult>
                   <OutArgument x:TypeArguments="p4:ClassifierResult">
                     <DelegateArgumentReference x:TypeArguments="p4:ClassifierResult">
-                      <DelegateOutArgument x:TypeArguments="p4:ClassifierResult" Name="ClassificationResult" />
+                      <DelegateOutArgument x:TypeArguments="p4:ClassifierResult" Name="ClassifierResult" />
                     </DelegateArgumentReference>
                   </OutArgument>
                 </p3:IntelligentKeywordClassifier.ClassifierResult>
@@ -188,6 +187,13 @@
                     <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">in_Config["ClassifierLearningFilePath"]</CSharpValue>
                   </InArgument>
                 </p3:IntelligentKeywordClassifier.LearningFilePath>
+                <p3:IntelligentKeywordClassifier.PredictionId>
+                  <InArgument x:TypeArguments="x:String">
+                    <DelegateArgumentValue x:TypeArguments="x:String">
+                      <DelegateInArgument x:TypeArguments="x:String" Name="PredictionId" />
+                    </DelegateArgumentValue>
+                  </InArgument>
+                </p3:IntelligentKeywordClassifier.PredictionId>
               </p3:IntelligentKeywordClassifier>
             </p3:ClassifyDocumentScope.Classifiers>
             <p3:ClassifyDocumentScope.DocumentObjectModel>
@@ -240,7 +246,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:RetryScope>
-    <ui:LogMessage DisplayName="Log Message - Classification Ended" sap:VirtualizedContainerService.HintSize="520,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2">
+    <ui:LogMessage DisplayName="Log Message - Classification Ended" sap:VirtualizedContainerService.HintSize="519.5555555555555,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">String.Format("{0}{1}\n{2}",in_Config["LogMessage_AutoClassificationResults"], string.Join(" | ", out_ClassificationResults.Select(cResult =&gt; String.Format("{0} : {1}", cResult.DocumentTypeId, cResult.Confidence.ToString()))), in_Config["logKey"])</CSharpValue>
