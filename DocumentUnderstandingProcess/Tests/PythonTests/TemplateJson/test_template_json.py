@@ -1,25 +1,28 @@
-import yaml
 from pytest import mark
-
-# TODO: Fix the yaml, use fixtures.
 
 
 @mark.smoke
 @mark.template_json
 class TemplateJsonTests:
     @staticmethod
-    def test_template_json_dependencies(dependency_check, app_constants):
+    def test_template_json_dependencies(convert_to_lower, load_json, app_constants):
         """
         Check if the dependencies field between project.json and template.json is the same
         """
-        result = dependency_check(app_constants.PROJECT_JSON, app_constants.TEMPLATE_JSON)
-        assert result
+        vb_project_json = load_json(app_constants.PROJECT_JSON)
+        vb_template_json = load_json(app_constants.TEMPLATE_JSON)
+
+        vb_project_json = convert_to_lower(vb_project_json)
+        vb_template_json = convert_to_lower(vb_template_json)
+
+        assert vb_project_json["dependencies"] == vb_template_json["dependencies"]
 
     @staticmethod
-    def test_template_json_main_file(app_constants):
+    def test_template_json_main_file(load_json, app_constants):
         """
         Check if the main file is Main-ActionCenter
         """
 
-        data = yaml.safe_load((open(app_constants.TEMPLATE_JSON, 'r')))
+        data = load_json(app_constants.TEMPLATE_JSON)
+
         assert app_constants.MAIN_ACTION_CENTER in data["MainFile"]
