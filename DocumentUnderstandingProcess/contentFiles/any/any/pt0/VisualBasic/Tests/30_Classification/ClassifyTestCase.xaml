@@ -1,12 +1,11 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="ClassifyTestCase" this:ClassifyTestCase.in_UseQueue="False" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="ClassifyTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
-    <x:Property Name="in_UseQueue" Type="InArgument(x:Boolean)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1122.2222222222222,2331.5555555555557</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1064,2331.5555555555557</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ClassifyTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="37">
@@ -113,6 +112,7 @@
       <Variable x:TypeArguments="p2:ClassificationResult[]" Name="classificationResultsArray" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
       <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
+      <Variable x:TypeArguments="p2:ClassificationResult[]" Name="cachedClassificationResultsArray" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -121,7 +121,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="ClassifyTestCase started" sap:VirtualizedContainerService.HintSize="652.8888888888889,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;ClassifyTestCase started.&quot;]" />
-    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file&#xA;Load the output of the digitization" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="652.8888888888889,777.7777777777778" sap2010:WorkflowViewState.IdRef="Sequence_11">
+    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file&#xA;Load the output of the digitization" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="652.8888888888889,931.5555555555555" sap2010:WorkflowViewState.IdRef="Sequence_11">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -185,6 +185,16 @@
           <OutArgument x:TypeArguments="x:String" x:Key="out_DocText">[docText]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadClassificationFromCache workflow" sap:VirtualizedContainerService.HintSize="431.1111111111111,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\LoadClassificationFromCache.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">[in_TargetFile]</InArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_Taxonomy">[docTaxonomy]</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+          <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">[dom]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocText">[docText]</InArgument>
+          <OutArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="out_ClassificationResultsArray">[cachedClassificationResultsArray]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
     </Sequence>
     <Sequence sap2010:Annotation.AnnotationText="Classify based on the given digitization and target file" DisplayName="... When" sap:VirtualizedContainerService.HintSize="652.8888888888889,237.33333333333334" sap2010:WorkflowViewState.IdRef="Sequence_12">
       <sap:WorkflowViewStateService.ViewState>
@@ -206,10 +216,9 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <Sequence sap2010:Annotation.AnnotationText="Compare the output of the classification with the presaved classification result" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="652.8888888888889,764.8888888888889" sap2010:WorkflowViewState.IdRef="Sequence_13">
+    <Sequence sap2010:Annotation.AnnotationText="Compare the output of the classification with the presaved classification result" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="652.8888888888889,611.1111111111111" sap2010:WorkflowViewState.IdRef="Sequence_13">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:Int32" Name="index" />
-        <Variable x:TypeArguments="p2:ClassificationResult[]" Name="cachedClassificationResultsArray" />
       </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -217,17 +226,7 @@
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadClassificationFromCache workflow" sap:VirtualizedContainerService.HintSize="611.1111111111111,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\LoadClassificationFromCache.xaml">
-        <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">[in_TargetFile]</InArgument>
-          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_Taxonomy">[docTaxonomy]</InArgument>
-          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
-          <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">[dom]</InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_DocText">[docText]</InArgument>
-          <OutArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="out_ClassificationResultsArray">[cachedClassificationResultsArray]</OutArgument>
-        </ui:InvokeWorkflowFile.Arguments>
-      </ui:InvokeWorkflowFile>
-      <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - Compare Results Count" Expression="[classificationResultsArray.Length = cachedClassificationResultsArray.Length]" sap:VirtualizedContainerService.HintSize="611.1111111111111,63.111111111111114" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="[&quot;ClassificationResultsArray count comparison = &quot; + (classificationResultsArray.Length = cachedClassificationResultsArray.Length).ToString +&quot;. Classified results count: &quot; + classificationResultsArray.Length.ToString +&quot; ; Cached results count: &quot; + cachedClassificationResultsArray.Length.ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
+      <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify - Compare Results Count" Expression="[classificationResultsArray.Length = cachedClassificationResultsArray.Length]" sap:VirtualizedContainerService.HintSize="611.1111111111111,63.111111111111114" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="[&quot;ClassificationResultsArray count comparison = &quot; + (classificationResultsArray.Length = cachedClassificationResultsArray.Length).ToString +&quot;. Classified results count: &quot; + classificationResultsArray.Length.ToString +&quot; ; Cached results count: &quot; + cachedClassificationResultsArray.Length.ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
       <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[index]" DisplayName="For Each Classification Result" sap:VirtualizedContainerService.HintSize="611.1111111111111,384.44444444444446" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[classificationResultsArray]">
         <ui:ForEach.Body>
           <ActivityAction x:TypeArguments="p2:ClassificationResult">
