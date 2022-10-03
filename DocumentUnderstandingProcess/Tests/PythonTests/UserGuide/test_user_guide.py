@@ -19,10 +19,8 @@ class UserGuideTests:
         for i in range(0, len(user_guide.pages)):
             page_obj = user_guide.pages[i]
             text = page_obj.extract_text()
-            if re.search(test_data_user_guide["release_version"], text):
-                found = True
+            # check for the presence of the release version in the user guide and do a logical "or" with found
+            found = found or (re.search(test_data_user_guide["release_version"], text) is not None)
 
-        if test_data_user_guide["expected_result"] == "pass":
-            assert found is True
-        else:
-            assert found is False
+        # asserting the presence of the release version in the user guide, considering also the expected_result
+        assert (test_data_user_guide["expected_result"] == "pass") == (found is True)

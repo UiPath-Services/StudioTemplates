@@ -21,8 +21,5 @@ class NuspecTests:
                 # if <version> tag is found, read its value
                 release_version = element.text
 
-        # asserting the text from tag <version> with the actual release version
-        if test_data_nuspec["expected_result"] == "pass":
-            assert release_version == test_data_nuspec["release_version"]
-        else:
-            assert release_version != test_data_nuspec["release_version"]
+        # asserting the text from tag <version> with the actual release version, considering also the expected_result
+        assert (test_data_nuspec["expected_result"] == "pass") == (release_version == test_data_nuspec["release_version"])
