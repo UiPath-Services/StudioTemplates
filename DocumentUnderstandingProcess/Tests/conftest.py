@@ -48,18 +48,6 @@ def convert_to_lower():
 
     return method
 
-# @fixture(scope='function')
-# def load_test_data():
-#
-#     def method(path):
-#         """
-#         :param path: The full path of the file containing the test data
-#         :return: test data
-#         """
-#         data = yaml.safe_load((open(path, 'r')))
-#         return data
-#
-#     return method
 
 @fixture(scope='function')
 def load_json():
@@ -82,35 +70,42 @@ def load_test_data(path):
     data = yaml.safe_load((open(path, 'r')))
     return data
 
+
 @fixture(params=load_test_data(NUSPEC_TEST_DATA))
 def test_data_nuspec(request):
     data = request.param
     return data
+
 
 @fixture(params=load_test_data(PROJECT_JSON_TEST_DATA))
 def test_data_project_json(request):
     data = request.param
     return data
 
+
 @fixture(params=load_test_data(USER_GUIDE_TEST_DATA))
 def test_data_user_guide(request):
     data = request.param
     return data
+
 
 @fixture(params=load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA))
 def test_data_folder(request):
     data = request.param
     return data
 
+
 @fixture(params=load_test_data(PROJECT_STRUCTURE_TEST_DATA))
 def test_project_folder(request):
     data = request.param
     return data
 
+
 @fixture(params=load_test_data(MOCK_FOLDER_STRUCTURE_TEST_DATA))
 def test_mock_folder(request):
     data = request.param
     return data
+
 
 @fixture(scope='function')
 def read_xml():
@@ -150,6 +145,7 @@ def read_pdf():
         return pdf_reader
 
     return method
+
 
 @fixture(scope='function')
 def get_filenames():

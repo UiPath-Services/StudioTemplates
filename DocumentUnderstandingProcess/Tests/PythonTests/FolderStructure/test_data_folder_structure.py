@@ -1,6 +1,6 @@
 from pytest import mark
 import os
-import json
+
 
 @mark.smoke
 @mark.folder_structure

@@ -12,14 +12,9 @@ class ProjectJsonTests:
         """
         data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", 'r')))
 
-        # initialize found_result with True
-        found_result = False
         for element in data["designOptions"]["fileInfoCollection"]:
-            # check for the Key presence and do a logical "or" with the found_result
-            found_result = found_result or (test_data_project_json["key"] in element)
-
-        # if Key was found, the test is failed
-        assert not found_result
+            # check for the Key presence
+            assert not test_data_project_json["key"] in element
 
     @staticmethod
     def test_project_json_main_file(app_constants):
