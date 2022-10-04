@@ -8,12 +8,10 @@ import os
 import xml.etree.ElementTree as et
 
 # Test Data Paths
-DATA_FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/DataFolderStructure_test_data.yaml"
-PROJECT_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/ProjectStructure_test_data.yaml"
-MOCK_FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/MockFolderStructure_test_data.yaml"
-NUSPEC_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/Nuspec_test_data.yaml"
-USER_GUIDE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/UserGuide_test_data.yaml"
-PROJECT_JSON_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/Project_Json_test_data.yaml"
+DATA_FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/DataFolderStructure_test_data.yaml"
+NUSPEC_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/Nuspec_test_data.yaml"
+USER_GUIDE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/UserGuide_test_data.yaml"
+PROJECT_JSON_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/Project_Json_test_data.yaml"
 
 
 def pytest_addoption(parser):
@@ -61,7 +59,7 @@ def load_json():
     return method
 
 
-# TODO: Let's find a way to make this a fixture
+# TODO: Let's find a way to make this a fixtue
 def load_test_data(path):
     """
     :param path: The full path of the file containing the test data
@@ -95,16 +93,16 @@ def test_data_folder(request):
     return data
 
 
-@fixture(params=load_test_data(PROJECT_STRUCTURE_TEST_DATA))
-def test_project_folder(request):
-    data = request.param
-    return data
-
-
-@fixture(params=load_test_data(MOCK_FOLDER_STRUCTURE_TEST_DATA))
-def test_mock_folder(request):
-    data = request.param
-    return data
+@fixture(scope='function')
+def load_test_input():
+    """
+    :param path: The full path of the file containing the test input
+    :return: test data
+    """
+    def method(path):
+        data = yaml.safe_load((open(path, 'r')))
+        return data
+    return method
 
 
 @fixture(scope='function')
