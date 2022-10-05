@@ -2,11 +2,12 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Contains the value of Confidence level of other fields to be tested" Name="in_otherConfValueData" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="in_otherConfValueExpectedResult" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Contains the name of the field to be tested" Name="in_otherConfNameData" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1196,1963</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1143,1742</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>IPP_OtherFieldsConfTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -43,7 +44,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="76">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="44">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -84,9 +85,13 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.IO.Packaging</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="IPP_OtherFieldsConfTestCase" sap:VirtualizedContainerService.HintSize="698,1898" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="IPP_OtherFieldsConfTestCase" sap:VirtualizedContainerService.HintSize="618,1677" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
@@ -95,14 +100,15 @@
       <Variable x:TypeArguments="x:String" Name="targetFile" />
       <Variable x:TypeArguments="x:String" Name="fileName" />
       <Variable x:TypeArguments="x:Boolean" Name="autoExtractionSuccess" />
+      <Variable x:TypeArguments="x:String" Name="testMessage" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="OtherFieldsConfidenceTestCase started" sap:VirtualizedContainerService.HintSize="656,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;OtherFieldsConfidenceTestCase started&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="656,527" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <ui:LogMessage DisplayName="OtherFieldsConfidenceTestCase started" sap:VirtualizedContainerService.HintSize="576,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;OtherFieldsConfidenceTestCase started&quot;]" />
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="576,527" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -150,119 +156,65 @@
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
     </Sequence>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="656,977" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-      <TryCatch.Try>
-        <Sequence DisplayName="Test Sequence" sap:VirtualizedContainerService.HintSize="618,750" sap2010:WorkflowViewState.IdRef="Sequence_9">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="576,465" sap2010:WorkflowViewState.IdRef="Sequence_3">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Name="extractionResultString" />
-              <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
-            </Sequence.Variables>
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read classification File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;ExtractionDocument_&quot;+fileName+&quot;_2&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-            <Assign DisplayName="Assign - deserialize classification" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_1">
-              <Assign.To>
-                <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResult]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
-                <InArgument x:TypeArguments="p1:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(extractionResultString)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Other Fields Confidence using in_otherConfValue argument" DisplayName="Invoke InvoicePostProcessing_mock_5 workflow" sap:VirtualizedContainerService.HintSize="434,154" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\InvoicePostProcessing_mock_5.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[targetFile]</InArgument>
-                <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Invoice</InArgument>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
-                <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
-                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_otherConfValue">[in_otherConfValueData]</InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:InvokeWorkflowFile>
-          </Sequence>
-          <Sequence DisplayName="... Then - No throw detected" sap:VirtualizedContainerService.HintSize="576,153" sap2010:WorkflowViewState.IdRef="Sequence_8">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression" Expression="False" sap:VirtualizedContainerService.HintSize="534,61" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="Error!" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
-          </Sequence>
-        </Sequence>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="622,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-              <x:Boolean x:Key="IsPinned">False</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <ActivityAction x:TypeArguments="ui:BusinessRuleException">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
-            </ActivityAction.Argument>
-            <Sequence DisplayName="... Then - Exception caught" sap:VirtualizedContainerService.HintSize="1239,403" sap2010:WorkflowViewState.IdRef="Sequence_12">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <If Condition="[in_otherConfValueExpectedResult.Equals(&quot;passed&quot;)]" sap:VirtualizedContainerService.HintSize="1197,311" sap2010:WorkflowViewState.IdRef="If_2">
-                <If.Then>
-                  <Sequence DisplayName="Passed" sap:VirtualizedContainerService.HintSize="576,153" sap2010:WorkflowViewState.IdRef="Sequence_10">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for succes" sap:VirtualizedContainerService.HintSize="534,61" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_3" Operator="Equality" OutputMessageFormat="[&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + in_otherConfValueData+ &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_otherConfValueExpectedResult + &quot;&quot;&quot;&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                      <uta:VerifyExpressionWithOperator.FirstExpression>
-                        <InArgument x:TypeArguments="x:String">[exception.Message]</InArgument>
-                      </uta:VerifyExpressionWithOperator.FirstExpression>
-                      <uta:VerifyExpressionWithOperator.SecondExpression>
-                        <InArgument x:TypeArguments="x:String">["Checking Other Fields Confidence has succed!"]</InArgument>
-                      </uta:VerifyExpressionWithOperator.SecondExpression>
-                    </uta:VerifyExpressionWithOperator>
-                  </Sequence>
-                </If.Then>
-                <If.Else>
-                  <Sequence DisplayName="Failed" sap:VirtualizedContainerService.HintSize="576,153" sap2010:WorkflowViewState.IdRef="Sequence_11">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for failure" sap:VirtualizedContainerService.HintSize="534,61" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_4" Operator="Equality" OutputMessageFormat="[&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + in_otherConfValueData+ &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_otherConfValueExpectedResult + &quot;&quot;&quot;&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                      <uta:VerifyExpressionWithOperator.FirstExpression>
-                        <InArgument x:TypeArguments="x:String">[exception.Message]</InArgument>
-                      </uta:VerifyExpressionWithOperator.FirstExpression>
-                      <uta:VerifyExpressionWithOperator.SecondExpression>
-                        <InArgument x:TypeArguments="x:String">["Checking Other Fields Confidence has failed!"]</InArgument>
-                      </uta:VerifyExpressionWithOperator.SecondExpression>
-                    </uta:VerifyExpressionWithOperator>
-                  </Sequence>
-                </If.Else>
-              </If>
-            </Sequence>
-          </ActivityAction>
-        </Catch>
-      </TryCatch.Catches>
-    </TryCatch>
-    <ui:LogMessage DisplayName="OtherFieldsConfidenceTestCase finished" sap:VirtualizedContainerService.HintSize="656,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;OtherFieldsConfidenceTestCase finished&quot;]" />
+    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="576,565" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="extractionResultString" />
+        <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,fileName+&quot;_2-2_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+      <Assign DisplayName="Assign - deserialize extraction " sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResult]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="p1:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(extractionResultString)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Assign DisplayName="Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Single">[extractionResult.GetField("Semi-StructuredDocuments.Financial.Invoice." + in_otherConfNameData).GetValue.Confidence]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Single">[Convert.ToSingle(in_otherConfValueData)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Other Fields Confidence using in_otherConfValue argument" DisplayName="Invoke InvoicePostProcessing_mock_5 workflow" sap:VirtualizedContainerService.HintSize="434,154" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\InvoicePostProcessing_mock_5.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[targetFile]</InArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Invoice</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">[testMessage]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:InvokeWorkflowFile>
+    </Sequence>
+    <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="576,151" sap2010:WorkflowViewState.IdRef="Sequence_12">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for succes" sap:VirtualizedContainerService.HintSize="534,59" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_3" Operator="Equality" OutputMessageFormat="[&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + in_otherConfValueData+ &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + in_otherConfNameData + &quot;&quot;&quot;&quot;  + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_otherConfValueExpectedResult + &quot;&quot;&quot;. Test result: &quot; + testMessage]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+        <uta:VerifyExpressionWithOperator.FirstExpression>
+          <InArgument x:TypeArguments="x:String">[testMessage]</InArgument>
+        </uta:VerifyExpressionWithOperator.FirstExpression>
+        <uta:VerifyExpressionWithOperator.SecondExpression>
+          <InArgument x:TypeArguments="x:String">[in_otherConfValueExpectedResult]</InArgument>
+        </uta:VerifyExpressionWithOperator.SecondExpression>
+      </uta:VerifyExpressionWithOperator>
+    </Sequence>
+    <ui:LogMessage DisplayName="OtherFieldsConfidenceTestCase finished" sap:VirtualizedContainerService.HintSize="576,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;OtherFieldsConfidenceTestCase finished&quot;]" />
   </Sequence>
 </Activity>

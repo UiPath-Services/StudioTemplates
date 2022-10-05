@@ -6,13 +6,12 @@
     <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="io_ExtractionResults" Type="InOutArgument(p1:ExtractionResult)" />
     <x:Property sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the extraction process." Name="out_AutoExtractionSuccess" Type="OutArgument(x:Boolean)" />
     <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetDocument" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="Name of the target field to be tested" Name="in_FieldName" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="Value to be passed and tested for the target field" Name="in_FieldValue" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The result of the test" Name="out_TestMessage" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1182,5238</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1162,5214</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ReceiptPostProcessing_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="32">
@@ -98,7 +97,7 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted  &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00) " DisplayName="ReceiptPostProcessing" sap:VirtualizedContainerService.HintSize="1172,5173" sap2010:WorkflowViewState.IdRef="Sequence_31">
+  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted  &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00) " DisplayName="ReceiptPostProcessing" sap:VirtualizedContainerService.HintSize="1172,5149" sap2010:WorkflowViewState.IdRef="Sequence_31">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataSet" sap2010:Annotation.AnnotationText="Used to store the extracted data from the ExtractionResults in the Export Extraction Results activity." Name="extractedDataSet" />
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="DataTable generated from the extractedDataSet." Name="itemTable" />
@@ -223,7 +222,7 @@
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
     </Sequence>
-    <Sequence sap2010:Annotation.AnnotationText="In the config file we have set seveal fields as must have under MandatoryFields and MandatoryColumns. Here, we try to see if they are present, starting with the date. &#xA;&#xA;- If the date is not present, or not parsable, the process will fail and manual validation will be required.&#xA;- If any of the fields in MandatoryFields or itemTable (which contains the MandatoryColumns) are missing, manual validation will be required." DisplayName="Check Mandatory Extracted Values" sap:VirtualizedContainerService.HintSize="1130,1349" sap2010:WorkflowViewState.IdRef="Sequence_28">
+    <Sequence sap2010:Annotation.AnnotationText="In the config file we have set seveal fields as must have under MandatoryFields and MandatoryColumns. Here, we try to see if they are present, starting with the date. &#xA;&#xA;- If the date is not present, or not parsable, the process will fail and manual validation will be required.&#xA;- If any of the fields in MandatoryFields or itemTable (which contains the MandatoryColumns) are missing, manual validation will be required." DisplayName="Check Mandatory Extracted Values" sap:VirtualizedContainerService.HintSize="1130,1325" sap2010:WorkflowViewState.IdRef="Sequence_28">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -259,7 +258,7 @@
               <ActivityAction.Argument>
                 <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
               </ActivityAction.Argument>
-              <Sequence DisplayName="Set Date Failure" sap:VirtualizedContainerService.HintSize="376,283" sap2010:WorkflowViewState.IdRef="Sequence_26">
+              <Sequence DisplayName="Set Date Failure" sap:VirtualizedContainerService.HintSize="376,280" sap2010:WorkflowViewState.IdRef="Sequence_26">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -279,7 +278,7 @@
           </Catch>
         </TryCatch.Catches>
       </TryCatch>
-      <utam:MockActivity DisplayName="Mock Mandatory Field Check" sap:VirtualizedContainerService.HintSize="1088,858" sap2010:WorkflowViewState.IdRef="MockActivity_1" MockedActivityIdRef="If_5">
+      <utam:MockActivity DisplayName="Mock Mandatory Field Check" sap:VirtualizedContainerService.HintSize="1088,834" sap2010:WorkflowViewState.IdRef="MockActivity_1" MockedActivityIdRef="If_5">
         <utam:MockActivity.MockedActivity>
           <If Condition="[mandatoryFields.Any(Function(field) documentFields(field) is Nothing) orElse itemTable.Rows.Count = 0]" DisplayName="Mandatory Field Check" sap:VirtualizedContainerService.HintSize="484,469" sap2010:WorkflowViewState.IdRef="If_5">
             <If.Then>
@@ -302,23 +301,23 @@
             </If.Then>
           </If>
         </utam:MockActivity.MockedActivity>
-        <Sequence DisplayName="Mock Mandatory Fields Check" sap:VirtualizedContainerService.HintSize="526,785" sap2010:WorkflowViewState.IdRef="Sequence_34">
+        <Sequence DisplayName="Mock Mandatory Fields Check" sap:VirtualizedContainerService.HintSize="526,761" sap2010:WorkflowViewState.IdRef="Sequence_34">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="Set value for a Mandatory Field" sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_31">
+          <Assign DisplayName="Assign &quot;passed&quot; message" sap:VirtualizedContainerService.HintSize="484,60" sap2010:WorkflowViewState.IdRef="Assign_33">
             <Assign.To>
-              <OutArgument x:TypeArguments="x:String">[documentFields(in_FieldName)]</OutArgument>
+              <OutArgument x:TypeArguments="x:String">[out_TestMessage]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:String">[in_FieldValue]</InArgument>
+              <InArgument x:TypeArguments="x:String">passed</InArgument>
             </Assign.Value>
           </Assign>
-          <If Condition="[mandatoryFields.Any(Function(field) documentFields(field) is Nothing) orElse itemTable.Rows.Count = 0]" DisplayName="Mock-Mandatory Field Check" sap:VirtualizedContainerService.HintSize="484,531" sap2010:WorkflowViewState.IdRef="If_6">
+          <If Condition="[mandatoryFields.Any(Function(field) documentFields(field) is Nothing) orElse itemTable.Rows.Count = 0]" DisplayName="Mock-Mandatory Field Check" sap:VirtualizedContainerService.HintSize="484,569" sap2010:WorkflowViewState.IdRef="If_6">
             <If.Then>
-              <Sequence DisplayName="Mock-Mandatory Field Check - Failure" sap:VirtualizedContainerService.HintSize="376,345" sap2010:WorkflowViewState.IdRef="Sequence_33">
+              <Sequence DisplayName="Mock-Mandatory Field Check - Failure" sap:VirtualizedContainerService.HintSize="376,383" sap2010:WorkflowViewState.IdRef="Sequence_33">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -333,11 +332,17 @@
                     <InArgument x:TypeArguments="x:Boolean">False</InArgument>
                   </Assign.Value>
                 </Assign>
-                <Throw DisplayName="Throw failure message" Exception="[new BusinessRuleException(in_Config(&quot;LogMessage_ReceiptPostProcessing_MandatoryFieldsFailure&quot;))]" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                <Assign DisplayName="Assign &quot;failed&quot; message" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_34">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[out_TestMessage]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">failed</InArgument>
+                  </Assign.Value>
+                </Assign>
               </Sequence>
             </If.Then>
           </If>
-          <Throw DisplayName="Throw success message" Exception="[new BusinessRuleException(&quot;All the mandatory were found!&quot;)]" sap:VirtualizedContainerService.HintSize="484,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
         </Sequence>
       </utam:MockActivity>
     </Sequence>
