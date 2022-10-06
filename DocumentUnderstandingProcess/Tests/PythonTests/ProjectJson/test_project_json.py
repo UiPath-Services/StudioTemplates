@@ -11,13 +11,10 @@ class ProjectJsonTests:
         Checks if the there are mentions of the .variation folder in the project.json
         """
         data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", 'r')))
-        for element in data["designOptions"]["fileInfoCollection"]:
-            if test_data_project_json["key"] in element:
-                # Key was found and it shouldn't be present
-                assert False
 
-        # Key was not found and the test is successful
-        assert True
+        for element in data["designOptions"]["fileInfoCollection"]:
+            # check for the Key presence
+            assert not test_data_project_json["key"] in element
 
     @staticmethod
     def test_project_json_main_file(app_constants):
