@@ -7,7 +7,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1196,1978</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1143,1821</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>InvoicePostProcessing_MandatoryFieldsTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -44,7 +44,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="76">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="40">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -87,7 +87,7 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="InvoicePostProcessing_MandatoryFieldsTestCase" sap:VirtualizedContainerService.HintSize="698,1913" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="InvoicePostProcessing_MandatoryFieldsTestCase" sap:VirtualizedContainerService.HintSize="618,1756" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
@@ -96,14 +96,18 @@
       <Variable x:TypeArguments="x:String" Name="targetFile" />
       <Variable x:TypeArguments="x:String" Name="fileName" />
       <Variable x:TypeArguments="x:Boolean" Name="autoExtractionSuccess" />
+      <Variable x:TypeArguments="x:String" Name="testMessage" />
+      <Variable x:TypeArguments="x:String" Name="mandatoryFieldValueData" />
+      <Variable x:TypeArguments="x:String" Name="mandatoryFieldNameData" />
+      <Variable x:TypeArguments="x:String" Name="mandatoryFieldExpectedResult" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="MandatoryFieldsTestCase started" sap:VirtualizedContainerService.HintSize="656,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;MandatoryFieldsTestCase started&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="656,527" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <ui:LogMessage DisplayName="MandatoryFieldsTestCase started" sap:VirtualizedContainerService.HintSize="576,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;MandatoryFieldsTestCase started&quot;]" />
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="576,527" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -157,120 +161,95 @@
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
     </Sequence>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="656,992" sap2010:WorkflowViewState.IdRef="TryCatch_1">
-      <TryCatch.Try>
-        <Sequence DisplayName="Test Sequence" sap:VirtualizedContainerService.HintSize="618,765" sap2010:WorkflowViewState.IdRef="Sequence_12">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="576,480" sap2010:WorkflowViewState.IdRef="Sequence_3">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Name="extractionResultString" />
-              <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
-            </Sequence.Variables>
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read classification File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,&quot;ExtractionDocument_&quot;+fileName+&quot;_2&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-            <Assign DisplayName="Assign - deserialize classification" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_1">
-              <Assign.To>
+    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="576,644" sap2010:WorkflowViewState.IdRef="Sequence_3">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="extractionResultString" />
+        <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,fileName+&quot;_2-2_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+      <ui:MultipleAssign DisplayName="Multiple Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="434,224" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+        <ui:MultipleAssign.AssignOperations>
+          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+              <ui:AssignOperation.To>
                 <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResult]</OutArgument>
-              </Assign.To>
-              <Assign.Value>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="p1:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(extractionResultString)]</InArgument>
-              </Assign.Value>
-            </Assign>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Mandatory Fields Check using in_MandatoryFieldName and in_MandatoryFieldValue arguments" DisplayName="Invoke InvoicePostProcessing_mock_1 workflow" sap:VirtualizedContainerService.HintSize="434,169" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\InvoicePostProcessing_mock_1.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[targetFile]</InArgument>
-                <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Invoice</InArgument>
-                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
-                <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
-                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_MandatoryFieldName">[in_MandatoryFieldNameData]</InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_MandatoryFieldValue">[in_MandatoryFieldValueData]</InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-            </ui:InvokeWorkflowFile>
-          </Sequence>
-          <Sequence DisplayName="... Then - No throw detected" sap:VirtualizedContainerService.HintSize="576,153" sap2010:WorkflowViewState.IdRef="Sequence_8">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression" Expression="False" sap:VirtualizedContainerService.HintSize="534,61" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="Error!" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
-          </Sequence>
-        </Sequence>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="622,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
-          <sap:WorkflowViewStateService.ViewState>
-            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-              <x:Boolean x:Key="IsPinned">False</x:Boolean>
-            </scg:Dictionary>
-          </sap:WorkflowViewStateService.ViewState>
-          <ActivityAction x:TypeArguments="ui:BusinessRuleException">
-            <ActivityAction.Argument>
-              <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
-            </ActivityAction.Argument>
-            <Sequence DisplayName="... Then - Exception caught" sap:VirtualizedContainerService.HintSize="1239,403" sap2010:WorkflowViewState.IdRef="Sequence_11">
-              <sap:WorkflowViewStateService.ViewState>
-                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                </scg:Dictionary>
-              </sap:WorkflowViewStateService.ViewState>
-              <If Condition="[in_MandatoryFieldExpectedResult.Equals(&quot;passed&quot;)]" sap:VirtualizedContainerService.HintSize="1197,311" sap2010:WorkflowViewState.IdRef="If_2">
-                <If.Then>
-                  <Sequence DisplayName="Passed" sap:VirtualizedContainerService.HintSize="576,153" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for succes" sap:VirtualizedContainerService.HintSize="534,61" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_3" Operator="Equality" OutputMessageFormat="[if(in_MandatoryFieldValueData is Nothing,&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + &quot;null&quot; + &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldNameData + &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldExpectedResult + &quot;&quot;&quot;&quot;,&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + in_MandatoryFieldValueData+ &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldNameData + &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldExpectedResult + &quot;&quot;&quot;&quot;)]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                      <uta:VerifyExpressionWithOperator.FirstExpression>
-                        <InArgument x:TypeArguments="x:String">[exception.Message]</InArgument>
-                      </uta:VerifyExpressionWithOperator.FirstExpression>
-                      <uta:VerifyExpressionWithOperator.SecondExpression>
-                        <InArgument x:TypeArguments="x:String">["All the mandatory were found!"]</InArgument>
-                      </uta:VerifyExpressionWithOperator.SecondExpression>
-                    </uta:VerifyExpressionWithOperator>
-                  </Sequence>
-                </If.Then>
-                <If.Else>
-                  <Sequence DisplayName="Failed" sap:VirtualizedContainerService.HintSize="576,153" sap2010:WorkflowViewState.IdRef="Sequence_10">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                    <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for failure" sap:VirtualizedContainerService.HintSize="534,61" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_4" Operator="Equality" OutputMessageFormat="[if(in_MandatoryFieldValueData is Nothing,&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + &quot;null&quot; + &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldNameData + &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldExpectedResult + &quot;&quot;&quot;&quot;,&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + in_MandatoryFieldValueData+ &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldNameData + &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_MandatoryFieldExpectedResult + &quot;&quot;&quot;&quot;)]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                      <uta:VerifyExpressionWithOperator.FirstExpression>
-                        <InArgument x:TypeArguments="x:String">[exception.Message]</InArgument>
-                      </uta:VerifyExpressionWithOperator.FirstExpression>
-                      <uta:VerifyExpressionWithOperator.SecondExpression>
-                        <InArgument x:TypeArguments="x:String">[config("LogMessage_InvoicePostProcessing_MandatoryFieldsFailure")]</InArgument>
-                      </uta:VerifyExpressionWithOperator.SecondExpression>
-                    </uta:VerifyExpressionWithOperator>
-                  </Sequence>
-                </If.Else>
-              </If>
-            </Sequence>
-          </ActivityAction>
-        </Catch>
-      </TryCatch.Catches>
-    </TryCatch>
-    <ui:LogMessage DisplayName="MandatoryFieldsTestCase finished" sap:VirtualizedContainerService.HintSize="656,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;MandatoryFieldsTestCase finished&quot;]" />
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[mandatoryFieldNameData]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_MandatoryFieldNameData), "Total", in_MandatoryFieldNameData)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[mandatoryFieldValueData]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_MandatoryFieldValueData), extractionResult.GetField("Semi-StructuredDocuments.Financial.Invoice." + mandatoryFieldNameData).GetValue.Value, in_MandatoryFieldValueData)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[mandatoryFieldExpectedResult]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_MandatoryFieldExpectedResult), "passed", in_MandatoryFieldExpectedResult)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[extractionResult.GetField("Semi-StructuredDocuments.Financial.Invoice." + mandatoryFieldNameData).GetValue.Value]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[mandatoryFieldValueData]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+          </scg:List>
+        </ui:MultipleAssign.AssignOperations>
+      </ui:MultipleAssign>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Mandatory Fields Check using in_MandatoryFieldName and in_MandatoryFieldValue arguments" DisplayName="Invoke InvoicePostProcessing_mock_1 workflow" sap:VirtualizedContainerService.HintSize="434,169" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\InvoicePostProcessing_mock_1.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[targetFile]</InArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Invoice</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">[testMessage]</OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:InvokeWorkflowFile>
+    </Sequence>
+    <Sequence DisplayName="... Then - No throw detected" sap:VirtualizedContainerService.HintSize="576,151" sap2010:WorkflowViewState.IdRef="Sequence_8">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression with Operator" sap:VirtualizedContainerService.HintSize="534,59" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_5" Operator="Equality" OutputMessageFormat="[&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + mandatoryFieldValueData+ &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + mandatoryFieldNameData + &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + mandatoryFieldExpectedResult + &quot;&quot;&quot;. Test result: &quot; + testMessage]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+        <uta:VerifyExpressionWithOperator.FirstExpression>
+          <InArgument x:TypeArguments="x:String">[testMessage]</InArgument>
+        </uta:VerifyExpressionWithOperator.FirstExpression>
+        <uta:VerifyExpressionWithOperator.SecondExpression>
+          <InArgument x:TypeArguments="x:String">[mandatoryFieldExpectedResult]</InArgument>
+        </uta:VerifyExpressionWithOperator.SecondExpression>
+      </uta:VerifyExpressionWithOperator>
+    </Sequence>
+    <ui:LogMessage DisplayName="MandatoryFieldsTestCase finished" sap:VirtualizedContainerService.HintSize="576,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;MandatoryFieldsTestCase finished&quot;]" />
   </Sequence>
 </Activity>
