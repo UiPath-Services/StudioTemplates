@@ -7,7 +7,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1143,1742</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1271,1806</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Receipt_OtherConfTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -87,7 +87,7 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Receipt_OtherConfTestCase" sap:VirtualizedContainerService.HintSize="618,1677" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Receipt_OtherConfTestCase" sap:VirtualizedContainerService.HintSize="618,1741" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
@@ -96,6 +96,9 @@
       <Variable x:TypeArguments="x:String" Name="targetFile" />
       <Variable x:TypeArguments="x:String" Name="fileName" />
       <Variable x:TypeArguments="x:String" Name="testMessage" />
+      <Variable x:TypeArguments="x:String" Name="otherConfValueExpectedResult" />
+      <Variable x:TypeArguments="x:String" Name="otherConfValueData" />
+      <Variable x:TypeArguments="x:String" Name="otherConfNameData" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -151,7 +154,7 @@
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
     </Sequence>
-    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="576,565" sap2010:WorkflowViewState.IdRef="Sequence_6">
+    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="576,629" sap2010:WorkflowViewState.IdRef="Sequence_6">
       <Sequence.Variables>
         <Variable x:TypeArguments="x:String" Name="extractionResultString" />
         <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
@@ -163,22 +166,52 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,fileName+&quot;_4-4_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-      <Assign DisplayName="Assign - deserialize extraction" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_1">
-        <Assign.To>
-          <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResult]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="p1:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(extractionResultString)]</InArgument>
-        </Assign.Value>
-      </Assign>
-      <Assign DisplayName="Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_2">
-        <Assign.To>
-          <OutArgument x:TypeArguments="x:Single">[extractionResult.GetField("Semi-StructuredDocuments.Financial.Receipt." + in_otherConfNameData).GetValue.Confidence]</OutArgument>
-        </Assign.To>
-        <Assign.Value>
-          <InArgument x:TypeArguments="x:Single">[Convert.ToSingle(in_otherConfValueData)]</InArgument>
-        </Assign.Value>
-      </Assign>
+      <ui:MultipleAssign DisplayName="Multiple Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="434,224" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+        <ui:MultipleAssign.AssignOperations>
+          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResult]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="p1:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of ExtractionResult)(extractionResultString)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[otherConfNameData]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_otherConfValueExpectedResult), "TotalValue", in_otherConfNameData)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[otherConfValueData]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_otherConfValueExpectedResult), extractionResult.GetField("Semi-StructuredDocuments.Financial.Receipt." + otherConfNameData).GetValue.Confidence.ToString, in_otherConfValueData)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:String">[otherConfValueExpectedResult]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_otherConfValueExpectedResult), "passed", in_otherConfValueExpectedResult)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+              <ui:AssignOperation.To>
+                <OutArgument x:TypeArguments="x:Single">[extractionResult.GetField("Semi-StructuredDocuments.Financial.Receipt." + otherConfNameData).GetValue.Confidence]</OutArgument>
+              </ui:AssignOperation.To>
+              <ui:AssignOperation.Value>
+                <InArgument x:TypeArguments="x:Single">[Convert.ToSingle(otherConfValueData)]</InArgument>
+              </ui:AssignOperation.Value>
+            </ui:AssignOperation>
+          </scg:List>
+        </ui:MultipleAssign.AssignOperations>
+      </ui:MultipleAssign>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Other Fields Confidence using in_otherConfValue argument" DisplayName="Invoke ReceiptPostProcessing_mock workflow" sap:VirtualizedContainerService.HintSize="434,154" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\ReceiptPostProcessing_mock_4.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
@@ -202,12 +235,12 @@
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for succes" sap:VirtualizedContainerService.HintSize="534,59" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_1" Operator="Equality" OutputMessageFormat="[&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + in_otherConfValueData+ &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + in_otherConfNameData + &quot;&quot;&quot;&quot;  + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + in_otherConfValueExpectedResult + &quot;&quot;&quot;. Test result: &quot; + testMessage]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+      <uta:VerifyExpressionWithOperator AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify exception message for succes" sap:VirtualizedContainerService.HintSize="534,59" sap2010:WorkflowViewState.IdRef="VerifyExpressionWithOperator_1" Operator="Equality" OutputMessageFormat="[&quot;For the value: &quot;+ &quot;&quot;&quot;&quot; + otherConfValueData+ &quot;&quot;&quot;&quot; + &quot; in the field: &quot; + &quot;&quot;&quot;&quot; + otherConfNameData + &quot;&quot;&quot;&quot; + &quot; we expect that the result of the test to be: &quot; + &quot;&quot;&quot;&quot; + otherConfValueExpectedResult + &quot;&quot;&quot;. Test result: &quot; + testMessage]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
         <uta:VerifyExpressionWithOperator.FirstExpression>
           <InArgument x:TypeArguments="x:String">[testMessage]</InArgument>
         </uta:VerifyExpressionWithOperator.FirstExpression>
         <uta:VerifyExpressionWithOperator.SecondExpression>
-          <InArgument x:TypeArguments="x:String">[in_otherConfValueExpectedResult]</InArgument>
+          <InArgument x:TypeArguments="x:String">[otherConfValueExpectedResult]</InArgument>
         </uta:VerifyExpressionWithOperator.SecondExpression>
       </uta:VerifyExpressionWithOperator>
     </Sequence>
