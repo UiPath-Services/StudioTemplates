@@ -29,4 +29,3 @@ class Constants:
         self.MOCK = self.PROJECT + "Mocks/"
         self.MOCK_CONFIG = self.PROJECT + "Mocks/mock_config.json"
         self.MOCK_REUSABLE_FOLDER = self.PROJECT + "Mocks/Framework/ReusableWorkflows"
-
