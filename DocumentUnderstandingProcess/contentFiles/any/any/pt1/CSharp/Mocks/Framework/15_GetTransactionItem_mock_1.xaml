@@ -7,7 +7,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Stores the transaction item to be updated in the Orchestrator Queue." Name="out_TransactionItem" Type="OutArgument(ui:QueueItem)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1302,1196</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1302,2568</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -93,7 +93,7 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the &quot;TargetFile&quot; key)..&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="938,1131" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the &quot;TargetFile&quot; key)..&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="938,2503" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -103,20 +103,23 @@
     <ui:LogMessage DisplayName="Log Message - GetTransactionItem" sap:VirtualizedContainerService.HintSize="896,101" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">String.Format("{0}\n{1}", in_Config["LogMessage_GetTransactionItem"], in_Config["logKey"])</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">
+            <CSharpValue.Result>
+              <OutArgument x:TypeArguments="x:Object" />
+            </CSharpValue.Result>String.Format("{0}\n{1}", in_Config["LogMessage_GetTransactionItem"], in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - GetTransactionItem" sap:VirtualizedContainerService.HintSize="896,667" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - GetTransactionItem" sap:VirtualizedContainerService.HintSize="896,1544" sap2010:WorkflowViewState.IdRef="RetryScope_1">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <Sequence DisplayName="RetryBody - GetTransactionItem" sap:VirtualizedContainerService.HintSize="854,441" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence DisplayName="RetryBody - GetTransactionItem" sap:VirtualizedContainerService.HintSize="854,1318" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <utam:MockActivity DisplayName="Mock Get Item to be Processed" sap:VirtualizedContainerService.HintSize="812,351" sap2010:WorkflowViewState.IdRef="MockActivity_1" MockedActivityIdRef="GetQueueItem_1">
+            <utam:MockActivity DisplayName="Mock Get Item to be Processed" sap:VirtualizedContainerService.HintSize="812,1228" sap2010:WorkflowViewState.IdRef="MockActivity_1" MockedActivityIdRef="GetQueueItem_1">
               <utam:MockActivity.MockedActivity>
                 <ui:GetQueueItem ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="Get a transaction item from the specified Orchestrator queue.&#xA;&#xA;The file to be processed is expected to be found under the &quot;TargetFile&quot; key of the transaction item." DisplayName="Get Item to be Processed" sap:VirtualizedContainerService.HintSize="334,268" sap2010:WorkflowViewState.IdRef="GetQueueItem_1">
                   <ui:GetQueueItem.FolderPath>
@@ -141,7 +144,7 @@
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:GetQueueItem>
               </utam:MockActivity.MockedActivity>
-              <Sequence sap:VirtualizedContainerService.HintSize="400,232" sap2010:WorkflowViewState.IdRef="Sequence_9">
+              <Sequence sap:VirtualizedContainerService.HintSize="400,1145" sap2010:WorkflowViewState.IdRef="Sequence_9">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="scg:IEnumerable(ui:QueueItem)" Name="queueItems" />
                 </Sequence.Variables>
@@ -150,28 +153,36 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:GetQueueItems Duration="{x:Null}" From="{x:Null}" Priority="{x:Null}" Reference="{x:Null}" Skip="{x:Null}" TimeoutMS="{x:Null}" To="{x:Null}" Top="{x:Null}" DisplayName="Get Queue Items" FilterStrategy="StartsWith" sap:VirtualizedContainerService.HintSize="358,32" sap2010:WorkflowViewState.IdRef="GetQueueItems_1" QueueItemStates="All" QueueName="[in_Config(&quot;DocumentUnderstandingQueueName&quot;)]">
+                <ui:GetQueueItems Duration="{x:Null}" From="{x:Null}" Priority="{x:Null}" Reference="{x:Null}" Skip="{x:Null}" TimeoutMS="{x:Null}" To="{x:Null}" Top="{x:Null}" DisplayName="Get Queue Items" FilterStrategy="Equals" sap:VirtualizedContainerService.HintSize="358,945" sap2010:WorkflowViewState.IdRef="GetQueueItems_2" QueueItemStates="All">
+                  <ui:GetQueueItems.QueueName>
+                    <InArgument x:TypeArguments="x:String">
+                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_22">in_Config["DocumentUnderstandingQueueName"]</CSharpValue>
+                    </InArgument>
+                  </ui:GetQueueItems.QueueName>
                   <ui:GetQueueItems.Result>
                     <OutArgument x:TypeArguments="scg:IEnumerable(ui:QueueItem)">
-                      <CSharpReference x:TypeArguments="scg:IEnumerable(ui:QueueItem)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">queueItems</CSharpReference>
+                      <CSharpReference x:TypeArguments="scg:IEnumerable(ui:QueueItem)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">
+                        <CSharpReference.Result>
+                          <OutArgument x:TypeArguments="Location(scg:IEnumerable(ui:QueueItem))" />
+                        </CSharpReference.Result>queueItems</CSharpReference>
                     </OutArgument>
                   </ui:GetQueueItems.Result>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
                 </ui:GetQueueItems>
                 <Assign sap:VirtualizedContainerService.HintSize="358,70" sap2010:WorkflowViewState.IdRef="Assign_4">
                   <Assign.To>
                     <OutArgument x:TypeArguments="ui:QueueItem">
-                      <CSharpReference x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">out_TransactionItem</CSharpReference>
+                      <CSharpReference x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">
+                        <CSharpReference.Result>
+                          <OutArgument x:TypeArguments="Location(ui:QueueItem)" />
+                        </CSharpReference.Result>out_TransactionItem</CSharpReference>
                     </OutArgument>
                   </Assign.To>
                   <Assign.Value>
                     <InArgument x:TypeArguments="ui:QueueItem">
-                      <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">queueItems.First()</CSharpValue>
+                      <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_20">
+                        <CSharpValue.Result>
+                          <OutArgument x:TypeArguments="ui:QueueItem" />
+                        </CSharpValue.Result>queueItems.First()</CSharpValue>
                     </InArgument>
                   </Assign.Value>
                 </Assign>
@@ -185,12 +196,18 @@
       </ui:RetryScope.Condition>
       <ui:RetryScope.NumberOfRetries>
         <InArgument x:TypeArguments="x:Int32">
-          <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">in_MaxAttempts</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">
+            <CSharpValue.Result>
+              <OutArgument x:TypeArguments="x:Int32" />
+            </CSharpValue.Result>in_MaxAttempts</CSharpValue>
         </InArgument>
       </ui:RetryScope.NumberOfRetries>
       <ui:RetryScope.RetryInterval>
         <InArgument x:TypeArguments="x:TimeSpan">
-          <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_RetryInterval</CSharpValue>
+          <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">
+            <CSharpValue.Result>
+              <OutArgument x:TypeArguments="x:TimeSpan" />
+            </CSharpValue.Result>in_RetryInterval</CSharpValue>
         </InArgument>
       </ui:RetryScope.RetryInterval>
       <sap:WorkflowViewStateService.ViewState>
@@ -201,9 +218,9 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:RetryScope>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="896,193" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="896,688" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <Sequence sap:VirtualizedContainerService.HintSize="476,431" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence sap:VirtualizedContainerService.HintSize="476,451" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -212,12 +229,18 @@
           <Assign sap2010:Annotation.AnnotationText="The TransactionItem should NOT be Nothing at this point. If the job was started, it should find an item to process" DisplayName="Assign - Get the TargetFile" sap:VirtualizedContainerService.HintSize="434,127" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="x:String">
-                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">out_TargetFile</CSharpReference>
+                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">
+                  <CSharpReference.Result>
+                    <OutArgument x:TypeArguments="Location(x:String)" />
+                  </CSharpReference.Result>out_TargetFile</CSharpReference>
               </OutArgument>
             </Assign.To>
             <Assign.Value>
               <InArgument x:TypeArguments="x:String">
-                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">out_TransactionItem.SpecificContent["TargetFile"].ToString()</CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">
+                  <CSharpValue.Result>
+                    <OutArgument x:TypeArguments="x:String" />
+                  </CSharpValue.Result>out_TransactionItem.SpecificContent["TargetFile"].ToString()</CSharpValue>
               </InArgument>
             </Assign.Value>
             <sap:WorkflowViewStateService.ViewState>
@@ -235,12 +258,18 @@
                 <Assign DisplayName="Assign - Copy SpecificContent to Config " sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                   <Assign.To>
                     <OutArgument x:TypeArguments="x:String">
-                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">in_Config[key]</CSharpReference>
+                      <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">
+                        <CSharpReference.Result>
+                          <OutArgument x:TypeArguments="Location(x:String)" />
+                        </CSharpReference.Result>in_Config[key]</CSharpReference>
                     </OutArgument>
                   </Assign.To>
                   <Assign.Value>
                     <InArgument x:TypeArguments="x:String">
-                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">out_TransactionItem.SpecificContent[key].ToString()</CSharpValue>
+                      <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">
+                        <CSharpValue.Result>
+                          <OutArgument x:TypeArguments="x:String" />
+                        </CSharpValue.Result>out_TransactionItem.SpecificContent[key].ToString()</CSharpValue>
                     </InArgument>
                   </Assign.Value>
                 </Assign>
@@ -248,7 +277,10 @@
             </ui:ForEach.Body>
             <ui:ForEach.Values>
               <InArgument x:TypeArguments="sc:IEnumerable">
-                <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">out_TransactionItem.SpecificContent.Keys</CSharpValue>
+                <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">
+                  <CSharpValue.Result>
+                    <OutArgument x:TypeArguments="sc:IEnumerable" />
+                  </CSharpValue.Result>out_TransactionItem.SpecificContent.Keys</CSharpValue>
               </InArgument>
             </ui:ForEach.Values>
           </ui:ForEach>
@@ -269,7 +301,10 @@
             <If DisplayName="If TransactionItem is missing" sap:VirtualizedContainerService.HintSize="646,1227" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Condition>
                 <InArgument x:TypeArguments="x:Boolean">
-                  <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">out_TransactionItem == null</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">
+                    <CSharpValue.Result>
+                      <OutArgument x:TypeArguments="x:Boolean" />
+                    </CSharpValue.Result>out_TransactionItem == null</CSharpValue>
                 </InArgument>
               </If.Condition>
               <If.Then>
@@ -282,20 +317,24 @@
                   <ui:LogMessage DisplayName="Log TransactionItem Message" sap:VirtualizedContainerService.HintSize="358,101" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Error">
                     <ui:LogMessage.Message>
                       <InArgument x:TypeArguments="x:Object">
-                        <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">"TransactionItem is missing."</CSharpValue>
+                        <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">
+                          <CSharpValue.Result>
+                            <OutArgument x:TypeArguments="x:Object" />
+                          </CSharpValue.Result>"TransactionItem is missing."</CSharpValue>
                       </InArgument>
                     </ui:LogMessage.Message>
                   </ui:LogMessage>
                   <Assign sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_3">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">out_TargetFile</CSharpReference>
+                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">
+                          <CSharpReference.Result>
+                            <OutArgument x:TypeArguments="Location(x:String)" />
+                          </CSharpReference.Result>out_TargetFile</CSharpReference>
                       </OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="x:String">
-                        <Literal x:TypeArguments="x:String" Value="" />
-                      </InArgument>
+                      <InArgument x:TypeArguments="x:String">[Nothing]</InArgument>
                     </Assign.Value>
                   </Assign>
                 </Sequence>
@@ -312,7 +351,10 @@
                       <If DisplayName="If TargetFile is missing" sap:VirtualizedContainerService.HintSize="484,432" sap2010:WorkflowViewState.IdRef="If_2">
                         <If.Condition>
                           <InArgument x:TypeArguments="x:Boolean">
-                            <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">out_TransactionItem.SpecificContent["TargetFile"] == null</CSharpValue>
+                            <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">
+                              <CSharpValue.Result>
+                                <OutArgument x:TypeArguments="x:Boolean" />
+                              </CSharpValue.Result>out_TransactionItem.SpecificContent["TargetFile"] == null</CSharpValue>
                           </InArgument>
                         </If.Condition>
                         <If.Then>
@@ -325,7 +367,10 @@
                             <ui:LogMessage DisplayName="Log TargetFile Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error">
                               <ui:LogMessage.Message>
                                 <InArgument x:TypeArguments="x:Object">
-                                  <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"TargetFile is missing."</CSharpValue>
+                                  <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">
+                                    <CSharpValue.Result>
+                                      <OutArgument x:TypeArguments="x:Object" />
+                                    </CSharpValue.Result>"TargetFile is missing."</CSharpValue>
                                 </InArgument>
                               </ui:LogMessage.Message>
                             </ui:LogMessage>
@@ -336,7 +381,10 @@
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
                               <InArgument x:TypeArguments="s:Exception">
-                                <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">new BusinessRuleException("TargetFile is missing.")</CSharpValue>
+                                <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">
+                                  <CSharpValue.Result>
+                                    <OutArgument x:TypeArguments="s:Exception" />
+                                  </CSharpValue.Result>new BusinessRuleException("TargetFile is missing.")</CSharpValue>
                               </InArgument>
                             </Throw>
                           </Sequence>
@@ -373,7 +421,10 @@
                             <ui:LogMessage DisplayName="Log TargetFile Message" sap:VirtualizedContainerService.HintSize="334,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Error">
                               <ui:LogMessage.Message>
                                 <InArgument x:TypeArguments="x:Object">
-                                  <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">"TargetFile doesn't exist."</CSharpValue>
+                                  <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">
+                                    <CSharpValue.Result>
+                                      <OutArgument x:TypeArguments="x:Object" />
+                                    </CSharpValue.Result>"TargetFile doesn't exist."</CSharpValue>
                                 </InArgument>
                               </ui:LogMessage.Message>
                             </ui:LogMessage>
@@ -384,7 +435,10 @@
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
                               <InArgument x:TypeArguments="s:Exception">
-                                <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_18">new BusinessRuleException("TargetFile doesn't exist.")</CSharpValue>
+                                <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_18">
+                                  <CSharpValue.Result>
+                                    <OutArgument x:TypeArguments="s:Exception" />
+                                  </CSharpValue.Result>new BusinessRuleException("TargetFile doesn't exist.")</CSharpValue>
                               </InArgument>
                             </Throw>
                           </Sequence>
