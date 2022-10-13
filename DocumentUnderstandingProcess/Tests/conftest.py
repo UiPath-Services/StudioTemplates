@@ -8,10 +8,11 @@ import os
 import xml.etree.ElementTree as et
 
 # Test Data Paths
-DATA_FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/DataFolderStructure_test_data.yaml"
-NUSPEC_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/Nuspec_test_data.yaml"
-USER_GUIDE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/UserGuide_test_data.yaml"
-PROJECT_JSON_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/Project_Json_test_data.yaml"
+ROOT_TEST_DATA_VARIATION = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/"
+DATA_FOLDER_STRUCTURE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "DataFolderStructure_test_data.yaml"
+NUSPEC_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Nuspec_test_data.yaml"
+USER_GUIDE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "UserGuide_test_data.yaml"
+PROJECT_JSON_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Project_Json_test_data.yaml"
 
 
 def pytest_addoption(parser):
@@ -31,6 +32,7 @@ def env(request):
 def app_constants(env):
     const = Constants(env)
     return const
+
 
 @fixture(scope='function')
 def convert_to_lower():
@@ -59,7 +61,7 @@ def load_json():
     return method
 
 
-# TODO: Let's find a way to make this a fixtue
+# TODO: Let's find a way to make this a fixture
 def load_test_data(path):
     """
     :param path: The full path of the file containing the test data
@@ -69,26 +71,53 @@ def load_test_data(path):
     return data
 
 
+# @fixture(params=[load_test_data(NUSPEC_TEST_DATA),
+#                  load_test_data(PROJECT_JSON_TEST_DATA),
+#                  load_test_data(USER_GUIDE_TEST_DATA),
+#                  load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA)])
+# def test_data(request):
+#     data = request.param
+#     return data
+
+# @pytest.fixture
+# def thing(request, db):
+#     class ThingFactory(object):
+#         def get(self):
+#             thing = MyModel.objects.create()
+#             request.addfinalizer(thing.delete)
+#             return thing
+#     return ThingFactory()
+# @fixture(scope='function')
+# def get_test_data(request):
+#     class DataFactory(object):
+#         @staticmethod
+#         def load_data(path):
+#             data = yaml.safe_load((open(path, 'r')))
+#             request.addfinalizer(data)
+#             return get_test_data
+#     return DataFactory
+
+
 @fixture(params=load_test_data(NUSPEC_TEST_DATA))
-def test_data_nuspec(request):
+def get_test_data_nuspec(request):
     data = request.param
     return data
 
 
 @fixture(params=load_test_data(PROJECT_JSON_TEST_DATA))
-def test_data_project_json(request):
+def get_test_data_project_json(request):
     data = request.param
     return data
 
 
 @fixture(params=load_test_data(USER_GUIDE_TEST_DATA))
-def test_data_user_guide(request):
+def get_test_data_user_guide(request):
     data = request.param
     return data
 
 
 @fixture(params=load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA))
-def test_data_folder(request):
+def get_test_data_folder(request):
     data = request.param
     return data
 
