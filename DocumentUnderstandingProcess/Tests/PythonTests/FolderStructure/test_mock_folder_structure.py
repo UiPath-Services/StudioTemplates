@@ -7,9 +7,6 @@ import os
 @mark.mock_folder_structure
 class MockFolderTests:
 
-    # Test Data Paths
-    MOCK_FOLDER_STRUCTURE_TEST_DATA = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataInput/MockFolderStructure_test_input.yaml"
-
     @staticmethod
     def test_project_mock_reusable_folder_structure(app_constants, load_test_input):
         """
@@ -19,7 +16,7 @@ class MockFolderTests:
         number_of_files = len(os.listdir(app_constants.MOCK_REUSABLE_FOLDER))
 
         # load expected mock folder structure
-        mock_structure = load_test_input(MockFolderTests.MOCK_FOLDER_STRUCTURE_TEST_DATA)
+        mock_structure = load_test_input(app_constants.MOCK_FOLDER_STRUCTURE_TEST_DATA)
         # expected folders/files count in mock folder
         expected_file_count = len(mock_structure[0]['MockReusableFolderStructure'])
 
@@ -35,11 +32,13 @@ class MockFolderTests:
         files = os.listdir(app_constants.MOCK_REUSABLE_FOLDER)
 
         # load expected mock folder structure
-        mock_structure = load_test_input(MockFolderTests.MOCK_FOLDER_STRUCTURE_TEST_DATA)
+        mock_structure = load_test_input(app_constants.MOCK_FOLDER_STRUCTURE_TEST_DATA)
 
         # compare folder content with the expected files
         assert all(file in files for file in mock_structure[0]['MockReusableFolderStructure'])
 
+    # TODO: Rewrite the test such that it dynamically checks for all the files in the mock folder in the mock config
+    # TODO: and the order is not relevant
     @staticmethod
     def test_project_mock_config_check(app_constants, load_json, get_filenames):
         """
@@ -54,10 +53,10 @@ class MockFolderTests:
         # get all mock file names from the mocks config and put them in a string; mock file names are separated by '_'
         all_mocks = ''
         for mock in mock_config['mockedWorkflows']:
-            # find index of last occurence of '\\'
-            last_occurance = mock['mockFilePath'].rfind('\\')
+            # find index of last occurrence of '\\'
+            last_occurrence = mock['mockFilePath'].rfind('\\')
             # trim to get only the name and extension of the file
-            mock_name = mock['mockFilePath'][last_occurance+1:]
+            mock_name = mock['mockFilePath'][last_occurrence+1:]
             all_mocks = all_mocks + '_' + mock_name
 
         # get all mock file names from the mocks folder and put them in a string; mock file names are separated by '_'
