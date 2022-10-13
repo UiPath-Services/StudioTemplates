@@ -29,3 +29,5 @@ class Constants:
         self.MOCK = self.PROJECT + "Mocks/"
         self.MOCK_CONFIG = self.PROJECT + "Mocks/mock_config.json"
         self.MOCK_REUSABLE_FOLDER = self.PROJECT + "Mocks/Framework/ReusableWorkflows"
+        self.ROOT_TEST_DATA_INPUT = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataInput/"
+        self.MOCK_FOLDER_STRUCTURE_TEST_DATA = self.ROOT_TEST_DATA_INPUT + "MockFolderStructure_test_input.yaml"
