@@ -4,7 +4,6 @@ from pytest import mark
 @mark.smoke
 @mark.nuspec
 class NuspecTests:
-
     @staticmethod
     def test_nuspec_version_as_expected(read_xml, get_test_data_nuspec, app_constants):
         """

@@ -17,24 +17,22 @@ PROJECT_JSON_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Project_Json_test_data.yaml
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--env",
-        action="store",
-        help="Development language selection between VB/CSharp"
+        "--env", action="store", help="Development language selection between VB/CSharp"
     )
 
 
-@fixture(scope='session')
+@fixture(scope="session")
 def env(request):
     return request.config.getoption("--env")
 
 
-@fixture(scope='session')
+@fixture(scope="session")
 def app_constants(env):
     const = Constants(env)
     return const
 
 
-@fixture(scope='function')
+@fixture(scope="function")
 def convert_to_lower():
     """
     The keys in the two files are not written in the same case, this function corrects this
@@ -43,21 +41,26 @@ def convert_to_lower():
     """
 
     def method(json_file):
-        json_file = {key.lower() if type(key) == str else key: value for key, value in json_file.items()}
+        json_file = {
+            key.lower() if type(key) == str else key: value
+            for key, value in json_file.items()
+        }
         return json_file
 
     return method
 
 
-@fixture(scope='function')
+@fixture(scope="function")
 def load_json():
     """
     :param path: The full path of the file containing the data
     :return: data
     """
+
     def method(path):
-        data = json.load((open(path, 'r')))
+        data = json.load((open(path, "r")))
         return data
+
     return method
 
 
@@ -67,7 +70,7 @@ def load_test_data(path):
     :param path: The full path of the file containing the test data
     :return: test data
     """
-    data = yaml.safe_load((open(path, 'r')))
+    data = yaml.safe_load((open(path, "r")))
     return data
 
 
@@ -122,19 +125,21 @@ def get_test_data_folder(request):
     return data
 
 
-@fixture(scope='function')
+@fixture(scope="function")
 def load_test_input():
     """
     :param path: The full path of the file containing the test input
     :return: test data
     """
+
     def method(path):
-        data = yaml.safe_load((open(path, 'r')))
+        data = yaml.safe_load((open(path, "r")))
         return data
+
     return method
 
 
-@fixture(scope='function')
+@fixture(scope="function")
 def read_xml():
     def method(nuspec_file):
         """
@@ -154,7 +159,7 @@ def read_xml():
     return method
 
 
-@fixture(scope='function')
+@fixture(scope="function")
 def read_pdf():
     def method(user_guide_file):
         """
@@ -164,7 +169,7 @@ def read_pdf():
         """
 
         # creating a pdf file object
-        pdf_file_obj = open(user_guide_file, 'rb')
+        pdf_file_obj = open(user_guide_file, "rb")
 
         # creating a pdf reader object
         pdf_reader = PyPDF2.PdfReader(pdf_file_obj)
@@ -174,12 +179,13 @@ def read_pdf():
     return method
 
 
-@fixture(scope='function')
+@fixture(scope="function")
 def get_filenames():
     """
     :param path: The full path of the file containing the data
     :return: data
     """
+
     def method(path):
         filenames = []
         for _, _, files in os.walk(path + "Framework"):

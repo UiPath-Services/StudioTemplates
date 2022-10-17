@@ -1,17 +1,15 @@
-
 class Constants:
-
     def __init__(self, env):
 
         # Language Selection
         self.PROJECT = {
             "vb": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/VisualBasic/",
-            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/CSharp/"
+            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/CSharp/",
         }[env]
 
         self.TEMPLATE_JSON = {
             "vb": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/.local/template.json",
-            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/.local/template.json"
+            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/.local/template.json",
         }[env]
 
         # Project Constants
