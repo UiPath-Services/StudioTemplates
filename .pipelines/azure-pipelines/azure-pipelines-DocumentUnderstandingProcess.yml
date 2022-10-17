@@ -3,20 +3,18 @@ trigger:
   branches:
     include:
       - develop
-      - master/*
-      - release/*
-
+      - master
+      - release
   paths:
     include:
-    - DocumentUnderstandingProcess/*
-    - .pipelines/*
+    - /DocumentUnderstandingProcess/*
+    - /.pipelines/*
 
 pr: 
   paths:
     include:
-     - DocumentUnderstandingProcess/*
-     - .pipelines/*
-     - azure-pipelines-DocumentUnderstandingProcess.yml
+     - /DocumentUnderstandingProcess/*
+     - /.pipelines/*
 
 variables:
   - template: ../variables/common.yml
@@ -30,15 +28,17 @@ variables:
 stages:
 - stage: Test
   jobs:
+    
     - template: ../jobs/DU-Test.yml
       parameters: 
         projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt0\VisualBasic'
-        name: 'VisualBasic'
+        name: 'vb'
         orchestratorConnection: 'OrAlphaConn'
+
     - template: ../jobs/DU-Test.yml
       parameters: 
         projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt1\CSharp'
-        name: 'CSharp'
+        name: 'csharp'
         orchestratorConnection: 'OrAlphaConn'
 
 - stage: Build
