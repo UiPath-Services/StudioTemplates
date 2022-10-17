@@ -10,7 +10,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1120.888888888889,1279.111111111111</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1244,1336</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CacheDUData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="48">
@@ -76,7 +76,7 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly save DU data to cache. &#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="CacheDUData" sap:VirtualizedContainerService.HintSize="525.3333333333334,1214.2222222222222" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly save DU data to cache. &#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="CacheDUData" sap:VirtualizedContainerService.HintSize="540,1271" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="cachePath" />
     </Sequence.Variables>
@@ -86,7 +86,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="483.55555555555554,60.44444444444444" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="498,70" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[cachePath]</OutArgument>
       </Assign.To>
@@ -94,33 +94,41 @@
         <InArgument x:TypeArguments="x:String">[Path.Combine("./Tests/Cache/", Path.GetFileNameWithoutExtension(in_TargetFile))]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write DocText" sap:VirtualizedContainerService.HintSize="483.55555555555554,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write DocText" sap:VirtualizedContainerService.HintSize="498,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[in_DocText]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_DocText.txt"]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_DocText" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="cachePath + &quot;_DocText.txt&quot;" />
+        </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write DOM" sap:VirtualizedContainerService.HintSize="483.55555555555554,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write DOM" sap:VirtualizedContainerService.HintSize="498,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[Newtonsoft.Json.JsonConvert.SerializeObject(in_Dom)]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_DOM.json"]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="Newtonsoft.Json.JsonConvert.SerializeObject(in_Dom)" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="cachePath + &quot;_DOM.json&quot;" />
+        </InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write Classification Results" sap:VirtualizedContainerService.HintSize="483.55555555555554,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write Classification Results" sap:VirtualizedContainerService.HintSize="498,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[Newtonsoft.Json.JsonConvert.SerializeObject(in_ClassificationResultsArray)]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_CResArray.json"]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <If Condition="[in_ExtractionResultsIndex &gt;= 0 AndAlso in_ExtractionResultsIndex &lt; in_ClassificationResultsArray.Length]" DisplayName="If - Skip Extraction Results if Index is Invalid" sap:VirtualizedContainerService.HintSize="483.55555555555554,498.6666666666667" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[in_ExtractionResultsIndex &gt;= 0 AndAlso in_ExtractionResultsIndex &lt; in_ClassificationResultsArray.Length]" DisplayName="If - Skip Extraction Results if Index is Invalid" sap:VirtualizedContainerService.HintSize="498,585" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
-        <Sequence sap:VirtualizedContainerService.HintSize="412,306.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence sap:VirtualizedContainerService.HintSize="416,322" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="Assign - Append Page Range to Path" sap:VirtualizedContainerService.HintSize="370.22222222222223,60.44444444444444" sap2010:WorkflowViewState.IdRef="Assign_2">
+          <Assign DisplayName="Assign - Append Page Range to Path" sap:VirtualizedContainerService.HintSize="374,70" sap2010:WorkflowViewState.IdRef="Assign_2">
             <Assign.To>
               <OutArgument x:TypeArguments="x:String">[cachePath]</OutArgument>
             </Assign.To>
@@ -128,7 +136,7 @@
               <InArgument x:TypeArguments="x:String">[cachePath + "_" + (in_ClassificationResultsArray(in_ExtractionResultsIndex).DocumentBounds.StartPage + 1).ToString + "-" + (in_ClassificationResultsArray(in_ExtractionResultsIndex).DocumentBounds.StartPage + in_ClassificationResultsArray(in_ExtractionResultsIndex).DocumentBounds.PageCount).ToString]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write Extraction Results" sap:VirtualizedContainerService.HintSize="370.22222222222223,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write Extraction Results" sap:VirtualizedContainerService.HintSize="374,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[Newtonsoft.Json.JsonConvert.SerializeObject(in_ExtractionResults)]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_Extraction.json"]</InArgument>
@@ -137,7 +145,7 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence sap:VirtualizedContainerService.HintSize="400,81" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
