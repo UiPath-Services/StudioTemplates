@@ -1,12 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="ExportTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="ExportTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1107.2,4100.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>968,4100.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="35">
+    <scg:List x:TypeArguments="x:String" Capacity="70">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -42,6 +42,7 @@
       <x:String>UiPath.Testing</x:String>
       <x:String>UiPath.Testing.Activities</x:String>
       <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -109,12 +110,15 @@
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
       <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
       <Variable x:TypeArguments="x:Int32" Name="index" />
-      <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResults" />
+      <Variable x:TypeArguments="p2:ExtractionResult" Name="extractionResults" />
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="cachedExportSheets" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="exportSheets" />
       <Variable x:TypeArguments="sd:DataTable" Name="dt_export" />
       <Variable x:TypeArguments="x:String" Name="pageRange" />
+      <Variable x:TypeArguments="p1:Document" Name="dom" />
+      <Variable x:TypeArguments="x:String" Name="docText" />
+      <Variable x:TypeArguments="p2:ClassificationResult[]" Name="classificationResultsArray" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -212,20 +216,46 @@
       </ui:InvokeWorkflowFile>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadDigitizationFromCache workflow" sap:VirtualizedContainerService.HintSize="430.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadDigitizationFromCache.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_84">in_TargetFile</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_83">config</CSharpValue>
+          </InArgument>
+          <OutArgument x:TypeArguments="p1:Document" x:Key="out_Dom">
+            <CSharpReference x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpReference`1_53">dom</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_DocText">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_52">docText</CSharpReference>
+          </OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadClassificationFromCache workflow" sap:VirtualizedContainerService.HintSize="430.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadClassificationFromCache.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_89">in_TargetFile</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_Taxonomy">
+            <CSharpValue x:TypeArguments="p:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_88">docTaxonomy</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_87">config</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">
+            <CSharpValue x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_86">dom</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_85">docText</CSharpValue>
+          </InArgument>
+          <OutArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="out_ClassificationResultsArray" />
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <ui:ForEach x:TypeArguments="p1:ClassificationResult" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="688.8,1238.4" sap2010:WorkflowViewState.IdRef="ForEach`1_4">
+    <ui:ForEach x:TypeArguments="p2:ClassificationResult" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="688.8,1238.4" sap2010:WorkflowViewState.IdRef="ForEach`1_6">
       <ui:ForEach.Body>
-        <ActivityAction x:TypeArguments="p1:ClassificationResult">
+        <ActivityAction x:TypeArguments="p2:ClassificationResult">
           <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="p1:ClassificationResult" Name="classificationResult" />
+            <DelegateInArgument x:TypeArguments="p2:ClassificationResult" Name="classificationResult" />
           </ActivityAction.Argument>
           <Sequence DisplayName="Body - for each classification result" sap:VirtualizedContainerService.HintSize="516.8,1113.6" sap2010:WorkflowViewState.IdRef="Sequence_22">
             <sap:WorkflowViewStateService.ViewState>
@@ -242,13 +272,36 @@
               </sap:WorkflowViewStateService.ViewState>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadExtractionFromCache workflow" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadExtractionFromCache.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                  <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_96">in_TargetFile</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_Taxonomy">
+                    <CSharpValue x:TypeArguments="p:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_95">docTaxonomy</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+                    <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_94">config</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">
+                    <CSharpValue x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_93">dom</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_92">docText</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResultsArray">
+                    <CSharpValue x:TypeArguments="p2:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_91">classificationResultsArray</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:Int32" x:Key="in_ExtractionResultsIndex">
+                    <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_90">index</CSharpValue>
+                  </InArgument>
+                  <OutArgument x:TypeArguments="p2:ExtractionResult" x:Key="out_ExtractionResults">
+                    <CSharpReference x:TypeArguments="p2:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_54">extractionResults</CSharpReference>
+                  </OutArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Export" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Framework\\70_Export.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="p1:ExtractionResult" x:Key="in_ExtractionResults">
-                    <CSharpValue x:TypeArguments="p1:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">extractionResults</CSharpValue>
+                  <InArgument x:TypeArguments="p2:ExtractionResult" x:Key="in_ExtractionResults">
+                    <CSharpValue x:TypeArguments="p2:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">extractionResults</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
                     <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">config</CSharpValue>
