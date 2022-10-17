@@ -84,10 +84,11 @@ jobs:
 
       - task: AzureCLI@2
         inputs:
+          azureSubscription: 'du-qa-process-framework-rg'
           scriptType: 'ps'
-          azureSubscription: 'QA-EA(59d990e3-de2a-4ed2-bd9e-c098cd714cd6)'
           scriptLocation: 'inlineScript'
-          inlineScript: 'az vm start --resource-group du-qa-process-framework-rg --name du-qa-process-framework-vm --subscription 59d990e3-de2a-4ed2-bd9e-c098cd714cd6'
+          inlineScript: 'az vm start --resource-group du-qa-process-framework-rg --name du-qa-process-framework-vm'
+          useGlobalConfig: true
 
       - task: UiPathTest@2
         displayName: 'Run tests'
