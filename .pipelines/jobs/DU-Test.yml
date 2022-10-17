@@ -11,9 +11,8 @@ jobs:
 
     steps:
       - script: |
-            pip install -r requierments.txt
-            pip install pytest-cov
-            pytest -m "smoke" --env "${{ parameters.name }}" -v -s  --junitxml=junit/test-results.xml
+            pip install -r '$(Build.SourcesDirectory)\DocumentUnderstandingProcess\Tests\requirements.txt'
+            pytest -m "smoke' --env "${{ parameters.name }}" -v -s  --junitxml=junit/test-results.xml
         displayName: "pytest-${{ parameters.name }}"
  
       - task: PublishTestResults@2
