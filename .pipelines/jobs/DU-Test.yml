@@ -82,6 +82,14 @@ jobs:
           scriptPath: '$(Build.SourcesDirectory)\.pipelines\scripts\DocumentUnderstandingProcess\DUTestDataGenerator.py'
           workingDirectory: '$(Build.SourcesDirectory)\.pipelines\scripts\DocumentUnderstandingProcess\'
 
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'du-qa-process-framework-rg'
+          scriptType: 'ps'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az vm start --resource-group du-qa-process-framework-rg --name du-qa-process-framework-vm'
+          useGlobalConfig: true
+
       - task: UiPathTest@2
         displayName: 'Run tests'
         inputs:
