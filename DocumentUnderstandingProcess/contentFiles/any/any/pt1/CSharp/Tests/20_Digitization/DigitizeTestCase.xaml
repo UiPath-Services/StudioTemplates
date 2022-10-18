@@ -3,7 +3,7 @@
     <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>892,1676.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>927.2,1984</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -90,7 +90,7 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Compare the output of the Digitize workflow with a saved digitization result based on the default input file MergedDocuments.pdf" DisplayName="DigitizeTestCase" sap:VirtualizedContainerService.HintSize="616.8,1612" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Test case compares the output of the Digitize workflow with a cached digitization result based on the default input file MergedDocuments.pdf" DisplayName="DigitizeTestCase" sap:VirtualizedContainerService.HintSize="616.8,1919.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
@@ -107,6 +107,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
+    <ui:Comment DisplayName="Test case description" sap:VirtualizedContainerService.HintSize="575.2,113.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Test case compares the output of the Digitize workflow with a cached digitization result based on the default input file MergedDocuments.pdf" />
     <ui:LogMessage DisplayName="DigitizeTestCase started" sap:VirtualizedContainerService.HintSize="575.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
@@ -114,7 +115,7 @@
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575.2,608" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Get the target file" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575.2,761.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -191,6 +192,22 @@
           </InOutArgument>
           <OutArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="out_DocTaxonomy">
             <CSharpReference x:TypeArguments="p:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">docTaxonomy</CSharpReference>
+          </OutArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadDigitizationFromCache workflow" sap:VirtualizedContainerService.HintSize="430.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadDigitizationFromCache.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">in_TargetFile</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">config</CSharpValue>
+          </InArgument>
+          <OutArgument x:TypeArguments="p1:Document" x:Key="out_Dom">
+            <CSharpReference x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpReference`1_22">cachedDom</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_DocText">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_21">cachedDocText</CSharpReference>
           </OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>

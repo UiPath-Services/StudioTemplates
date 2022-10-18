@@ -3,22 +3,18 @@ trigger:
   branches:
     include:
     - develop
-    - master/DocumentUnderstandingProcess*
+    - master
+    - release
   paths:
     include:
-    - DocumentUnderstandingProcess/*
-    - .pipelines/*
+    - /DocumentUnderstandingProcess/*
+    - /.pipelines/*
 
-pr: none
-  # branches:
-  #   include:
-  #   - develop
-  #   - master/DocumentUnderstandingProcess*
-  # paths:
-  #   include:
-  #   - DocumentUnderstandingProcess/*
-  #   - .pipelines/*
-  #   - azure-pipelines-DocumentUnderstandingProcess.yml
+pr: 
+  paths:
+    include:
+     - /DocumentUnderstandingProcess/*
+     - /.pipelines/*
 
 variables:
   - template: ../variables/common.yml
@@ -32,11 +28,13 @@ variables:
 stages:
 - stage: Test
   jobs:
+    
     - template: ../jobs/DU-Test.yml
       parameters: 
         projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt0\VisualBasic'
-        name: 'VisualBasic'
+        name: 'VB'
         orchestratorConnection: 'OrAlphaConn'
+
     - template: ../jobs/DU-Test.yml
       parameters: 
         projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt1\CSharp'
