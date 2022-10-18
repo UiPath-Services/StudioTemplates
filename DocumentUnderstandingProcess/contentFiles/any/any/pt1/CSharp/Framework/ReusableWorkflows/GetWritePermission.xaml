@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="GetWritePermission" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="GetWritePermission" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The name of the queue which acts as a synchronization mechanism." Name="in_AccessQueue" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The path to the folder where the queue is found in Orchestrator." Name="in_AccessQueueFolderPath" Type="InArgument(x:String)" />
@@ -6,7 +6,7 @@
     <x:Property sap2010:Annotation.AnnotationText="The queue item used in the synchronization process." Name="out_AccessToken" Type="OutArgument(ui:QueueItem)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1047.2,1055.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1162.4,1104</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -37,7 +37,8 @@
       <x:String>System.Reflection</x:String>
       <x:String>System.Runtime.Serialization</x:String>
       <x:String>System.Linq.Expressions</x:String>
-      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -73,46 +74,45 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>UiPath.Excel</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is retrieved. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GetWritePermission" sap:VirtualizedContainerService.HintSize="375.2,990.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is retrieved. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GetWritePermission" sap:VirtualizedContainerService.HintSize="478.4,1039.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Comment - GetWritePermission" sap:VirtualizedContainerService.HintSize="333.6,152" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
-    <ui:LogMessage DisplayName="Log Message - GetWritePermission" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:Comment DisplayName="Comment - GetWritePermission" sap:VirtualizedContainerService.HintSize="435.2,161.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
+    <ui:LogMessage DisplayName="Log Message - GetWritePermission" sap:VirtualizedContainerService.HintSize="435.2,102.4" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">String.Format("{0}\n{1}", in_Config["LogMessage_GetWritePermission"], in_Config["logKey"])</mca:CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">String.Format("{0}\n{1}", in_Config["LogMessage_GetWritePermission"], in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:InterruptibleWhile sap2010:Annotation.AnnotationText="When a Transaction Item cannot be obtained, it means another job is writing the file. " DisplayName="While Cannot Get Permission" sap:VirtualizedContainerService.HintSize="333.6,432.8" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+    <ui:InterruptibleWhile CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="When a Transaction Item cannot be obtained, it means another job is writing the file. " DisplayName="While Cannot Get Permission" sap:VirtualizedContainerService.HintSize="435.2,604" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
       <ui:InterruptibleWhile.Body>
-        <Sequence DisplayName="While Body" sap:VirtualizedContainerService.HintSize="241.6,221.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="While Body" sap:VirtualizedContainerService.HintSize="400,383.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:GetQueueItem TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="ContinueOnError = True; we want to retry until successful" ContinueOnError="True" DisplayName="Get &quot;AccessToken&quot;" sap:VirtualizedContainerService.HintSize="200,66.4" sap2010:WorkflowViewState.IdRef="GetQueueItem_1">
+          <ui:GetQueueItem TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="ContinueOnError = True; we want to retry until successful" ContinueOnError="True" DisplayName="Get &quot;AccessToken&quot;" sap:VirtualizedContainerService.HintSize="356.8,229.6" sap2010:WorkflowViewState.IdRef="GetQueueItem_1">
             <ui:GetQueueItem.FolderPath>
               <InArgument x:TypeArguments="x:String">
-                <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_AccessQueueFolderPath</mca:CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_AccessQueueFolderPath</CSharpValue>
               </InArgument>
             </ui:GetQueueItem.FolderPath>
             <ui:GetQueueItem.QueueType>
               <InArgument x:TypeArguments="x:String">
-                <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_AccessQueue</mca:CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_AccessQueue</CSharpValue>
               </InArgument>
             </ui:GetQueueItem.QueueType>
             <ui:GetQueueItem.TransactionItem>
               <OutArgument x:TypeArguments="ui:QueueItem">
-                <mca:CSharpReference x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">out_AccessToken</mca:CSharpReference>
+                <CSharpReference x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">out_AccessToken</CSharpReference>
               </OutArgument>
             </ui:GetQueueItem.TransactionItem>
             <sap:WorkflowViewStateService.ViewState>
@@ -121,7 +121,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:GetQueueItem>
-          <Delay mva:VisualBasic.Settings="{x:Null}" DisplayName="Delay 1 second" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Delay_1">
+          <Delay VisualBasic.Settings="{x:Null}" DisplayName="Delay 1 second" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Delay_1">
             <TextExpression.Namespaces>
               <sco:Collection x:TypeArguments="x:String">
                 <x:String>System.Activities</x:String>
@@ -170,7 +170,7 @@
         </Sequence>
       </ui:InterruptibleWhile.Body>
       <ui:InterruptibleWhile.Condition>
-        <mca:CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">out_AccessToken == null</mca:CSharpValue>
+        <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">out_AccessToken == null</CSharpValue>
       </ui:InterruptibleWhile.Condition>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
