@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="SetTransactionProgress" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="SetTransactionProgress" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The custom progress status of the current transaction item." Name="in_Progress" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Stores the transaction item to be updated in the Orchestrator Queue." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
@@ -7,7 +7,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1048,897.333333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1162.4,905.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -37,8 +37,9 @@
       <x:String>System.Runtime.InteropServices</x:String>
       <x:String>System.Reflection</x:String>
       <x:String>System.Runtime.Serialization</x:String>
-      <x:String>System.Activities.DynamicUpdate</x:String>
       <x:String>System.Linq.Expressions</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -79,37 +80,37 @@
       <AssemblyReference>UiPath.DocumentUnderstanding.ML.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Updates the TransactionProgress. The TransactionItem must exist." DisplayName="SetTransactionProgress" sap:VirtualizedContainerService.HintSize="418,760.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Updates the TransactionProgress. The TransactionItem must exist." DisplayName="SetTransactionProgress" sap:VirtualizedContainerService.HintSize="419.2,840.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="376,94.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:LogMessage DisplayName="Log Message - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="376,102.4" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <mca:CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">String.Format("{0} {1}\n{2}", in_Config["LogMessage_SetTransactionProgress"], in_Progress, in_Config["logKey"])</mca:CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">String.Format("{0} {1}\n{2}", in_Config["LogMessage_SetTransactionProgress"], in_Progress, in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;NOTE: ContinueOnError = TRUE - failing to update the transaction progress should not stop the processing of the transaction." ContinueOnError="False" DisplayName="Retry Scope - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="376,503.333333333333" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;NOTE: ContinueOnError = TRUE - failing to update the transaction progress should not stop the processing of the transaction." ContinueOnError="False" DisplayName="Retry Scope - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="376,607.2" sap2010:WorkflowViewState.IdRef="RetryScope_1">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <ui:SetTransactionProgress TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="The LogKey is added to the progress message in order to facilitate finding the job that is processing the item." DisplayName="Set Transaction Progress with LogKey" sap:VirtualizedContainerService.HintSize="334,180.666666666667" sap2010:WorkflowViewState.IdRef="SetTransactionProgress_1">
+          <ui:SetTransactionProgress TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="The LogKey is added to the progress message in order to facilitate finding the job that is processing the item." DisplayName="Set Transaction Progress with LogKey" sap:VirtualizedContainerService.HintSize="334.4,281.6" sap2010:WorkflowViewState.IdRef="SetTransactionProgress_1">
             <ui:SetTransactionProgress.FolderPath>
               <InArgument x:TypeArguments="x:String">
-                <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">in_Config["DocumentUnderstandingQueuePath"]</mca:CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">in_Config["DocumentUnderstandingQueuePath"]</CSharpValue>
               </InArgument>
             </ui:SetTransactionProgress.FolderPath>
             <ui:SetTransactionProgress.Progress>
               <InArgument x:TypeArguments="x:String">
-                <mca:CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">String.Format("{0}_{1}", in_Progress, in_Config["logKey"])</mca:CSharpValue>
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">String.Format("{0}_{1}", in_Progress, in_Config["logKey"])</CSharpValue>
               </InArgument>
             </ui:SetTransactionProgress.Progress>
             <ui:SetTransactionProgress.TransactionItem>
               <InArgument x:TypeArguments="ui:QueueItem">
-                <mca:CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_TransactionItem</mca:CSharpValue>
+                <CSharpValue x:TypeArguments="ui:QueueItem" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">in_TransactionItem</CSharpValue>
               </InArgument>
             </ui:SetTransactionProgress.TransactionItem>
             <sap:WorkflowViewStateService.ViewState>
@@ -125,12 +126,12 @@
       </ui:RetryScope.Condition>
       <ui:RetryScope.NumberOfRetries>
         <InArgument x:TypeArguments="x:Int32">
-          <mca:CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">in_MaxAttempts</mca:CSharpValue>
+          <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">in_MaxAttempts</CSharpValue>
         </InArgument>
       </ui:RetryScope.NumberOfRetries>
       <ui:RetryScope.RetryInterval>
         <InArgument x:TypeArguments="x:TimeSpan">
-          <mca:CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_RetryInterval</mca:CSharpValue>
+          <CSharpValue x:TypeArguments="x:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_RetryInterval</CSharpValue>
         </InArgument>
       </ui:RetryScope.RetryInterval>
       <sap:WorkflowViewStateService.ViewState>
