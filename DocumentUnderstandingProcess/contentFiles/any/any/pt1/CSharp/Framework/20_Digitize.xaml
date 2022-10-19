@@ -8,7 +8,7 @@
     <x:Property sap2010:Annotation.AnnotationText="The text extracted from the target document." Name="out_DocText" Type="OutArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>600.6666666666666,1249.3333333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1162.4,1201.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -43,10 +43,11 @@
       <x:String>UiPath.Vision.OCR</x:String>
       <x:String>UiPath.OCR.Contracts</x:String>
       <x:String>UiPath.IntelligentOCR.Activities.Digitization</x:String>
-      <x:String>System.Activities.DynamicUpdate</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>UiPath.OCR.Activities</x:String>
       <x:String>UiPath.OCR.Contracts.Activities</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -103,26 +104,26 @@
       <AssemblyReference>System.Security.Permissions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Digitizes the specified file. OCR engine is process-dependant!&#xA;&#xA;Any pre-processing logic that should be executed prior to digitization belongs here." DisplayName="Digitize" sap:VirtualizedContainerService.HintSize="418,1184.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Digitizes the specified file. OCR engine is process-dependant!&#xA;&#xA;Any pre-processing logic that should be executed prior to digitization belongs here." DisplayName="Digitize" sap:VirtualizedContainerService.HintSize="419.2,1136.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - DigitizationStarted" sap:VirtualizedContainerService.HintSize="376,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:LogMessage DisplayName="Log Message - DigitizationStarted" sap:VirtualizedContainerService.HintSize="376,102.4" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">String.Format("{0} {1}\n{2}", in_Config["LogMessage_DigitizationStarted"], Path.GetFileName(in_TargetDocument), in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:Comment DisplayName="Comment Pre-Digitization" sap:VirtualizedContainerService.HintSize="376,94" sap2010:WorkflowViewState.IdRef="Comment_1" Text="If needed, any pre-digitization processing meant to help improve OCR results belongs here. Eg: grayscaling" />
-    <ui:Comment DisplayName="Note About Retry Mechanism" sap:VirtualizedContainerService.HintSize="376,113.33333333333333" sap2010:WorkflowViewState.IdRef="Comment_2" Text="An OCR engine that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
-    <ui:RetryScope sap2010:Annotation.AnnotationText="OCR engines might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsDigitize overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Digitize" sap:VirtualizedContainerService.HintSize="376,592" sap2010:WorkflowViewState.IdRef="RetryScope_1">
+    <ui:Comment DisplayName="Comment Pre-Digitization" sap:VirtualizedContainerService.HintSize="376,104" sap2010:WorkflowViewState.IdRef="Comment_1" Text="If needed, any pre-digitization processing meant to help improve OCR results belongs here. Eg: grayscaling" />
+    <ui:Comment DisplayName="Note About Retry Mechanism" sap:VirtualizedContainerService.HintSize="376,123.2" sap2010:WorkflowViewState.IdRef="Comment_2" Text="An OCR engine that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
+    <ui:RetryScope sap2010:Annotation.AnnotationText="OCR engines might need to make API calls. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsDigitize overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Digitize" sap:VirtualizedContainerService.HintSize="376,596" sap2010:WorkflowViewState.IdRef="RetryScope_1">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <p1:DigitizeDocument ApplyOcrMigrated="True" ApplyOcrOnPdf="Auto" DegreeOfParallelism="-1" DisplayName="Digitize Document - Digitize" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="334,302.6666666666667" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
+          <p1:DigitizeDocument ApplyOcrMigrated="True" ApplyOcrOnPdf="Auto" DegreeOfParallelism="-1" DetectCheckboxes="True" DisplayName="Digitize Document - Digitize" ForceApplyOCR="False" sap:VirtualizedContainerService.HintSize="334,302.6666666666667" sap2010:WorkflowViewState.IdRef="DigitizeDocument_1">
             <p1:DigitizeDocument.DocumentObjectModel>
               <OutArgument x:TypeArguments="p:Document">
                 <CSharpReference x:TypeArguments="p:Document" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">out_DOM</CSharpReference>
@@ -139,10 +140,10 @@
               </OutArgument>
             </p1:DigitizeDocument.DocumentText>
             <p1:DigitizeDocument.OCREngine>
-              <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
-                <ActivityFunc.Argument>
+              <ActivityFunc x:TypeArguments="sd:Image, x:String, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))" Argument2="{x:Reference __ReferenceID0}">
+                <ActivityFunc.Argument1>
                   <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
-                </ActivityFunc.Argument>
+                </ActivityFunc.Argument1>
                 <p2:UiPathDocumentOCR Output="{x:Null}" Text="{x:Null}" UseLocalServer="{x:Null}" ComputeSkewAngle="False" DisplayName="UiPath Document OCR - Digitize" ExtractWords="True" sap:VirtualizedContainerService.HintSize="312,22" sap2010:WorkflowViewState.IdRef="UiPathDocumentOCR_1" Language="auto" Profile="None" Scale="1" Timeout="100000">
                   <p2:UiPathDocumentOCR.ApiKey>
                     <InArgument x:TypeArguments="x:String">
@@ -159,6 +160,13 @@
                       <CSharpValue x:TypeArguments="sd:Image" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">Image</CSharpValue>
                     </InArgument>
                   </p2:UiPathDocumentOCR.Image>
+                  <p2:UiPathDocumentOCR.PredictionId>
+                    <InArgument x:TypeArguments="x:String">
+                      <DelegateArgumentValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="DelegateArgumentValue`1_1">
+                        <DelegateInArgument x:TypeArguments="x:String" x:Name="__ReferenceID0" Name="PredictionId" />
+                      </DelegateArgumentValue>
+                    </InArgument>
+                  </p2:UiPathDocumentOCR.PredictionId>
                 </p2:UiPathDocumentOCR>
               </ActivityFunc>
             </p1:DigitizeDocument.OCREngine>

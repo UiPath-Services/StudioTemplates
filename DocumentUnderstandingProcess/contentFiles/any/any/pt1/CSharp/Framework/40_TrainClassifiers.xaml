@@ -10,7 +10,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1228,1504</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1162.4,1500</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -45,11 +45,12 @@
       <x:String>System.Runtime.Serialization</x:String>
       <x:String>System.Linq.Expressions</x:String>
       <x:String>UiPath.IntelligentOCR.Activities.Training</x:String>
-      <x:String>System.Activities.DynamicUpdate</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Training</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Classification</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -106,7 +107,7 @@
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Classifier training (if needed)." DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="400,1439.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Classifier training (if needed)." DisplayName="TrainClassifiers" sap:VirtualizedContainerService.HintSize="401.6,1435.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="keywordLockName" />
     </Sequence.Variables>
@@ -116,15 +117,15 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Train Classifiers Start" sap:VirtualizedContainerService.HintSize="358.4,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:LogMessage DisplayName="Log Message - Train Classifiers Start" sap:VirtualizedContainerService.HintSize="358.4,102.4" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">String.Format("{0}\n{1}", in_Config["LogMessage_TrainClassifiersStart"], in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:Comment DisplayName="Comment - Train Classifiers" sap:VirtualizedContainerService.HintSize="358.4,344.8" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time.&#xA;&#xA;Three options are readily available (see the Examples folder for sample implementations):&#xA;&#xA;1. Locking/unlocking the learning file before/after accessing it&#xA;2. Using a semaphore to regulate access&#xA;3. Adding training data to a queue and have a dedicated job for training" />
-    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" sap2010:Annotation.AnnotationText="Has timeout to avoid waiting forever.&#xA;&#xA;NOTE: ContinueOnError = True - For classifier training, losing a small bit of training data to allow data extraction seems the preferred approach. This setting should be changed if it does not suit the Business Requirements of the process!" ContinueOnError="True" DisplayName="Invoke LockFile" sap:VirtualizedContainerService.HintSize="358.4,237.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" Timeout="00:00:30" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\LockFile.xaml">
+    <ui:Comment DisplayName="Comment - Train Classifiers" sap:VirtualizedContainerService.HintSize="358.4,354.4" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time.&#xA;&#xA;Three options are readily available (see the Examples folder for sample implementations):&#xA;&#xA;1. Locking/unlocking the learning file before/after accessing it&#xA;2. Using a semaphore to regulate access&#xA;3. Adding training data to a queue and have a dedicated job for training" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" sap2010:Annotation.AnnotationText="Has timeout to avoid waiting forever.&#xA;&#xA;NOTE: ContinueOnError = True - For classifier training, losing a small bit of training data to allow data extraction seems the preferred approach. This setting should be changed if it does not suit the Business Requirements of the process!" ContinueOnError="True" DisplayName="Invoke LockFile" sap:VirtualizedContainerService.HintSize="358.4,247.2" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" Timeout="00:00:30" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\LockFile.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
           <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">in_Config</CSharpValue>
@@ -169,7 +170,7 @@
               </InArgument>
             </p3:TrainClassifiersScope.Taxonomy>
             <p3:TrainClassifiersScope.Trainables>
-              <p3:IntelligentKeywordClassifierTrainer LearningData="{x:Null}" DisplayName="Intelligent Keyword Classifier Trainer - Train Classifiers" sap:VirtualizedContainerService.HintSize="233.6,115.2" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifierTrainer_1" PersistenceId="UIe92f3405e61d43c69621ce0c40eb6099">
+              <p3:IntelligentKeywordClassifierTrainer LearningData="{x:Null}" PredictionId="{x:Null}" DisplayName="Intelligent Keyword Classifier Trainer - Train Classifiers" sap:VirtualizedContainerService.HintSize="233.6,115.2" sap2010:WorkflowViewState.IdRef="IntelligentKeywordClassifierTrainer_1" PersistenceId="UIe92f3405e61d43c69621ce0c40eb6099">
                 <p3:IntelligentKeywordClassifierTrainer.DocumentObjectModel>
                   <InArgument x:TypeArguments="p1:Document">
                     <DelegateArgumentValue x:TypeArguments="p1:Document">

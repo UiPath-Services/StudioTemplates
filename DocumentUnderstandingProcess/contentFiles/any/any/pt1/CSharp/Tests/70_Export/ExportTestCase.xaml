@@ -1,12 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="ExportTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="ExportTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.Collections;assembly=System.Private.CoreLib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1107.2,4100.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>796.8,4088</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="35">
+    <scg:List x:TypeArguments="x:String" Capacity="70">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -42,6 +42,7 @@
       <x:String>UiPath.Testing</x:String>
       <x:String>UiPath.Testing.Activities</x:String>
       <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -103,18 +104,21 @@
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Test case compares the output of the Export workflow with a cached export result based on the default input file MergedDocuments.pdf" DisplayName="ExportTestCase" sap:VirtualizedContainerService.HintSize="730.4,4036" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Test case compares the output of the Export workflow with a cached export result based on the default input file MergedDocuments.pdf" DisplayName="ExportTestCase" sap:VirtualizedContainerService.HintSize="807.2,4023.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
       <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
       <Variable x:TypeArguments="x:Int32" Name="index" />
-      <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResults" />
+      <Variable x:TypeArguments="p2:ExtractionResult" Name="extractionResults" />
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="cachedExportSheets" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="exportSheets" />
-      <Variable x:TypeArguments="sd:DataTable" Name="dt_export" />
+      <Variable x:TypeArguments="sd:DataTable" Name="dtExport" />
       <Variable x:TypeArguments="x:String" Name="pageRange" />
+      <Variable x:TypeArguments="p1:Document" Name="dom" />
+      <Variable x:TypeArguments="x:String" Name="docText" />
+      <Variable x:TypeArguments="p2:ClassificationResult[]" Name="classificationResultsArray" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -122,15 +126,15 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Test case description" sap:VirtualizedContainerService.HintSize="688.8,113.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Test case compares the output of the Export workflow with a cached export result based on the default input file MergedDocuments.pdf" />
-    <ui:LogMessage DisplayName="ExportTestCase started" sap:VirtualizedContainerService.HintSize="688.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:Comment DisplayName="Test case description" sap:VirtualizedContainerService.HintSize="765.6,113.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Test case compares the output of the Export workflow with a cached export result based on the default input file MergedDocuments.pdf" />
+    <ui:LogMessage DisplayName="ExportTestCase started" sap:VirtualizedContainerService.HintSize="765.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">"ExportTestCase started."</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Give the input target file&#xA;Load the number of exported documents" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="688.8,931.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Give the input target file&#xA;Load the number of exported documents" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="765.6,931.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -212,28 +216,56 @@
       </ui:InvokeWorkflowFile>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadDigitizationFromCache workflow" sap:VirtualizedContainerService.HintSize="430.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadDigitizationFromCache.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_84">in_TargetFile</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_83">config</CSharpValue>
+          </InArgument>
+          <OutArgument x:TypeArguments="p1:Document" x:Key="out_Dom">
+            <CSharpReference x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpReference`1_53">dom</CSharpReference>
+          </OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_DocText">
+            <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_52">docText</CSharpReference>
+          </OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadClassificationFromCache workflow" sap:VirtualizedContainerService.HintSize="430.4,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadClassificationFromCache.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <scg:Dictionary x:TypeArguments="x:String, Argument" />
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_89">in_TargetFile</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_Taxonomy">
+            <CSharpValue x:TypeArguments="p:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_88">docTaxonomy</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+            <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_87">config</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">
+            <CSharpValue x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_86">dom</CSharpValue>
+          </InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_85">docText</CSharpValue>
+          </InArgument>
+          <OutArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="out_ClassificationResultsArray">
+            <CSharpReference x:TypeArguments="p2:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpReference`1_55">classificationResultsArray</CSharpReference>
+          </OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <ui:ForEach x:TypeArguments="p1:ClassificationResult" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="688.8,1238.4" sap2010:WorkflowViewState.IdRef="ForEach`1_4">
+    <ui:ForEach x:TypeArguments="p2:ClassificationResult" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="765.6,2508.8" sap2010:WorkflowViewState.IdRef="ForEach`1_6">
       <ui:ForEach.Body>
-        <ActivityAction x:TypeArguments="p1:ClassificationResult">
+        <ActivityAction x:TypeArguments="p2:ClassificationResult">
           <ActivityAction.Argument>
-            <DelegateInArgument x:TypeArguments="p1:ClassificationResult" Name="classificationResult" />
+            <DelegateInArgument x:TypeArguments="p2:ClassificationResult" Name="classificationResult" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body - for each classification result" sap:VirtualizedContainerService.HintSize="516.8,1113.6" sap2010:WorkflowViewState.IdRef="Sequence_22">
+          <Sequence DisplayName="Body - for each classification result" sap:VirtualizedContainerService.HintSize="730.4,2384" sap2010:WorkflowViewState.IdRef="Sequence_22">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <Sequence sap2010:Annotation.AnnotationText="Run extraction workflow for each classification result" DisplayName="... When" sap:VirtualizedContainerService.HintSize="475.2,1020.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Sequence sap2010:Annotation.AnnotationText="Run extraction workflow for each classification result" DisplayName="... When" sap:VirtualizedContainerService.HintSize="688.8,1020.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -242,13 +274,36 @@
               </sap:WorkflowViewStateService.ViewState>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke LoadExtractionFromCache workflow" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Tests\\BatchTestingUtilities\\LoadExtractionFromCache.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                  <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_96">in_TargetFile</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_Taxonomy">
+                    <CSharpValue x:TypeArguments="p:DocumentTaxonomy" sap2010:WorkflowViewState.IdRef="CSharpValue`1_95">docTaxonomy</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+                    <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_94">config</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">
+                    <CSharpValue x:TypeArguments="p1:Document" sap2010:WorkflowViewState.IdRef="CSharpValue`1_93">dom</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_92">docText</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResultsArray">
+                    <CSharpValue x:TypeArguments="p2:ClassificationResult[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_91">classificationResultsArray</CSharpValue>
+                  </InArgument>
+                  <InArgument x:TypeArguments="x:Int32" x:Key="in_ExtractionResultsIndex">
+                    <CSharpValue x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpValue`1_90">index</CSharpValue>
+                  </InArgument>
+                  <OutArgument x:TypeArguments="p2:ExtractionResult" x:Key="out_ExtractionResults">
+                    <CSharpReference x:TypeArguments="p2:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_54">extractionResults</CSharpReference>
+                  </OutArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Export" sap:VirtualizedContainerService.HintSize="433.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Framework\\70_Export.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
-                  <InArgument x:TypeArguments="p1:ExtractionResult" x:Key="in_ExtractionResults">
-                    <CSharpValue x:TypeArguments="p1:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">extractionResults</CSharpValue>
+                  <InArgument x:TypeArguments="p2:ExtractionResult" x:Key="in_ExtractionResults">
+                    <CSharpValue x:TypeArguments="p2:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">extractionResults</CSharpValue>
                   </InArgument>
                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
                     <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">config</CSharpValue>
@@ -330,6 +385,158 @@
                 </ui:ExcelApplicationScope.WorkbookPath>
               </ui:ExcelApplicationScope>
             </Sequence>
+            <Sequence sap2010:Annotation.AnnotationText="Compare the outpur of the export with a saved export results" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="688.8,1230.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="scg:List(x:String)" Name="exportExpectSheets" />
+                <Variable x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" Name="exportResultsDict" />
+                <Variable x:TypeArguments="x:Int32" Name="expectResultColCnt" />
+                <Variable x:TypeArguments="x:Int32" Name="expectResultRowCnt" />
+                <Variable x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" Name="exportExpectDict" />
+                <Variable x:TypeArguments="x:Int32" Name="exportResultColCnt" />
+                <Variable x:TypeArguments="x:Int32" Name="exportResultRowCnt" />
+                <Variable x:TypeArguments="x:Boolean" Name="rowIsEqual" />
+                <Variable x:TypeArguments="x:Int32" Name="indexDataTable" />
+                <Variable x:TypeArguments="x:String" Name="cachedSheetString" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <TryCatch DisplayName="Try Catch - verify content of each sheet" sap:VirtualizedContainerService.HintSize="647.2,1106.4" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                <TryCatch.Try>
+                  <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each sheet in expected results" sap:VirtualizedContainerService.HintSize="610.4,875.2" sap2010:WorkflowViewState.IdRef="ForEach`1_5">
+                    <ui:ForEach.Body>
+                      <ActivityAction x:TypeArguments="x:String">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:String" Name="sheet" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body - For Each sheet in expected results" sap:VirtualizedContainerService.HintSize="575.2,750.4" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="exportSheetString" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_4" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                            <uta:VerifyExpression.Expression>
+                              <InArgument x:TypeArguments="x:Boolean">
+                                <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_59">cachedExportSheets.Count == exportSheets.Count</CSharpValue>
+                              </InArgument>
+                            </uta:VerifyExpression.Expression>
+                            <uta:VerifyExpression.OutputMessageFormat>
+                              <InArgument x:TypeArguments="x:String">
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_60">"Compare number of sheets - "+(cachedExportSheets.Count==exportSheets.Count).ToString()</CSharpValue>
+                              </InArgument>
+                            </uta:VerifyExpression.OutputMessageFormat>
+                          </uta:VerifyExpression>
+                          <ui:ReadRange Range="{x:Null}" AddHeaders="True" DisplayName="Read cached export results" sap:VirtualizedContainerService.HintSize="533.6,88" sap2010:WorkflowViewState.IdRef="ReadRange_3">
+                            <ui:ReadRange.DataTable>
+                              <OutArgument x:TypeArguments="sd:DataTable">
+                                <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_47">dtExport</CSharpReference>
+                              </OutArgument>
+                            </ui:ReadRange.DataTable>
+                            <ui:ReadRange.SheetName>
+                              <InArgument x:TypeArguments="x:String">
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_62">sheet</CSharpValue>
+                              </InArgument>
+                            </ui:ReadRange.SheetName>
+                            <ui:ReadRange.WorkbookPath>
+                              <InArgument x:TypeArguments="x:String">
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_81">@"Tests\Cache\" + "Export" + System.IO.Path.GetFileNameWithoutExtension(in_TargetFile) + "_" + pageRange + ".xlsx"</CSharpValue>
+                              </InArgument>
+                            </ui:ReadRange.WorkbookPath>
+                          </ui:ReadRange>
+                          <ui:OutputDataTable DisplayName="Output the read data" sap:VirtualizedContainerService.HintSize="533.6,80.8" sap2010:WorkflowViewState.IdRef="OutputDataTable_1">
+                            <ui:OutputDataTable.DataTable>
+                              <InArgument x:TypeArguments="sd:DataTable">
+                                <CSharpValue x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_63">dtExport</CSharpValue>
+                              </InArgument>
+                            </ui:OutputDataTable.DataTable>
+                            <ui:OutputDataTable.Text>
+                              <OutArgument x:TypeArguments="x:String">
+                                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_48">cachedSheetString</CSharpReference>
+                              </OutArgument>
+                            </ui:OutputDataTable.Text>
+                          </ui:OutputDataTable>
+                          <ui:ReadRange Range="{x:Null}" AddHeaders="True" DisplayName="Read export results" sap:VirtualizedContainerService.HintSize="533.6,88" sap2010:WorkflowViewState.IdRef="ReadRange_4">
+                            <ui:ReadRange.DataTable>
+                              <OutArgument x:TypeArguments="sd:DataTable">
+                                <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_49">dtExport</CSharpReference>
+                              </OutArgument>
+                            </ui:ReadRange.DataTable>
+                            <ui:ReadRange.SheetName>
+                              <InArgument x:TypeArguments="x:String">
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_65">sheet</CSharpValue>
+                              </InArgument>
+                            </ui:ReadRange.SheetName>
+                            <ui:ReadRange.WorkbookPath>
+                              <InArgument x:TypeArguments="x:String">
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_97">@"Data\Exports\"+ System.IO.Path.GetFileName(in_TargetFile) + "_" + pageRange + ".xlsx"</CSharpValue>
+                              </InArgument>
+                            </ui:ReadRange.WorkbookPath>
+                          </ui:ReadRange>
+                          <ui:OutputDataTable DisplayName="Output the read sheet" sap:VirtualizedContainerService.HintSize="533.6,80.8" sap2010:WorkflowViewState.IdRef="OutputDataTable_2">
+                            <ui:OutputDataTable.DataTable>
+                              <InArgument x:TypeArguments="sd:DataTable">
+                                <CSharpValue x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_66">dtExport</CSharpValue>
+                              </InArgument>
+                            </ui:OutputDataTable.DataTable>
+                            <ui:OutputDataTable.Text>
+                              <OutArgument x:TypeArguments="x:String">
+                                <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_50">exportSheetString</CSharpReference>
+                              </OutArgument>
+                            </ui:OutputDataTable.Text>
+                          </ui:OutputDataTable>
+                          <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Compare content of sheets" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_5" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                            <uta:VerifyExpression.Expression>
+                              <InArgument x:TypeArguments="x:Boolean">
+                                <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_67">cachedSheetString.Equals(exportSheetString) == true</CSharpValue>
+                              </InArgument>
+                            </uta:VerifyExpression.Expression>
+                            <uta:VerifyExpression.OutputMessageFormat>
+                              <InArgument x:TypeArguments="x:String">
+                                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_68">"Compare of sheet "+sheet+" between the cached results and the export results"</CSharpValue>
+                              </InArgument>
+                            </uta:VerifyExpression.OutputMessageFormat>
+                          </uta:VerifyExpression>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEach.Body>
+                    <ui:ForEach.Values>
+                      <InArgument x:TypeArguments="sc:IEnumerable">
+                        <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_58">cachedExportSheets</CSharpValue>
+                      </InArgument>
+                    </ui:ForEach.Values>
+                  </ui:ForEach>
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="613.6,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ActivityAction x:TypeArguments="s:Exception">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                      </ActivityAction.Argument>
+                      <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Sheet not present in export result" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_6" OutputMessageFormat="Numbers of sheets was not equal" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                        <uta:VerifyExpression.Expression>
+                          <InArgument x:TypeArguments="x:Boolean">
+                            <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_70">false == true</CSharpValue>
+                          </InArgument>
+                        </uta:VerifyExpression.Expression>
+                      </uta:VerifyExpression>
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
+            </Sequence>
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
@@ -344,158 +551,6 @@
         </InArgument>
       </ui:ForEach.Values>
     </ui:ForEach>
-    <Sequence sap2010:Annotation.AnnotationText="Compare the outpur of the export with a saved export results" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="688.8,1230.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="scg:List(x:String)" Name="exportExpectSheets" />
-        <Variable x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" Name="exportResultsDict" />
-        <Variable x:TypeArguments="x:Int32" Name="expectResultColCnt" />
-        <Variable x:TypeArguments="x:Int32" Name="expectResultRowCnt" />
-        <Variable x:TypeArguments="scg:Dictionary(x:String, sd:DataTable)" Name="exportExpectDict" />
-        <Variable x:TypeArguments="x:Int32" Name="exportResultColCnt" />
-        <Variable x:TypeArguments="x:Int32" Name="exportResultRowCnt" />
-        <Variable x:TypeArguments="x:Boolean" Name="rowIsEqual" />
-        <Variable x:TypeArguments="x:Int32" Name="indexDataTable" />
-        <Variable x:TypeArguments="x:String" Name="cachedSheetString" />
-      </Sequence.Variables>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-      <TryCatch DisplayName="Try Catch - verify content of each sheet" sap:VirtualizedContainerService.HintSize="647.2,1106.4" sap2010:WorkflowViewState.IdRef="TryCatch_2">
-        <TryCatch.Try>
-          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each sheet in expected results" sap:VirtualizedContainerService.HintSize="610.4,875.2" sap2010:WorkflowViewState.IdRef="ForEach`1_5">
-            <ui:ForEach.Body>
-              <ActivityAction x:TypeArguments="x:String">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="x:String" Name="sheet" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Body - For Each sheet in expected results" sap:VirtualizedContainerService.HintSize="575.2,750.4" sap2010:WorkflowViewState.IdRef="Sequence_25">
-                  <Sequence.Variables>
-                    <Variable x:TypeArguments="x:String" Name="exportSheetString" />
-                  </Sequence.Variables>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_4" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                    <uta:VerifyExpression.Expression>
-                      <InArgument x:TypeArguments="x:Boolean">
-                        <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_59">cachedExportSheets.Count == exportSheets.Count</CSharpValue>
-                      </InArgument>
-                    </uta:VerifyExpression.Expression>
-                    <uta:VerifyExpression.OutputMessageFormat>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_60">"Compare number of sheets - "+(cachedExportSheets.Count==exportSheets.Count).ToString()</CSharpValue>
-                      </InArgument>
-                    </uta:VerifyExpression.OutputMessageFormat>
-                  </uta:VerifyExpression>
-                  <ui:ReadRange Range="{x:Null}" AddHeaders="True" DisplayName="Read cached export results" sap:VirtualizedContainerService.HintSize="533.6,88" sap2010:WorkflowViewState.IdRef="ReadRange_3">
-                    <ui:ReadRange.DataTable>
-                      <OutArgument x:TypeArguments="sd:DataTable">
-                        <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_47">dt_export</CSharpReference>
-                      </OutArgument>
-                    </ui:ReadRange.DataTable>
-                    <ui:ReadRange.SheetName>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_62">sheet</CSharpValue>
-                      </InArgument>
-                    </ui:ReadRange.SheetName>
-                    <ui:ReadRange.WorkbookPath>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_81">@"Tests\Cache\" + "Export" + System.IO.Path.GetFileNameWithoutExtension(in_TargetFile) + "_" + pageRange + ".xlsx"</CSharpValue>
-                      </InArgument>
-                    </ui:ReadRange.WorkbookPath>
-                  </ui:ReadRange>
-                  <ui:OutputDataTable DisplayName="Output the read data" sap:VirtualizedContainerService.HintSize="533.6,80.8" sap2010:WorkflowViewState.IdRef="OutputDataTable_1">
-                    <ui:OutputDataTable.DataTable>
-                      <InArgument x:TypeArguments="sd:DataTable">
-                        <CSharpValue x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_63">dt_export</CSharpValue>
-                      </InArgument>
-                    </ui:OutputDataTable.DataTable>
-                    <ui:OutputDataTable.Text>
-                      <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_48">cachedSheetString</CSharpReference>
-                      </OutArgument>
-                    </ui:OutputDataTable.Text>
-                  </ui:OutputDataTable>
-                  <ui:ReadRange Range="{x:Null}" AddHeaders="True" DisplayName="Read export results" sap:VirtualizedContainerService.HintSize="533.6,88" sap2010:WorkflowViewState.IdRef="ReadRange_4">
-                    <ui:ReadRange.DataTable>
-                      <OutArgument x:TypeArguments="sd:DataTable">
-                        <CSharpReference x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_49">dt_export</CSharpReference>
-                      </OutArgument>
-                    </ui:ReadRange.DataTable>
-                    <ui:ReadRange.SheetName>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_65">sheet</CSharpValue>
-                      </InArgument>
-                    </ui:ReadRange.SheetName>
-                    <ui:ReadRange.WorkbookPath>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_82">@"Data\Exports\"+ System.IO.Path.GetFileName(in_TargetFile) + pageRange + ".xlsx"</CSharpValue>
-                      </InArgument>
-                    </ui:ReadRange.WorkbookPath>
-                  </ui:ReadRange>
-                  <ui:OutputDataTable DisplayName="Output the read sheet" sap:VirtualizedContainerService.HintSize="533.6,80.8" sap2010:WorkflowViewState.IdRef="OutputDataTable_2">
-                    <ui:OutputDataTable.DataTable>
-                      <InArgument x:TypeArguments="sd:DataTable">
-                        <CSharpValue x:TypeArguments="sd:DataTable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_66">dt_export</CSharpValue>
-                      </InArgument>
-                    </ui:OutputDataTable.DataTable>
-                    <ui:OutputDataTable.Text>
-                      <OutArgument x:TypeArguments="x:String">
-                        <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_50">exportSheetString</CSharpReference>
-                      </OutArgument>
-                    </ui:OutputDataTable.Text>
-                  </ui:OutputDataTable>
-                  <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Compare content of sheets" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_5" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                    <uta:VerifyExpression.Expression>
-                      <InArgument x:TypeArguments="x:Boolean">
-                        <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_67">cachedSheetString.Equals(exportSheetString) == true</CSharpValue>
-                      </InArgument>
-                    </uta:VerifyExpression.Expression>
-                    <uta:VerifyExpression.OutputMessageFormat>
-                      <InArgument x:TypeArguments="x:String">
-                        <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_68">"Compare of sheet "+sheet+" between the cached results and the export results"</CSharpValue>
-                      </InArgument>
-                    </uta:VerifyExpression.OutputMessageFormat>
-                  </uta:VerifyExpression>
-                </Sequence>
-              </ActivityAction>
-            </ui:ForEach.Body>
-            <ui:ForEach.Values>
-              <InArgument x:TypeArguments="sc:IEnumerable">
-                <CSharpValue x:TypeArguments="sc:IEnumerable" sap2010:WorkflowViewState.IdRef="CSharpValue`1_58">cachedExportSheets</CSharpValue>
-              </InArgument>
-            </ui:ForEach.Values>
-          </ui:ForEach>
-        </TryCatch.Try>
-        <TryCatch.Catches>
-          <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="613.6,22.4" sap2010:WorkflowViewState.IdRef="Catch`1_2">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <ActivityAction x:TypeArguments="s:Exception">
-              <ActivityAction.Argument>
-                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
-              </ActivityAction.Argument>
-              <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Sheet not present in export result" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_6" OutputMessageFormat="Numbers of sheets was not equal" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
-                <uta:VerifyExpression.Expression>
-                  <InArgument x:TypeArguments="x:Boolean">
-                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_70">false == true</CSharpValue>
-                  </InArgument>
-                </uta:VerifyExpression.Expression>
-              </uta:VerifyExpression>
-            </ActivityAction>
-          </Catch>
-        </TryCatch.Catches>
-      </TryCatch>
-    </Sequence>
     <ui:LogMessage DisplayName="ExportTestCase ended" sap:VirtualizedContainerService.HintSize="688.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">

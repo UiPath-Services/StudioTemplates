@@ -10,7 +10,7 @@ class ProjectJsonTests:
         """
         Checks if the there are mentions of the .variation folder in the project.json
         """
-        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", 'r')))
+        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", "r")))
         # print(get_test_data.load_data(app_constants.PROJECT_JSON_TEST_DATA))
         #
         for element in data["designOptions"]["fileInfoCollection"]:
@@ -23,6 +23,6 @@ class ProjectJsonTests:
         """
         Checks if the main file is Main-ActionCenter
         """
-        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", 'r')))
+        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", "r")))
 
         assert app_constants.MAIN_ACTION_CENTER in data["main"]
