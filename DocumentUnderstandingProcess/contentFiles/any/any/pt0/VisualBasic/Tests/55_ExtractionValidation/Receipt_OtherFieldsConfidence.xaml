@@ -1,13 +1,13 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Receipt_OtherConfTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property sap2010:Annotation.AnnotationText="Contains the value of Confidence level of other fields to be tested" Name="in_otherConfValueData" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="in_otherConfValueExpectedResult" Type="InArgument(x:String)" />
-    <x:Property Name="in_otherConfNameData" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Contains the value of Confidence level of other fields to be tested" Name="in_OtherConfValueData" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="in_OtherConfValueExpectedResult" Type="InArgument(x:String)" />
+    <x:Property Name="in_OtherConfNameData" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1110,2074</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>628,2121</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Receipt_OtherConfTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="30">
@@ -91,7 +91,7 @@
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Receipt_OtherConfTestCase" sap:VirtualizedContainerService.HintSize="638,2009" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Receipt_OtherConfTestCase" sap:VirtualizedContainerService.HintSize="638,2056" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
@@ -109,7 +109,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:Comment DisplayName="Test description" sap:VirtualizedContainerService.HintSize="596,141" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Test case checks the output of the InvoicePostProcessing.xaml workflow in cases when the extracted &quot;Confidence&quot; of the generic confidence fields, have values above and below the threshold." />
-    <ui:LogMessage DisplayName="OtherFieldsConfidenceTestCase started" sap:VirtualizedContainerService.HintSize="596,101" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;OtherFieldsConfidenceTestCase started&quot;]" />
+    <ui:LogMessage DisplayName="OtherFieldsConfidenceTestCase started" sap:VirtualizedContainerService.HintSize="596,148" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;OtherFieldsConfidenceTestCase started&quot;]" />
     <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="596,516" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -204,27 +204,13 @@
       </ui:MultipleAssign>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Other Fields Confidence using in_otherConfValue argument" DisplayName="Invoke ReceiptPostProcessing_mock workflow" sap:VirtualizedContainerService.HintSize="431,164" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\ReceiptPostProcessing_mock_4.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-            <VisualBasicValue x:TypeArguments="p:DocumentTaxonomy" ExpressionText="docTaxonomy" />
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">
-            <Literal x:TypeArguments="x:String">Semi-StructuredDocuments.Financial.Receipt</Literal>
-          </InArgument>
-          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-            <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
-          </InArgument>
-          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">
-            <VisualBasicReference x:TypeArguments="p1:ExtractionResult" ExpressionText="extractionResult" />
-          </InOutArgument>
-          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">
-            <VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="autoExtractionSuccess" />
-          </OutArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-            <Literal x:TypeArguments="x:String">Data\ExampleDocuments\MergedDocuments.pdf</Literal>
-          </InArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">
-            <VisualBasicReference x:TypeArguments="x:String" ExpressionText="testMessage" />
-          </OutArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Receipt</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">Data\ExampleDocuments\MergedDocuments.pdf</InArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">[testMessage]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
