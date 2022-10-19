@@ -1,11 +1,13 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="ClassificationBRValidationTestCase" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
+    <x:Property Name="in_ClassificationResultConfidence" Type="InArgument(x:String)" />
+    <x:Property Name="in_ExpectedResult" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1395.2,2264.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1472,2190</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ClassificationBRValidationTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="66">
@@ -105,7 +107,7 @@
       <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ClassificationBRValidationTestCase" sap:VirtualizedContainerService.HintSize="534.4,2200" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="ClassificationBRValidationTestCase" sap:VirtualizedContainerService.HintSize="535,2125" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
@@ -121,16 +123,15 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Test description" sap:VirtualizedContainerService.HintSize="492.8,152" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Test case checks that the classification results confidence level is above or below the pre-defined threshold, by verifing the output of the 35_ClassificationBusinessRuleValidation.xaml workflow." />
-    <ui:LogMessage DisplayName="Log Message - ClassificationBRValidationTestCase  Start " sap:VirtualizedContainerService.HintSize="492.8,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;ClassificationBRValidationTestCase started.&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="492.8,987.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <ui:LogMessage DisplayName="Log Message - ClassificationBRValidationTestCase  Start " sap:VirtualizedContainerService.HintSize="493,148" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;ClassificationBRValidationTestCase started.&quot;]" />
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="493,1052" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 00_ReadConfigFile workflow" sap:VirtualizedContainerService.HintSize="431.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 00_ReadConfigFile workflow" sap:VirtualizedContainerService.HintSize="431,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
           <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants"}]</InArgument>
@@ -139,7 +140,7 @@
           <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[retryInterval]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:MultipleAssign DisplayName="Multiple Assign - Settings" sap:VirtualizedContainerService.HintSize="431.2,164" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign DisplayName="Multiple Assign - Settings" sap:VirtualizedContainerService.HintSize="431,172" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
         <ui:MultipleAssign.AssignOperations>
           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -169,7 +170,7 @@
           </scg:List>
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 10_InitializeProcess workflow" sap:VirtualizedContainerService.HintSize="431.2,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 10_InitializeProcess workflow" sap:VirtualizedContainerService.HintSize="431,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_AssetsSheet">Assets</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
@@ -179,7 +180,7 @@
           <OutArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="out_DocTaxonomy">[docTaxonomy]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <Assign DisplayName="Assign - AlwaysValidateClassification = FALSE" sap:VirtualizedContainerService.HintSize="431.2,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+      <Assign DisplayName="Assign - AlwaysValidateClassification = FALSE" sap:VirtualizedContainerService.HintSize="431,70" sap2010:WorkflowViewState.IdRef="Assign_8">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[config("AlwaysValidateClassification")]</OutArgument>
         </Assign.To>
