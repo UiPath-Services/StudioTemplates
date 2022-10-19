@@ -1,0 +1,50 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - develop
+      - master/*
+      - release/*
+  paths:
+    include:
+    - /DocumentUnderstandingProcess/*
+    - /.pipelines/*
+
+pr: 
+  paths:
+    include:
+     - /DocumentUnderstandingProcess/*
+     - /.pipelines/*
+
+variables:
+  - template: ../variables/common.yml
+  - name: projectPath
+    value: 'DocumentUnderstandingProcess'
+  - name: projectNuspec
+    value: 'UiPath.Template.DocumentUnderstandingProcess.nuspec'
+  - name: UIPCLIDirectory
+    value: "$(Agent.ToolsDirectory)\\uipcli"
+
+stages:
+- stage: Test
+  jobs:
+    
+    - template: ../jobs/DU-Test.yml
+      parameters: 
+        projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt0\VisualBasic'
+        name: 'VB'
+        orchestratorConnection: 'OrAlphaConn'
+
+    - template: ../jobs/DU-Test.yml
+      parameters: 
+        projectPath: '${{ variables.projectPath }}\contentFiles\any\any\pt1\CSharp'
+        name: 'CSharp'
+        orchestratorConnection: 'OrAlphaConn'
+
+- stage: Build
+  dependsOn: Test
+  jobs:
+    - template: ../jobs/ci.yml
+      parameters: 
+        projectPath: ${{ variables.projectPath }}
+        projectNuspec: ${{ variables.projectNuspec }}
