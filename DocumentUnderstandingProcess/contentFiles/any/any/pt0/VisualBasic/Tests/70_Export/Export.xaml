@@ -134,7 +134,7 @@
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
       <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
-      <Variable x:TypeArguments="x:Int32" Name="index" />
+      <Variable x:TypeArguments="x:Int32" Name="exportResultIndex" />
       <Variable x:TypeArguments="p2:ExtractionResult" Name="extractionResults" />
       <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
       <Variable x:TypeArguments="p1:Document" Name="dom" />
@@ -224,7 +224,7 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[index]" DisplayName="For Each Classification Result" sap:VirtualizedContainerService.HintSize="765.6,2508.8" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[classificationResultsArray]">
+    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[exportResultIndex]" DisplayName="For Each Classification Result" sap:VirtualizedContainerService.HintSize="765.6,2508.8" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[classificationResultsArray]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="p2:ClassificationResult">
           <ActivityAction.Argument>
@@ -257,7 +257,7 @@
                   <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">[dom]</InArgument>
                   <InArgument x:TypeArguments="x:String" x:Key="in_DocText">[docText]</InArgument>
                   <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResultsArray">[classificationResultsArray]</InArgument>
-                  <InArgument x:TypeArguments="x:Int32" x:Key="in_ExtractionResultsIndex">[index]</InArgument>
+                  <InArgument x:TypeArguments="x:Int32" x:Key="in_ExtractionResultsIndex">[exportResultIndex]</InArgument>
                   <OutArgument x:TypeArguments="p2:ExtractionResult" x:Key="out_ExtractionResults">[extractionResults]</OutArgument>
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
