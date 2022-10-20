@@ -10,7 +10,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1029.7777777777778,2484.4444444444443</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1108,2529.3333333333335</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_15_GetTransactionItem_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="39">
@@ -56,7 +56,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="102">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="106">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -108,17 +108,19 @@
       <AssemblyReference>System.Collections</AssemblyReference>
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
       <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="632,2419.5555555555557" sap2010:WorkflowViewState.IdRef="Sequence_16">
+  <Sequence sap:VirtualizedContainerService.HintSize="632,2464.4444444444443" sap2010:WorkflowViewState.IdRef="Sequence_16">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsPinned">False</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="589.3333333333334,2328.8888888888887" sap2010:WorkflowViewState.IdRef="Sequence_60">
+    <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="589.3333333333334,2373.777777777778" sap2010:WorkflowViewState.IdRef="Sequence_60">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -126,7 +128,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:LogMessage DisplayName="Log Message - GetTransactionItem" sap:VirtualizedContainerService.HintSize="527.1111111111111,104.44444444444444" sap2010:WorkflowViewState.IdRef="LogMessage_23" Message="[in_Config(&quot;LogMessage_GetTransactionItem&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-      <Assign sap2010:Annotation.AnnotationText="Preemptively clear the file" DisplayName="Assign - Empty Target File" sap:VirtualizedContainerService.HintSize="527.1111111111111,101.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_24">
+      <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty Target File" sap:VirtualizedContainerService.HintSize="527.1111111111111,101.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_24">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[out_TargetFile]</OutArgument>
         </Assign.To>
@@ -192,7 +194,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:RetryScope>
-      <ui:IfElseIf DisplayName="Else If - Transaction Item &amp; Target File Check" sap:VirtualizedContainerService.HintSize="527.1111111111111,1150.6666666666667" sap2010:WorkflowViewState.IdRef="IfElseIf_1">
+      <ui:IfElseIf sap2010:Annotation.AnnotationText="There is an issue with the Else-If activity where subsequent conditions are checked. Thus the double-check whether the Transaction Item is Nothing" DisplayName="Else If - Transaction Item &amp; Target File Check" sap:VirtualizedContainerService.HintSize="527.1111111111111,1195.5555555555557" sap2010:WorkflowViewState.IdRef="IfElseIf_1">
         <ui:IfElseIf.ConditionBlocks>
           <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
             <ui:IfElseIfBlock BlockType="If" Condition="[out_TransactionItem Is Nothing]">
@@ -207,7 +209,7 @@
                 </Sequence>
               </ui:IfElseIfBlock.Then>
             </ui:IfElseIfBlock>
-            <ui:IfElseIfBlock BlockType="ElseIf" Condition="[not out_TransactionItem.SpecificContent.Keys.Contains(in_Config(&quot;TargetFileKey&quot;))]">
+            <ui:IfElseIfBlock BlockType="ElseIf" Condition="[out_TransactionItem IsNot Nothing AndAlso not out_TransactionItem.SpecificContent.Keys.Contains(in_Config(&quot;TargetFileKey&quot;))]">
               <ui:IfElseIfBlock.Then>
                 <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="400,188" sap2010:WorkflowViewState.IdRef="Sequence_62">
                   <sap:WorkflowViewStateService.ViewState>
@@ -232,7 +234,7 @@
                       <OutArgument x:TypeArguments="x:String">[out_TargetFile]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="x:String">[out_TransactionItem.SpecificContent("TargetFile").ToString]</InArgument>
+                      <InArgument x:TypeArguments="x:String">[out_TransactionItem.SpecificContent(in_Config("TargetFileKey")).ToString]</InArgument>
                     </Assign.Value>
                   </Assign>
                   <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each - Copy SpecificContent to Config " sap:VirtualizedContainerService.HintSize="433.77777777777777,204.88888888888889" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[out_TransactionItem.SpecificContent.Keys]">
@@ -257,6 +259,11 @@
             </ui:IfElseIfBlock>
           </sc:BindingList>
         </ui:IfElseIf.ConditionBlocks>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
       </ui:IfElseIf>
     </Sequence>
   </Sequence>
