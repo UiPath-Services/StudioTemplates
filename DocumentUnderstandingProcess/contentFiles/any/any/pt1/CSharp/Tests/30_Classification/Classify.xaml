@@ -4,7 +4,7 @@
     <x:Property Name="in_UseQueue" Type="InArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>911.2,2427.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>880.8,2427.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="31">
@@ -275,7 +275,7 @@
     </Sequence>
     <Sequence sap2010:Annotation.AnnotationText="Compare the output of the classification with the presaved classification result" DisplayName="... Then" sap:VirtualizedContainerService.HintSize="652,601.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
       <Sequence.Variables>
-        <Variable x:TypeArguments="x:Int32" Name="index" />
+        <Variable x:TypeArguments="x:Int32" Name="classificationIndex" />
       </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -310,24 +310,24 @@
               <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression - Compare DocumentTypeID" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                 <uta:VerifyExpression.Expression>
                   <InArgument x:TypeArguments="x:Boolean">
-                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_50">classificationResult.DocumentTypeId == cachedClassificationResultsArray[index].DocumentTypeId</CSharpValue>
+                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_50">classificationResult.DocumentTypeId == cachedClassificationResultsArray[classificationIndex].DocumentTypeId</CSharpValue>
                   </InArgument>
                 </uta:VerifyExpression.Expression>
                 <uta:VerifyExpression.OutputMessageFormat>
                   <InArgument x:TypeArguments="x:String">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_52">"DocumentTypeID check for document # " + index.ToString()</CSharpValue>
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_52">"DocumentTypeID check for document # " + classificationIndex.ToString()</CSharpValue>
                   </InArgument>
                 </uta:VerifyExpression.OutputMessageFormat>
               </uta:VerifyExpression>
               <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression - Compare Document Bounds" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_3" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                 <uta:VerifyExpression.Expression>
                   <InArgument x:TypeArguments="x:Boolean">
-                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_53">Newtonsoft.Json.JsonConvert.SerializeObject(classificationResult.DocumentBounds).ToLower() == Newtonsoft.Json.JsonConvert.SerializeObject(cachedClassificationResultsArray[index].DocumentBounds).ToLower()</CSharpValue>
+                    <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_53">Newtonsoft.Json.JsonConvert.SerializeObject(classificationResult.DocumentBounds).ToLower() == Newtonsoft.Json.JsonConvert.SerializeObject(cachedClassificationResultsArray[classificationIndex].DocumentBounds).ToLower()</CSharpValue>
                   </InArgument>
                 </uta:VerifyExpression.Expression>
                 <uta:VerifyExpression.OutputMessageFormat>
                   <InArgument x:TypeArguments="x:String">
-                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_54">"DocumentBounds check for document # " + index.ToString()</CSharpValue>
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_54">"DocumentBounds check for document # " + classificationIndex.ToString()</CSharpValue>
                   </InArgument>
                 </uta:VerifyExpression.OutputMessageFormat>
               </uta:VerifyExpression>
@@ -336,7 +336,7 @@
         </ui:ForEach.Body>
         <ui:ForEach.CurrentIndex>
           <OutArgument x:TypeArguments="x:Int32">
-            <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_25">index</CSharpReference>
+            <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_25">classificationIndex</CSharpReference>
           </OutArgument>
         </ui:ForEach.CurrentIndex>
         <ui:ForEach.Values>
