@@ -24,6 +24,7 @@ class Constants:
         self.NUSPEC = "../../DocumentUnderstandingProcess/UiPath.Template.DocumentUnderstandingProcess.nuspec"
         self.MAIN_ACTION_CENTER = "Main-ActionCenter.xaml"
         self.MAIN_ATTENDED = "Main-Attended.xaml"
+        self.FRAMEWORK = self.PROJECT + "Framework"
         self.MOCK = self.PROJECT + "Mocks/"
         self.MOCK_CONFIG = self.PROJECT + "Mocks/mock_config.json"
         self.MOCK_REUSABLE_FOLDER = self.PROJECT + "Mocks/Framework/ReusableWorkflows"
