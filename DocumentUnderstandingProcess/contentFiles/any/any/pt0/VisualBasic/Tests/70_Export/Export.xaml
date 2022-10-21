@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>911.2,4056.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1127.2,3947.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ExportTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="43">
@@ -129,7 +129,7 @@
       <AssemblyReference>System.Text.Encoding.CodePages</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ExportTestCase" sap:VirtualizedContainerService.HintSize="807.2,3992" sap2010:WorkflowViewState.IdRef="Sequence_53">
+  <Sequence sap2010:Annotation.AnnotationText="The test case compares the output of the 70_Export.xaml workflow with a cached export result based on the default input file &quot;MergedDocuments.pdf&quot;." DisplayName="ExportTestCase" sap:VirtualizedContainerService.HintSize="807.2,3882.4" sap2010:WorkflowViewState.IdRef="Sequence_53">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
       <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
@@ -145,9 +145,9 @@
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Test case description" sap:VirtualizedContainerService.HintSize="765.6,113.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Test case compares the output of the 70_Export.xaml workflow with a cached export result based on the default input file MergedDocuments.pdf." />
     <ui:LogMessage DisplayName="ExportTestCase started" sap:VirtualizedContainerService.HintSize="765.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;ExportTestCase started.&quot;]" />
     <Sequence sap2010:Annotation.AnnotationText="Read the Config file&#xA;Give the input target file&#xA;Load the number of exported documents" DisplayName="... Given" sap:VirtualizedContainerService.HintSize="765.6,931.2" sap2010:WorkflowViewState.IdRef="Sequence_11">
       <sap:WorkflowViewStateService.ViewState>
@@ -337,12 +337,12 @@
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Compare number of sheets" Expression="[cachedExportSheets.Count = exportSheets.Count]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_11" OutputMessageFormat="[&quot;Compare number of sheets - &quot;+(cachedExportSheets.Count=exportSheets.Count).ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
+                          <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Compare number of sheets" Expression="[cachedExportSheets.Count = exportSheets.Count]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_11" OutputMessageFormat="Assert: Number of sheets in export result is equal to number of sheets in cached export.&#xD;&#xA;Tested without data variation.&#xD;&#xA;Input value: default document&#xD;&#xA;Expected outcome: True&#xD;&#xA;Actual outcome result: {Result}" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
                           <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtExport]" DisplayName="Read cached export results" sap:VirtualizedContainerService.HintSize="533.6,88" sap2010:WorkflowViewState.IdRef="ReadRange_3" SheetName="[sheet]" WorkbookPath="[Path.Combine(&quot;Tests\Cache\&quot;, &quot;Export&quot; + Path.GetFileNameWithoutExtension(in_TargetFile) + &quot;_&quot; + pageRange + &quot;.xlsx&quot;)]" />
                           <ui:OutputDataTable DataTable="[dtExport]" DisplayName="Output the read data" sap:VirtualizedContainerService.HintSize="533.6,80.8" sap2010:WorkflowViewState.IdRef="OutputDataTable_1" Text="[cachedSheetString]" />
                           <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[dtExport]" DisplayName="Read export results" sap:VirtualizedContainerService.HintSize="533.6,88" sap2010:WorkflowViewState.IdRef="ReadRange_4" SheetName="[sheet]" WorkbookPath="[Path.Combine(&quot;Data\Exports\&quot;, Path.GetFileName(in_TargetFile) + &quot;_&quot; + pageRange + &quot;.xlsx&quot;)]" />
                           <ui:OutputDataTable DataTable="[dtExport]" DisplayName="Output the read sheet" sap:VirtualizedContainerService.HintSize="533.6,80.8" sap2010:WorkflowViewState.IdRef="OutputDataTable_3" Text="[exportSheetString]" />
-                          <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Compare content of sheets" Expression="[cachedSheetString.Equals(exportSheetString) = true]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_10" OutputMessageFormat="[&quot;Compare of sheet &quot;+sheet+&quot; between the cached results and the export results&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                          <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Compare content of sheets" Expression="[cachedSheetString.Equals(exportSheetString) = true]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_10" OutputMessageFormat="[&quot;Assert: Content of sheet &quot;+sheet+&quot; in the export result is equal to the content of sheet &quot; + sheet + &quot; in cached export.&#xD;&#xA;Tested without data variation.&#xD;&#xA;Input value: default document&#xD;&#xA;Expected outcome: True&#xD;&#xA;Actual outcome result: {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
