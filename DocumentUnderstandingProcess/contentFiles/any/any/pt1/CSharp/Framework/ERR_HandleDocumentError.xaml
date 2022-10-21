@@ -2,11 +2,11 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The file that triggered the exception when processed." Name="in_TargetFile" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The range of pages within the file where the process was aborted." Name="in_PageRange" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="The message from the exception that is thrown when the process is aborted." Name="in_Exception" Type="InArgument(s:Exception)" />
+    <x:Property sap2010:Annotation.AnnotationText="Used to determine if the process ended with an exception and the type of exception that was thrown if the process was aborted during the execution." Name="in_Exception" Type="InArgument(s:Exception)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1145.6,652.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1530,705</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -37,6 +37,8 @@
       <x:String>System.Reflection</x:String>
       <x:String>System.Runtime.Serialization</x:String>
       <x:String>System.Linq.Expressions</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -88,20 +90,20 @@
       <AssemblyReference>System.Collections</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Workflow executes when an exception occurs when processing a classified document.&#xA;&#xA;Any error cleanup should be done here.&#xA;&#xA;NOTE: By default, all exceptions are treated the same. " DisplayName="ERR_HandleDocumentError" sap:VirtualizedContainerService.HintSize="375.2,389.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Workflow executes when an exception occurs when processing a classified document.&#xA;&#xA;Any error cleanup should be done here.&#xA;&#xA;NOTE: By default, all exceptions are treated the same. " DisplayName="ERR_HandleDocumentError" sap:VirtualizedContainerService.HintSize="400,296" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - HandleDocumentError" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn">
+    <ui:LogMessage DisplayName="Log Message - HandleDocumentError" sap:VirtualizedContainerService.HintSize="358,101" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">String.Format(in_Config["WarnMessage_DocumentProcessingFailure"]+"\n{5}", in_PageRange, in_TargetFile, in_Exception.GetType().Name, in_Exception.Message, in_Exception.ToString(), in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:Comment DisplayName="Comment - Cleanup Code" sap:VirtualizedContainerService.HintSize="333.6,56" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Error cleanup code belongs here" />
+    <ui:Comment DisplayName="Comment - Cleanup Code" sap:VirtualizedContainerService.HintSize="358,65" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Error cleanup code belongs here" />
   </Sequence>
 </Activity>
