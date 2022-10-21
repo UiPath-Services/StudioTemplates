@@ -7,10 +7,10 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1110,2242</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1549,2242</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>InvoicePostProcessing_MandatoryFieldsTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="30">
+    <scg:List x:TypeArguments="x:String" Capacity="60">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -41,6 +41,8 @@
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -93,16 +95,16 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="InvoicePostProcessing_MandatoryFieldsTestCase" sap:VirtualizedContainerService.HintSize="618,2177" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
-      <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
-      <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
-      <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
-      <Variable x:TypeArguments="x:String" Name="targetFile" />
-      <Variable x:TypeArguments="x:Boolean" Name="autoExtractionSuccess" />
-      <Variable x:TypeArguments="x:String" Name="testMessage" />
-      <Variable x:TypeArguments="x:String" Name="mandatoryFieldValueData" />
-      <Variable x:TypeArguments="x:String" Name="mandatoryFieldNameData" />
-      <Variable x:TypeArguments="x:String" Name="mandatoryFieldExpectedResult" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="config" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="maxAttempts" />
+      <Variable x:TypeArguments="x:TimeSpan" sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="retryInterval" />
+      <Variable x:TypeArguments="p:DocumentTaxonomy" sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="docTaxonomy" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="targetFile" />
+      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the extraction process." Name="autoExtractionSuccess" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the message of the test." Name="testMessage" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the value to be tested" Name="mandatoryFieldValueData" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the name of the field to be tested" Name="mandatoryFieldNameData" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="mandatoryFieldExpectedResult" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -210,27 +212,13 @@
       </ui:MultipleAssign>
       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Mandatory Fields Check using in_MandatoryFieldName and in_MandatoryFieldValue arguments" DisplayName="Invoke InvoicePostProcessing_mock_1 workflow" sap:VirtualizedContainerService.HintSize="431,179" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\InvoicePostProcessing_mock_1.xaml">
         <ui:InvokeWorkflowFile.Arguments>
-          <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
-            <Literal x:TypeArguments="x:String">Data\ExampleDocuments\MergedDocuments.pdf</Literal>
-          </InArgument>
-          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">
-            <VisualBasicValue x:TypeArguments="p:DocumentTaxonomy" ExpressionText="docTaxonomy" />
-          </InArgument>
-          <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">
-            <Literal x:TypeArguments="x:String">Semi-StructuredDocuments.Financial.Invoice</Literal>
-          </InArgument>
-          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
-            <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
-          </InArgument>
-          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">
-            <VisualBasicReference x:TypeArguments="p1:ExtractionResult" ExpressionText="extractionResult" />
-          </InOutArgument>
-          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">
-            <VisualBasicReference x:TypeArguments="x:Boolean" ExpressionText="autoExtractionSuccess" />
-          </OutArgument>
-          <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">
-            <VisualBasicReference x:TypeArguments="x:String" ExpressionText="testMessage" />
-          </OutArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">Data\ExampleDocuments\MergedDocuments.pdf</InArgument>
+          <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Invoice</InArgument>
+          <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
+          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
+          <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">[testMessage]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
