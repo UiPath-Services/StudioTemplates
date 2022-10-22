@@ -5,7 +5,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Contains data variation for the classification result confidence." Name="in_ClassifyResultConfidence" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>830.4,2029.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1227.2,2029.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>TestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="66">
@@ -252,7 +252,7 @@
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:Single">
-                  <CSharpValue x:TypeArguments="x:Single" sap2010:WorkflowViewState.IdRef="CSharpValue`1_49">string.IsNullOrWhiteSpace(in_ExpectedResult) ? classificationResultsArray[0].Confidence : Convert.ToSingle(Convert.ToDecimal(in_ClassifyResultConfidence))</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:Single" sap2010:WorkflowViewState.IdRef="CSharpValue`1_55">in_ExpectedResult == null ? classificationResultsArray[0].Confidence : Convert.ToSingle(Convert.ToDecimal(in_ClassifyResultConfidence))</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -264,7 +264,7 @@
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_53">string.IsNullOrWhiteSpace(in_ExpectedResult.ToLower()) ? "True" : in_ExpectedResult</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_59">in_ExpectedResult == null ? "True" : in_ExpectedResult</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -322,7 +322,7 @@
         </uta:VerifyExpression.Expression>
         <uta:VerifyExpression.OutputMessageFormat>
           <InArgument x:TypeArguments="x:String">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_52" xml:space="preserve">"Assert: The classification result confidence is higher than the classification result threshold."+ "\n" + (String.IsNullOrWhiteSpace(in_ExpectedResult) ? "Tested without data variation." + "\n" + "Input value: default document " : "Tested with data variation." + "\n" + "Input value: " + in_ClassifyResultConfidence).ToString() + "\n" + "Expected outcome: " + expectedResult + "\n" +  "Actual outcome: " +  classificationSuccessFlag.ToString()</CSharpValue>
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_54" xml:space="preserve">"Assert: The classification result confidence is higher than the classification result threshold."+ "\n" + ((in_ExpectedResult == null) ? "Tested without data variation." + "\n" + "Input value: default document " : "Tested with data variation." + "\n" + "Input value: " + in_ClassifyResultConfidence).ToString() + "\n" + "Expected outcome: " + expectedResult + "\n" +  "Actual outcome: " +  classificationSuccessFlag.ToString()</CSharpValue>
           </InArgument>
         </uta:VerifyExpression.OutputMessageFormat>
         <sap:WorkflowViewStateService.ViewState>
