@@ -329,20 +329,20 @@
                 <ActivityAction.Argument>
                   <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                 </ActivityAction.Argument>
-                <Sequence DisplayName="Set Date Failure" sap:VirtualizedContainerService.HintSize="400,281" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                <Sequence DisplayName="Set Date Failure" sap:VirtualizedContainerService.HintSize="400,296" sap2010:WorkflowViewState.IdRef="Sequence_3">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Setting the Date Failure" sap:VirtualizedContainerService.HintSize="358,101" sap2010:WorkflowViewState.IdRef="LogMessage_2">
+                  <ui:LogMessage DisplayName="Setting the Date Failure" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_2">
                     <ui:LogMessage.Message>
                       <InArgument x:TypeArguments="x:Object">
                         <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_62">String.Format("{0}\n{1}", in_Config["LogMessage_ReceiptPostProcessing_DateFailure"], in_Config["logKey"])</CSharpValue>
                       </InArgument>
                     </ui:LogMessage.Message>
                   </ui:LogMessage>
-                  <Assign DisplayName="Set AutoExtraction to False" sap:VirtualizedContainerService.HintSize="358,70" sap2010:WorkflowViewState.IdRef="Assign_3">
+                  <Assign DisplayName="Set AutoExtraction to False" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_3">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Boolean">
                         <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">out_AutoExtractionSuccess</CSharpReference>
@@ -799,7 +799,7 @@
               </OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:String">true</InArgument>
+              <InArgument x:TypeArguments="x:String">True</InArgument>
             </Assign.Value>
           </Assign>
           <Flowchart sap2010:Annotation.AnnotationText="In this step, we check to see if we have found any issues up until now in the process. If we did, we skip this flowchart and set the AutoExtraction to False, otherwise, we continue with the checks:&#xA;1. Total - Checks to see if the sum of the additions to the subtotal match the extracted Total. &#xA;2.  Specific Fields - Checks the list (defined in the Config File) with their specific confidence threshold. If they are below that, the process will require manual validation.&#xA;3. Other fields - Checks the list ( defined in the Config File) with the confidence threshold defined for 'other-Confidence'. If they are below that, the process will require manual validation.&#xA;&#xA;If at any point, the above steps return a 'true', the receipt will require manual validation. &#xA;If all the if pass through the 'false' branch, the receipt will skip manual validation and go directly to the next step." DisplayName="Extraction Results Check" sap:VirtualizedContainerService.HintSize="1067.2,956" sap2010:WorkflowViewState.IdRef="Flowchart_4">
@@ -876,7 +876,7 @@
                 </FlowStep>
               </FlowDecision.True>
               <FlowDecision.False>
-                <FlowDecision x:Name="__ReferenceID8" DisplayName="Specific Fields Confidence?" sap:VirtualizedContainerService.HintSize="148,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_11">
+                <FlowDecision x:Name="__ReferenceID8" DisplayName="Specific Fields Confidence?" sap:VirtualizedContainerService.HintSize="149.6,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_11">
                   <FlowDecision.Condition>
                     <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_88">confidenceFields.Any(confField =&gt; (! String.IsNullOrEmpty(documentFields[confField]) &amp;&amp; ! io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(missing =&gt; missing.IsMissing.Equals(true)).First() &amp;&amp; Convert.ToDecimal(io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(actual_field =&gt; actual_field.Values.Select(val =&gt; val.Confidence)).First().First())*100 &lt; Convert.ToDecimal(in_Config[confField+"-Confidence"])? true : false))</CSharpValue>
                   </FlowDecision.Condition>
@@ -884,9 +884,9 @@
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <av:Point x:Key="ShapeLocation">616,416.5</av:Point>
-                      <av:Size x:Key="ShapeSize">148,87.2</av:Size>
+                      <av:Size x:Key="ShapeSize">149.6,87.2</av:Size>
                       <av:PointCollection x:Key="TrueConnector">616,460.1 586.0000000000001,460.1 586.0000000000001,455 531.4,455</av:PointCollection>
-                      <av:PointCollection x:Key="FalseConnector">764,460 790,460 790,586.5</av:PointCollection>
+                      <av:PointCollection x:Key="FalseConnector">765.6,460.1 789.8,460.1 789.8,586.5</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                   <FlowDecision.True>
@@ -905,7 +905,7 @@
                           </OutArgument>
                         </Assign.To>
                         <Assign.Value>
-                          <InArgument x:TypeArguments="x:String">false</InArgument>
+                          <InArgument x:TypeArguments="x:String">False</InArgument>
                         </Assign.Value>
                       </Assign>
                       <FlowStep.Next>

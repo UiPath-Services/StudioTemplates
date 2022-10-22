@@ -4,7 +4,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="in_InvoiceDateExpectedResult" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>830.4,1800.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1227.2,1800.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>TestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="64">
@@ -108,6 +108,8 @@
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the message of the test." Name="testMessage" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="invoiceExpectedResult" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the value to be tested" Name="invoiceDateData" />
+      <Variable x:TypeArguments="x:String" Name="extractionResultString" />
+      <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -177,10 +179,6 @@
       </Assign>
     </Sequence>
     <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="575.2,592.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="extractionResultString" />
-        <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResult" />
-      </Sequence.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -204,7 +202,7 @@
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
               <ui:AssignOperation.To>
                 <OutArgument x:TypeArguments="p1:ExtractionResult">
-                  <CSharpReference x:TypeArguments="p1:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">extractionResult</CSharpReference>
+                  <CSharpReference x:TypeArguments="p1:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_18">extractionResult</CSharpReference>
                 </OutArgument>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
@@ -233,7 +231,7 @@
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">
-                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_33">string.IsNullOrWhiteSpace(in_InvoiceDateExpectedResult.ToLower()) ? "true" : in_InvoiceDateExpectedResult</CSharpValue>
+                  <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_36">string.IsNullOrWhiteSpace(in_InvoiceDateExpectedResult) ? "True" : in_InvoiceDateExpectedResult</CSharpValue>
                 </InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
@@ -293,7 +291,7 @@
         </uta:VerifyExpressionWithOperator.FirstExpression>
         <uta:VerifyExpressionWithOperator.OutputMessageFormat>
           <InArgument x:TypeArguments="x:String">
-            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_34">"Assert: Parsing the Date.\n" + (String.IsNullOrWhiteSpace(in_InvoiceDateExpectedResult.ToLower()) ? "Tested without data variation.\nInput value: default document " : "Tested with data variation.\nInput value: " + invoiceDateData).ToString() + "\nExpected outcome: " + invoiceExpectedResult + "\nActual outcome: " + testMessage</CSharpValue>
+            <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_37">"Assert: Parsing the Date.\n" + (String.IsNullOrWhiteSpace(in_InvoiceDateExpectedResult) ? "Tested without data variation.\nInput value: default document " : "Tested with data variation.\nInput value: " + invoiceDateData).ToString() + "\nExpected outcome: " + invoiceExpectedResult + "\nActual outcome: " + testMessage</CSharpValue>
           </InArgument>
         </uta:VerifyExpressionWithOperator.OutputMessageFormat>
         <uta:VerifyExpressionWithOperator.SecondExpression>
