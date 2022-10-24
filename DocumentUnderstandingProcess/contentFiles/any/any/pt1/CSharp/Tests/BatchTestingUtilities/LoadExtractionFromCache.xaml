@@ -1,13 +1,13 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="LoadExtractionFromCache" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
-    <x:Property Name="in_Taxonomy" Type="InArgument(p:DocumentTaxonomy)" />
-    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property Name="in_Dom" Type="InArgument(p1:Document)" />
-    <x:Property Name="in_DocText" Type="InArgument(x:String)" />
-    <x:Property Name="in_ClassificationResultsArray" Type="InArgument(p2:ClassificationResult[])" />
-    <x:Property Name="in_ExtractionResultsIndex" Type="InArgument(x:Int32)" />
-    <x:Property Name="out_ExtractionResults" Type="OutArgument(p2:ExtractionResult)" />
+    <x:Property sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="in_Taxonomy" Type="InArgument(p:DocumentTaxonomy)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property sap2010:Annotation.AnnotationText="The Document Object Model (DOM) of the target document." Name="in_Dom" Type="InArgument(p1:Document)" />
+    <x:Property sap2010:Annotation.AnnotationText="The text extracted from the target document." Name="in_DocText" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The array of classification results given by running the chosen classifier over the target document." Name="in_ClassificationResultsArray" Type="InArgument(p2:ClassificationResult[])" />
+    <x:Property sap2010:Annotation.AnnotationText="Contains The Extraction Results Index." Name="in_ExtractionResultsIndex" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="out_ExtractionResults" Type="OutArgument(p2:ExtractionResult)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap:VirtualizedContainerService.HintSize>1530,1070</sap:VirtualizedContainerService.HintSize>
@@ -42,10 +42,12 @@
       <x:String>System.Runtime.Serialization</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="39">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="78">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
@@ -89,7 +91,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="LoadExtractionFromCache" sap:VirtualizedContainerService.HintSize="524,1005" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="cachePath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the file path of the data written to cache." Name="cachePath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -164,7 +166,7 @@
               </InArgument>
             </ui:LogMessage.Message>
           </ui:LogMessage>
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="334,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\\50_Extract.xaml">
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="358,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\\50_Extract.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">
                 <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">in_TargetFile</CSharpValue>
@@ -184,12 +186,8 @@
               <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
                 <CSharpValue x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">in_Config</CSharpValue>
               </InArgument>
-              <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">
-                <Literal x:TypeArguments="x:Int32" Value="1" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">
-                <Literal x:TypeArguments="x:TimeSpan" />
-              </InArgument>
+              <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">1</InArgument>
+              <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">00:00:00</InArgument>
               <OutArgument x:TypeArguments="p2:ExtractionResult" x:Key="out_ExtractionResults">
                 <CSharpReference x:TypeArguments="p2:ExtractionResult" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">out_ExtractionResults</CSharpReference>
               </OutArgument>

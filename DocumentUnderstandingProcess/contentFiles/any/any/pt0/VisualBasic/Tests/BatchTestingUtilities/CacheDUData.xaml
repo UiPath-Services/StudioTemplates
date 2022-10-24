@@ -1,16 +1,16 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="CacheDUData" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
-    <x:Property Name="in_DocText" Type="InArgument(x:String)" />
-    <x:Property Name="in_Dom" Type="InArgument(p:Document)" />
-    <x:Property Name="in_ClassificationResultsArray" Type="InArgument(p1:ClassificationResult[])" />
-    <x:Property Name="in_ExtractionResultsIndex" Type="InArgument(x:Int32)" />
-    <x:Property Name="in_ExtractionResults" Type="InArgument(p1:ExtractionResult)" />
+    <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The text extracted from the target document." Name="in_DocText" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The Document Object Model (DOM) of the target document." Name="in_Dom" Type="InArgument(p:Document)" />
+    <x:Property sap2010:Annotation.AnnotationText="The array of classification results given by running the chosen classifier over the target document." Name="in_ClassificationResultsArray" Type="InArgument(p1:ClassificationResult[])" />
+    <x:Property sap2010:Annotation.AnnotationText="Contains The Extraction Results Index." Name="in_ExtractionResultsIndex" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="in_ExtractionResults" Type="InArgument(p1:ExtractionResult)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1244,1336</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1549,1336</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CacheDUData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="48">
@@ -39,6 +39,8 @@
       <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.Reflection</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -78,7 +80,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly save DU data to cache. &#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="CacheDUData" sap:VirtualizedContainerService.HintSize="540,1271" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="cachePath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the file path of the data written to cache." Name="cachePath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -96,22 +98,14 @@
     </Assign>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write DocText" sap:VirtualizedContainerService.HintSize="498,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_DocText" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="cachePath + &quot;_DocText.txt&quot;" />
-        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[in_DocText]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_DocText.txt"]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write DOM" sap:VirtualizedContainerService.HintSize="498,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="Newtonsoft.Json.JsonConvert.SerializeObject(in_Dom)" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">
-          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="cachePath + &quot;_DOM.json&quot;" />
-        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[Newtonsoft.Json.JsonConvert.SerializeObject(in_Dom)]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_DOM.json"]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write Classification Results" sap:VirtualizedContainerService.HintSize="498,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
@@ -138,12 +132,8 @@
           </Assign>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Write Extraction Results" sap:VirtualizedContainerService.HintSize="374,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\WriteDataToCache.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <InArgument x:TypeArguments="x:String" x:Key="in_DataString">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="Newtonsoft.Json.JsonConvert.SerializeObject(in_ExtractionResults)" />
-              </InArgument>
-              <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">
-                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="cachePath + &quot;_Extraction.json&quot;" />
-              </InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_DataString">[Newtonsoft.Json.JsonConvert.SerializeObject(in_ExtractionResults)]</InArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="in_CachePath">[cachePath + "_Extraction.json"]</InArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
         </Sequence>

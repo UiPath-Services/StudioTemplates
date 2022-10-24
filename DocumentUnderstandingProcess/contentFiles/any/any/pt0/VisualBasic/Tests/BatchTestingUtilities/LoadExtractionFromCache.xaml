@@ -1,18 +1,18 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="LoadExtractionFromCache" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/taxonomy" xmlns:p1="http://schemas.uipath.com/workflow/activities/document-processing-contracts/dom" xmlns:p2="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_TargetFile" Type="InArgument(x:String)" />
-    <x:Property Name="in_Taxonomy" Type="InArgument(p:DocumentTaxonomy)" />
-    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
-    <x:Property Name="in_Dom" Type="InArgument(p1:Document)" />
-    <x:Property Name="in_DocText" Type="InArgument(x:String)" />
-    <x:Property Name="in_ClassificationResultsArray" Type="InArgument(p2:ClassificationResult[])" />
-    <x:Property Name="in_ExtractionResultsIndex" Type="InArgument(x:Int32)" />
-    <x:Property Name="out_ExtractionResults" Type="OutArgument(p2:ExtractionResult)" />
+    <x:Property sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="in_Taxonomy" Type="InArgument(p:DocumentTaxonomy)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
+    <x:Property sap2010:Annotation.AnnotationText="The Document Object Model (DOM) of the target document." Name="in_Dom" Type="InArgument(p1:Document)" />
+    <x:Property sap2010:Annotation.AnnotationText="The text extracted from the target document." Name="in_DocText" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The array of classification results given by running the chosen classifier over the target document." Name="in_ClassificationResultsArray" Type="InArgument(p2:ClassificationResult[])" />
+    <x:Property sap2010:Annotation.AnnotationText="Contains The Extraction Results Index." Name="in_ExtractionResultsIndex" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="out_ExtractionResults" Type="OutArgument(p2:ExtractionResult)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1122.2222222222222,936.8888888888889</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1549,1070</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>LoadExtractionFromCache_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="50">
@@ -45,6 +45,8 @@
       <x:String>System.Runtime.Serialization</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -88,9 +90,9 @@
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly read extraction data from cahe when available or run the regular extraction, if needed.&#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="LoadExtractionFromCache" sap:VirtualizedContainerService.HintSize="937.3333333333334,756.4444444444445" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly read extraction data from cahe when available or run the regular extraction, if needed.&#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="LoadExtractionFromCache" sap:VirtualizedContainerService.HintSize="524,1005" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="cachePath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the file path of the data written to cache." Name="cachePath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -98,7 +100,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="895.5555555555555,60.44444444444444" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="482,70" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[cachePath]</OutArgument>
       </Assign.To>
@@ -106,9 +108,9 @@
         <InArgument x:TypeArguments="x:String">[Path.Combine("./Tests/Cache/", Path.GetFileNameWithoutExtension(in_TargetFile) + "_" + (in_ClassificationResultsArray(in_ExtractionResultsIndex).DocumentBounds.StartPage + 1).ToString + "-" + (in_ClassificationResultsArray(in_ExtractionResultsIndex).DocumentBounds.StartPage + in_ClassificationResultsArray(in_ExtractionResultsIndex).DocumentBounds.PageCount).ToString)]</InArgument>
       </Assign.Value>
     </Assign>
-    <If Condition="[File.Exists(cachePath + &quot;_Extraction.json&quot;)]" DisplayName="If - Extraction Cache Exists" sap:VirtualizedContainerService.HintSize="895.5555555555555,502.22222222222223" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[File.Exists(cachePath + &quot;_Extraction.json&quot;)]" DisplayName="If - Extraction Cache Exists" sap:VirtualizedContainerService.HintSize="482,805" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
-        <Sequence sap:VirtualizedContainerService.HintSize="475.55555555555554,273.77777777777777" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence sap:VirtualizedContainerService.HintSize="400,289" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="x:String" Name="auxStr" />
           </Sequence.Variables>
@@ -117,8 +119,8 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:ReadTextFile File="{x:Null}" Content="[auxStr]" DisplayName="Read Text File - Extraction" FileName="[cachePath + &quot;_Extraction.json&quot;]" sap:VirtualizedContainerService.HintSize="433.77777777777777,80.88888888888889" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-          <Assign DisplayName="Assign - Deserialize Extraction Results" sap:VirtualizedContainerService.HintSize="433.77777777777777,60.44444444444444" sap2010:WorkflowViewState.IdRef="Assign_2">
+          <ui:ReadTextFile File="{x:Null}" Content="[auxStr]" DisplayName="Read Text File - Extraction" FileName="[cachePath + &quot;_Extraction.json&quot;]" sap:VirtualizedContainerService.HintSize="358,89" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+          <Assign DisplayName="Assign - Deserialize Extraction Results" sap:VirtualizedContainerService.HintSize="358,70" sap2010:WorkflowViewState.IdRef="Assign_2">
             <Assign.To>
               <OutArgument x:TypeArguments="p2:ExtractionResult">[out_ExtractionResults]</OutArgument>
             </Assign.To>
@@ -129,14 +131,14 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence sap:VirtualizedContainerService.HintSize="375.55555555555554,340.8888888888889" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence sap:VirtualizedContainerService.HintSize="400,353" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="333.77777777777777,94.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="[&quot;Extraction cache not found, running extractor!&quot;]" />
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="333.77777777777777,113.77777777777777" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="358,101" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="[&quot;Extraction cache not found, running extractor!&quot;]" />
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="358,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[in_TargetFile]</InArgument>
               <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[in_Taxonomy]</InArgument>
