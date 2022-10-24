@@ -10,7 +10,7 @@
     <InArgument x:TypeArguments="p:ExtractionResult" />
   </this:CompareTables.in_CachedExtractionResults>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1530,4385</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1530,3121</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -81,17 +81,23 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="CompareTables" sap:VirtualizedContainerService.HintSize="747,4320" sap2010:WorkflowViewState.IdRef="Sequence_7">
+  <Sequence DisplayName="CompareTables" sap:VirtualizedContainerService.HintSize="727,3056" sap2010:WorkflowViewState.IdRef="Sequence_7">
     <Sequence.Variables>
       <Variable x:TypeArguments="p:ResultsDataPoint[]" sap2010:Annotation.AnnotationText="Contains a collection of extracted table fields." Name="extractionTables" />
       <Variable x:TypeArguments="p:ResultsDataPoint[]" sap2010:Annotation.AnnotationText="Contains a collection of cached table fields." Name="cachedTables" />
+      <Variable x:TypeArguments="p:ResultsTable" sap2010:Annotation.AnnotationText="Contains the current table to be compared." Name="cTable" />
+      <Variable x:TypeArguments="p:ResultsTable" sap2010:Annotation.AnnotationText="Contains the extracted table to be compared." Name="eTable" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Contains the index of the row." Name="rowIndex" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Contains the index of the column." Name="colIndex" />
+      <Variable x:TypeArguments="p:ResultsTableCell" sap2010:Annotation.AnnotationText="Contains the cell of the current table." Name="cCell" />
+      <Variable x:TypeArguments="p:ResultsTableCell" sap2010:Annotation.AnnotationText="Contains the cell of the extracted table." Name="eCell" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="705,141" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="685,141" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -121,7 +127,7 @@
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Table Count" sap:VirtualizedContainerService.HintSize="705,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+    <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Table Count" sap:VirtualizedContainerService.HintSize="685,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
       <uta:VerifyExpression.Expression>
         <InArgument x:TypeArguments="x:Boolean">
           <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">extractionTables.Length == cachedTables.Length</CSharpValue>
@@ -133,31 +139,25 @@
         </InArgument>
       </uta:VerifyExpression.OutputMessageFormat>
     </uta:VerifyExpression>
-    <ui:ForEach x:TypeArguments="p:ResultsDataPoint" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="705,3879" sap2010:WorkflowViewState.IdRef="ForEach`1_2">
+    <ui:ForEach x:TypeArguments="p:ResultsDataPoint" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="685,2615" sap2010:WorkflowViewState.IdRef="ForEach`1_2">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="p:ResultsDataPoint">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="p:ResultsDataPoint" Name="currentTable" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="669,3745" sap2010:WorkflowViewState.IdRef="Sequence_6">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="p:ResultsTable" Name="cTable" />
-              <Variable x:TypeArguments="p:ResultsTable" Name="eTable" />
-              <Variable x:TypeArguments="x:Int32" Name="rowIndex" />
-              <Variable x:TypeArguments="x:Int32" Name="colIndex" />
-            </Sequence.Variables>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="649,2481" sap2010:WorkflowViewState.IdRef="Sequence_6">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:MultipleAssign DisplayName="Multiple Assign - Get Current Table" sap:VirtualizedContainerService.HintSize="627,203" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+            <ui:MultipleAssign DisplayName="Multiple Assign - Get Current Table" sap:VirtualizedContainerService.HintSize="607,203" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
               <ui:MultipleAssign.AssignOperations>
                 <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
                     <ui:AssignOperation.To>
                       <OutArgument x:TypeArguments="p:ResultsTable">
-                        <CSharpReference x:TypeArguments="p:ResultsTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">cTable</CSharpReference>
+                        <CSharpReference x:TypeArguments="p:ResultsTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_12">cTable</CSharpReference>
                       </OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
@@ -169,7 +169,7 @@
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
                     <ui:AssignOperation.To>
                       <OutArgument x:TypeArguments="p:ResultsTable">
-                        <CSharpReference x:TypeArguments="p:ResultsTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">eTable</CSharpReference>
+                        <CSharpReference x:TypeArguments="p:ResultsTable" sap2010:WorkflowViewState.IdRef="CSharpReference`1_13">eTable</CSharpReference>
                       </OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
@@ -181,7 +181,7 @@
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
                     <ui:AssignOperation.To>
                       <OutArgument x:TypeArguments="x:Int32">
-                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">rowIndex</CSharpReference>
+                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_14">rowIndex</CSharpReference>
                       </OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
@@ -191,7 +191,7 @@
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
                     <ui:AssignOperation.To>
                       <OutArgument x:TypeArguments="x:Int32">
-                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">colIndex</CSharpReference>
+                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_15">colIndex</CSharpReference>
                       </OutArgument>
                     </ui:AssignOperation.To>
                     <ui:AssignOperation.Value>
@@ -201,7 +201,7 @@
                 </scg:List>
               </ui:MultipleAssign.AssignOperations>
             </ui:MultipleAssign>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Extracted Table Instance" sap:VirtualizedContainerService.HintSize="627,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Extracted Table Instance" sap:VirtualizedContainerService.HintSize="607,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
               <uta:VerifyExpression.Expression>
                 <InArgument x:TypeArguments="x:Boolean">
                   <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">(cTable.IsMissing == eTable.IsMissing) &amp;&amp; (cTable.IsMissing || cTable.Values.Length == eTable.Values.Length)</CSharpValue>
@@ -219,7 +219,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </uta:VerifyExpression>
-            <If DisplayName="If - No Extracted Data, Skip" sap:VirtualizedContainerService.HintSize="627,385" sap2010:WorkflowViewState.IdRef="If_1">
+            <If DisplayName="If - No Extracted Data, Skip" sap:VirtualizedContainerService.HintSize="607,385" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Condition>
                 <InArgument x:TypeArguments="x:Boolean">
                   <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">cTable.IsMissing || cTable.Values.Length == 0</CSharpValue>
@@ -245,7 +245,7 @@
                 </Sequence>
               </If.Else>
             </If>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" sap2010:Annotation.AnnotationText="Enumerable.SequenceEqual doesn't work here, for some reason" ContinueOnFailure="False" DisplayName="Verify Expression - Column Signatures" sap:VirtualizedContainerService.HintSize="627,572" sap2010:WorkflowViewState.IdRef="VerifyExpression_3" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" sap2010:Annotation.AnnotationText="Enumerable.SequenceEqual doesn't work here, for some reason" ContinueOnFailure="False" DisplayName="Verify Expression - Column Signatures" sap:VirtualizedContainerService.HintSize="607,172" sap2010:WorkflowViewState.IdRef="VerifyExpression_3" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
               <uta:VerifyExpression.Expression>
                 <InArgument x:TypeArguments="x:Boolean">
                   <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">Newtonsoft.Json.JsonConvert.SerializeObject(cTable.Values[0].ColumnInfo) == Newtonsoft.Json.JsonConvert.SerializeObject(eTable.Values[0].ColumnInfo)</CSharpValue>
@@ -264,7 +264,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </uta:VerifyExpression>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Row Count" sap:VirtualizedContainerService.HintSize="627,530" sap2010:WorkflowViewState.IdRef="VerifyExpression_4" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Row Count" sap:VirtualizedContainerService.HintSize="607,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_4" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
               <uta:VerifyExpression.Expression>
                 <InArgument x:TypeArguments="x:Boolean">
                   <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">cTable.Values[0].NumberOfRows == eTable.Values[0].NumberOfRows</CSharpValue>
@@ -282,9 +282,9 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </uta:VerifyExpression>
-            <ui:InterruptibleWhile CurrentIndex="{x:Null}" DisplayName="While - Iterate Rows" sap:VirtualizedContainerService.HintSize="627,1635" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
+            <ui:InterruptibleWhile CurrentIndex="{x:Null}" DisplayName="While - Iterate Rows" sap:VirtualizedContainerService.HintSize="607,1171" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
               <ui:InterruptibleWhile.Body>
-                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="591,1460" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="571,996" sap2010:WorkflowViewState.IdRef="Sequence_5">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -293,20 +293,16 @@
                   <Assign DisplayName="Assign - Reset ColIndex" sap:VirtualizedContainerService.HintSize="529,70" sap2010:WorkflowViewState.IdRef="Assign_1">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Int32">
-                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">colIndex</CSharpReference>
+                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_16">colIndex</CSharpReference>
                       </OutArgument>
                     </Assign.To>
                     <Assign.Value>
                       <InArgument x:TypeArguments="x:Int32">0</InArgument>
                     </Assign.Value>
                   </Assign>
-                  <ui:InterruptibleWhile CurrentIndex="{x:Null}" DisplayName="While - Iterate Columns" sap:VirtualizedContainerService.HintSize="529,1118" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+                  <ui:InterruptibleWhile CurrentIndex="{x:Null}" DisplayName="While - Iterate Columns" sap:VirtualizedContainerService.HintSize="529,686" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
                     <ui:InterruptibleWhile.Body>
-                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="493,943" sap2010:WorkflowViewState.IdRef="Sequence_4">
-                        <Sequence.Variables>
-                          <Variable x:TypeArguments="p:ResultsTableCell" Name="cCell" />
-                          <Variable x:TypeArguments="p:ResultsTableCell" Name="eCell" />
-                        </Sequence.Variables>
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473,511" sap2010:WorkflowViewState.IdRef="Sequence_4">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -318,7 +314,7 @@
                               <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
                                 <ui:AssignOperation.To>
                                   <OutArgument x:TypeArguments="p:ResultsTableCell">
-                                    <CSharpReference x:TypeArguments="p:ResultsTableCell" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">cCell</CSharpReference>
+                                    <CSharpReference x:TypeArguments="p:ResultsTableCell" sap2010:WorkflowViewState.IdRef="CSharpReference`1_19">cCell</CSharpReference>
                                   </OutArgument>
                                 </ui:AssignOperation.To>
                                 <ui:AssignOperation.Value>
@@ -330,7 +326,7 @@
                               <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
                                 <ui:AssignOperation.To>
                                   <OutArgument x:TypeArguments="p:ResultsTableCell">
-                                    <CSharpReference x:TypeArguments="p:ResultsTableCell" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">eCell</CSharpReference>
+                                    <CSharpReference x:TypeArguments="p:ResultsTableCell" sap2010:WorkflowViewState.IdRef="CSharpReference`1_20">eCell</CSharpReference>
                                   </OutArgument>
                                 </ui:AssignOperation.To>
                                 <ui:AssignOperation.Value>
@@ -342,7 +338,7 @@
                             </scg:List>
                           </ui:MultipleAssign.AssignOperations>
                         </ui:MultipleAssign>
-                        <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Current Cells" sap:VirtualizedContainerService.HintSize="431,530" sap2010:WorkflowViewState.IdRef="VerifyExpression_5" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                        <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Current Cells" sap:VirtualizedContainerService.HintSize="431,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_5" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                           <uta:VerifyExpression.Expression>
                             <InArgument x:TypeArguments="x:Boolean">
                               <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_19">(cCell.IsMissing == eCell.IsMissing) &amp;&amp; (cCell.IsMissing || Enumerable.SequenceEqual(cCell.Values.Select(cv =&gt; cv.Value), eCell.Values.Select(ev =&gt; ev.Value)))</CSharpValue>
@@ -363,7 +359,7 @@
                         <Assign DisplayName="Assign - Increment ColIndex" sap:VirtualizedContainerService.HintSize="431,70" sap2010:WorkflowViewState.IdRef="Assign_2">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:Int32">
-                              <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_10">colIndex</CSharpReference>
+                              <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_17">colIndex</CSharpReference>
                             </OutArgument>
                           </Assign.To>
                           <Assign.Value>
@@ -381,7 +377,7 @@
                   <Assign DisplayName="Assign - Increment RowIndex" sap:VirtualizedContainerService.HintSize="529,70" sap2010:WorkflowViewState.IdRef="Assign_3">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Int32">
-                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_11">rowIndex</CSharpReference>
+                        <CSharpReference x:TypeArguments="x:Int32" sap2010:WorkflowViewState.IdRef="CSharpReference`1_18">rowIndex</CSharpReference>
                       </OutArgument>
                     </Assign.To>
                     <Assign.Value>

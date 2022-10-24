@@ -12,7 +12,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1549,3141</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1549,3121</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CompareTables_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="58">
@@ -99,17 +99,23 @@
       <AssemblyReference>System.Collections</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="CompareTables" sap:VirtualizedContainerService.HintSize="708,3076" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="CompareTables" sap:VirtualizedContainerService.HintSize="707,3056" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="p:ResultsDataPoint[]" sap2010:Annotation.AnnotationText="Contains a collection of extracted table fields." Name="extractionTables" />
       <Variable x:TypeArguments="p:ResultsDataPoint[]" sap2010:Annotation.AnnotationText="Contains a collection of cached table fields." Name="cachedTables" />
+      <Variable x:TypeArguments="p:ResultsTable" sap2010:Annotation.AnnotationText="Contains the current table to be compared." Name="cTable" />
+      <Variable x:TypeArguments="p:ResultsTable" sap2010:Annotation.AnnotationText="Contains the extracted table to be compared." Name="eTable" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Contains the index of the row." Name="rowIndex" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Contains the index of the column." Name="colIndex" />
+      <Variable x:TypeArguments="p:ResultsTableCell" sap2010:Annotation.AnnotationText="Contains the cell of the current table." Name="cCell" />
+      <Variable x:TypeArguments="p:ResultsTableCell" sap2010:Annotation.AnnotationText="Contains the cell of the extracted table." Name="eCell" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="666,141" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="665,141" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -131,26 +137,20 @@
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Table Count" Expression="[extractionTables.Length = cachedTables.Length]" sap:VirtualizedContainerService.HintSize="666,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="[in_ExtractionResults.GetDocumentType + &quot; Table count comparison = &quot; + (extractionTables.Length = cachedTables.Length).ToString +&quot;. Extracted count: &quot; + extractionTables.Length.ToString +&quot; ; Cached count: &quot; + cachedTables.Length.ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
-    <ui:ForEach x:TypeArguments="p:ResultsDataPoint" CurrentIndex="{x:Null}" DisplayName="For Each - Iterate Through Tables" sap:VirtualizedContainerService.HintSize="666,2635" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[cachedTables]">
+    <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Table Count" Expression="[extractionTables.Length = cachedTables.Length]" sap:VirtualizedContainerService.HintSize="665,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="[in_ExtractionResults.GetDocumentType + &quot; Table count comparison = &quot; + (extractionTables.Length = cachedTables.Length).ToString +&quot;. Extracted count: &quot; + extractionTables.Length.ToString +&quot; ; Cached count: &quot; + cachedTables.Length.ToString]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
+    <ui:ForEach x:TypeArguments="p:ResultsDataPoint" CurrentIndex="{x:Null}" DisplayName="For Each - Iterate Through Tables" sap:VirtualizedContainerService.HintSize="665,2615" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[cachedTables]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="p:ResultsDataPoint">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="p:ResultsDataPoint" Name="currentTable" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="630,2501" sap2010:WorkflowViewState.IdRef="Sequence_2">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="p:ResultsTable" Name="cTable" />
-              <Variable x:TypeArguments="p:ResultsTable" Name="eTable" />
-              <Variable x:TypeArguments="x:Int32" Name="rowIndex" />
-              <Variable x:TypeArguments="x:Int32" Name="colIndex" />
-            </Sequence.Variables>
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="629,2481" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:MultipleAssign DisplayName="Multiple Assign - Get Current Table" sap:VirtualizedContainerService.HintSize="588,203" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+            <ui:MultipleAssign DisplayName="Multiple Assign - Get Current Table" sap:VirtualizedContainerService.HintSize="587,203" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
               <ui:MultipleAssign.AssignOperations>
                 <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                   <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
@@ -188,7 +188,7 @@
                 </scg:List>
               </ui:MultipleAssign.AssignOperations>
             </ui:MultipleAssign>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Extracted Table Instance" Expression="[(cTable.IsMissing = eTable.IsMissing) AndAlso (cTable.IsMissing OrElse cTable.Values.Length = eTable.Values.Length)]" sap:VirtualizedContainerService.HintSize="588,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" OutputMessageFormat="[&quot;Matched table instances for &quot; + currentTable.FieldId + &quot; = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Extracted Table Instance" Expression="[(cTable.IsMissing = eTable.IsMissing) AndAlso (cTable.IsMissing OrElse cTable.Values.Length = eTable.Values.Length)]" sap:VirtualizedContainerService.HintSize="587,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" OutputMessageFormat="[&quot;Matched table instances for &quot; + currentTable.FieldId + &quot; = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -196,7 +196,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </uta:VerifyExpression>
-            <If Condition="[cTable.IsMissing OrElse cTable.Values.Length = 0]" DisplayName="If - No Extracted Data, Skip" sap:VirtualizedContainerService.HintSize="588,385" sap2010:WorkflowViewState.IdRef="If_1">
+            <If Condition="[cTable.IsMissing OrElse cTable.Values.Length = 0]" DisplayName="If - No Extracted Data, Skip" sap:VirtualizedContainerService.HintSize="587,385" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Then>
                 <Sequence sap:VirtualizedContainerService.HintSize="400,122" sap2010:WorkflowViewState.IdRef="Sequence_3">
                   <sap:WorkflowViewStateService.ViewState>
@@ -217,7 +217,7 @@
                 </Sequence>
               </If.Else>
             </If>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" sap2010:Annotation.AnnotationText="Enumerable.SequenceEqual doesn't work here, for some reason" ContinueOnFailure="False" DisplayName="Verify Expression - Column Signatures" Expression="[Newtonsoft.Json.JsonConvert.SerializeObject(cTable.Values(0).ColumnInfo) = Newtonsoft.Json.JsonConvert.SerializeObject(eTable.Values(0).ColumnInfo)]" sap:VirtualizedContainerService.HintSize="587.5555555555555,178.22222222222223" sap2010:WorkflowViewState.IdRef="VerifyExpression_6" OutputMessageFormat="[&quot;Matched column signatures for &quot; + currentTable.FieldId + &quot; = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" sap2010:Annotation.AnnotationText="Enumerable.SequenceEqual doesn't work here, for some reason" ContinueOnFailure="False" DisplayName="Verify Expression - Column Signatures" Expression="[Newtonsoft.Json.JsonConvert.SerializeObject(cTable.Values(0).ColumnInfo) = Newtonsoft.Json.JsonConvert.SerializeObject(eTable.Values(0).ColumnInfo)]" sap:VirtualizedContainerService.HintSize="587,172" sap2010:WorkflowViewState.IdRef="VerifyExpression_6" OutputMessageFormat="[&quot;Matched column signatures for &quot; + currentTable.FieldId + &quot; = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -226,7 +226,7 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </uta:VerifyExpression>
-            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Row Count" Expression="[cTable.Values(0).NumberOfRows = eTable.Values(0).NumberOfRows]" sap:VirtualizedContainerService.HintSize="587.5555555555555,133.33333333333334" sap2010:WorkflowViewState.IdRef="VerifyExpression_4" OutputMessageFormat="[&quot;Matching row count for &quot; + currentTable.FieldId + &quot;; Cached = &quot;+cTable.Values(0).NumberOfRows.ToString +&quot; Extracted = &quot; + eTable.Values(0).NumberOfRows.ToString + &quot; Result = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+            <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Row Count" Expression="[cTable.Values(0).NumberOfRows = eTable.Values(0).NumberOfRows]" sap:VirtualizedContainerService.HintSize="587,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_4" OutputMessageFormat="[&quot;Matching row count for &quot; + currentTable.FieldId + &quot;; Cached = &quot;+cTable.Values(0).NumberOfRows.ToString +&quot; Extracted = &quot; + eTable.Values(0).NumberOfRows.ToString + &quot; Result = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -234,15 +234,15 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </uta:VerifyExpression>
-            <ui:InterruptibleWhile CurrentIndex="{x:Null}" Condition="[rowIndex &lt; cTable.Values(0).NumberOfRows]" DisplayName="While - Iterate Rows" sap:VirtualizedContainerService.HintSize="587.5555555555555,1182.2222222222222" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
+            <ui:InterruptibleWhile CurrentIndex="{x:Null}" Condition="[rowIndex &lt; cTable.Values(0).NumberOfRows]" DisplayName="While - Iterate Rows" sap:VirtualizedContainerService.HintSize="587,1171" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_1">
               <ui:InterruptibleWhile.Body>
-                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="552,1004.4444444444445" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="551,996" sap2010:WorkflowViewState.IdRef="Sequence_5">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Assign DisplayName="Assign - Reset ColIndex" sap:VirtualizedContainerService.HintSize="509.3333333333333,70.22222222222223" sap2010:WorkflowViewState.IdRef="Assign_3">
+                  <Assign DisplayName="Assign - Reset ColIndex" sap:VirtualizedContainerService.HintSize="509,70" sap2010:WorkflowViewState.IdRef="Assign_3">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Int32">[colIndex]</OutArgument>
                     </Assign.To>
@@ -250,19 +250,15 @@
                       <InArgument x:TypeArguments="x:Int32">0</InArgument>
                     </Assign.Value>
                   </Assign>
-                  <ui:InterruptibleWhile CurrentIndex="{x:Null}" Condition="[colIndex &lt; cTable.Values(0).ColumnInfo.Length]" DisplayName="While - Iterate Columns" sap:VirtualizedContainerService.HintSize="509.3333333333333,693.3333333333334" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
+                  <ui:InterruptibleWhile CurrentIndex="{x:Null}" Condition="[colIndex &lt; cTable.Values(0).ColumnInfo.Length]" DisplayName="While - Iterate Columns" sap:VirtualizedContainerService.HintSize="509,686" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
                     <ui:InterruptibleWhile.Body>
-                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473.77777777777777,515.5555555555555" sap2010:WorkflowViewState.IdRef="Sequence_6">
-                        <Sequence.Variables>
-                          <Variable x:TypeArguments="p:ResultsTableCell" Name="cCell" />
-                          <Variable x:TypeArguments="p:ResultsTableCell" Name="eCell" />
-                        </Sequence.Variables>
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473,511" sap2010:WorkflowViewState.IdRef="Sequence_6">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:MultipleAssign DisplayName="Multiple Assign - Get Current Cells" sap:VirtualizedContainerService.HintSize="431.1111111111111,141.33333333333334" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+                        <ui:MultipleAssign DisplayName="Multiple Assign - Get Current Cells" sap:VirtualizedContainerService.HintSize="431,141" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
                           <ui:MultipleAssign.AssignOperations>
                             <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                               <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
@@ -284,7 +280,7 @@
                             </scg:List>
                           </ui:MultipleAssign.AssignOperations>
                         </ui:MultipleAssign>
-                        <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Current Cells" Expression="[(cCell.IsMissing = eCell.IsMissing) AndAlso (cCell.IsMissing OrElse Enumerable.SequenceEqual(cCell.Values.Select(function(cv) cv.Value), eCell.Values.Select(function(ev) ev.Value)))]" sap:VirtualizedContainerService.HintSize="431.1111111111111,133.33333333333334" sap2010:WorkflowViewState.IdRef="VerifyExpression_5" OutputMessageFormat="[currentTable.FieldId + &quot; cell matching at [&quot; + rowIndex.ToString + &quot;,&quot; + colIndex.ToString + &quot;] = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                        <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="False" DisplayName="Verify Expression - Current Cells" Expression="[(cCell.IsMissing = eCell.IsMissing) AndAlso (cCell.IsMissing OrElse Enumerable.SequenceEqual(cCell.Values.Select(function(cv) cv.Value), eCell.Values.Select(function(ev) ev.Value)))]" sap:VirtualizedContainerService.HintSize="431,130" sap2010:WorkflowViewState.IdRef="VerifyExpression_5" OutputMessageFormat="[currentTable.FieldId + &quot; cell matching at [&quot; + rowIndex.ToString + &quot;,&quot; + colIndex.ToString + &quot;] = {Result}&quot;]" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
