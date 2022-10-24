@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1127.2,1800.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1549,1825</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Receipt_DateTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="60">
@@ -46,7 +46,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="88">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="47">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -92,19 +92,22 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="The test case checks the output of the ReceiptPostProcessing.xaml workflow in cases when the extracted &quot;Date&quot; field is nothing, or has different date formats, or is complete garbage.&#xD;&#xA;&#xD;&#xA;Test can use Data Variation.&#xD;&#xA;Out of the box, Data Variation is not set-up. You will need to create your own variations." DisplayName="Receipt_DateTestCase" sap:VirtualizedContainerService.HintSize="616.8,1736" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="The test case checks the output of the ReceiptPostProcessing.xaml workflow in cases when the extracted &quot;Date&quot; field is nothing, or has different date formats, or is complete garbage.&#xA;&#xA;Test can use Data Variation.&#xA;Out of the box, Data Variation is not set-up. You will need to create your own variations." DisplayName="Receipt_DateTestCase" sap:VirtualizedContainerService.HintSize="617,1760" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" Name="config" />
-      <Variable x:TypeArguments="x:Int32" Name="maxAttempts" />
-      <Variable x:TypeArguments="x:TimeSpan" Name="retryInterval" />
-      <Variable x:TypeArguments="p:DocumentTaxonomy" Name="docTaxonomy" />
-      <Variable x:TypeArguments="x:String" Name="targetFile" />
-      <Variable x:TypeArguments="x:Boolean" Name="autoExtractionSuccess" />
-      <Variable x:TypeArguments="x:String" Name="testMessage" />
-      <Variable x:TypeArguments="x:String" Name="receiptDateExpectedResult" />
-      <Variable x:TypeArguments="x:String" Name="receiptDateData" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="config" />
+      <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="maxAttempts" />
+      <Variable x:TypeArguments="x:TimeSpan" sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="retryInterval" />
+      <Variable x:TypeArguments="p:DocumentTaxonomy" sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="docTaxonomy" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="targetFile" />
+      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the extraction process." Name="autoExtractionSuccess" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the message of the test." Name="testMessage" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="receiptDateExpectedResult" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the value to be tested" Name="receiptDateData" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The string of the result of the data extraction process." Name="extractionResultString" />
+      <Variable x:TypeArguments="p1:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResult" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -112,14 +115,14 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="DateTestCase started" sap:VirtualizedContainerService.HintSize="575.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;DateTestCase started&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575.2,460" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <ui:LogMessage DisplayName="DateTestCase started" sap:VirtualizedContainerService.HintSize="575,101" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;DateTestCase started&quot;]" />
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575,516" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="338,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
           <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants", "InvoicePostProcessing", "ReceiptPostProcessing"}]</InArgument>
@@ -128,7 +131,7 @@
           <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[retryInterval]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="338,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_AssetsSheet">Assets</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
@@ -138,7 +141,7 @@
           <OutArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="out_DocTaxonomy">[docTaxonomy]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <Assign DisplayName="Assign - target file" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign DisplayName="Assign - target file" sap:VirtualizedContainerService.HintSize="338,70" sap2010:WorkflowViewState.IdRef="Assign_1">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[targetFile]</OutArgument>
         </Assign.To>
@@ -147,23 +150,19 @@
         </Assign.Value>
       </Assign>
     </Sequence>
-    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="575.2,592.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="extractionResultString" />
-        <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResults" />
-      </Sequence.Variables>
+    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="575,647" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,targetFile+&quot;_4-4_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="430.4,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-      <ui:MultipleAssign DisplayName="Multiple Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="430.4,194.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+      <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,targetFile+&quot;_4-4_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="431,89" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+      <ui:MultipleAssign DisplayName="Multiple Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="431,203" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
         <ui:MultipleAssign.AssignOperations>
           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
               <ui:AssignOperation.To>
-                <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResults]</OutArgument>
+                <OutArgument x:TypeArguments="p1:ExtractionResult">[extractionResult]</OutArgument>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="p1:ExtractionResult">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of UiPath.DocumentProcessing.Contracts.Results.ExtractionResult)(extractionResultString)]</InArgument>
@@ -174,7 +173,7 @@
                 <OutArgument x:TypeArguments="x:String">[receiptDateData]</OutArgument>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
-                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_ReceiptDateExpectedResult), extractionResults.GetField("Semi-StructuredDocuments.Financial.Receipt.ReceiptDate").GetValue.Value, in_ReceiptDateData)]</InArgument>
+                <InArgument x:TypeArguments="x:String">[if(string.IsNullOrWhiteSpace(in_ReceiptDateExpectedResult), extractionResult.GetField("Semi-StructuredDocuments.Financial.Receipt.ReceiptDate").GetValue.Value, in_ReceiptDateData)]</InArgument>
               </ui:AssignOperation.Value>
             </ui:AssignOperation>
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
@@ -187,7 +186,7 @@
             </ui:AssignOperation>
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
               <ui:AssignOperation.To>
-                <OutArgument x:TypeArguments="x:String">[extractionResults.GetField("Semi-StructuredDocuments.Financial.Receipt.ReceiptDate").GetValue.Value]</OutArgument>
+                <OutArgument x:TypeArguments="x:String">[extractionResult.GetField("Semi-StructuredDocuments.Financial.Receipt.ReceiptDate").GetValue.Value]</OutArgument>
               </ui:AssignOperation.To>
               <ui:AssignOperation.Value>
                 <InArgument x:TypeArguments="x:String">[receiptDateData]</InArgument>
@@ -196,12 +195,12 @@
           </scg:List>
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Date Parsing using in_DateString argument" DisplayName="Invoke ReceiptPostProcessing_mock workflow" sap:VirtualizedContainerService.HintSize="430.4,144.8" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\ReceiptPostProcessing_mock.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="This mock test Date Parsing using in_DateString argument" DisplayName="Invoke ReceiptPostProcessing_mock workflow" sap:VirtualizedContainerService.HintSize="431,153" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Mocks\Framework\ReusableWorkflows\ReceiptPostProcessing_mock.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_DocumentType">Semi-StructuredDocuments.Financial.Receipt</InArgument>
           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
-          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResults]</InOutArgument>
+          <InOutArgument x:TypeArguments="p1:ExtractionResult" x:Key="io_ExtractionResults">[extractionResult]</InOutArgument>
           <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccess]</OutArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">Data\ExampleDocuments\MergedDocuments.pdf</InArgument>
           <OutArgument x:TypeArguments="x:String" x:Key="out_TestMessage">[testMessage]</OutArgument>

@@ -7,7 +7,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1127.2,1861.6</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1549,1877</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>InvoicePostProcessing_MandatoryFieldsTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="60">
@@ -47,7 +47,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="80">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="47">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -93,9 +93,10 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="The test case checks the output of the InvoicePostProcessing.xaml workflow in cases when the extracted &quot;Mandatory&quot; fields are null, nothing, or have proper values.&#xD;&#xA;&#xD;&#xA;Test can use Data Variation.&#xD;&#xA;Out of the box, Data Variation is not set-up. You will need to create your own variations." DisplayName="InvoicePostProcessing_MandatoryFieldsTestCase" sap:VirtualizedContainerService.HintSize="616.8,1796.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="The test case checks the output of the InvoicePostProcessing.xaml workflow in cases when the extracted &quot;Mandatory&quot; fields are null, nothing, or have proper values.&#xA;&#xA;Test can use Data Variation.&#xA;Out of the box, Data Variation is not set-up. You will need to create your own variations." DisplayName="InvoicePostProcessing_MandatoryFieldsTestCase" sap:VirtualizedContainerService.HintSize="617,1812" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="config" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="maxAttempts" />
@@ -107,6 +108,8 @@
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the value to be tested" Name="mandatoryFieldValueData" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the name of the field to be tested" Name="mandatoryFieldNameData" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the expected result of the test" Name="mandatoryFieldExpectedResult" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The string of the result of the data extraction process." Name="extractionResultString" />
+      <Variable x:TypeArguments="p1:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -114,14 +117,14 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="MandatoryFieldsTestCase started" sap:VirtualizedContainerService.HintSize="575.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;MandatoryFieldsTestCase started&quot;]" />
-    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575.2,460" sap2010:WorkflowViewState.IdRef="Sequence_5">
+    <ui:LogMessage DisplayName="MandatoryFieldsTestCase started" sap:VirtualizedContainerService.HintSize="575,101" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;MandatoryFieldsTestCase started&quot;]" />
+    <Sequence DisplayName="... Given" sap:VirtualizedContainerService.HintSize="575,516" sap2010:WorkflowViewState.IdRef="Sequence_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="338,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\00_ReadConfigFile.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
           <InArgument x:TypeArguments="s:String[]" x:Key="in_ConfigSheets">[{"Settings", "Constants", "InvoicePostProcessing"}]</InArgument>
@@ -130,7 +133,7 @@
           <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[retryInterval]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InitializeProcess" sap:VirtualizedContainerService.HintSize="338,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_AssetsSheet">Assets</InArgument>
           <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">Data\Config.xlsx</InArgument>
@@ -146,7 +149,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:InvokeWorkflowFile>
-      <Assign DisplayName="Assign - target file" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign DisplayName="Assign - target file" sap:VirtualizedContainerService.HintSize="338,70" sap2010:WorkflowViewState.IdRef="Assign_1">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[targetFile]</OutArgument>
         </Assign.To>
@@ -155,18 +158,14 @@
         </Assign.Value>
       </Assign>
     </Sequence>
-    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="575.2,653.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="x:String" Name="extractionResultString" />
-        <Variable x:TypeArguments="p1:ExtractionResult" Name="extractionResults" />
-      </Sequence.Variables>
+    <Sequence DisplayName="... When" sap:VirtualizedContainerService.HintSize="575,699" sap2010:WorkflowViewState.IdRef="Sequence_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,targetFile+&quot;_2-2_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="430.4,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-      <ui:MultipleAssign DisplayName="Multiple Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="430.4,226.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+      <ui:ReadTextFile File="{x:Null}" Content="[extractionResultString]" DisplayName="Read extraction File" FileName="[Path.Combine(&quot;Tests\Cache\&quot;,targetFile+&quot;_2-2_Extraction&quot;+&quot;.json&quot;)]" sap:VirtualizedContainerService.HintSize="431,89" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+      <ui:MultipleAssign DisplayName="Multiple Assign - prepare extraction for test" sap:VirtualizedContainerService.HintSize="431,234" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
         <ui:MultipleAssign.AssignOperations>
           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
