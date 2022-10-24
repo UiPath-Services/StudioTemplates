@@ -8,7 +8,7 @@
     <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetDocument" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1530,5068</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1060,5273.777777777777</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -95,7 +95,7 @@
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted  &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00)" DisplayName="ReceiptPostProcessing" sap:VirtualizedContainerService.HintSize="1070,5003" sap2010:WorkflowViewState.IdRef="Sequence_13">
+  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted  &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00)" DisplayName="ReceiptPostProcessing" sap:VirtualizedContainerService.HintSize="1070.2222222222222,5208.888888888889" sap2010:WorkflowViewState.IdRef="Sequence_13">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataSet" sap2010:Annotation.AnnotationText="Used to store the extracted data from the ExtractionResults in the Export Extraction Results activity." Name="extractedDataSet" />
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="DataTable generated from the extractedDataSet." Name="itemTable" />
@@ -132,15 +132,15 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="1028,101" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+    <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="1027.5555555555557,104.44444444444444" sap2010:WorkflowViewState.IdRef="LogMessage_1">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_60">String.Format("{0} {1} (pag {2}-{3})\n{4}", in_Config["LogMessage_ReceiptPostProcessing"], io_ExtractionResults.ResultsDocument.DocumentTypeId, io_ExtractionResults.ResultsDocument.Bounds.StartPage + 1, io_ExtractionResults.ResultsDocument.Bounds.StartPage + io_ExtractionResults.ResultsDocument.Bounds.PageCount, in_Config["logKey"])</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:Comment DisplayName="Comment - Important Notice" sap:VirtualizedContainerService.HintSize="1028,409" sap2010:WorkflowViewState.IdRef="Comment_1" Text="This is made with the default, out of the box, invoice taxonomy in mind, and uses these SPECIFIC taxonomy field names. Please propagate any changes in the workflow below. (e.g make sure the keys of documentFields are correct and that they match of what you have in the config file)&#xA;&#xA;Moreover, any OTHER logic that you would like added, should be added here. &#xA;&#xA;Do NOT use this as-is, except for demo purposes. For a production use case, it is recommended to tailor the workflow to your SPECIFIC needs instead.&#xA;&#xA;We're using the english culture information, which means we use '.' for decimal points. (eg: 10,000.00)" />
-    <Sequence sap2010:Annotation.AnnotationText="In this sequence we are generating our variables.  &#xA;&#xA;- documentFields is a dictionary with:&#xA;       * keys, being the taxonomy field names &#xA;       * values, being the extracted data from the document for that specific field.&#xA;&#xA;- itemTable is a DataTable that contains the extracted data present in the document in table format (the line items). We check to see if the mandatory columns are present inside the extracted table, and if not, we are generating an empty table, such that the process will fail.&#xA;&#xA;- the other variables are lists of the defined variables in the config file" DisplayName="Setting Up Variables" sap:VirtualizedContainerService.HintSize="1028,4323" sap2010:WorkflowViewState.IdRef="Sequence_12">
+    <ui:Comment DisplayName="Comment - Important Notice" sap:VirtualizedContainerService.HintSize="1027.5555555555557,417.77777777777777" sap2010:WorkflowViewState.IdRef="Comment_1" Text="This is made with the default, out of the box, invoice taxonomy in mind, and uses these SPECIFIC taxonomy field names. Please propagate any changes in the workflow below. (e.g make sure the keys of documentFields are correct and that they match of what you have in the config file)&#xA;&#xA;Moreover, any OTHER logic that you would like added, should be added here. &#xA;&#xA;Do NOT use this as-is, except for demo purposes. For a production use case, it is recommended to tailor the workflow to your SPECIFIC needs instead.&#xA;&#xA;We're using the english culture information, which means we use '.' for decimal points. (eg: 10,000.00)" />
+    <Sequence sap2010:Annotation.AnnotationText="In this sequence we are generating our variables.  &#xA;&#xA;- documentFields is a dictionary with:&#xA;       * keys, being the taxonomy field names &#xA;       * values, being the extracted data from the document for that specific field.&#xA;&#xA;- itemTable is a DataTable that contains the extracted data present in the document in table format (the line items). We check to see if the mandatory columns are present inside the extracted table, and if not, we are generating an empty table, such that the process will fail.&#xA;&#xA;- the other variables are lists of the defined variables in the config file" DisplayName="Setting Up Variables" sap:VirtualizedContainerService.HintSize="1027.5555555555557,4516" sap2010:WorkflowViewState.IdRef="Sequence_12">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -148,19 +148,19 @@
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEach x:TypeArguments="p:Field" CurrentIndex="{x:Null}" DisplayName="For Each Field in the Taxonomy" sap:VirtualizedContainerService.HintSize="966,282" sap2010:WorkflowViewState.IdRef="ForEach`1_1">
+      <ui:ForEach x:TypeArguments="p:Field" CurrentIndex="{x:Null}" DisplayName="For Each Field in the Taxonomy" sap:VirtualizedContainerService.HintSize="965.3333333333334,296.44444444444446" sap2010:WorkflowViewState.IdRef="ForEach`1_1">
         <ui:ForEach.Body>
           <ActivityAction x:TypeArguments="p:Field">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="p:Field" Name="field" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Creating Taxonomy Dictionary" sap:VirtualizedContainerService.HintSize="304,154" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence DisplayName="Creating Taxonomy Dictionary" sap:VirtualizedContainerService.HintSize="400,160.88888888888889" sap2010:WorkflowViewState.IdRef="Sequence_2">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Assign DisplayName="Assign Document Fields Dictionary" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_1">
+              <Assign DisplayName="Assign Document Fields Dictionary" sap:VirtualizedContainerService.HintSize="357.3333333333333,70.22222222222223" sap2010:WorkflowViewState.IdRef="Assign_1">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">
                     <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">documentFields[field.FieldName]</CSharpReference>
@@ -187,7 +187,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ForEach>
-      <p2:ExportExtractionResults DisplayName="Export Extraction Results to a Dataset" sap:VirtualizedContainerService.HintSize="966,180.66666666666666" sap2010:WorkflowViewState.IdRef="ExportExtractionResults_1" IncludeConfidence="False" IncludeOCRConfidence="False">
+      <p2:ExportExtractionResults DisplayName="Export Extraction Results to a Dataset" sap:VirtualizedContainerService.HintSize="965.3333333333334,188.44444444444446" sap2010:WorkflowViewState.IdRef="ExportExtractionResults_1" IncludeConfidence="False" IncludeOCRConfidence="False">
         <p2:ExportExtractionResults.DataSet>
           <OutArgument x:TypeArguments="sd:DataSet">
             <CSharpReference x:TypeArguments="sd:DataSet" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">extractedDataSet</CSharpReference>
@@ -199,7 +199,7 @@
           </InArgument>
         </p2:ExportExtractionResults.ExtractionResult>
       </p2:ExportExtractionResults>
-      <ui:MultipleAssign DisplayName="Initialize Lists and set variables" sap:VirtualizedContainerService.HintSize="966,283.3333333333333" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign DisplayName="Initialize Lists and set variables" sap:VirtualizedContainerService.HintSize="965.3333333333334,296.8888888888889" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
         <ui:MultipleAssign.AssignOperations>
           <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
             <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -287,7 +287,7 @@
           </scg:List>
         </ui:MultipleAssign.AssignOperations>
       </ui:MultipleAssign>
-      <Sequence sap2010:Annotation.AnnotationText="In the config file we have set seveal fields as must have under MandatoryFields and MandatoryColumns. Here, we try to see if they are present, starting with the date. &#xA;&#xA;- If the date is not present, or not parsable, the process will fail and manual validation will be required.&#xA;- If any of the fields in MandatoryFields or itemTable (which contains the MandatoryColumns) are missing, manual validation will be required." DisplayName="Check Mandatory Extracted Values" sap:VirtualizedContainerService.HintSize="966,1275.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_5">
+      <Sequence sap2010:Annotation.AnnotationText="In the config file we have set seveal fields as must have under MandatoryFields and MandatoryColumns. Here, we try to see if they are present, starting with the date. &#xA;&#xA;- If the date is not present, or not parsable, the process will fail and manual validation will be required.&#xA;- If any of the fields in MandatoryFields or itemTable (which contains the MandatoryColumns) are missing, manual validation will be required." DisplayName="Check Mandatory Extracted Values" sap:VirtualizedContainerService.HintSize="965.3333333333334,1381.7777777777778" sap2010:WorkflowViewState.IdRef="Sequence_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -295,7 +295,7 @@
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <TryCatch DisplayName="Try Catch | Setting the Date" sap:VirtualizedContainerService.HintSize="484,531.3333333333334" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+        <TryCatch DisplayName="Try Catch | Setting the Date" sap:VirtualizedContainerService.HintSize="457.77777777777777,536" sap2010:WorkflowViewState.IdRef="TryCatch_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -356,7 +356,7 @@
             </Catch>
           </TryCatch.Catches>
         </TryCatch>
-        <If DisplayName="Mandatory Field Check" sap:VirtualizedContainerService.HintSize="484,483.3333333333333" sap2010:WorkflowViewState.IdRef="If_1">
+        <If DisplayName="Mandatory Field Check" sap:VirtualizedContainerService.HintSize="457.77777777777777,556" sap2010:WorkflowViewState.IdRef="If_1">
           <If.Condition>
             <InArgument x:TypeArguments="x:Boolean">
               <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">mandatoryFields.Any(field =&gt; documentFields[field] == null) || itemTable.Rows.Count == 0</CSharpValue>
@@ -390,7 +390,7 @@
           </If.Then>
         </If>
       </Sequence>
-      <Sequence sap2010:Annotation.AnnotationText="In the Value Cleanup part we're removing empty fields, symbols, extra text (OCR errors), and everything that is NOT a number or a decimal point from the extracted field. This will allows us to perform mathematical operations with the values." DisplayName="Value Cleanup" sap:VirtualizedContainerService.HintSize="966,402.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_6">
+      <Sequence sap2010:Annotation.AnnotationText="In the Value Cleanup part we're removing empty fields, symbols, extra text (OCR errors), and everything that is NOT a number or a decimal point from the extracted field. This will allows us to perform mathematical operations with the values." DisplayName="Value Cleanup" sap:VirtualizedContainerService.HintSize="965.3333333333334,416" sap2010:WorkflowViewState.IdRef="Sequence_6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -439,7 +439,7 @@
           </ui:MultipleAssign.AssignOperations>
         </ui:MultipleAssign>
       </Sequence>
-      <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="This is where we are doing the math operations on the Quantity, Unit Price, and Line Amounts to make sure they match to their extracted counterparts. &#xA;Before doing anything like that though, we repeat a similar operation as we did in the previous sequence where we remove any non-numeric characters from the variables.&#xA;If at any point, the math doesn't add up, we break this loop and we move to manual validation." DisplayName="For Each Row - Line Verification" sap:VirtualizedContainerService.HintSize="966,524" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="This is where we are doing the math operations on the Quantity, Unit Price, and Line Amounts to make sure they match to their extracted counterparts. &#xA;Before doing anything like that though, we repeat a similar operation as we did in the previous sequence where we remove any non-numeric characters from the variables.&#xA;If at any point, the math doesn't add up, we break this loop and we move to manual validation." DisplayName="For Each Row - Line Verification" sap:VirtualizedContainerService.HintSize="965.3333333333334,530.6666666666666" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
         <ui:ForEachRow.Body>
           <ActivityAction x:TypeArguments="sd:DataRow">
             <ActivityAction.Argument>
@@ -500,16 +500,16 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:ForEachRow>
-      <Flowchart sap2010:Annotation.AnnotationText="In this step, we check to see if we have found any issues up until now in the process. If we did, we skip this flowchart and set the AutoExtraction to False, otherwise, we continue with the checks:&#xA;1. Total - Checks to see if the sum of the additions to the subtotal match the extracted Total. &#xA;2.  Specific Fields - Checks the list (defined in the Config File) with their specific confidence threshold. If they are below that, the process will require manual validation.&#xA;3. Other fields - Checks the list ( defined in the Config File) with the confidence threshold defined for 'other-Confidence'. If they are below that, the process will require manual validation.&#xA;&#xA;If at any point, the above steps return a 'true', the receipt will require manual validation. &#xA;If all the if pass through the 'false' branch, the receipt will skip manual validation and go directly to the next step." DisplayName="Extraction Results Check" sap:VirtualizedContainerService.HintSize="966,850.6666666666666" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+      <Flowchart sap2010:Annotation.AnnotationText="In this step, we check to see if we have found any issues up until now in the process. If we did, we skip this flowchart and set the AutoExtraction to False, otherwise, we continue with the checks:&#xA;1. Total - Checks to see if the sum of the additions to the subtotal match the extracted Total. &#xA;2.  Specific Fields - Checks the list (defined in the Config File) with their specific confidence threshold. If they are below that, the process will require manual validation.&#xA;3. Other fields - Checks the list ( defined in the Config File) with the confidence threshold defined for 'other-Confidence'. If they are below that, the process will require manual validation.&#xA;&#xA;If at any point, the above steps return a 'true', the receipt will require manual validation. &#xA;If all the if pass through the 'false' branch, the receipt will skip manual validation and go directly to the next step." DisplayName="Extraction Results Check" sap:VirtualizedContainerService.HintSize="965.3333333333334,866.6666666666666" sap2010:WorkflowViewState.IdRef="Flowchart_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">20,42.66666666666666</av:Point>
-            <av:Size x:Key="ShapeSize">60,74.66666666666667</av:Size>
+            <av:Size x:Key="ShapeSize">60,75.11111111111111</av:Size>
             <av:PointCollection x:Key="ConnectorLocation">80,80 220,80 220,146.66666666666666</av:PointCollection>
             <x:Double x:Key="Width">931.6666666666667</x:Double>
-            <x:Double x:Key="Height">652.6666666666666</x:Double>
+            <x:Double x:Key="Height">660.2222222222222</x:Double>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -520,10 +520,10 @@
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <av:Point x:Key="ShapeLocation">19,590</av:Point>
-              <av:Size x:Key="ShapeSize">262,62</av:Size>
+              <av:Size x:Key="ShapeSize">262.22222222222223,70.22222222222223</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="Assign Extraction Failure" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_12">
+          <Assign DisplayName="Assign Extraction Failure" sap:VirtualizedContainerService.HintSize="262.22222222222223,70.22222222222223" sap2010:WorkflowViewState.IdRef="Assign_12">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Boolean">
                 <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_28">out_AutoExtractionSuccess</CSharpReference>
@@ -534,7 +534,7 @@
             </Assign.Value>
           </Assign>
         </FlowStep>
-        <FlowDecision x:Name="__ReferenceID3" DisplayName="Total Issue?" sap:VirtualizedContainerService.HintSize="70,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+        <FlowDecision x:Name="__ReferenceID3" DisplayName="Total Issue?" sap:VirtualizedContainerService.HintSize="70.22222222222223,87.11111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
           <FlowDecision.Condition>
             <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_51">! (total == Convert.ToDecimal(documentFields["Total Value"]))</CSharpValue>
           </FlowDecision.Condition>
@@ -542,8 +542,8 @@
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               <av:Point x:Key="ShapeLocation">345,216.66666666666666</av:Point>
-              <av:Size x:Key="ShapeSize">70,86.66666666666667</av:Size>
-              <av:PointCollection x:Key="TrueConnector">345,260 315,260 315,380.8333333333333 210,380.8333333333333</av:PointCollection>
+              <av:Size x:Key="ShapeSize">70.22222222222223,87.11111111111111</av:Size>
+              <av:PointCollection x:Key="TrueConnector">345,260.22222222222223 315,260.22222222222223 315,385.8333333333333 210,385.8333333333333</av:PointCollection>
               <av:PointCollection x:Key="FalseConnector">415,260 537.1666666666666,260 537.1666666666666,286.5</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
@@ -552,11 +552,11 @@
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">10,354.5</av:Point>
-                  <av:Size x:Key="ShapeSize">200,52.666666666666664</av:Size>
-                  <av:PointCollection x:Key="ConnectorLocation">10,380.9 0,380.9 0,621.2 19,621.2</av:PointCollection>
+                  <av:Size x:Key="ShapeSize">200,62.666666666666664</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">10,385.8333333333333 0,385.8333333333333 0,625.1111111111111 19,625.1111111111111</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Total Failure" sap:VirtualizedContainerService.HintSize="200,52.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_8">
+              <ui:LogMessage DisplayName="Total Failure" sap:VirtualizedContainerService.HintSize="200,62.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_8">
                 <ui:LogMessage.Message>
                   <InArgument x:TypeArguments="x:Object">
                     <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_64" xml:space="preserve">in_Config["LogMessage_ReceiptPostProcessing_TotalFailure"] +  Environment.NewLine + in_Config["logKey"]</CSharpValue>
@@ -574,7 +574,7 @@
             </FlowStep>
           </FlowDecision.True>
           <FlowDecision.False>
-            <FlowDecision x:Name="__ReferenceID8" DisplayName="Specific Fields Confidence?" sap:VirtualizedContainerService.HintSize="147.33333333333334,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+            <FlowDecision x:Name="__ReferenceID8" DisplayName="Specific Fields Confidence?" sap:VirtualizedContainerService.HintSize="147.11111111111111,87.11111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
               <FlowDecision.Condition>
                 <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_43">confidenceFields.Any(confField =&gt; (! String.IsNullOrEmpty(documentFields[confField]) &amp;&amp; ! io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(missing =&gt; missing.IsMissing.Equals(true)).First() &amp;&amp; Convert.ToDecimal(io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(actual_field =&gt; actual_field.Values.Select(val =&gt; val.Confidence)).First().First())*100 &lt; Convert.ToDecimal(in_Config[confField+"-Confidence"])? true : false))</CSharpValue>
               </FlowDecision.Condition>
@@ -582,8 +582,8 @@
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <av:Point x:Key="ShapeLocation">463.5,286.5</av:Point>
-                  <av:Size x:Key="ShapeSize">147.33333333333334,86.66666666666667</av:Size>
-                  <av:PointCollection x:Key="TrueConnector">463.5,330 433.5,330 433.5,450 210,450</av:PointCollection>
+                  <av:Size x:Key="ShapeSize">147.11111111111111,87.11111111111111</av:Size>
+                  <av:PointCollection x:Key="TrueConnector">463.5,330.05555555555554 433.5,330.05555555555554 433.5,455.8333333333333 210,455.8333333333333</av:PointCollection>
                   <av:PointCollection x:Key="FalseConnector">610.833333333333,329.833333333333 705.666666666667,329.833333333333 705.666666666667,356.5</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
@@ -592,11 +592,11 @@
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <av:Point x:Key="ShapeLocation">10,424.5</av:Point>
-                      <av:Size x:Key="ShapeSize">200,52.666666666666664</av:Size>
-                      <av:PointCollection x:Key="ConnectorLocation">10,450.9 0,450.9 0,621.2 19,621.2</av:PointCollection>
+                      <av:Size x:Key="ShapeSize">200,62.666666666666664</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">10,455.8333333333333 0,455.8333333333333 0,625.1111111111111 19,625.1111111111111</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:LogMessage DisplayName="Specific Confidence Fields Failure" sap:VirtualizedContainerService.HintSize="200,52.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_9">
+                  <ui:LogMessage DisplayName="Specific Confidence Fields Failure" sap:VirtualizedContainerService.HintSize="200,62.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_9">
                     <ui:LogMessage.Message>
                       <InArgument x:TypeArguments="x:Object">
                         <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_65" xml:space="preserve">in_Config["LogMessage_ReceiptPostProcessing_ConfidenceFieldsFailure"]  + String.Join(", ", confidenceFields.Where(confField =&gt; (!String.IsNullOrEmpty(documentFields[confField]) &amp;&amp; !io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(missing =&gt; missing.IsMissing.Equals(true)).First() &amp;&amp; Convert.ToDecimal(io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(actual_field =&gt; actual_field.Values.Select(val =&gt; val.Confidence)).First().First())*100 &lt; Convert.ToDecimal(in_Config[confField+"-Confidence"])? true : false) == true).ToList()) +  Environment.NewLine + in_Config["logKey"]</CSharpValue>
@@ -614,7 +614,7 @@
                 </FlowStep>
               </FlowDecision.True>
               <FlowDecision.False>
-                <FlowDecision x:Name="__ReferenceID9" DisplayName="Other Fields Confidence?" sap:VirtualizedContainerService.HintSize="137.33333333333334,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                <FlowDecision x:Name="__ReferenceID9" DisplayName="Other Fields Confidence?" sap:VirtualizedContainerService.HintSize="136.88888888888889,87.11111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
                   <FlowDecision.Condition>
                     <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_52">otherConfidenceFields.Any(confField =&gt; (! String.IsNullOrEmpty(documentFields[confField]) &amp;&amp; ! io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(missing =&gt; missing.IsMissing.Equals(true)).First() &amp;&amp; Convert.ToDecimal(io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(actual_field =&gt; actual_field.Values.Select(val =&gt; val.Confidence)).First().First())*100 &lt; Convert.ToDecimal(in_Config["otherReceipt-Confidence"])? true : false))</CSharpValue>
                   </FlowDecision.Condition>
@@ -622,9 +622,9 @@
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <av:Point x:Key="ShapeLocation">637,356.5</av:Point>
-                      <av:Size x:Key="ShapeSize">137.33333333333334,86.66666666666667</av:Size>
-                      <av:PointCollection x:Key="TrueConnector">637,400 607,400 607,520 210,520</av:PointCollection>
-                      <av:PointCollection x:Key="FalseConnector">775,400 800,400 800,590</av:PointCollection>
+                      <av:Size x:Key="ShapeSize">136.88888888888889,87.11111111111111</av:Size>
+                      <av:PointCollection x:Key="TrueConnector">637,400.05555555555554 607,400.05555555555554 607,525.8333333333334 210,525.8333333333334</av:PointCollection>
+                      <av:PointCollection x:Key="FalseConnector">773.8888888888889,400.05555555555554 800.1111111111111,400.05555555555554 800.1111111111111,590</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                   <FlowDecision.True>
@@ -632,11 +632,11 @@
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <av:Point x:Key="ShapeLocation">10,494.5</av:Point>
-                          <av:Size x:Key="ShapeSize">200,52.666666666666664</av:Size>
-                          <av:PointCollection x:Key="ConnectorLocation">10,520.9 0,520.9 0,621.2 19,621.2</av:PointCollection>
+                          <av:Size x:Key="ShapeSize">200,62.666666666666664</av:Size>
+                          <av:PointCollection x:Key="ConnectorLocation">10,525.8333333333334 0,525.8333333333334 0,625.1111111111111 19,625.1111111111111</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Other Confidence fields Failure" sap:VirtualizedContainerService.HintSize="200,52.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_10">
+                      <ui:LogMessage DisplayName="Other Confidence fields Failure" sap:VirtualizedContainerService.HintSize="200,62.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_10">
                         <ui:LogMessage.Message>
                           <InArgument x:TypeArguments="x:Object">
                             <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_66" xml:space="preserve">in_Config["LogMessage_ReceiptPostProcessing_ConfidenceFieldsFailure"] + String.Join(", ", otherConfidenceFields.Where(confField =&gt; (!String.IsNullOrEmpty(documentFields[confField]) &amp;&amp; !io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(missing =&gt; missing.IsMissing.Equals(true)).First() &amp;&amp; Convert.ToDecimal(io_ExtractionResults.ResultsDocument.Fields.Where(field =&gt; field.FieldName.Equals(confField)).Select(actual_field =&gt; actual_field.Values.Select(val =&gt; val.Confidence)).First().First())*100 &lt; Convert.ToDecimal(in_Config["otherReceipt-Confidence"])? true : false) == true).ToList())  +  Environment.NewLine + in_Config["logKey"]</CSharpValue>
@@ -658,10 +658,10 @@
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <av:Point x:Key="ShapeLocation">669,590</av:Point>
-                          <av:Size x:Key="ShapeSize">262,62</av:Size>
+                          <av:Size x:Key="ShapeSize">262.22222222222223,70.22222222222223</av:Size>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <Assign DisplayName="Assign Extraction Success" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_14">
+                      <Assign DisplayName="Assign Extraction Success" sap:VirtualizedContainerService.HintSize="262.22222222222223,70.22222222222223" sap2010:WorkflowViewState.IdRef="Assign_14">
                         <Assign.To>
                           <OutArgument x:TypeArguments="x:Boolean">
                             <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_30">out_AutoExtractionSuccess</CSharpReference>
@@ -680,7 +680,7 @@
         </FlowDecision>
         <x:Reference>__ReferenceID1</x:Reference>
         <x:Reference>__ReferenceID2</x:Reference>
-        <FlowDecision x:Name="__ReferenceID11" DisplayName="AutoExtraction Issue?" sap:VirtualizedContainerService.HintSize="118.66666666666667,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+        <FlowDecision x:Name="__ReferenceID11" DisplayName="AutoExtraction Issue?" sap:VirtualizedContainerService.HintSize="117.33333333333333,87.11111111111111" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
           <FlowDecision.Condition>
             <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_35">out_AutoExtractionSuccess == false</CSharpValue>
           </FlowDecision.Condition>
@@ -688,9 +688,9 @@
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               <av:Point x:Key="ShapeLocation">160.66666666666666,146.66666666666666</av:Point>
-              <av:Size x:Key="ShapeSize">118.66666666666667,86.66666666666667</av:Size>
+              <av:Size x:Key="ShapeSize">117.33333333333333,87.11111111111111</av:Size>
               <av:PointCollection x:Key="TrueConnector">160.66666666666666,190 110,190 110,283.6666666666667</av:PointCollection>
-              <av:PointCollection x:Key="FalseConnector">279.3333333333333,190 309.33333333333337,190 309.33333333333337,40.83333333333333 440,40.83333333333333</av:PointCollection>
+              <av:PointCollection x:Key="FalseConnector">278,190.22222222222223 308,190.22222222222223 308,45.83333333333333 440,45.83333333333333</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <FlowDecision.True>
@@ -698,11 +698,11 @@
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">10,283.6666666666667</av:Point>
-                  <av:Size x:Key="ShapeSize">200,52.666666666666664</av:Size>
-                  <av:PointCollection x:Key="ConnectorLocation">10,310 0,310 0,621 19,621</av:PointCollection>
+                  <av:Size x:Key="ShapeSize">200,62.666666666666664</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">10,315 0,315 0,625.1111111111111 19,625.1111111111111</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="AutoExtraction Is already False" sap:VirtualizedContainerService.HintSize="200,52.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_5">
+              <ui:LogMessage DisplayName="AutoExtraction Is already False" sap:VirtualizedContainerService.HintSize="200,62.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_5">
                 <ui:LogMessage.Message>
                   <InArgument x:TypeArguments="x:Object">
                     <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_63" xml:space="preserve">in_Config["LogMessage_ReceiptPostProcessing_AlreadySetFalse"] +  Environment.NewLine + in_Config["logKey"]</CSharpValue>
@@ -724,11 +724,11 @@
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">440,14.5</av:Point>
-                  <av:Size x:Key="ShapeSize">200,52.666666666666664</av:Size>
-                  <av:PointCollection x:Key="ConnectorLocation">540,67.3 540,97.3 540.2,97.3 540.2,100</av:PointCollection>
+                  <av:Size x:Key="ShapeSize">200,62.666666666666664</av:Size>
+                  <av:PointCollection x:Key="ConnectorLocation">540,77.16666666666666 540,97.16666666666666</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Subtotal Pass" sap:VirtualizedContainerService.HintSize="200,52.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_7">
+              <ui:LogMessage DisplayName="Subtotal Pass" sap:VirtualizedContainerService.HintSize="200,62.666666666666664" sap2010:WorkflowViewState.IdRef="LogMessage_7">
                 <ui:LogMessage.Message>
                   <InArgument x:TypeArguments="x:Object">
                     <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_59">String.Format(in_Config["LogMessage_ReceiptPostProcessing_SubtotalPass"], subtotal)+ Environment.NewLine + in_Config["logKey"]</CSharpValue>
@@ -744,12 +744,12 @@
                 <FlowStep x:Name="__ReferenceID7">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <av:Point x:Key="ShapeLocation">409,100</av:Point>
-                      <av:Size x:Key="ShapeSize">262,62</av:Size>
-                      <av:PointCollection x:Key="ConnectorLocation">540,162 540,192.00000000000003 380,192.00000000000003 380,216.66666666666666</av:PointCollection>
+                      <av:Point x:Key="ShapeLocation">408.8888888888889,97.16666666666666</av:Point>
+                      <av:Size x:Key="ShapeSize">262.22222222222223,70.22222222222223</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">540,167.38888888888889 540,197.38888888888889 380.1111111111111,197.38888888888889 380.1111111111111,216.66666666666666</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Assign DisplayName="Total Calculation" sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_13">
+                  <Assign DisplayName="Total Calculation" sap:VirtualizedContainerService.HintSize="262.22222222222223,70.22222222222223" sap2010:WorkflowViewState.IdRef="Assign_13">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Decimal">
                         <CSharpReference x:TypeArguments="x:Decimal" sap2010:WorkflowViewState.IdRef="CSharpReference`1_29">total</CSharpReference>
