@@ -10,7 +10,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1549,1070</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1247.2,816</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>LoadClassificationFromCache_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="52">
@@ -84,7 +84,7 @@
       <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly read classification data from cahe when available or run the regular classification, if needed.&#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="LoadClassificationFromCache" sap:VirtualizedContainerService.HintSize="524,1005" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly read classification data from cahe when available or run the regular classification, if needed.&#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="LoadClassificationFromCache" sap:VirtualizedContainerService.HintSize="836,751.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the file path of the data written to cache." Name="cachePath" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the output of the read text file for classification." Name="auxStr" />
@@ -95,7 +95,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="482,70" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="794.4,60" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[cachePath]</OutArgument>
       </Assign.To>
@@ -103,16 +103,16 @@
         <InArgument x:TypeArguments="x:String">[Path.Combine("./Tests/Cache/", Path.GetFileNameWithoutExtension(in_TargetFile))]</InArgument>
       </Assign.Value>
     </Assign>
-    <If Condition="[File.Exists(cachePath + &quot;_CResArray.json&quot;)]" DisplayName="If - Classification Cache Exists" sap:VirtualizedContainerService.HintSize="482,805" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[File.Exists(cachePath + &quot;_CResArray.json&quot;)]" DisplayName="If - Classification Cache Exists" sap:VirtualizedContainerService.HintSize="794.4,498.4" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
-        <Sequence sap:VirtualizedContainerService.HintSize="400,289" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Classification cache exists" sap:VirtualizedContainerService.HintSize="375.2,273.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:ReadTextFile File="{x:Null}" Content="[auxStr]" DisplayName="Read Text File - Classification" FileName="[cachePath + &quot;_CResArray.json&quot;]" sap:VirtualizedContainerService.HintSize="358,89" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-          <Assign DisplayName="Assign - Deserialize Classification Results" sap:VirtualizedContainerService.HintSize="358,70" sap2010:WorkflowViewState.IdRef="Assign_2">
+          <ui:ReadTextFile File="{x:Null}" Content="[auxStr]" DisplayName="Read Text File - Classification" FileName="[cachePath + &quot;_CResArray.json&quot;]" sap:VirtualizedContainerService.HintSize="333.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+          <Assign DisplayName="Assign - Deserialize Classification Results" sap:VirtualizedContainerService.HintSize="333.6,60" sap2010:WorkflowViewState.IdRef="Assign_2">
             <Assign.To>
               <OutArgument x:TypeArguments="p2:ClassificationResult[]">[out_ClassificationResultsArray]</OutArgument>
             </Assign.To>
@@ -123,14 +123,14 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence sap:VirtualizedContainerService.HintSize="400,353" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence DisplayName="Classification cache does not exist" sap:VirtualizedContainerService.HintSize="375.2,339.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="358,101" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="[&quot;Classification cache not found, running classifier!&quot;]" />
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Classify" sap:VirtualizedContainerService.HintSize="358,122" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\30_Classify.xaml">
+          <ui:LogMessage DisplayName="Error message" sap:VirtualizedContainerService.HintSize="333.6,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="[&quot;Classification cache not found, running classifier!&quot;]" />
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Classify" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\30_Classify.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">[in_TargetFile]</InArgument>
               <InArgument x:TypeArguments="p:DocumentTaxonomy" x:Key="in_DocTaxonomy">[in_Taxonomy]</InArgument>
