@@ -8,7 +8,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1162.4,1104</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1112,1186.2222222222222</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GetWritePermission_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -69,33 +69,42 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Activities.Design</AssemblyReference>
       <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is retrieved. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GetWritePermission" sap:VirtualizedContainerService.HintSize="478.4,1039.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is retrieved. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GetWritePermission" sap:VirtualizedContainerService.HintSize="478.22222222222223,1121.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Comment - GetWritePermission" sap:VirtualizedContainerService.HintSize="435.2,161.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
-    <ui:LogMessage DisplayName="Log Message - GetWritePermission" sap:VirtualizedContainerService.HintSize="435.2,102.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_GetWritePermission&quot;) +Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:InterruptibleWhile CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="When a Transaction Item cannot be obtained, it means another job is writing the file. " Condition="[out_AccessToken is Nothing]" DisplayName="While Cannot Get Permission" sap:VirtualizedContainerService.HintSize="435.2,604" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
+    <ui:Comment DisplayName="Comment - GetWritePermission" sap:VirtualizedContainerService.HintSize="435.55555555555554,163.55555555555554" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
+    <ui:LogMessage DisplayName="Log Message - GetWritePermission" sap:VirtualizedContainerService.HintSize="435.55555555555554,104.44444444444444" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_GetWritePermission&quot;) +Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:InterruptibleWhile CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="When a Transaction Item cannot be obtained, it means another job is writing the file. " Condition="[out_AccessToken is Nothing]" DisplayName="While Cannot Get Permission" sap:VirtualizedContainerService.HintSize="435.55555555555554,682.6666666666666" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
       <ui:InterruptibleWhile.Body>
-        <Sequence DisplayName="While Body" sap:VirtualizedContainerService.HintSize="400,383.2" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence DisplayName="While Body" sap:VirtualizedContainerService.HintSize="400,460" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:GetQueueItem TimeoutMS="{x:Null}" sap2010:Annotation.AnnotationText="ContinueOnError = True; we want to retry until successful" ContinueOnError="True" DisplayName="Get &quot;AccessToken&quot;" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="356.8,229.6" sap2010:WorkflowViewState.IdRef="GetQueueItem_1" QueueType="[in_AccessQueue]" TransactionItem="[out_AccessToken]">
+          <ui:GetQueueItem sap2010:Annotation.AnnotationText="ContinueOnError = True; we want to retry until successful" ContinueOnError="True" DisplayName="Get &quot;AccessToken&quot;" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="357.3333333333333,230.66666666666666" sap2010:WorkflowViewState.IdRef="GetQueueItem_1" QueueType="[in_AccessQueue]" TransactionItem="[out_AccessToken]">
+            <ui:GetQueueItem.Reference>
+              <InArgument x:TypeArguments="x:String" />
+            </ui:GetQueueItem.Reference>
+            <ui:GetQueueItem.TimeoutMS>
+              <InArgument x:TypeArguments="x:Int32" />
+            </ui:GetQueueItem.TimeoutMS>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:GetQueueItem>
-          <Delay VisualBasic.Settings="{x:Null}" DisplayName="Delay 1 second" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Delay_2">
+          <Delay VisualBasic.Settings="{x:Null}" DisplayName="Delay 1 second" Duration="00:00:01" sap:VirtualizedContainerService.HintSize="357.3333333333333,98.66666666666667" sap2010:WorkflowViewState.IdRef="Delay_2">
             <TextExpression.Namespaces>
               <sco:Collection x:TypeArguments="x:String">
                 <x:String>System.Activities</x:String>
