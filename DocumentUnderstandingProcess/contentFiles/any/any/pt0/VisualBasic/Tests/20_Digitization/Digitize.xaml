@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1127.2,1830.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1225.6,1830.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>DigitizeTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="74">
@@ -98,6 +98,7 @@
       <AssemblyReference>UiPath.Platform</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic.Forms</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="The test case compares the output of the 20_Digitize.xaml workflow with a cached digitization result based on the default input file &quot;MergedDocuments.pdf&quot;." DisplayName="DigitizeTestCase" sap:VirtualizedContainerService.HintSize="616.8,1765.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -208,7 +209,7 @@
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - DOM compare" Expression="[dom.Serialize = cachedDom.Serialize]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="Assert: The DOM (output of the digitization) is equal to the cached DOM.&#xD;&#xA;Tested without data variation.&#xD;&#xA;Input value: default document&#xD;&#xA;Expected outcome: true&#xD;&#xA;Actual outcome: {Result}" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
+      <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify - DOM compare" Expression="[dom.Serialize.Substring(0,dom.Serialize.LastIndexOf(&quot;DocumentMetadata&quot;)) = cachedDom.Serialize.Substring(0,cachedDom.Serialize.LastIndexOf(&quot;DocumentMetadata&quot;))]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_6" OutputMessageFormat="Assert: The DOM (output of the digitization) is equal to the cached DOM.&#xA;Tested without data variation.&#xA;Input value: default document&#xA;Expected outcome: true&#xA;Actual outcome: {Result}" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
       <uta:VerifyExpression AlternativeVerificationTitle="{x:Null}" KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" ContinueOnFailure="True" DisplayName="Verify Expression - DocText compare" Expression="[docText = cachedDocText]" sap:VirtualizedContainerService.HintSize="533.6,60" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" OutputMessageFormat="Assert: The DocText (output of the digitization) is equal to the cached Text.&#xA;Tested without data variation.&#xA;Input value: default document&#xA;Expected outcome: true&#xA;Actual outcome: {Result}" TakeScreenshotInCaseOfFailingAssertion="False" TakeScreenshotInCaseOfSucceedingAssertion="False" />
     </Sequence>
     <ui:LogMessage DisplayName="DigitizeTestCase ended" sap:VirtualizedContainerService.HintSize="575.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;DigitizeTestCase finished.&quot;]" />
