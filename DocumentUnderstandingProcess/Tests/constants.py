@@ -1,17 +1,15 @@
-
 class Constants:
-
     def __init__(self, env):
 
         # Language Selection
         self.PROJECT = {
-            "vb": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/VisualBasic/",
-            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/CSharp/"
+            "VB": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/VisualBasic/",
+            "CSharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/CSharp/",
         }[env]
 
         self.TEMPLATE_JSON = {
-            "vb": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/.local/template.json",
-            "csharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/.local/template.json"
+            "VB": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/.local/template.json",
+            "CSharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/.local/template.json",
         }[env]
 
         # Project Constants
@@ -26,7 +24,9 @@ class Constants:
         self.NUSPEC = "../../DocumentUnderstandingProcess/UiPath.Template.DocumentUnderstandingProcess.nuspec"
         self.MAIN_ACTION_CENTER = "Main-ActionCenter.xaml"
         self.MAIN_ATTENDED = "Main-Attended.xaml"
+        self.FRAMEWORK = self.PROJECT + "Framework"
         self.MOCK = self.PROJECT + "Mocks/"
         self.MOCK_CONFIG = self.PROJECT + "Mocks/mock_config.json"
         self.MOCK_REUSABLE_FOLDER = self.PROJECT + "Mocks/Framework/ReusableWorkflows"
-
+        self.ROOT_TEST_DATA_INPUT = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataInput/"
+        self.MOCK_FOLDER_STRUCTURE_TEST_DATA = self.ROOT_TEST_DATA_INPUT + "MockFolderStructure_test_input.yaml"
