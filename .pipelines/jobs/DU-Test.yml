@@ -10,7 +10,19 @@ jobs:
         vmImage: 'windows-latest'
 
     steps:
-          
+      - script: |
+            cd $(Build.SourcesDirectory)\DocumentUnderstandingProcess\Tests
+            pip install -r requirements.txt
+            pytest -m "smoke" --env "${{ parameters.name }}" -v -s  --junitxml=junit/test-results-${{ parameters.name }}.xml
+        displayName: "pytest-${{ parameters.name }}"
+ 
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          testRunTitle: 'Publish test results for Python ${{ parameters.name }}'
+
+      # Download custom dev uipcli 
       - task: DownloadBuildArtifacts@1
         inputs:
           buildType: 'specific'
@@ -21,7 +33,7 @@ jobs:
           downloadType: 'single'
           artifactName: 'uipcli'
           downloadPath: '$(Build.SourcesDirectory)'
-          
+
       - task: ExtractFiles@1
         displayName: "Extract CLI"
         inputs:
@@ -30,36 +42,36 @@ jobs:
           cleanDestinationFolder: false
           overwriteExistingFiles: true
 
-      - task: UiPathInstallPlatform@2
+      - task: UiPathInstallPlatform@2.10.2941586
         displayName: 'Install platform to cache internal tool'
 
-      # Override UIPCLI with one that supports running tests from a nupkg
+      # Override UIPCLI with one that supports running tests build with Windows and cross platform
       - powershell: |
           Get-ChildItem $env:UIPCLIDirectory -Directory -ErrorAction Ignore | ForEach-Object -Process {
             $destination = [System.IO.Path]::Combine($_.FullName, "x64")
-            
+
             Write-Host $("Source " + $env:Source)
             Write-Host $("Destination " + $destination)
-            
+
             Write-Host $("Delete old CLI" + $destination)
             Remove-Item $destination -Recurse -Force
-            
+
             Write-Host $("List content " + $destination)
             Get-ChildItem -Path $destination -ErrorAction Ignore -Recurse
-            
+
             Write-Host $("Copy "+ $env:Source +" to " + $destination)
-            
+
             Get-ChildItem $env:Source | ForEach-Object {
                 Copy-Item -Path $_.FullName -Destination $destination -Recurse -Force
             }
-            
+
             Write-Host $("List content " + $destination)
             Get-ChildItem -Path $destination -ErrorAction Ignore -Recurse
           }
         displayName: "Override UiPath CLI version"
         env:
           Source: "$(Build.SourcesDirectory)\\uipcli"
-      
+
       - script: python -m pip install --upgrade pyyaml
         displayName: 'Install pip Yaml tools'
 
@@ -69,14 +81,21 @@ jobs:
           scriptSource: 'filePath'
           scriptPath: '$(Build.SourcesDirectory)\.pipelines\scripts\DocumentUnderstandingProcess\DUTestDataGenerator.py'
           workingDirectory: '$(Build.SourcesDirectory)\.pipelines\scripts\DocumentUnderstandingProcess\'
-          
-      - task: UiPathTest@2
+
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'du-qa-process-framework-rg'
+          scriptType: 'ps'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az vm start --resource-group du-qa-process-framework-rg --name du-qa-process-framework-vm'
+          useGlobalConfig: true
+
+      - task: UiPathTest@2.10.2941586
         displayName: 'Run tests'
         inputs:
           testTarget: 'TestProject'
           orchestratorConnection: '${{ parameters.orchestratorConnection }}'
           testProjectPath: '${{ parameters.projectPath }}'
-          folderName: 'Shared'
+          folderName: 'DU Process'
           traceLevel: 'Verbose'
           attachRobotLogs: true
- 

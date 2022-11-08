@@ -6,27 +6,23 @@ from pytest import mark
 @mark.project_json
 class ProjectJsonTests:
     @staticmethod
-    def test_project_json_variation_path(test_data_project_json, app_constants):
+    def test_project_json_variation_path(get_test_data_project_json, app_constants):
         """
         Checks if the there are mentions of the .variation folder in the project.json
         """
-        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", 'r')))
+        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", "r")))
+        # print(get_test_data.load_data(app_constants.PROJECT_JSON_TEST_DATA))
+        #
         for element in data["designOptions"]["fileInfoCollection"]:
-            if test_data_project_json["key"] in element:
-                # Key was found and it shouldn't be present
-                assert False
-
-        # Key was not found and the test is successful
-        assert True
+            # check for the Key presence
+            assert not get_test_data_project_json["key"] in element
+            # assert not get_test_data(app_constants.PROJECT_JSON_TEST_DATA)["key"] in element
 
     @staticmethod
     def test_project_json_main_file(app_constants):
         """
         Checks if the main file is Main-ActionCenter
         """
-        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", 'r')))
+        data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", "r")))
 
         assert app_constants.MAIN_ACTION_CENTER in data["main"]
-
-
-
