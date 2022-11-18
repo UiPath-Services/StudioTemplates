@@ -7,6 +7,10 @@ class TemplateJsonTests:
     @staticmethod
     def test_template_json_dependencies(convert_to_lower, load_json, app_constants):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP39
+
         Check if the dependencies field between project.json and template.json is the same
         """
         vb_project_json = load_json(app_constants.PROJECT_JSON)
@@ -20,6 +24,10 @@ class TemplateJsonTests:
     @staticmethod
     def test_template_json_main_file(load_json, app_constants):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP40
+
         Check if the main file is Main-ActionCenter
         """
 

@@ -9,6 +9,10 @@ class DataFolderTests:
     @staticmethod
     def test_data_folder_structure(app_constants, get_test_data_folder):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP29
+
         Check the structure of the Data folder and its inner folders.
         """
         # count folders/files in Data folder
@@ -23,6 +27,10 @@ class DataFolderTests:
     @staticmethod
     def test_data_folder_content(app_constants, get_test_data_folder):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP30
+
         Check the content of the Data folder and its inner folders.
         """
         # get the folder content

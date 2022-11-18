@@ -7,6 +7,10 @@ class NuspecTests:
     @staticmethod
     def test_nuspec_version_as_expected(read_xml, get_test_data_nuspec, app_constants):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP36
+
         Check the *.nuspec file for the correct value in the version field.
         Test with multiple values, which are saved in Nuspec_test_data.yaml
         """

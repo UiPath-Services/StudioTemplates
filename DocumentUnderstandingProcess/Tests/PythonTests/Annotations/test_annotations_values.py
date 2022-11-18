@@ -12,6 +12,10 @@ class AnnotationsValuesTests:
     # TODO: Make a test for every folder (Tests, Framework, Mock, etc..)
     def test_annotations_values(app_constants):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP27
+
         Check the values of annotations from the Framework files.
         """
 

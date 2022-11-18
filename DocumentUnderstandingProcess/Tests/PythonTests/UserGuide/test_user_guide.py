@@ -10,6 +10,10 @@ class UserGuideTests:
         read_pdf, get_test_data_user_guide, app_constants
     ):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP41
+
         Check the User_Guide.pdf file for the correct value of the release version.
         Test with multiple values, which are saved in UserGuide_test_data.yaml
         """
