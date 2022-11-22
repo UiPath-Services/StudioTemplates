@@ -87,8 +87,7 @@ class AnnotationsValuesTests:
 
         # Read input test data
         test_input = yaml.safe_load(
-            # TODO: Make a variable somewhere for the path
-            (open(app_constants.ROOT_TEST_DATA_INPUT + "\\StandardAnnotations_test_input.yaml", "r"))
+            (open(app_constants.STANDARD_ANNOTATIONS_TEST_DATA, "r"))
         )
         var_to_annot = {v: key for key, value in test_input.items() for v in value}
 
