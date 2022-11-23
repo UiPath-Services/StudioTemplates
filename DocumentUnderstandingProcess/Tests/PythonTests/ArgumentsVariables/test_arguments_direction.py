@@ -4,10 +4,10 @@ import yaml
 import re
 
 @mark.smoke
-@mark.arguments
+@mark.arguments_direction
 class ArgumentsDirectionTests:
     @staticmethod
-    def test_arguments_direction(app_constants):
+    def test_arguments_direction(app_constants, get_absolute_filenames):
         """
         alpha.uipath.com/dualphatests
         Test Manager project: Document Understanding Process
@@ -15,21 +15,6 @@ class ArgumentsDirectionTests:
 
         Check that all arguments have the correct direction set.
         """
-
-        def get_absolute_filenames(path):
-            """
-            Returns the full paths of the files found in a given folder.
-            :param path: The full path of the folder containing the data
-            :return: List of absolute filenames
-            """
-            absolute_filenames = []
-            for root, _, files in os.walk(path):
-                for file in files:
-                    if file.split(".")[-1].lower() != "xaml":
-                        continue
-                    absolute_filenames.append(os.path.join(root, file))
-            return absolute_filenames
-
         def extract_argument_direction(filename):
             """
             :param filename: XAML filename from which we extract annotations for arguments and variables
@@ -99,11 +84,8 @@ class ArgumentsDirectionTests:
             (open(app_constants.ARGUMENTS_DIRECTION_TEST_DATA, "r"))
         )
 
-        # Get path to where the XAMLs are stored
-        framework_folder_path = app_constants.PROJECT
-
-        # Iterate through each XAML
-        framework_files = get_absolute_filenames(framework_folder_path)
+        # Iterate through each XAML in the project
+        framework_files = get_absolute_filenames(app_constants.PROJECT)
         for framework_file in framework_files:
             # The extend() method adds all the elements of an iterable (list, tuple, string etc.) to the end of the list
             extracted_data.extend(extract_argument_direction(framework_file))

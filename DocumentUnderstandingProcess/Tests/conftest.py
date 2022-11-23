@@ -183,14 +183,35 @@ def read_pdf():
 def get_filenames():
     """
     :param path: The full path of the file containing the data
-    :return: data
+    :return: [] with all the xaml file names
     """
 
     def method(path):
         filenames = []
-        for _, _, files in os.walk(path + "Framework"):
+        for _, _, files in os.walk(path):
             for name in files:
+                if name.split(".")[-1].lower() != "xaml":
+                    continue
                 filenames.append(name)
         return filenames
+
+    return method
+
+@fixture(scope="function")
+def get_absolute_filenames():
+    """
+    Returns the full paths of the files found in a given folder.
+    :param path: The full path of the folder containing the data
+    :return: List of absolute filenames
+    """
+
+    def method(path):
+        absolute_filenames = []
+        for root, _, files in os.walk(path):
+            for file in files:
+                if file.split(".")[-1].lower() != "xaml":
+                    continue
+                absolute_filenames.append(os.path.join(root, file))
+        return absolute_filenames
 
     return method
