@@ -6,7 +6,7 @@ from pytest import mark
 @mark.project_json
 class ProjectJsonTests:
     @staticmethod
-    def test_project_json_variation_path(get_test_data_project_json, app_constants):
+    def test_project_json_variation_path(test_data, app_constants):
         """
         alpha.uipath.com/dualphatests
         Test Manager project: Document Understanding Process
@@ -19,7 +19,7 @@ class ProjectJsonTests:
         #
         for element in data["designOptions"]["fileInfoCollection"]:
             # check for the Key presence
-            assert not get_test_data_project_json["key"] in element
+            assert not test_data["key"] in element
             # assert not get_test_data(app_constants.PROJECT_JSON_TEST_DATA)["key"] in element
 
     @staticmethod

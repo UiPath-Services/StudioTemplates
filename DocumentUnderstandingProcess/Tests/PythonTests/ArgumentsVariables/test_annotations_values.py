@@ -1,5 +1,4 @@
 from pytest import mark
-import os
 import yaml
 import re
 
