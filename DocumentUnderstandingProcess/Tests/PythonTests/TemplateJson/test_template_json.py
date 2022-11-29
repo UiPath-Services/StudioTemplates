@@ -28,7 +28,7 @@ class TemplateJsonTests:
         Test Manager project: Document Understanding Process
         Test Case: DUP40
 
-        Check if the main file is Main-ActionCenter
+        Check if the main file is Main-ActionCenter.
         """
 
         data = load_json(app_constants.TEMPLATE_JSON)
@@ -36,14 +36,14 @@ class TemplateJsonTests:
         assert app_constants.MAIN_ACTION_CENTER in data["MainFile"]
 
     @staticmethod
-    def test_template_json_fileinfocollection(convert_to_lower, load_json, app_constants):
+    def test_template_json_file_info_collection(convert_to_lower, load_json, app_constants):
         """
         alpha.uipath.com/dualphatests
         Test Manager project: Document Understanding Process
         Test Case: DUP56
 
         Check if the FileInfoCollection field, which holds all the configured RPA tests,
-        between project.json and template.json is the same
+        between project.json and template.json is the same.
         """
         vb_project_json = load_json(app_constants.PROJECT_JSON)
         vb_template_json = load_json(app_constants.TEMPLATE_JSON)

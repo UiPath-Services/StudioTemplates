@@ -206,7 +206,7 @@ def read_pdf():
 def get_filenames():
     """
     :param path: The full path of the file containing the data
-    :return: [] with all the xaml file names
+    :return: List with all the xaml file names
     """
 
     def method(path):
@@ -237,5 +237,68 @@ def get_absolute_filenames():
                     continue
                 absolute_filenames.append(os.path.join(root, file))
         return absolute_filenames
+
+    return method
+
+@fixture(scope="function")
+def retry_interval():
+    """
+    :param filename: XAML filename in which we search for presence of retry scope activity and RetryInterval property
+           retry_scope_re: regular expression pattern object to search for Retry Scope
+           retry_property_re: regular expression pattern object to search for Property
+           retry_property_value_re: regular expression pattern object to search for Property value
+    :return: True - the file does not have a retry scope activity
+             True - the file has retry scope activity and the property is configurable
+             False - the file has retry scope activity, but the property is not configurable
+    """
+
+    def method(filename, retry_scope_re, retry_property_re, retry_property_value_re):
+        digit_found = False
+
+        with open(filename, "r") as f:
+            content = f.read()
+            retry_scope_tags = retry_scope_re.findall(content)
+            for tag in retry_scope_tags:
+                retry_property_value = retry_property_re.search(tag[0])
+                # Check for NoneType
+                if retry_property_value is not None:
+                    retry_property_value = retry_property_value.group(0)
+                    # check if value is configurable or hard coded
+                    if retry_property_value_re.search(retry_property_value) != None:
+                        print("\nFile " + filename + " has a retry scope with hard coded property")
+                        digit_found = True
+
+        return not digit_found
+
+    return method
+
+@fixture(scope="function")
+def extract_argument_direction():
+    """
+    :param filename: XAML filename from which we extract the direction of arguments
+           argument_re: regular expression pattern object to search for argument
+           name_re: regular expression pattern object to search for argument name
+           type_value_re: regular expression pattern object to search for argument direction
+    :return: List of tuples (filename, argument, direction)
+    """
+
+    def method(filename, argument_re, name_re, type_value_re):
+
+        # the list of tuples
+        argument_data = []
+
+        with open(filename, "r") as f:
+            content = f.read()
+            argument_variable_tags = argument_re.findall(content)
+            for tag in argument_variable_tags:
+                direction_value = type_value_re.search(tag[0])
+                # Check for NoneType
+                if direction_value is not None:
+                    direction_value = direction_value.group(0)
+
+                name = name_re.search(tag[0]).group(0)
+
+                argument_data.append((os.path.basename(f.name), name, direction_value))
+        return argument_data
 
     return method
