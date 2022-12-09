@@ -1,4 +1,4 @@
-from pytest import fixture, mark
+from pytest import fixture
 from constants import Constants
 
 import json
@@ -7,23 +7,21 @@ import yaml
 import os
 import xml.etree.ElementTree as et
 
+# Test Data Paths
+ROOT_TEST_DATA_VARIATION = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/"
+DATA_FOLDER_STRUCTURE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "DataFolderStructure_test_data.yaml"
+NUSPEC_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Nuspec_test_data.yaml"
+USER_GUIDE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "UserGuide_test_data.yaml"
+PROJECT_JSON_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Project_Json_test_data.yaml"
 
-def return_test_data_location():
-    # Test Data Paths
-    root_test_data_variation = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/"
-    data_folder_structure_test_data = root_test_data_variation + "DataFolderStructure_test_data.yaml"
-    nuspec_test_data = root_test_data_variation + "Nuspec_test_data.yaml"
-    user_guide_test_data = root_test_data_variation + "UserGuide_test_data.yaml"
-    project_json_test_data = root_test_data_variation + "Project_Json_test_data.yaml"
-
-    test_data_mapping = {
-        "test_data_folder_structure": data_folder_structure_test_data,
-        "test_data_folder_content": data_folder_structure_test_data,
-        "test_nuspec_version_as_expected": nuspec_test_data,
-        "test_user_guide_version_as_expected": user_guide_test_data,
-        "test_project_json_variation_path": project_json_test_data,
-    }
-    return test_data_mapping
+# Dictionary used for the test parametrization hook
+TEST_DATA_MAPPING = {
+    "test_data_folder_structure": DATA_FOLDER_STRUCTURE_TEST_DATA,
+    "test_data_folder_content": DATA_FOLDER_STRUCTURE_TEST_DATA,
+    "test_nuspec_version_as_expected": NUSPEC_TEST_DATA,
+    "test_user_guide_version_as_expected": USER_GUIDE_TEST_DATA,
+    "test_project_json_variation_path": PROJECT_JSON_TEST_DATA,
+}
 
 
 def pytest_addoption(parser):
@@ -76,76 +74,17 @@ def load_json():
 
 
 def pytest_generate_tests(metafunc):
-    mappings = return_test_data_location()
-    test_name_list = [test_name for test_name in mappings.keys()]
+    """
+    Pytest hook that generates parametrized calls to given test functions
+    :param metafunc: Object that helps with test function inspection and test generation
+    :return:
+    """
+    test_name_list = [test_name for test_name in TEST_DATA_MAPPING.keys()]
     test_name = metafunc.function.__name__
 
     if test_name in test_name_list:
-        data = yaml.safe_load((open(mappings[test_name], "r")))
+        data = yaml.safe_load((open(TEST_DATA_MAPPING[test_name], "r")))
         metafunc.parametrize("test_data", data)
-
-
-# TODO: Let's find a way to make this a fixture
-# @fixture(scope="function")
-# def load_test_data(request):
-#     """
-#     :param path: The full path of the file containing the test data
-#     :return: test data
-#     """
-#     mappings = return_test_data_location()
-#     data = yaml.safe_load((open(mappings[request.node.originalname], "r")))
-#     return data
-
-
-# @fixture(params=[load_test_data(NUSPEC_TEST_DATA),
-#                  load_test_data(PROJECT_JSON_TEST_DATA),
-#                  load_test_data(USER_GUIDE_TEST_DATA),
-#                  load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA)])
-# def test_data(request):
-#     data = request.param
-#     return data
-
-# @pytest.fixture
-# def thing(request, db):
-#     class ThingFactory(object):
-#         def get(self):
-#             thing = MyModel.objects.create()
-#             request.addfinalizer(thing.delete)
-#             return thing
-#     return ThingFactory()
-# @fixture(scope='function')
-# def get_test_data(request):
-#     class DataFactory(object):
-#         @staticmethod
-#         def load_data(path):
-#             data = yaml.safe_load((open(path, 'r')))
-#             request.addfinalizer(data)
-#             return get_test_data
-#     return DataFactory
-
-
-# @fixture(params=load_test_data(NUSPEC_TEST_DATA))
-# def get_test_data_nuspec(request):
-#     data = request.param
-#     return data
-#
-#
-# @fixture(params=load_test_data(PROJECT_JSON_TEST_DATA))
-# def get_test_data_project_json(request):
-#     data = request.param
-#     return data
-#
-#
-# @fixture(params=load_test_data(USER_GUIDE_TEST_DATA))
-# def get_test_data_user_guide(request):
-#     data = request.param
-#     return data
-#
-#
-# @fixture(params=load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA))
-# def get_test_data_folder(request):
-#     data = request.param
-#     return data
 
 
 @fixture(scope="function")
