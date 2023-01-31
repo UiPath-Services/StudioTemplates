@@ -1,15 +1,15 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="False" this:Main.in_ExceptionId="1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upaf="clr-namespace:UiPath.Persistence.Activities.FormTask;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="False" this:Main.in_Template="Exception_AssignedUsersProcess" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upaf="clr-namespace:UiPath.Persistence.Activities.FormTask;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Variable that checks if the Document Understanding Process is using Orchestrator Queues or not." Name="in_UseQueue" Type="InArgument(x:Boolean)" />
-    <x:Property sap2010:Annotation.AnnotationText="Id of the exception that should be displayed in Action Center. The template selection is based on the id value. " Name="in_ExceptionId" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="Name of the JSON file, used bu the 'Create Form Task' activity" Name="in_Template" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1254.6666666666667,1244.6666666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1126.6666666666667,1244.6666666666667</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="56">
+    <scg:List x:TypeArguments="x:String" Capacity="30">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -165,7 +165,7 @@
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
                 <FlowDecision.True>
-                  <FlowDecision x:Name="__ReferenceID1" Condition="[in_ExceptionId Is Nothing]" DisplayName="Data Found?" sap:VirtualizedContainerService.HintSize="73.33333333333333,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                  <FlowDecision x:Name="__ReferenceID1" Condition="[in_Template Is Nothing]" DisplayName="Data Found?" sap:VirtualizedContainerService.HintSize="73.33333333333333,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -209,13 +209,7 @@
                             <av:PointCollection x:Key="ConnectorLocation">620,446.66666666666663 620,488.6666666666667</av:PointCollection>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <Sequence sap2010:Annotation.AnnotationText="Create the task in Action Center and wait for it to be resumed" DisplayName="Create &amp; Wait for Task " sap:VirtualizedContainerService.HintSize="214.66666666666666,93.33333333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
-                          <Sequence.Variables>
-                            <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Used as form task parameter. Displays the issue." Default="Exception" Name="title" />
-                            <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Used as form task parameter. Displays a detailed description of the issue." Default="Detailed description of the exception" Name="errorMessage" />
-                            <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Used as form task parameter. Is the path to the storage bucket file, which is displayed in Action Center.  " Default="template.pdf" Name="fileName" />
-                            <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Used as form task parameter. Displays steps that should be followed in order to resolve the issue. " Default="Description of the steps that should be performed in order to solve the issue" Name="indications" />
-                          </Sequence.Variables>
+                        <Sequence sap2010:Annotation.AnnotationText="Create the task in Action Center and wait for it to be resumed" DisplayName="Create &amp; Wait for Task " sap:VirtualizedContainerService.HintSize="400,1306" sap2010:WorkflowViewState.IdRef="Sequence_6">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -224,10 +218,18 @@
                           </sap:WorkflowViewStateService.ViewState>
                           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Selection of the task template, which will be further used in order to display the error in Action Center" DisplayName="Select Template" sap:VirtualizedContainerService.HintSize="338,124" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_18" UnSafe="False" WorkflowFileName="Framework\30_SelectTemplate.xaml">
                             <ui:InvokeWorkflowFile.Arguments>
-                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
-                              <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[transactionItem]</InArgument>
-                              <OutArgument x:TypeArguments="x:String" x:Key="out_TemplateLocation">[templateLocation]</OutArgument>
-                              <InArgument x:TypeArguments="x:String" x:Key="in_ExceptionId">[in_ExceptionId]</InArgument>
+                              <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+                                <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
+                              </InArgument>
+                              <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
+                                <VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="transactionItem" />
+                              </InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_TemplateLocation">
+                                <VisualBasicReference x:TypeArguments="x:String" ExpressionText="templateLocation" />
+                              </OutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_Template">
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Template" />
+                              </InArgument>
                             </ui:InvokeWorkflowFile.Arguments>
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -244,22 +246,22 @@
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                           </ui:LogMessage>
-                          <upaf:CreateFormTask BucketFolderPath="{x:Null}" BulkFormLayout="{x:Null}" ExternalTag="{x:Null}" Labels="{x:Null}" TimeoutMs="{x:Null}" BucketName="[config(&quot;StorageBucketName&quot;).ToString]" BulkFormLayoutGuid="46589703-4fc1-4b27-8763-d22e2c9df2e6" DisplayName="Create Form Task" DynamicFormPath="[templateLocation]" EnableBulkEdit="False" EnableDynamicForms="True" FolderPath="[config(&quot;OrchestratorAssetsFolder&quot;).ToString]" FormLayout="%[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;b style=\&quot;color:#B82505;font-size:180%\&quot;&gt; Business Rule Exception - {{data.title}} &lt;/b&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;b style=\&quot;color:black;font-size:120%\&quot;&gt; {{data.errorMessage}} &lt;/b&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html1&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;label&quot;:&quot;Table&quot;,&quot;cellAlignment&quot;:&quot;left&quot;,&quot;key&quot;:&quot;table&quot;,&quot;type&quot;:&quot;table&quot;,&quot;numRows&quot;:5,&quot;numCols&quot;:2,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;rows&quot;:[[{&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html2&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;tag&quot;:&quot;div&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;embed src = {{ data.targetFile_storage }} width = \&quot;100%\&quot; height=\&quot;700px\&quot; /&gt;&quot;,&quot;refreshOnChange&quot;:true,&quot;key&quot;:&quot;html3&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;{{data.indications}}&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html4&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;Comments&quot;,&quot;placeholder&quot;:&quot;Enter reasons for rejection&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;comments&quot;,&quot;type&quot;:&quot;textarea&quot;,&quot;input&quot;:true}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;Done&quot;,&quot;theme&quot;:&quot;success&quot;,&quot;tableView&quot;:false,&quot;key&quot;:&quot;completed&quot;,&quot;custom&quot;:&quot;instance.emit('executeDoBlock', instance.component);&quot;,&quot;input&quot;:true,&quot;type&quot;:&quot;button&quot;,&quot;isResetData&quot;:false}]},{&quot;components&quot;:[{&quot;label&quot;:&quot;Reject&quot;,&quot;theme&quot;:&quot;danger&quot;,&quot;tableView&quot;:false,&quot;key&quot;:&quot;rejected&quot;,&quot;custom&quot;:&quot;instance.emit('executeDoBlock', instance.component);&quot;,&quot;input&quot;:true,&quot;type&quot;:&quot;button&quot;,&quot;isResetData&quot;:false}]}]]},{&quot;label&quot;:&quot;targetFile_storage&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;targetFile_storage&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;indications&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;indications&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;title&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;title&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;comments&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;comments&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;errorMessage&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;errorMessage&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true}]" FormLayoutGuid="4570cf29-28b5-4d59-a878-f4ca32c4fee6" GenerateInputFields="True" sap:VirtualizedContainerService.HintSize="338,453.3333333333333" sap2010:WorkflowViewState.IdRef="CreateFormTask_2" TaskCatalog="[config(&quot;TaskCatalog&quot; + in_ExceptionId).ToString]" TaskOutput="[taskOutput]" TaskPriority="[TaskPriority.Medium]" TaskTitle="[config(&quot;TaskTitle&quot; + in_ExceptionId).toString]">
+                          <upaf:CreateFormTask BucketFolderPath="{x:Null}" BulkFormLayout="{x:Null}" ExternalTag="{x:Null}" Labels="{x:Null}" TimeoutMs="{x:Null}" BucketName="[config(&quot;StorageBucketName&quot;).ToString]" BulkFormLayoutGuid="46589703-4fc1-4b27-8763-d22e2c9df2e6" DisplayName="Create Form Task" DynamicFormPath="[templateLocation]" EnableBulkEdit="False" EnableDynamicForms="True" FolderPath="[config(&quot;OrchestratorAssetsFolder&quot;).ToString]" FormLayout="%[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;b style=\&quot;color:#B82505;font-size:180%\&quot;&gt; Business Rule Exception - {{data.title}} &lt;/b&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;b style=\&quot;color:black;font-size:120%\&quot;&gt; {{data.errorMessage}} &lt;/b&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html1&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;label&quot;:&quot;Table&quot;,&quot;cellAlignment&quot;:&quot;left&quot;,&quot;key&quot;:&quot;table&quot;,&quot;type&quot;:&quot;table&quot;,&quot;numRows&quot;:5,&quot;numCols&quot;:2,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;rows&quot;:[[{&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html2&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;tag&quot;:&quot;div&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;embed src = {{ data.targetFile_storage }} width = \&quot;100%\&quot; height=\&quot;700px\&quot; /&gt;&quot;,&quot;refreshOnChange&quot;:true,&quot;key&quot;:&quot;html3&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;{{data.indications}}&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html4&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;Comments&quot;,&quot;placeholder&quot;:&quot;Enter reasons for rejection&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;comments&quot;,&quot;type&quot;:&quot;textarea&quot;,&quot;input&quot;:true}]},{&quot;components&quot;:[]}],[{&quot;components&quot;:[{&quot;label&quot;:&quot;Done&quot;,&quot;theme&quot;:&quot;success&quot;,&quot;tableView&quot;:false,&quot;key&quot;:&quot;completed&quot;,&quot;custom&quot;:&quot;instance.emit('executeDoBlock', instance.component);&quot;,&quot;input&quot;:true,&quot;type&quot;:&quot;button&quot;,&quot;isResetData&quot;:false}]},{&quot;components&quot;:[{&quot;label&quot;:&quot;Reject&quot;,&quot;theme&quot;:&quot;danger&quot;,&quot;tableView&quot;:false,&quot;key&quot;:&quot;rejected&quot;,&quot;custom&quot;:&quot;instance.emit('executeDoBlock', instance.component);&quot;,&quot;input&quot;:true,&quot;type&quot;:&quot;button&quot;,&quot;isResetData&quot;:false}]}]]},{&quot;label&quot;:&quot;targetFile_storage&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;targetFile_storage&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;indications&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;indications&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;title&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;title&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;comments&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;comments&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;label&quot;:&quot;errorMessage&quot;,&quot;hidden&quot;:true,&quot;hideLabel&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;errorMessage&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true}]" FormLayoutGuid="4570cf29-28b5-4d59-a878-f4ca32c4fee6" GenerateInputFields="True" sap:VirtualizedContainerService.HintSize="338,453.3333333333333" sap2010:WorkflowViewState.IdRef="CreateFormTask_2" TaskCatalog="[config(&quot;TaskCatalog&quot;).ToString]" TaskOutput="[taskOutput]" TaskPriority="[TaskPriority.Medium]" TaskTitle="[config(&quot;TaskTitle&quot;).toString]">
                             <upaf:CreateFormTask.FormData>
                               <InArgument x:TypeArguments="x:String" x:Key="title">
-                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="title" />
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;Title&quot;).toString" />
                               </InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="errorMessage">
-                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="errorMessage" />
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;Description&quot;).toString" />
                               </InArgument>
                               <OutArgument x:TypeArguments="x:String" x:Key="comments">
                                 <VisualBasicReference x:TypeArguments="x:String" ExpressionText="comments" />
                               </OutArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="targetFile_storage">
-                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="fileName" />
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;FileName&quot;).toString" />
                               </InArgument>
                               <InArgument x:TypeArguments="x:String" x:Key="indications">
-                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="indications" />
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;SolutionDescription&quot;).toString" />
                               </InArgument>
                             </upaf:CreateFormTask.FormData>
                           </upaf:CreateFormTask>
@@ -283,8 +285,15 @@
                             </sap:WorkflowViewStateService.ViewState>
                             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Processing the Action Center input of the user (in case there is any)" DisplayName="DataPostProcessing" sap:VirtualizedContainerService.HintSize="200,62.666666666666664" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="Framework\40_DataPostProcessing.xaml">
                               <ui:InvokeWorkflowFile.Arguments>
-                                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
-                                <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[transactionItem]</InArgument>
+                                <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">
+                                  <VisualBasicValue x:TypeArguments="scg:Dictionary(x:String, x:String)" ExpressionText="config" />
+                                </InArgument>
+                                <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">
+                                  <VisualBasicValue x:TypeArguments="ui:QueueItem" ExpressionText="transactionItem" />
+                                </InArgument>
+                                <InArgument x:TypeArguments="upaf:FormTaskData" x:Key="in_TaskOutput">
+                                  <VisualBasicValue x:TypeArguments="upaf:FormTaskData" ExpressionText="taskOutput" />
+                                </InArgument>
                               </ui:InvokeWorkflowFile.Arguments>
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -317,7 +326,7 @@
                         <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[maxAttempts]</InArgument>
                         <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[retryInterval]</InArgument>
                         <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">[transactionItem]</OutArgument>
-                        <OutArgument x:TypeArguments="x:String" x:Key="out_ExceptionId">[in_ExceptionId]</OutArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="out_ExceptionId">[in_Template]</OutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
