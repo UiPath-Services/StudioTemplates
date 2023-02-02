@@ -10,10 +10,10 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1254.6666666666667,897.3333333333334</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1184,897.3333333333334</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_40_DataPostProcessing_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="60">
+    <scg:List x:TypeArguments="x:String" Capacity="31">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -48,7 +48,7 @@
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="72">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="37">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>System.Private.CoreLib</AssemblyReference>
@@ -87,13 +87,33 @@
       <AssemblyReference>System.Text.RegularExpressions</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="DataPostProcessing" sap:VirtualizedContainerService.HintSize="400,332" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="DataPostProcessing" sap:VirtualizedContainerService.HintSize="441.3333333333333,640.6666666666666" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="response" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - DataPostProcessing" sap:VirtualizedContainerService.HintSize="338,104.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;LogMessage_DataPostProcessing&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:Comment DisplayName="Comment - Custom code data processing" sap:VirtualizedContainerService.HintSize="338,65.33333333333333" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Process data based on the current case" />
+    <ui:LogMessage DisplayName="Log Message - DataPostProcessing" sap:VirtualizedContainerService.HintSize="379.3333333333333,104.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;LogMessage_DataPostProcessing&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Orchestrator Request - Get Assigned User Name" sap:VirtualizedContainerService.HintSize="379.3333333333333,124" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\ReusableWorkflows\OrchestratorRequest_GET.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Endpoint">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="&quot;/odata/Users(&quot; + in_TaskOutput.AssignedToUserId.ToString + &quot;)&quot;" />
+        </InArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_Response">
+          <VisualBasicReference x:TypeArguments="x:String" ExpressionText="response" />
+        </OutArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_Payload">
+          <Literal x:TypeArguments="x:String" Value="" />
+        </InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="in_OrchestratorFolder">
+          <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_Config(&quot;OrchestratorAssetsFolder&quot;).ToString" />
+        </InArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:LogMessage DisplayName="Log Message - Assigned User Name" sap:VirtualizedContainerService.HintSize="379.3333333333333,104.66666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Task has been completed by: &quot; + System.Text.RegularExpressions.Regex.Match(response, &quot;(?&lt;=FullName&quot;&quot;:&quot;&quot;\s*)(.*?)(?=\s*&quot;&quot;,&quot;&quot;EmailAddress)&quot;).Value]" />
+    <ui:Comment DisplayName="Comment - Custom code data processing" sap:VirtualizedContainerService.HintSize="379.3333333333333,65.33333333333333" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Process data based on the current case" />
   </Sequence>
 </Activity>
