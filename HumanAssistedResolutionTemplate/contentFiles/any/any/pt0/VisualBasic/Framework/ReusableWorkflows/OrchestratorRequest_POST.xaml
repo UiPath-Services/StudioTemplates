@@ -2,8 +2,8 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The endpoint to use, relative to the base URL." Name="in_Endpoint" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The JSON returned by the request." Name="out_Response" Type="OutArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="The JSON payload to send with the request." Name="in_Payload" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The path of the orchestrator folder." Name="in_OrchestratorFolder" Type="InArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The JSON payload to send with the request." Name="in_Payload" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -74,6 +74,7 @@
       <AssemblyReference>System.ComponentModel</AssemblyReference>
       <AssemblyReference>System.Memory</AssemblyReference>
       <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="OrchestratorRequest" sap:VirtualizedContainerService.HintSize="542.6666666666666,1301.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -93,7 +94,7 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:OrchestratorHttpRequest DisplayName="Orchestrator HTTP Request -" FolderPath="[in_OrchestratorFolder]" sap:VirtualizedContainerService.HintSize="338,622" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_4" JSONPayload="[in_Payload]" Method="GET" RelativeEndpoint="[in_Endpoint]" Result="[out_Response]">
+                <ui:OrchestratorHttpRequest DisplayName="Orchestrator HTTP Request -" FolderPath="[in_OrchestratorFolder]" sap:VirtualizedContainerService.HintSize="338,622" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_4" JSONPayload="[in_Payload]" Method="POST" RelativeEndpoint="[in_Endpoint]" Result="[out_Response]">
                   <ui:OrchestratorHttpRequest.ResponseHeaders>
                     <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" />
                   </ui:OrchestratorHttpRequest.ResponseHeaders>
@@ -124,7 +125,7 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Rethrow " sap:VirtualizedContainerService.HintSize="400,272.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Sequence DisplayName="Rethrow " sap:VirtualizedContainerService.HintSize="400,256.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
