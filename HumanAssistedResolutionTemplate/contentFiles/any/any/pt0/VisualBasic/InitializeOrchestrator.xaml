@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1172,1722.6666666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1216,1819.3333333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_15_CreateOrchestratorResources_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="37">
@@ -100,7 +100,7 @@
       <AssemblyReference>UiPath.Persistence.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Creates &#xA;    - the storage bucket&#xA;    - the assets&#xA;    - the task catalog &#xA;from the settings sheet of the configuration file.&#xA;" DisplayName="InitializeOrchestrator" sap:VirtualizedContainerService.HintSize="828.6666666666666,1658" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence sap2010:Annotation.AnnotationText="Creates &#xA;    - the storage bucket&#xA;    - the assets&#xA;    - the task catalog &#xA;from the settings sheet of the configuration file.&#xA;" DisplayName="InitializeOrchestrator" sap:VirtualizedContainerService.HintSize="976,1754.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Name of the folder used by the process." Name="folderName" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Name of the storage bucket, used by the process." Name="storageBucketName" />
@@ -112,13 +112,13 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each - Input Sheet" sap:VirtualizedContainerService.HintSize="766.6666666666666,1149.3333333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[in_ConfigSheets]">
+    <ui:ForEach x:TypeArguments="x:String" DisplayName="For Each - Input Sheet" sap:VirtualizedContainerService.HintSize="914,1246" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[in_ConfigSheets]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:String" Name="sheet" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="730,1020" sap2010:WorkflowViewState.IdRef="Sequence_1">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="880,1072" sap2010:WorkflowViewState.IdRef="Sequence_1">
             <Sequence.Variables>
               <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="Intermediary DataTable structure used for reading from the configuration file." Name="configDT" />
             </Sequence.Variables>
@@ -127,8 +127,8 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[configDT]" DisplayName="Read range settings" sap:VirtualizedContainerService.HintSize="668,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[sheet]" WorkbookPath="[in_ConfigFile]" />
-            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[configDT]" DisplayName="For each row" sap:VirtualizedContainerService.HintSize="838,860" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+            <ui:ReadRange Range="{x:Null}" AddHeaders="True" DataTable="[configDT]" DisplayName="Read range settings" sap:VirtualizedContainerService.HintSize="838,88" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="[sheet]" WorkbookPath="[in_ConfigFile]" />
+            <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[configDT]" DisplayName="For each row" sap:VirtualizedContainerService.HintSize="838,856.6666666666666" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
               <ui:ForEachRow.Body>
                 <ActivityAction x:TypeArguments="sd:DataRow">
                   <ActivityAction.Argument>
@@ -181,7 +181,7 @@
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                             <If.Then>
-                              <Assign DisplayName="Assign - folderName" sap:VirtualizedContainerService.HintSize="262,63.333333333333336" sap2010:WorkflowViewState.IdRef="Assign_14">
+                              <Assign DisplayName="Assign - folderName" sap:VirtualizedContainerService.HintSize="434,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_14">
                                 <Assign.To>
                                   <OutArgument x:TypeArguments="x:String">[folderName]</OutArgument>
                                 </Assign.To>
@@ -438,10 +438,7 @@
                         </FlowStep>
                       </FlowDecision.True>
                       <FlowDecision.False>
-                        <FlowDecision x:Name="__ReferenceID3" DisplayName="Task Catalog?" sap:VirtualizedContainerService.HintSize="77.33333333333333,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
-                          <FlowDecision.Condition>
-                            <VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="row(&quot;Type&quot;).ToString.Equals(&quot;Task Catalog&quot;)" />
-                          </FlowDecision.Condition>
+                        <FlowDecision x:Name="__ReferenceID3" Condition="[row(&quot;Type&quot;).ToString.Equals(&quot;Task Catalog&quot;)]" DisplayName="Task Catalog?" sap:VirtualizedContainerService.HintSize="77.33333333333333,86.66666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -476,7 +473,7 @@
                                   <av:Size x:Key="ShapeSize">200,54</av:Size>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <Throw Exception="[new SystemException(row(&quot;Name&quot;).toString + &quot; has no value.&quot;)]" sap:VirtualizedContainerService.HintSize="200,54" sap2010:WorkflowViewState.IdRef="Throw_1">
+                              <Throw Exception="[new SystemException(row(&quot;Name&quot;).toString + &quot; has no value.&quot;)]" sap:VirtualizedContainerService.HintSize="334,92" sap2010:WorkflowViewState.IdRef="Throw_1">
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -506,6 +503,9 @@
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
+      <ui:ForEach.CurrentIndex>
+        <OutArgument x:TypeArguments="x:Int32" />
+      </ui:ForEach.CurrentIndex>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -513,7 +513,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEach>
-    <ucas:UploadStorageFile FileResource="{x:Null}" TimeoutMS="{x:Null}" Destination="[fileName]" DisplayName="Upload Storage File" sap:VirtualizedContainerService.HintSize="766.6666666666666,246" sap2010:WorkflowViewState.IdRef="UploadStorageFile_3" Path="[&quot;Data\Files\&quot; + fileName]" StorageBucketName="[storageBucketName]">
+    <ucas:UploadStorageFile FileResource="{x:Null}" TimeoutMS="{x:Null}" Destination="[fileName]" DisplayName="Upload Storage File" sap:VirtualizedContainerService.HintSize="914,246" sap2010:WorkflowViewState.IdRef="UploadStorageFile_3" Path="[&quot;Data\Files\&quot; + fileName]" StorageBucketName="[storageBucketName]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
