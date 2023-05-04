@@ -30,3 +30,5 @@ class Constants:
         self.MOCK_REUSABLE_FOLDER = self.PROJECT + "Mocks/Framework/ReusableWorkflows"
         self.ROOT_TEST_DATA_INPUT = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataInput/"
         self.MOCK_FOLDER_STRUCTURE_TEST_DATA = self.ROOT_TEST_DATA_INPUT + "MockFolderStructure_test_input.yaml"
+        self.STANDARD_ANNOTATIONS_TEST_DATA = self.ROOT_TEST_DATA_INPUT + "StandardAnnotations_test_input.yaml"
+        self.ARGUMENTS_DIRECTION_TEST_DATA = self.ROOT_TEST_DATA_INPUT + "ArgumentsDirection_test_input.yaml"

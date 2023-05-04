@@ -7,9 +7,13 @@ import re
 class UserGuideTests:
     @staticmethod
     def test_user_guide_version_as_expected(
-        read_pdf, get_test_data_user_guide, app_constants
+        read_pdf, test_data, app_constants
     ):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP41
+
         Check the User_Guide.pdf file for the correct value of the release version.
         Test with multiple values, which are saved in UserGuide_test_data.yaml
         """
@@ -20,8 +24,8 @@ class UserGuideTests:
         output = output.split("\n")[-1].replace("  ", "|")
 
         # check for the presence of the release version in the user guide
-        found = re.search(get_test_data_user_guide["release_version"], output) is not None
-        should_pass = get_test_data_user_guide["expected_result"] == "pass"
+        found = re.search(test_data["release_version"], output) is not None
+        should_pass = test_data["expected_result"] == "pass"
 
         # asserting the presence of the release version in the user guide, considering also the expected_result
         assert should_pass == found
