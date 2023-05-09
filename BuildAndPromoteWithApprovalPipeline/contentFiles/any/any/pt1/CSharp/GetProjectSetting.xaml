@@ -3,12 +3,13 @@
     <x:Property Name="in_ProjectPath" Type="InArgument(x:String)" />
     <x:Property Name="in_ParameterKey" Type="InArgument(x:String)" />
     <x:Property Name="out_ParameterValue" Type="OutArgument(x:String)" />
+    <x:Property Name="in_SecondParameterKey" Type="InArgument(x:String)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
-  <sap:VirtualizedContainerService.HintSize>1775,879</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>852,1153</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="30">
+    <scg:List x:TypeArguments="x:String" Capacity="60">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -39,6 +40,8 @@
       <x:String>System.Collections.Specialized</x:String>
       <x:String>UiPath.Web.Activities</x:String>
       <x:String>System.Linq.Expressions</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>GlobalConstantsNamespace</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -83,12 +86,15 @@
       <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
       <AssemblyReference>System.Security.Permissions</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Attempts to get values for first-level keys in json files" DisplayName="GetProjectSetting" sap:VirtualizedContainerService.HintSize="476,532" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Attempts to get values for first-level keys in json files" DisplayName="GetProjectVersion" sap:VirtualizedContainerService.HintSize="572,1088" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="jsonText" />
       <Variable x:TypeArguments="njl:JObject" Name="jsonObject" />
+      <Variable x:TypeArguments="njl:JToken" Name="foundObject" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -96,14 +102,14 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log input arguments" sap:VirtualizedContainerService.HintSize="434,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace">
+    <ui:LogMessage DisplayName="Log input arguments" sap:VirtualizedContainerService.HintSize="510,92" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">"Get setting: "+ in_ParameterKey + " in " + in_ProjectPath</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">"Get setting: "+ in_ParameterKey + in_SecondParameterKey==null?"":"|"+in_SecondParameterKey+ " in " + in_ProjectPath</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <ui:ReadTextFile File="{x:Null}" DisplayName="Read json file" sap:VirtualizedContainerService.HintSize="434,79" sap2010:WorkflowViewState.IdRef="ReadTextFile_1">
+    <ui:ReadTextFile File="{x:Null}" DisplayName="Read json file" sap:VirtualizedContainerService.HintSize="510,80" sap2010:WorkflowViewState.IdRef="ReadTextFile_1">
       <ui:ReadTextFile.Content>
         <OutArgument x:TypeArguments="x:String">
           <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">jsonText</CSharpReference>
@@ -121,7 +127,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ReadTextFile>
-    <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize JSON text" sap:VirtualizedContainerService.HintSize="434,59" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1">
+    <ui:DeserializeJson x:TypeArguments="njl:JObject" DisplayName="Deserialize JSON text" sap:VirtualizedContainerService.HintSize="510,90" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_1">
       <ui:DeserializeJson.JsonObject>
         <OutArgument x:TypeArguments="njl:JObject">
           <CSharpReference x:TypeArguments="njl:JObject" sap2010:WorkflowViewState.IdRef="CSharpReference`1_6">jsonObject</CSharpReference>
@@ -139,7 +145,62 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:DeserializeJson>
-    <Assign DisplayName="Get the value for the key" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign DisplayName="Get the value for the key" sap:VirtualizedContainerService.HintSize="510,82" sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="njl:JToken">
+          <CSharpReference x:TypeArguments="njl:JToken" sap2010:WorkflowViewState.IdRef="CSharpReference`1_8">foundObject</CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="njl:JToken">
+          <CSharpValue x:TypeArguments="njl:JToken" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">jsonObject[in_ParameterKey]</CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <If sap:VirtualizedContainerService.HintSize="510,320" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">in_SecondParameterKey == null</CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="300,80" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="476,170" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign DisplayName="Get the value for the key" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="njl:JToken">
+                <CSharpReference x:TypeArguments="njl:JToken" sap2010:WorkflowViewState.IdRef="CSharpReference`1_9">foundObject</CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="njl:JToken">
+                <CSharpValue x:TypeArguments="njl:JToken" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">foundObject[in_SecondParameterKey]</CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Else>
+    </If>
+    <Assign DisplayName="Get the value for the key" sap:VirtualizedContainerService.HintSize="510,82" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">
           <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_7">out_ParameterValue</CSharpReference>
@@ -147,7 +208,7 @@
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="x:String">
-          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">jsonObject[in_ParameterKey].ToString()</CSharpValue>
+          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">foundObject.ToString()</CSharpValue>
         </InArgument>
       </Assign.Value>
     </Assign>
