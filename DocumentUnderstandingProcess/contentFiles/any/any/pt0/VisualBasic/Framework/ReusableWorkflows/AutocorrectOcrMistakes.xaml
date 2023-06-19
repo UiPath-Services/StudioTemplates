@@ -11,7 +11,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1874,8109.333333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1874,8126</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AutocorrectOcrMistakes_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -91,9 +91,15 @@
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
       <AssemblyReference>System.Data.Common</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Detect and automatically correct common OCR mistakes for fields with set values (E.g. Logo) by saving repetitive corrections made in Action Center.&#xD;&#xA;&#xD;&#xA;This should NOT be used as-is. For a real implementation, the auto correction should be tailored to the specifics of the business process." DisplayName="AutocorrectOcrMistakes" sap:VirtualizedContainerService.HintSize="681.3333333333334,8044.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Detect and automatically correct common OCR mistakes for fields with set values (E.g. Logo) by saving repetitive corrections made in Action Center.&#xA;&#xA;This should NOT be used as-is. For a real implementation, the auto correction should be tailored to the specifics of the business process." DisplayName="AutocorrectOcrMistakes" sap:VirtualizedContainerService.HintSize="681.3333333333334,8061.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" Name="commonOcrMistakesDT" />
       <Variable x:TypeArguments="x:String" Name="valueBeforeHitL" />
@@ -108,14 +114,14 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="619.3333333333334,96" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_AutocorrectOcrMistakesStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:BuildDataTable sap2010:Annotation.AnnotationText="The default structure of the DT used to save the mistakes." DataTable="[commonOcrMistakesDT]" DisplayName="Build Data Table - commonOcrMistakesDT" sap:VirtualizedContainerService.HintSize="619.3333333333334,105.33333333333333" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;OcrValue&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Corrected_x0020_Value&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Number_x0020_of_x0020_Repetitions&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Black_x0020_Listed&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;">
+    <ui:BuildDataTable sap2010:Annotation.AnnotationText="The default structure of the DT used to save the mistakes." DataTable="[commonOcrMistakesDT]" DisplayName="Build Data Table - commonOcrMistakesDT" sap:VirtualizedContainerService.HintSize="619.3333333333334,105.33333333333333" sap2010:WorkflowViewState.IdRef="BuildDataTable_1" TableInfo="&lt;NewDataSet&gt;&#xD;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xD;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xD;&#xA;      &lt;xs:complexType&gt;&#xD;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xD;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xD;&#xA;            &lt;xs:complexType&gt;&#xD;&#xA;              &lt;xs:sequence&gt;&#xD;&#xA;                &lt;xs:element name=&quot;OCR_x0020_Value&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Corrected_x0020_Value&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Number_x0020_of_x0020_Repetitions&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;                &lt;xs:element name=&quot;Black_x0020_Listed&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xD;&#xA;              &lt;/xs:sequence&gt;&#xD;&#xA;            &lt;/xs:complexType&gt;&#xD;&#xA;          &lt;/xs:element&gt;&#xD;&#xA;        &lt;/xs:choice&gt;&#xD;&#xA;      &lt;/xs:complexType&gt;&#xD;&#xA;    &lt;/xs:element&gt;&#xD;&#xA;  &lt;/xs:schema&gt;&#xD;&#xA;&lt;/NewDataSet&gt;">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:BuildDataTable>
-    <ucas:ReadStorageText TimeoutMS="{x:Null}" DisplayName="Read Storage Text - Common Ocr Mistakes" sap:VirtualizedContainerService.HintSize="619.3333333333334,136.66666666666666" sap2010:WorkflowViewState.IdRef="ReadStorageText_1" Path="[in_Config(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" Result="[commonOcrMistakesMapping]" StorageBucketName="[in_Config(&quot;AutocorrectStorageBucketName&quot;)]" />
+    <ucas:ReadStorageText TimeoutMS="{x:Null}" DisplayName="Read Storage Text - Common OCR Mistakes" sap:VirtualizedContainerService.HintSize="619.3333333333334,136.66666666666666" sap2010:WorkflowViewState.IdRef="ReadStorageText_1" Path="[in_Config(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" Result="[commonOcrMistakesMapping]" StorageBucketName="[in_Config(&quot;AutocorrectStorageBucketName&quot;)]" />
     <TryCatch sap2010:Annotation.AnnotationText="The list is saved in the storage bucket as a serialized DT by default." DisplayName="Try Catch - Deserialize DT" sap:VirtualizedContainerService.HintSize="619.3333333333334,333.3333333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -207,7 +213,7 @@
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <If sap2010:Annotation.AnnotationText="There are some generic values that can be read as OCR mistakes that can not be mapped to a single correct value so they should be blacklisted (E.g. 'Bank Of' is an incomplete OCR reading that may be any bank)" Condition="[commonOcrMistakesDT.Select(&quot;[OcrValue] = '&quot;+valueAfterHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Any(Function(row) CBool(row(&quot;Black Listed&quot;)).Equals(True))]" DisplayName="If - value is blacklisted" sap:VirtualizedContainerService.HintSize="619.3333333333334,683.3333333333334" sap2010:WorkflowViewState.IdRef="If_3">
+    <If sap2010:Annotation.AnnotationText="There are some generic values that can be read as OCR mistakes that can not be mapped to a single correct value so they should be blacklisted (E.g. 'Bank Of' is an incomplete OCR reading that may be any bank)" Condition="[commonOcrMistakesDT.Select(&quot;[OCR Value] = '&quot;+valueAfterHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Any(Function(row) CBool(row(&quot;Black Listed&quot;)).Equals(True))]" DisplayName="If - value is blacklisted" sap:VirtualizedContainerService.HintSize="619.3333333333334,683.3333333333334" sap2010:WorkflowViewState.IdRef="If_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -225,7 +231,7 @@
         </Sequence>
       </If.Then>
     </If>
-    <If sap2010:Annotation.AnnotationText="We try to correct the the ocr value read from the document regardless if the document will go to hitl or not, even after returning from hitl as well.&#xA;We need only check value after hitl against the DT since valueAfterHitL = valueBeforeHitL always when this flow is called before sending to hitl" Condition="[commonOcrMistakesDT.Select(&quot;[OcrValue] = '&quot;+valueAfterHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Count&gt;0]" DisplayName="If - value found in mistakesDT" sap:VirtualizedContainerService.HintSize="619.3333333333334,1483.3333333333333" sap2010:WorkflowViewState.IdRef="If_5">
+    <If sap2010:Annotation.AnnotationText="We try to correct the the ocr value read from the document regardless if the document will go to hitl or not, even after returning from hitl as well.&#xA;We need only check value after hitl against the DT since valueAfterHitL = valueBeforeHitL always when this flow is called before sending to hitl" Condition="[commonOcrMistakesDT.Select(&quot;[OCR Value] = '&quot;+valueAfterHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Count&gt;0]" DisplayName="If - value found in mistakesDT" sap:VirtualizedContainerService.HintSize="619.3333333333334,1483.3333333333333" sap2010:WorkflowViewState.IdRef="If_5">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -249,7 +255,7 @@
               <OutArgument x:TypeArguments="sd:DataRow">[row]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="sd:DataRow">[commonOcrMistakesDT.Select("[OcrValue] = '"+valueAfterHitL.Replace("'","''")+"'").First]</InArgument>
+              <InArgument x:TypeArguments="sd:DataRow">[commonOcrMistakesDT.Select("[OCR Value] = '"+valueAfterHitL.Replace("'","''")+"'").First]</InArgument>
             </Assign.Value>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -299,7 +305,7 @@
         <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="334,96" sap2010:WorkflowViewState.IdRef="LogMessage_13" Message="[in_FieldName+&quot; '&quot;+valueAfterHitL+&quot;' was not found in the mistakes DT&quot;]" />
       </If.Else>
     </If>
-    <If sap2010:Annotation.AnnotationText="If the field was changed in HitL and the new value is not found in the mistakes DT (with the required number of repetitions met) we need to update our mapping.&#xA;A human might use a value that is marked as a mistake when validating the document, we do not want to add those to the DT, creating cycles in the corrections." Condition="[not String.IsNullOrEmpty(correctedValue) AndAlso not String.isNullOrEmpty(valueBeforeHitL) AndAlso not valueAfterHitL.Equals(valueBeforeHitL)]" DisplayName="If - check before &amp; after HitL" sap:VirtualizedContainerService.HintSize="619.3333333333334,2585.3333333333335" sap2010:WorkflowViewState.IdRef="If_6">
+    <If sap2010:Annotation.AnnotationText="If the field was changed in HitL and the new value is not found in the mistakes DT (with the required number of repetitions met) we need to update our mapping.&#xA;A human might use a value that is marked as a mistake when validating the document, we do not want to add those to the DT, creating cycles in the corrections." Condition="[not String.IsNullOrEmpty(correctedValue) AndAlso not String.isNullOrEmpty(valueBeforeHitL) AndAlso not valueAfterHitL.Equals(valueBeforeHitL)]" DisplayName="If - check before &amp; after HitL" sap:VirtualizedContainerService.HintSize="619.3333333333334,2602" sap2010:WorkflowViewState.IdRef="If_6">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -308,17 +314,17 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Value changed in HitL" sap:VirtualizedContainerService.HintSize="533.3333333333334,2224" sap2010:WorkflowViewState.IdRef="Sequence_12">
+        <Sequence DisplayName="Value changed in HitL" sap:VirtualizedContainerService.HintSize="513.3333333333334,2240.6666666666665" sap2010:WorkflowViewState.IdRef="Sequence_12">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="471.3333333333333,96" sap2010:WorkflowViewState.IdRef="LogMessage_7" Message="[in_FieldName+&quot; value was changed in HitL -&gt; updating mapping&quot;]" />
-          <ui:IfElseIf sap2010:Annotation.AnnotationText="When updating the mapping we search for valueBeforeHitL as the mistake and valueAfterHitL as the corrected.&#xA;&#xA;If already present we check if correction done by the human is the same as the one we have saved already, if it is not, we will raise an alert (only one corrected value can be valid -&gt; we need to check mapping to account for human errors / inconsistencies between multiple validators), else we just increment repetition.&#xA;&#xA;If not present in our mapping we add it with repetition set to 1." DisplayName="Else If - value already present in mistakesDT" sap:VirtualizedContainerService.HintSize="471.3333333333333,1977.3333333333333" sap2010:WorkflowViewState.IdRef="IfElseIf_1">
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="451.3333333333333,96" sap2010:WorkflowViewState.IdRef="LogMessage_7" Message="[in_FieldName+&quot; value was changed in HitL -&gt; updating mapping&quot;]" />
+          <ui:IfElseIf sap2010:Annotation.AnnotationText="When updating the mapping we search for valueBeforeHitL as the mistake and valueAfterHitL as the corrected.&#xA;&#xA;If already present we check if correction done by the human is the same as the one we have saved already, if it is not, we will raise an alert (only one corrected value can be valid -&gt; we need to check mapping to account for human errors / inconsistencies between multiple validators), else we just increment repetition.&#xA;&#xA;If not present in our mapping we add it with repetition set to 1." DisplayName="Else If - value already present in mistakesDT" sap:VirtualizedContainerService.HintSize="451.3333333333333,1994" sap2010:WorkflowViewState.IdRef="IfElseIf_1">
             <ui:IfElseIf.ConditionBlocks>
               <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
-                <ui:IfElseIfBlock BlockType="If" Condition="[commonOcrMistakesDT.Select(&quot;[OcrValue] = '&quot;+valueBeforeHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Count.Equals(0)]">
+                <ui:IfElseIfBlock BlockType="If" Condition="[commonOcrMistakesDT.Select(&quot;[OCR Value] = '&quot;+valueBeforeHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Count.Equals(0)]">
                   <ui:IfElseIfBlock.Then>
                     <Sequence DisplayName="Add new entry to mapping" sap:VirtualizedContainerService.HintSize="400,430" sap2010:WorkflowViewState.IdRef="Sequence_9">
                       <sap:WorkflowViewStateService.ViewState>
@@ -331,7 +337,7 @@
                     </Sequence>
                   </ui:IfElseIfBlock.Then>
                 </ui:IfElseIfBlock>
-                <ui:IfElseIfBlock BlockType="ElseIf" Condition="[commonOcrMistakesDT.Select(&quot;[OcrValue] = '&quot;+valueBeforeHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;' and [Corrected Value] = '&quot; +valueAfterHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Count&gt;0]">
+                <ui:IfElseIfBlock BlockType="ElseIf" Condition="[commonOcrMistakesDT.Select(&quot;[OCR Value] = '&quot;+valueBeforeHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;' and [Corrected Value] = '&quot; +valueAfterHitL.Replace(&quot;'&quot;,&quot;''&quot;)+&quot;'&quot;).Count&gt;0]">
                   <ui:IfElseIfBlock.Then>
                     <Sequence DisplayName="Increment repetition" sap:VirtualizedContainerService.HintSize="400,405.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_10">
                       <Sequence.Variables>
@@ -347,7 +353,7 @@
                           <OutArgument x:TypeArguments="sd:DataRow">[row]</OutArgument>
                         </Assign.To>
                         <Assign.Value>
-                          <InArgument x:TypeArguments="sd:DataRow">[commonOcrMistakesDT.Select("[OcrValue] = '"+valueBeforeHitL.Replace("'","''")+"' and [Corrected Value] = '" +valueAfterHitL.Replace("'","''")+"'").First]</InArgument>
+                          <InArgument x:TypeArguments="sd:DataRow">[commonOcrMistakesDT.Select("[OCR Value] = '"+valueBeforeHitL.Replace("'","''")+"' and [Corrected Value] = '" +valueAfterHitL.Replace("'","''")+"'").First]</InArgument>
                         </Assign.Value>
                       </Assign>
                       <Assign DisplayName="Assign - increment repetition counter" sap:VirtualizedContainerService.HintSize="338,63.333333333333336" sap2010:WorkflowViewState.IdRef="Assign_7">
@@ -379,7 +385,7 @@
                           <OutArgument x:TypeArguments="sd:DataRow">[row]</OutArgument>
                         </Assign.To>
                         <Assign.Value>
-                          <InArgument x:TypeArguments="sd:DataRow">[commonOcrMistakesDT.Select("[OcrValue] = '"+valueBeforeHitL.Replace("'","''")+"'").First]</InArgument>
+                          <InArgument x:TypeArguments="sd:DataRow">[commonOcrMistakesDT.Select("[OCR Value] = '"+valueBeforeHitL.Replace("'","''")+"'").First]</InArgument>
                         </Assign.Value>
                       </Assign>
                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="338,88" sap2010:WorkflowViewState.IdRef="LogMessage_10" Message="[&quot;While trying to autocorrect OCR mistakes, a discrepancy between the already existing corrected value: '&quot;+row(&quot;Corrected Value&quot;).ToString+&quot;' and the newly inserted value: '&quot;+valueAfterHitL+&quot;' was found. Manual review of the mapping may be necessary.&quot;]" />
