@@ -2,7 +2,7 @@ from pytest import fixture
 from constants import Constants
 
 import json
-import PyPDF2
+import pypdf
 import yaml
 import os
 import xml.etree.ElementTree as et
@@ -172,7 +172,7 @@ def read_pdf():
         pdf_file_obj = open(user_guide_file, "rb")
 
         # creating a pdf reader object
-        pdf_reader = PyPDF2.PdfReader(pdf_file_obj)
+        pdf_reader = pypdf.PdfReader(pdf_file_obj)
 
         return pdf_reader
 
