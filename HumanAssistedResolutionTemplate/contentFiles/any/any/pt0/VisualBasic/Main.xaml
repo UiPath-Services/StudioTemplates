@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="False" this:Main.in_Template="finalForm" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upaf="clr-namespace:UiPath.Persistence.Activities.FormTask;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.in_UseQueue="False" this:Main.in_Template="CategorizeDocument_ProcessName" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upaf="clr-namespace:UiPath.Persistence.Activities.FormTask;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Variable that checks if the Document Understanding Process is using Orchestrator Queues or not." Name="in_UseQueue" Type="InArgument(x:Boolean)" />
     <x:Property sap2010:Annotation.AnnotationText="Name of the JSON file, used by the 'Create Form Task' activity" Name="in_Template" Type="InArgument(x:String)" />
@@ -177,7 +177,7 @@
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
               <av:Point x:Key="ShapeLocation">250,2.6666666666666643</av:Point>
               <av:Size x:Key="ShapeSize">60,74.66666666666667</av:Size>
-              <av:PointCollection x:Key="ConnectorLocation">280,77.33333333333334 280,98.66666666666666</av:PointCollection>
+              <av:PointCollection x:Key="ConnectorLocation">280,77.33333333333334 280,123</av:PointCollection>
               <x:Double x:Key="Width">777</x:Double>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
@@ -187,9 +187,9 @@
           <FlowStep x:Name="__ReferenceID6">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <av:Point x:Key="ShapeLocation">180,98.66666666666666</av:Point>
+                <av:Point x:Key="ShapeLocation">180,123</av:Point>
                 <av:Size x:Key="ShapeSize">200,54</av:Size>
-                <av:PointCollection x:Key="ConnectorLocation">280,152.66666666666666 280,216.66666666666666</av:PointCollection>
+                <av:PointCollection x:Key="ConnectorLocation">280,177 280,216.66666666666666</av:PointCollection>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Loads Orchestrator assets and executes logic for process-specific Initialization" DisplayName="Initialize Process" sap:VirtualizedContainerService.HintSize="200,54" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_10" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
@@ -265,7 +265,7 @@
                             <av:PointCollection x:Key="ConnectorLocation">640,462.33333333333337 640,518.6666666666666</av:PointCollection>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <Sequence sap2010:Annotation.AnnotationText="Create the task in Action Center and wait for it to be resumed" DisplayName="Create &amp; Wait for Task " sap:VirtualizedContainerService.HintSize="512,1689.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                        <Sequence sap2010:Annotation.AnnotationText="Create the task in Action Center and wait for it to be resumed" DisplayName="Create &amp; Wait for Task " sap:VirtualizedContainerService.HintSize="212.66666666666666,84.66666666666667" sap2010:WorkflowViewState.IdRef="Sequence_9">
                           <Sequence.Variables>
                             <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="RPA checks result performed on the title." Name="dt_titleRobotChecks" />
                             <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="RPA checks result performed on the summary." Name="dt_summaryRobotChecks" />
@@ -372,6 +372,18 @@
                               <OutArgument x:TypeArguments="x:String" x:Key="reviewerRemarks">
                                 <VisualBasicReference x:TypeArguments="x:String" ExpressionText="reviewerRemarks" />
                               </OutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="title">
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;Title&quot;).toString" />
+                              </InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="errorMessage">
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;Description&quot;).toString" />
+                              </InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="comments">
+                                <VisualBasicReference x:TypeArguments="x:String" ExpressionText="comments" />
+                              </OutArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="indications">
+                                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="config(&quot;SolutionDescription&quot;).toString" />
+                              </InArgument>
                             </upaf:CreateFormTask.FormData>
                           </upaf:CreateFormTask>
                           <ui:LogMessage DisplayName="Wait for Form Task - Start" sap:VirtualizedContainerService.HintSize="450,96" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[config(&quot;LogMessage_WaitTask&quot;) + Environment.NewLine +config(&quot;logKey&quot;)]">
