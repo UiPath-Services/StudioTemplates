@@ -125,13 +125,13 @@
     </sap:WorkflowViewStateService.ViewState>
     <TryCatch DisplayName="Try Catch - autocorrect ocr mistakes" sap:VirtualizedContainerService.HintSize="777.3333333333334,9242" sap2010:WorkflowViewState.IdRef="TryCatch_6">
       <TryCatch.Variables>
-        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="Datatable containing the information related to the autocorrections made in Human in the Loop." Name="commonOcrMistakesJson" />
-        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field before Human in the Loop" Name="valueBeforeHitL" />
-        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field after Human in the Loop" Name="valueAfterHitL" />
-        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Corrected value of the field taken from the commonOcrMistakesDataTable" Name="correctedValue" />
-        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Serialized string of the commonOcrMistakesDataTable" Name="commonOcrMistakesString" />
-        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="Current row from the commonOcrMistakesDataTable containing the autocorrection information that matches the current extracted field value." Name="currentCorrectionJson" />
-        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="KeyValue pair of the corrected value with most repetitions that matches current extracted field value." Name="mostRelevantCorrectedValue" />
+        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject containing all of the information related to the corrections made in Human in the Loop." Name="commonOcrMistakesJson" />
+        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field before Human in the Loop." Name="valueBeforeHitL" />
+        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field after Human in the Loop." Name="valueAfterHitL" />
+        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The corrected value to be used for autocorrection that matches the extracted field value." Name="correctedValue" />
+        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Serialized string of the commonOcrMistakesJson read from the storage bucket." Name="commonOcrMistakesString" />
+        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject from the commonOcrMistakesJson containing only the autocorrection information that matches the current extracted field value." Name="currentCorrectionJson" />
+        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="&quot;Corrected Values&quot; item with highest number of repetitions that matches current extracted field value." Name="mostRelevantCorrectedValue" />
       </TryCatch.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -365,7 +365,7 @@
             <If.Then>
               <Sequence DisplayName="Value changed in HitL" sap:VirtualizedContainerService.HintSize="598,2659.3333333333335" sap2010:WorkflowViewState.IdRef="Sequence_35">
                 <Sequence.Variables>
-                  <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="The new corrected value to be added to the corrected values jarray" Default="[new JObject]" Name="newCorrectedValueJson" />
+                  <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="The new item to be added to the &quot;Corrected Values&quot; JArray." Default="[new JObject]" Name="newCorrectedValueJson" />
                 </Sequence.Variables>
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -381,11 +381,7 @@
                         <ui:IfElseIfBlock.Then>
                           <Sequence sap2010:Annotation.AnnotationText="If currentCorrectionJson is null, the valueBeforeHitL is not in the commonOcrMistakesjson and needs to be added." DisplayName="Add new entry to mapping" sap:VirtualizedContainerService.HintSize="484.6666666666667,746.6666666666666" sap2010:WorkflowViewState.IdRef="Sequence_32">
                             <Sequence.Variables>
-                              <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="The json for the new mistake to be added in the commonOcrMistakesJson" Name="newMistakeJson">
-                                <Variable.Default>
-                                  <VisualBasicValue x:TypeArguments="njl:JObject" ExpressionText="new JObject" />
-                                </Variable.Default>
-                              </Variable>
+                              <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="Json for the new mistake to be added in the commonOcrMistakesJson." Default="[new JObject]" Name="newMistakeJson" />
                             </Sequence.Variables>
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -454,7 +450,7 @@
                         <ui:IfElseIfBlock.Then>
                           <Sequence sap2010:Annotation.AnnotationText="The current correction is already present in the corrected values array, hence we need to increment the number of repetition." DisplayName="Increment repetition" sap:VirtualizedContainerService.HintSize="400,507.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_33">
                             <Sequence.Variables>
-                              <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="The &quot;Corrected Values&quot; item that contains our current valueAfterHitL" Name="currentCorrectedValue" />
+                              <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="&quot;Corrected Values&quot; item from current mistake that contains our valueAfterHitL and it's number of repetitions." Name="currentCorrectedValue" />
                             </Sequence.Variables>
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
