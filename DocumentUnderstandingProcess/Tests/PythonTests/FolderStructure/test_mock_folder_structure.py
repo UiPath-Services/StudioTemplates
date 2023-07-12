@@ -60,7 +60,4 @@ class MockFolderTests:
             folder_mocks.add(filename)
 
         # assert that the sets of mock file names are equal
-        print(config_mocks)
-        print("***********")
-        print(folder_mocks)
         assert config_mocks == folder_mocks
