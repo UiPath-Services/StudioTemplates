@@ -64,16 +64,21 @@ if ($shouldGetTemplatesFromConfig -eq $true) {
 Write-Host "The list of modified paths: $set"
 Write-Host "Absolute path is $buildSourcesDirectory"
 foreach ($directory in $set) {
-    Write-Host "Current directory is $directory"
-    $directoryPath = "$buildSourcesDirectory\$directory"
-    Write-Host "Directory path is $directoryPath"
-    $nuspecPath = Get-ChildItem $directoryPath -Recurse -Depth 1 -Filter *.nuspec | Select-Object -First 1 | % { $_.FullName }
-    Write-Host ".nuspec path is $nuspecPath"
-    if ($nuspecPath -And (Test-Path $nuspecPath)) {          
-        $Command = "nuget pack $nuspecPath -OutputDirectory $outputDirectory"
-        Write-Host $Command
-        Invoke-Expression $Command
-    } else {
-        Write-Host "##vso[task.LogIssue type=warning;] $nuspecPath file not found"
+    try {
+        Write-Host "Current directory is $directory"
+        $directoryPath = "$buildSourcesDirectory\$directory"
+        Write-Host "Directory path is $directoryPath"
+        $nuspecPath = Get-ChildItem $directoryPath -Recurse -Depth 1 -Filter *.nuspec | Select-Object -First 1 | % { $_.FullName }
+        Write-Host ".nuspec path is $nuspecPath"
+        if ($nuspecPath -And (Test-Path $nuspecPath)) {
+            $Command = "nuget pack $nuspecPath -OutputDirectory $outputDirectory"
+            Write-Host $Command
+            Invoke-Expression $Command
+        } else {
+            Write-Host "##vso[task.LogIssue type=warning;] $nuspecPath file not found"
+        }
+    }
+    catch {
+        # Fail silently...
     }
 }
