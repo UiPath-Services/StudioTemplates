@@ -5,11 +5,12 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
     <x:Property sap2010:Annotation.AnnotationText="Stores the transaction item to be updated in the Orchestrator Queue." Name="out_TransactionItem" Type="OutArgument(ui:QueueItem)" />
     <x:Property Name="out_TargetFile" Type="OutArgument(upr:ILocalResource)" />
+    <x:Property Name="out_TargetFileString" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1006.6666666666665,1580.6666666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>587.3333333333334,1719.3333333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_15_GetTransactionItem_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="74">
@@ -114,12 +115,12 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationNext.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="588,1516" sap2010:WorkflowViewState.IdRef="Sequence_68">
-    <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="TargetFile" />
-    </Sequence.Variables>
+  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="588,1654.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_68">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -127,7 +128,7 @@
         <x:Boolean x:Key="IsPinned">False</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty Target File" sap:VirtualizedContainerService.HintSize="526,84.66666666666667" sap2010:WorkflowViewState.IdRef="Assign_25">
+    <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty Target File" sap:VirtualizedContainerService.HintSize="526,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_25">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[out_TargetFile]</OutArgument>
       </Assign.To>
@@ -140,13 +141,13 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </Assign>
-    <Sequence sap:VirtualizedContainerService.HintSize="526,691.3333333333334" sap2010:WorkflowViewState.IdRef="Sequence_70">
+    <Sequence sap:VirtualizedContainerService.HintSize="526,822" sap2010:WorkflowViewState.IdRef="Sequence_70">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:GetQueueItem sap2010:Annotation.AnnotationText="Get a transaction item from the specified Orchestrator queue.&#xA;&#xA;The file to be processed is expected to be found under the &quot;TargetFile&quot; key of the transaction item." ContinueOnError="False" DisplayName="Get Item to be Processed" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DocumentUnderstandingQueuePath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="450,220" sap2010:WorkflowViewState.IdRef="GetQueueItem_4" QueueType="[in_Config(&quot;Settings&quot;)(&quot;DocumentUnderstandingQueueName&quot;).ToString]" TransactionItem="[out_TransactionItem]">
+      <ui:GetQueueItem sap2010:Annotation.AnnotationText="Get a transaction item from the specified Orchestrator queue.&#xA;&#xA;The file to be processed is expected to be found under the &quot;TargetFile&quot; key of the transaction item." ContinueOnError="False" DisplayName="Get Item to be Processed" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DocumentUnderstandingQueuePath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="450,223.33333333333334" sap2010:WorkflowViewState.IdRef="GetQueueItem_4" QueueType="[in_Config(&quot;Settings&quot;)(&quot;DocumentUnderstandingQueueName&quot;).ToString]" TransactionItem="[out_TransactionItem]">
         <ui:GetQueueItem.Reference>
           <InArgument x:TypeArguments="x:String" />
         </ui:GetQueueItem.Reference>
@@ -159,29 +160,37 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </ui:GetQueueItem>
-      <Assign sap:VirtualizedContainerService.HintSize="450,84.66666666666667" sap2010:WorkflowViewState.IdRef="Assign_27">
+      <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_27">
         <Assign.To>
-          <OutArgument x:TypeArguments="x:String">[TargetFile]</OutArgument>
+          <OutArgument x:TypeArguments="x:String">[out_TargetFileString]</OutArgument>
         </Assign.To>
         <Assign.Value>
           <InArgument x:TypeArguments="x:String">[out_TransactionItem.SpecificContent("TargetFile").ToString]</InArgument>
         </Assign.Value>
       </Assign>
-      <ucas:DownloadStorageFile Destination="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Download Storage File" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,196" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="[TargetFile]" Result="[out_TargetFile]" StorageBucketName="DU_StorageBucket" />
+      <ucas:DownloadStorageFile Destination="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Download Storage File" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,197.33333333333334" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="[out_TargetFileString]" Result="[out_TargetFile]" StorageBucketName="DU_StorageBucket" />
+      <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_28">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[out_TargetFileString]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[Path.GetFileNameWithoutExtension(out_TargetFileString)]</InArgument>
+        </Assign.Value>
+      </Assign>
     </Sequence>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="526,143.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;File downloaded succesfully&quot;]" />
-    <ui:CommentOut DisplayName="Disabled activities" sap:VirtualizedContainerService.HintSize="526,258" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="526,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;File downloaded succesfully&quot;]" />
+    <ui:CommentOut DisplayName="Disabled activities" sap:VirtualizedContainerService.HintSize="526,260" sap2010:WorkflowViewState.IdRef="CommentOut_1">
       <ui:CommentOut.Body>
-        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="492,172.66666666666666" sap2010:WorkflowViewState.IdRef="Sequence_71">
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="492,174.66666666666666" sap2010:WorkflowViewState.IdRef="Sequence_71">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - GetTransactionItem" sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="RetryScope_3" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+          <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues." ContinueOnError="False" DisplayName="Retry Scope - GetTransactionItem" sap:VirtualizedContainerService.HintSize="450,87.33333333333333" sap2010:WorkflowViewState.IdRef="RetryScope_3" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
             <ui:RetryScope.ActivityBody>
               <ActivityAction>
-                <Sequence DisplayName="RetryBody - GetTransactionItem" sap:VirtualizedContainerService.HintSize="416,80.66666666666667" sap2010:WorkflowViewState.IdRef="Sequence_64">
+                <Sequence DisplayName="RetryBody - GetTransactionItem" sap:VirtualizedContainerService.HintSize="416,81.33333333333333" sap2010:WorkflowViewState.IdRef="Sequence_64">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -192,7 +201,7 @@
             </ui:RetryScope.ActivityBody>
             <ui:RetryScope.Condition>
               <ActivityFunc x:TypeArguments="x:Boolean">
-                <Sequence DisplayName="Condition" sap:VirtualizedContainerService.HintSize="416,80.66666666666667" sap2010:WorkflowViewState.IdRef="Sequence_69">
+                <Sequence DisplayName="Condition" sap:VirtualizedContainerService.HintSize="416,81.33333333333333" sap2010:WorkflowViewState.IdRef="Sequence_69">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
