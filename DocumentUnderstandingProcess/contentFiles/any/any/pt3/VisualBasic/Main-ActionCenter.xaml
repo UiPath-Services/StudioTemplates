@@ -55,6 +55,10 @@
       <x:String>UiPath.IntelligentOCR.StudioWeb.Activities.DataValidation</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Classification</x:String>
       <x:String>UiPath.DocumentUnderstanding.ML.Activities</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -103,6 +107,11 @@
       <AssemblyReference>ExtendedExtractionRe.MPIqC4lWsGC1qHlla2KNFTJ2</AssemblyReference>
       <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
       <AssemblyReference>UiPath.DocumentUnderstanding.ML.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="911,2863" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -147,6 +156,8 @@
               <Variable x:TypeArguments="x:Boolean" Name="ClassificationSuccessFlag" />
               <Variable x:TypeArguments="uisad:DocumentData" Name="ClassificationResult" />
               <Variable x:TypeArguments="x:Boolean" Name="ExtractionSuccessFlag" />
+              <Variable x:TypeArguments="x:String" Name="TargetFileString" />
+              <Variable x:TypeArguments="scg:List(sd:DataTable)" Name="DataTableExtracted" />
             </Flowchart.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -294,7 +305,7 @@
                                             <ui:InvokeWorkflowFile.Arguments>
                                               <InArgument x:TypeArguments="upr:IResource" x:Key="in_TargetDocumentPath">[TargetDocumentPath]</InArgument>
                                               <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="in_Config">[Config]</InArgument>
-                                              <OutArgument x:TypeArguments="uisad1:IDocumentData(uisaseib:Invoices)" x:Key="out_ExtractedDocData" />
+                                              <OutArgument x:TypeArguments="uisad1:IDocumentData(uisaseib:Invoices)" x:Key="out_ExtractedDocData">[ExtractedDocData]</OutArgument>
                                               <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                                             </ui:InvokeWorkflowFile.Arguments>
                                             <sap:WorkflowViewStateService.ViewState>
@@ -342,11 +353,11 @@
                                                           <av:PointCollection x:Key="ConnectorLocation">120,1445.52 120,1473.6</av:PointCollection>
                                                         </scg:Dictionary>
                                                       </sap:WorkflowViewStateService.ViewState>
-                                                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Export" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Framework\70_Export.xaml">
+                                                      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Export" sap:VirtualizedContainerService.HintSize="450,223" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="Framework\70_Export.xaml">
                                                         <ui:InvokeWorkflowFile.Arguments>
-                                                          <InArgument x:TypeArguments="uisad1:IDocumentData(uisaseib:Invoices)" x:Key="in_ExtractedDocData" />
-                                                          <OutArgument x:TypeArguments="scg:List(sd:DataTable)" x:Key="out_DataTableExtracted" />
-                                                          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFileString" />
+                                                          <InArgument x:TypeArguments="uisad1:IDocumentData(uisaseib:Invoices)" x:Key="in_ExtractedDocData">[ExtractedDocData]</InArgument>
+                                                          <OutArgument x:TypeArguments="scg:List(sd:DataTable)" x:Key="out_DataTableExtracted">[DataTableExtracted]</OutArgument>
+                                                          <InArgument x:TypeArguments="x:String" x:Key="in_TargetFileString">[TargetFileString]</InArgument>
                                                         </ui:InvokeWorkflowFile.Arguments>
                                                         <sap:WorkflowViewStateService.ViewState>
                                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -455,7 +466,7 @@
                           <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                           <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">[TransactionItem]</OutArgument>
                           <OutArgument x:TypeArguments="upr:ILocalResource" x:Key="out_TargetFile">[TargetDocumentPath]</OutArgument>
-                          <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFileString" />
+                          <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFileString">[TargetFileString]</OutArgument>
                         </ui:InvokeWorkflowFile.Arguments>
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
