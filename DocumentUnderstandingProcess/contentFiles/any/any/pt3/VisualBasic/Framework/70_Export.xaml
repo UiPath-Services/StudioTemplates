@@ -1,16 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_70_Export" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uisad="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DataExtraction;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:uisaseib="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.SWEntities.ExtendedExtractionResultsForDocumentData.Invoices.Bundle;assembly=ExtendedExtractionRe.MPIqC4lWsGC1qHlla2KNFTJ2" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_70_Export" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_ExtractedDocData" Type="InArgument(uisad:IDocumentData(uisaseib:Invoices))" />
     <x:Property Name="out_DataTableExtracted" Type="OutArgument(scg:List(sd:DataTable))" />
     <x:Property Name="in_TargetFileString" Type="InArgument(x:String)" />
   </x:Members>
-  <this:_70_Export.in_ExtractedDocData>
-    <InArgument x:TypeArguments="uisad:IDocumentData(uisaseib:Invoices)" />
-  </this:_70_Export.in_ExtractedDocData>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>587.3333333333334,1329.3333333333333</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>973,1315</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_70_Export_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -103,7 +99,7 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="_70_Export" sap:VirtualizedContainerService.HintSize="512,1264.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="_70_Export" sap:VirtualizedContainerService.HintSize="512,1250" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:Int32" Name="Index" />
       <Variable x:TypeArguments="x:String" Name="JsonRegularFields" />
@@ -115,15 +111,15 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="scg:List(sd:DataTable)">[out_DataTableExtracted]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[in_ExtractedDocData.DocumentMetadata.ResultsAsDataTables]</InArgument>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[GlobalVariablesNamespace.GlobalVariables.extractedDocumentData.DocumentMetadata.ResultsAsDataTables]</InArgument>
       </Assign.Value>
     </Assign>
-    <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_4">
+    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_4">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[JsonRegularFields]</OutArgument>
       </Assign.To>
@@ -131,7 +127,7 @@
         <InArgument x:TypeArguments="x:String">[JsonConvert.SerializeObject(out_DataTableExtracted(0))]</InArgument>
       </Assign.Value>
     </Assign>
-    <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_5">
+    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_5">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[JsonLineDetails]</OutArgument>
       </Assign.To>
@@ -139,7 +135,7 @@
         <InArgument x:TypeArguments="x:String">[JsonConvert.SerializeObject(out_DataTableExtracted(1))]</InArgument>
       </Assign.Value>
     </Assign>
-    <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,250" sap2010:WorkflowViewState.IdRef="WriteStorageText_3" Path="[in_TargetFileString+&quot;_RegularFields&quot;+&quot;.json&quot;]" StorageBucketName="DU_StorageBucket" Text="[JsonRegularFields]" />
+    <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,245" sap2010:WorkflowViewState.IdRef="WriteStorageText_3" Path="[in_TargetFileString+&quot;_RegularFields&quot;+&quot;.json&quot;]" StorageBucketName="DU_StorageBucket" Text="[JsonRegularFields]" />
     <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,250" sap2010:WorkflowViewState.IdRef="WriteStorageText_5" Path="[in_TargetFileString+&quot;_LineDetails&quot;+&quot;.json&quot;]" StorageBucketName="DU_StorageBucket" Text="[JsonLineDetails]" />
     <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,198" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="Document_Understanding_Queue">
       <ui:AddQueueItem.ItemInformation>
