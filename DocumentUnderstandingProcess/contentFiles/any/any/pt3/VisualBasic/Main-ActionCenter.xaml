@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>973,2928</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1794,2928</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -127,6 +127,7 @@
       <Variable x:TypeArguments="x:TimeSpan" Name="RetryInterval" />
       <Variable x:TypeArguments="x:Int32" Name="MaxAttempts" />
       <Variable x:TypeArguments="uisad2:IDocumentData(uisaseib:Invoices)" Name="ExtractedDocData" />
+      <Variable x:TypeArguments="x:String" Name="variable" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -221,7 +222,7 @@
                           <av:PointCollection x:Key="TrueConnector">260.6666666666667,420 160,420 160,530.5999999999999 190,530.5999999999999</av:PointCollection>
                           <x:String x:Key="TrueLabel">Yes</x:String>
                           <x:String x:Key="FalseLabel">No Data</x:String>
-                          <av:PointCollection x:Key="FalseConnector">332.6666666666667,420.1666666666667 602.6666666666667,420.1666666666667 602.6666666666667,1500.6 220,1500.6</av:PointCollection>
+                          <av:PointCollection x:Key="FalseConnector">332.6666666666667,420.1666666666667 624.5,420.1666666666667 624.5,1500.6 220,1500.6</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <FlowDecision.True>
@@ -254,7 +255,10 @@
                               </sap:WorkflowViewStateService.ViewState>
                               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Classify" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="Framework\30_Classify.xaml">
                                 <ui:InvokeWorkflowFile.Arguments>
-                                  <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                                  <InArgument x:TypeArguments="upr:ILocalResource" x:Key="in_TargetDocumentPath" />
+                                  <OutArgument x:TypeArguments="uisad:DocumentData" x:Key="ClassificationResult" />
+                                  <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="in_Config" />
+                                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval" />
                                 </ui:InvokeWorkflowFile.Arguments>
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -398,7 +402,7 @@
                                                           <av:PointCollection x:Key="ConnectorLocation">400,1359.4 400,1419.52 220,1419.52</av:PointCollection>
                                                         </scg:Dictionary>
                                                       </sap:WorkflowViewStateService.ViewState>
-                                                      <Sequence DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="588,1527" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                                      <Sequence DisplayName="Validate &amp; Train Extractors" sap:VirtualizedContainerService.HintSize="588,1613" sap2010:WorkflowViewState.IdRef="Sequence_12">
                                                         <Sequence.Variables>
                                                           <Variable x:TypeArguments="uisad1:CreatedValidationAction(uisaseib:Invoices)" Name="validationActionObject" />
                                                         </Sequence.Variables>
@@ -408,7 +412,7 @@
                                                           </scg:Dictionary>
                                                         </sap:WorkflowViewStateService.ViewState>
                                                         <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="526,141" sap2010:WorkflowViewState.IdRef="LogMessage_6" Message="[Config(&quot;Constants&quot;)(&quot;LogMessage_CreateValidationAction&quot;).ToString + &quot; &quot; + GlobalVariablesNamespace.GlobalVariables.extractedDocumentData.DocumentType.Name.ToString + Environment.NewLine + Config(&quot;Constants&quot;)(&quot;logkey&quot;).ToString]" />
-                                                        <uisad1:CreateValidationAction x:TypeArguments="uisaseib:Invoices" ContainsDocument="{x:Null}" ContainsTaxonomy="{x:Null}" OriginalFilePath="{x:Null}" ActionCatalogue="DU_Catalog" ActionPriority="Medium" ActionTitle="[Config(&quot;Assets&quot;)(&quot;DU_ActionCatalogName&quot;).ToString]" AutomaticExtractionResults="[GlobalVariablesNamespace.GlobalVariables.extractedDocumentData]" BucketId="38775" BucketName="du_storage_bucket" CreatedValidationAction="[validationActionObject]" DisplayName="Create Validation Task" sap:VirtualizedContainerService.HintSize="450,143" sap2010:WorkflowViewState.IdRef="CreateValidationAction`1_1" OrchestratorFolderId="3532611" OrchestratorFolderName="DuProcess" />
+                                                        <uisad1:CreateValidationAction x:TypeArguments="uisaseib:Invoices" ContainsDocument="{x:Null}" ContainsTaxonomy="{x:Null}" OriginalFilePath="{x:Null}" ActionCatalogue="DU_Catalog" ActionPriority="Medium" ActionTitle="[Config(&quot;Assets&quot;)(&quot;DU_ActionCatalogName&quot;).ToString]" AutomaticExtractionResults="[GlobalVariablesNamespace.GlobalVariables.extractedDocumentData]" BucketId="38775" BucketName="du_storage_bucket" CreatedValidationAction="[validationActionObject]" DisplayName="Create Validation Task" sap:VirtualizedContainerService.HintSize="526,143" sap2010:WorkflowViewState.IdRef="CreateValidationAction`1_1" OrchestratorFolderId="3532611" OrchestratorFolderName="DuProcess" />
                                                         <If Condition="[TransactionItem IsNot Nothing]" sap:VirtualizedContainerService.HintSize="526,646" sap2010:WorkflowViewState.IdRef="If_1">
                                                           <If.Then>
                                                             <Sequence sap:VirtualizedContainerService.HintSize="492,464" sap2010:WorkflowViewState.IdRef="Sequence_13">
@@ -462,8 +466,8 @@
                                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                               </scg:Dictionary>
                                             </sap:WorkflowViewStateService.ViewState>
-                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_5" Message="[&quot;Starting Validate &amp; Train Classifier&quot;]" />
-                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[&quot;Creating Classification Validation Action&quot;]" />
+                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_5" Message="[&quot;Starting Validate &amp; Train Classifier&quot;]" />
+                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[&quot;Creating Classification Validation Action&quot;]" />
                                           </Sequence>
                                           <FlowStep.Next>
                                             <x:Reference>__ReferenceID1</x:Reference>
