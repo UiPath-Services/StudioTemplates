@@ -6,7 +6,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1031.3333333333333,2948</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>900.6666666666666,2948</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -125,6 +125,7 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" Name="Config" />
       <Variable x:TypeArguments="x:Int32" Name="MaxAttempts" />
+      <Variable x:TypeArguments="x:TimeSpan" Name="RetryInterval" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -135,7 +136,7 @@
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_ConfigFile">config.json</InArgument>
         <OutArgument x:TypeArguments="x:Int32" x:Key="out_MaxAttempts">[MaxAttempts]</OutArgument>
-        <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[GlobalVariablesNamespace.GlobalVariables.RetryInterval]</OutArgument>
+        <OutArgument x:TypeArguments="x:TimeSpan" x:Key="out_RetryInterval">[RetryInterval]</OutArgument>
         <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="out_ConfigDic">[Config]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
@@ -184,13 +185,13 @@
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <av:Point x:Key="ShapeLocation">200,127.16666666666667</av:Point>
                   <av:Size x:Key="ShapeSize">200,54</av:Size>
-                  <av:PointCollection x:Key="ConnectorLocation">300,181.16666666666669 300,211.16666666666666 299.97499999999997,211.16666666666666 299.97499999999997,231.16666666666669</av:PointCollection>
+                  <av:PointCollection x:Key="ConnectorLocation">300,181.16666666666669 300,211.16666666666666 300.30833333333334,211.16666666666666 300.30833333333334,231.16666666666669</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Initialize Process" sap:VirtualizedContainerService.HintSize="200,54" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\10_InitializeProcess.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
                   <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[MaxAttempts]</InArgument>
-                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[GlobalVariablesNamespace.GlobalVariables.RetryInterval]</InArgument>
+                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                   <InOutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="io_Config">[Config]</InOutArgument>
                 </ui:InvokeWorkflowFile.Arguments>
                 <sap:WorkflowViewStateService.ViewState>
@@ -256,7 +257,7 @@
                                   <InArgument x:TypeArguments="upr:ILocalResource" x:Key="in_TargetDocumentPath">[TargetDocumentPath]</InArgument>
                                   <OutArgument x:TypeArguments="uisad:DocumentData" x:Key="ClassificationResult">[ClassificationResult]</OutArgument>
                                   <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="in_Config">[Config]</InArgument>
-                                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[GlobalVariablesNamespace.GlobalVariables.RetryInterval]</InArgument>
+                                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                                 </ui:InvokeWorkflowFile.Arguments>
                                 <sap:WorkflowViewStateService.ViewState>
                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -307,12 +308,13 @@
                                               <av:PointCollection x:Key="ConnectorLocation">180,1067.52 180,1103.3333333333333</av:PointCollection>
                                             </scg:Dictionary>
                                           </sap:WorkflowViewStateService.ViewState>
-                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="200,54" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
+                                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="450,335.3333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="Framework\50_Extract.xaml">
                                             <ui:InvokeWorkflowFile.Arguments>
                                               <InArgument x:TypeArguments="upr:IResource" x:Key="in_TargetDocumentPath">[TargetDocumentPath]</InArgument>
                                               <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="in_Config">[Config]</InArgument>
-                                              <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[GlobalVariablesNamespace.GlobalVariables.RetryInterval]</InArgument>
+                                              <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                                               <OutArgument x:TypeArguments="uisad1:IDocumentData(uisaseib:Invoices)" x:Key="extractedDocumentData">[extractedDocumentData]</OutArgument>
+                                              <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[MaxAttempts]</InArgument>
                                             </ui:InvokeWorkflowFile.Arguments>
                                             <sap:WorkflowViewStateService.ViewState>
                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -429,7 +431,7 @@
                                                                   <InArgument x:TypeArguments="ui:QueueItem" x:Key="in_TransactionItem">[TransactionItem]</InArgument>
                                                                   <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="in_Config">[Config]</InArgument>
                                                                   <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[MaxAttempts]</InArgument>
-                                                                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[GlobalVariablesNamespace.GlobalVariables.RetryInterval]</InArgument>
+                                                                  <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                                                                 </ui:InvokeWorkflowFile.Arguments>
                                                               </ui:InvokeWorkflowFile>
                                                             </Sequence>
@@ -501,14 +503,14 @@
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <av:Point x:Key="ShapeLocation">430,243.60000000000002</av:Point>
                           <av:Size x:Key="ShapeSize">200,54</av:Size>
-                          <av:PointCollection x:Key="ConnectorLocation">530,297.6 530,327.6 296.6666666666667,327.6 296.6666666666667,376.6666666666667</av:PointCollection>
+                          <av:PointCollection x:Key="ConnectorLocation">530,297.6 530,327.6 297.33333333333337,327.6 297.33333333333337,376.6666666666667</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
                       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="200,54" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" LogEntry="No" LogExit="No" UnSafe="False" WorkflowFileName="Framework\15_GetTransactionItem.xaml">
                         <ui:InvokeWorkflowFile.Arguments>
                           <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" x:Key="in_Config">[Config]</InArgument>
                           <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[MaxAttempts]</InArgument>
-                          <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[GlobalVariablesNamespace.GlobalVariables.RetryInterval]</InArgument>
+                          <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[RetryInterval]</InArgument>
                           <OutArgument x:TypeArguments="ui:QueueItem" x:Key="out_TransactionItem">[TransactionItem]</OutArgument>
                           <OutArgument x:TypeArguments="upr:ILocalResource" x:Key="out_TargetFile">[TargetDocumentPath]</OutArgument>
                           <OutArgument x:TypeArguments="x:String" x:Key="out_TargetFileString">[TargetFileString]</OutArgument>
