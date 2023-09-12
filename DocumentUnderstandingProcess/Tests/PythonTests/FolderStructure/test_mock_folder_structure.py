@@ -36,8 +36,6 @@ class MockFolderTests:
         # compare folder content with the expected files
         assert all(file in files for file in mock_structure[0]["MockReusableFolderStructure"])
 
-    # TODO: Rewrite the test such that it dynamically checks for all the files in the mock folder in the mock config
-    # TODO: and the order is not relevant
     @staticmethod
     def test_project_mock_config_check(app_constants, load_json, get_filenames):
         """
@@ -49,18 +47,17 @@ class MockFolderTests:
         # load the mock_config
         mock_config = load_json(app_constants.MOCK_CONFIG)
 
-        # get all mock file names from the mocks config and put them in a string; mock file names are separated by '_'
-        all_mocks = ""
+        # get all mock file names from the mocks config and put them in a set
+        config_mocks = set()
         for mock in mock_config["mockedWorkflows"]:
-            # find index of last occurrence of '\\'
-            last_occurrence = mock["mockFilePath"].rfind("\\")
-            # trim to get only the name and extension of the file
-            mock_name = mock["mockFilePath"][last_occurrence + 1 :]
-            all_mocks = all_mocks + "_" + mock_name
+            mock_file_path = mock["mockFilePath"]
+            mock_file_name = os.path.basename(mock_file_path)
+            config_mocks.add(mock_file_name)
 
-        # get all mock file names from the mocks folder and put them in a string; mock file names are separated by '_'
-        all_files = ""
-        for file in filenames:
-            all_files = all_files + "_" + file
+        # get all mock file names from the mocks folder and put them in a set
+        folder_mocks = set()
+        for filename in filenames:
+            folder_mocks.add(filename)
 
-        assert all_mocks == all_files
+        # assert that the sets of mock file names are equal
+        assert config_mocks == folder_mocks
