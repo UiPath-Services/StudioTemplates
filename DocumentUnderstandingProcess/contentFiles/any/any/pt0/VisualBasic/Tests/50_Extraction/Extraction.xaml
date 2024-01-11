@@ -5,7 +5,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1408,3402.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>988.8,3675.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ExtractionTestCase_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="96">
@@ -126,7 +126,7 @@
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="The test case compares the output of the 50_Extraction.xaml workflow with a cached extraction result based on the default input file &quot;MergedDocuments.pdf&quot;." DisplayName="ExtractionTestCase" sap:VirtualizedContainerService.HintSize="688,3337.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
+  <Sequence sap2010:Annotation.AnnotationText="The test case compares the output of the 50_Extraction.xaml workflow with a cached extraction result based on the default input file &quot;MergedDocuments.pdf&quot;." DisplayName="ExtractionTestCase" sap:VirtualizedContainerService.HintSize="688,3610.4" sap2010:WorkflowViewState.IdRef="Sequence_14">
     <Sequence.Variables>
       <Variable x:TypeArguments="p:DocumentTaxonomy" sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="docTaxonomy" />
       <Variable x:TypeArguments="p1:Document" sap2010:Annotation.AnnotationText="The Document Object Model (DOM) of the target document." Name="dom" />
@@ -138,6 +138,11 @@
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Contains The Extraction Results Index." Name="extractionResultIndex" />
       <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="The cached results of the data extraction process." Name="cachedExtractionResults" />
       <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
+      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="If enabled and the cached data is missing, it will write the new cache to disk." Name="skipWritingNewCacheVariable">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:Boolean" Value="True" />
+        </Variable.Default>
+      </Variable>
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -228,13 +233,13 @@
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
-    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[extractionResultIndex]" DisplayName="For Each Classification Result" sap:VirtualizedContainerService.HintSize="625.6,1993.6" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[classificationResultsArray]">
+    <ui:ForEach x:TypeArguments="p2:ClassificationResult" CurrentIndex="[extractionResultIndex]" DisplayName="For Each Classification Result" sap:VirtualizedContainerService.HintSize="625.6,2266.4" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[classificationResultsArray]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="p2:ClassificationResult">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="p2:ClassificationResult" Name="classificationResult" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body - for each classification result" sap:VirtualizedContainerService.HintSize="592,1805.6" sap2010:WorkflowViewState.IdRef="Sequence_28">
+          <Sequence DisplayName="Body - for each classification result" sap:VirtualizedContainerService.HintSize="592,2078.4" sap2010:WorkflowViewState.IdRef="Sequence_28">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -279,28 +284,36 @@
                 </ui:InvokeWorkflowFile.Arguments>
               </ui:InvokeWorkflowFile>
             </Sequence>
-            <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Tests\BatchTestingUtilities\CacheDUData.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="548.8,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_21" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\CacheDUData.xaml">
-              <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">
-                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="in_TargetFile" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_DocText">
-                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="docText" />
-                </InArgument>
-                <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">
-                  <VisualBasicValue x:TypeArguments="p1:Document" ExpressionText="dom" />
-                </InArgument>
-                <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResultsArray">
-                  <VisualBasicValue x:TypeArguments="p2:ClassificationResult[]" ExpressionText="classificationResultsArray" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:Int32" x:Key="in_ExtractionResultsIndex">
-                  <VisualBasicValue x:TypeArguments="x:Int32" ExpressionText="extractionResultIndex" />
-                </InArgument>
-                <InArgument x:TypeArguments="p2:ExtractionResult" x:Key="in_ExtractionResults">
-                  <VisualBasicValue x:TypeArguments="p2:ExtractionResult" ExpressionText="extractionResults" />
-                </InArgument>
-              </ui:InvokeWorkflowFile.Arguments>
-            </ui:InvokeWorkflowFile>
+            <If Condition="[skipWritingNewCacheVariable]" DisplayName="If - Skip Writing New Cache to Disk? " sap:VirtualizedContainerService.HintSize="548.8,386.4" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="300,82.4" sap2010:WorkflowViewState.IdRef="Sequence_40">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="376.8,203.2" sap2010:WorkflowViewState.IdRef="Sequence_41">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Tests\BatchTestingUtilities\CacheDUData.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="333.6,113.6" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_21" UnSafe="False" WorkflowFileName="Tests\BatchTestingUtilities\CacheDUData.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_TargetFile">[in_TargetFile]</InArgument>
+                      <InArgument x:TypeArguments="x:String" x:Key="in_DocText">[docText]</InArgument>
+                      <InArgument x:TypeArguments="p1:Document" x:Key="in_Dom">[dom]</InArgument>
+                      <InArgument x:TypeArguments="p2:ClassificationResult[]" x:Key="in_ClassificationResultsArray">[classificationResultsArray]</InArgument>
+                      <InArgument x:TypeArguments="x:Int32" x:Key="in_ExtractionResultsIndex">[extractionResultIndex]</InArgument>
+                      <InArgument x:TypeArguments="p2:ExtractionResult" x:Key="in_ExtractionResults">[extractionResults]</InArgument>
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                </Sequence>
+              </If.Else>
+            </If>
             <Sequence DisplayName="... Then" sap:VirtualizedContainerService.HintSize="548.8,852.8" sap2010:WorkflowViewState.IdRef="Sequence_38">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
