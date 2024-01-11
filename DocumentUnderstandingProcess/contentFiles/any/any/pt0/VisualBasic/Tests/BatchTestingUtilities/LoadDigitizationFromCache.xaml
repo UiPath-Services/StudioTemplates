@@ -8,7 +8,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1408,1506.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1408,1508.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>LoadDigitizationCache_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="52">
@@ -84,7 +84,7 @@
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly read digitization data from cahe when available or run the regular digitization, if needed.&#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="LoadDigitizationFromCache" sap:VirtualizedContainerService.HintSize="572.8,1441.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This reusable worklow is used to quickly read digitization data from cahe when available or run the regular digitization, if needed.&#xA;&#xA;It is meant for testing, thus there is no exception handling, etc..." DisplayName="LoadDigitizationFromCache" sap:VirtualizedContainerService.HintSize="572.8,1444" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the file path of the data written to cache." Name="cachePath" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the output of the read text file for classification." Name="auxStr" />
@@ -95,7 +95,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="510.4,80.8" sap2010:WorkflowViewState.IdRef="Assign_2">
+    <Assign DisplayName="Assign CachePath" sap:VirtualizedContainerService.HintSize="510.4,81.6" sap2010:WorkflowViewState.IdRef="Assign_2">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[cachePath]</OutArgument>
       </Assign.To>
@@ -103,21 +103,21 @@
         <InArgument x:TypeArguments="x:String">[Path.Combine("./Tests/Cache/", Path.GetFileNameWithoutExtension(in_TargetFile))]</InArgument>
       </Assign.Value>
     </Assign>
-    <If sap2010:Annotation.AnnotationText="DocText &amp; DOM are both digitization outputs so we handle them together" Condition="[File.Exists(cachePath + &quot;_DocText.txt&quot;) AndAlso File.Exists(cachePath + &quot;_DOM.json&quot;)]" DisplayName="If - Digitization Cache Exists" sap:VirtualizedContainerService.HintSize="510.4,1132.8" sap2010:WorkflowViewState.IdRef="If_1">
+    <If sap2010:Annotation.AnnotationText="DocText &amp; DOM are both digitization outputs so we handle them together" Condition="[File.Exists(cachePath + &quot;_DocText.txt&quot;) AndAlso File.Exists(cachePath + &quot;_DOM.json&quot;)]" DisplayName="If - Digitization Cache Exists" sap:VirtualizedContainerService.HintSize="510.4,1134.4" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Digitization cache exists" sap:VirtualizedContainerService.HintSize="476.8,532.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Digitization cache exists" sap:VirtualizedContainerService.HintSize="476.8,534.4" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <ui:ReadTextFile File="{x:Null}" Content="[out_DocText]" DisplayName="Read Text File - DocText" FileName="[cachePath + &quot;_DocText.txt&quot;]" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-          <Assign DisplayName="Replace line ending" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="Assign_3">
+          <Assign DisplayName="Replace line ending" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_3">
             <Assign.To>
               <OutArgument x:TypeArguments="x:String">[out_DocText]</OutArgument>
             </Assign.To>
@@ -126,7 +126,7 @@
             </Assign.Value>
           </Assign>
           <ui:ReadTextFile File="{x:Null}" Content="[auxStr]" DisplayName="Read Text File - DOM" FileName="[cachePath + &quot;_DOM.json&quot;]" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
-          <Assign DisplayName="Assign - Deserialize DOM" sap:VirtualizedContainerService.HintSize="433.6,80.8" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign DisplayName="Assign - Deserialize DOM" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="p:Document">[out_Dom]</OutArgument>
             </Assign.To>
