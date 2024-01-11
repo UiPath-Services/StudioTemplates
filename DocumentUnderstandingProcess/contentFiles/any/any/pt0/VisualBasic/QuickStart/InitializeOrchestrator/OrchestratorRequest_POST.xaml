@@ -2,12 +2,12 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The endpoint to use, relative to the base URL." Name="in_Endpoint" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="The JSON payload to send with the request." Name="in_Payload" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="The current row that is procesed" Name="in_Row" Type="InArgument(sd:DataRow)" />
+    <x:Property sap2010:Annotation.AnnotationText="The number of the current row is being processed." Name="in_Row" Type="InArgument(sd:DataRow)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1023,1401</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1023,1432</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>OrchestratorRequest_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -91,30 +91,28 @@
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="OrchestratorRequest" sap:VirtualizedContainerService.HintSize="496,1336" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Create and send HTTP request to Orchestrator." DisplayName="OrchestratorRequest" sap:VirtualizedContainerService.HintSize="496,1367" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="Response" />
-      <Variable x:TypeArguments="x:String" Default="1001" Name="Error1001" />
-      <Variable x:TypeArguments="x:String" Name="FolderColumnName" />
-      <Variable x:TypeArguments="x:String" Name="ValueColumnName" />
-      <Variable x:TypeArguments="x:String" Name="VariableNameColumnName" />
-      <Variable x:TypeArguments="x:String" Name="VariableTypeColumnName" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Response from the HTTP Request." Name="httpResponse" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Error in case of Http request failure." Default="1001" Name="error1001" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Folder column from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="folderColumnName" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Assign DisplayName="Assign - Constant" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[FolderColumnName]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[folderColumnName]</OutArgument>
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="x:String">Folder</InArgument>
       </Assign.Value>
     </Assign>
     <ui:LogMessage DisplayName="Log Message - Seding HTTP request" sap:VirtualizedContainerService.HintSize="434,141" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Sending HTTP request&quot;]" />
-    <ui:OrchestratorHttpRequest DisplayName="Orchestrator HTTP Request" FolderPath="[in_Row(FolderColumnName).ToString]" sap:VirtualizedContainerService.HintSize="434,242" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_4" JSONPayload="[in_Payload]" Method="POST" RelativeEndpoint="[in_Endpoint]" Result="[Response]">
+    <ui:OrchestratorHttpRequest DisplayName="Orchestrator HTTP Request" FolderPath="[in_Row(FolderColumnName).ToString]" sap:VirtualizedContainerService.HintSize="434,242" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_4" JSONPayload="[in_Payload]" Method="POST" RelativeEndpoint="[in_Endpoint]" Result="[httpResponse]">
       <ui:OrchestratorHttpRequest.ResponseHeaders>
         <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" />
       </ui:OrchestratorHttpRequest.ResponseHeaders>
@@ -125,7 +123,7 @@
         <InArgument x:TypeArguments="x:Int32" />
       </ui:OrchestratorHttpRequest.TimeoutMS>
     </ui:OrchestratorHttpRequest>
-    <If Condition="[Response.Contains(Error1001)]" DisplayName="If error 1001" sap:VirtualizedContainerService.HintSize="434,640" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[httpResponse.Contains(error1001)]" DisplayName="If error 1001" sap:VirtualizedContainerService.HintSize="434,640" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Storage bucket already exists" sap:VirtualizedContainerService.HintSize="376,229" sap2010:WorkflowViewState.IdRef="Sequence_4">
           <sap:WorkflowViewStateService.ViewState>
