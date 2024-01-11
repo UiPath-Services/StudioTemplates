@@ -97,12 +97,12 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="The database extracted from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="dt_InitOrchestrator" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Path to the configuration file that defines settings, constants and assets." Name="configFilePath" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Settings Sheet in the InitializeOrchestratorConfig.xls" Name="settingsSheetName" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The endpoint to use for the assset creation, relative to the base URL." Name="endpointAsset" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Settings Sheet in the InitializeOrchestratorConfig.xls." Name="settingsSheetName" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The endpoint to use for the asset creation, relative to the base URL." Name="endpointAsset" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The endpoint to use for the storage bucket creation, relative to the base URL." Name="endpointStorageBucket" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The endpoint to use for the task catalog creation, relative to the base URL." Name="endpointTaskCatalog" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the asset/queue/storage bucket/task catalog that will be created in the Orchestrator." Name="variableName" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="&#xD;&#xA;A randomly generated number between 0 and 9999, necessary for the creation of a queue/storage bucket in Orchestrator." Name="variableId" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="A randomly generated number between 0 and 9999, necessary for the creation of a queue/storage bucket in Orchestrator." Name="variableId" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="String representation of the value of this instance in registry format. Used for the indetifier in the storage bucket creation in the Orchestrator." Name="variableKey" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the asset that will be created in the Orchestrator." Name="variableValue" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The description for the queue/storage bucket.task catalog that will be created in the Orchestrator." Name="variableDescription" />
@@ -112,7 +112,7 @@
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Path to the TaskCatalog.json." Name="taskCatalogJsonPath" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Path to the Queue.json." Name="queueJsonPath" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Type column from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="typeColumnName" />
-      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="he name of the Name column from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="nameColumnName" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Name column from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="nameColumnName" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Description column from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="descriptionColumnName" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The name of the Value column from the Settings Sheet in InitializeOrchestratorConfig.xls." Name="valueColumnName" />
     </Sequence.Variables>
@@ -291,8 +291,8 @@
           </ActivityAction.Argument>
           <Sequence DisplayName="Create HTTP request" sap:VirtualizedContainerService.HintSize="623,1050" sap2010:WorkflowViewState.IdRef="Sequence_43">
             <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Required for the HTTP request." Name="endpoint" />
-              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Required for the HTTP request." Name="payload" />
+              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The endpoint to use, relative to the base URL." Name="endpoint" />
+              <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The JSON payload to send with the request." Name="payload" />
             </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -448,15 +448,9 @@
             <ui:LogMessage DisplayName="Log Message - Variable Data" sap:VirtualizedContainerService.HintSize="581,141" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Name: &quot; + row(nameColumnName).toString + &quot;, Value: &quot; + row(valueColumnName).toString + &quot;, Type: &quot; + row(typeColumnName).ToString + &quot;, Description: &quot; + row(descriptionColumnName).toString]" />
             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="QuickStart\InitializeOrchestrator\OrchestratorRequest_POST.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="581,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_22" UnSafe="False" WorkflowFileName="QuickStart\InitializeOrchestrator\OrchestratorRequest_POST.xaml">
               <ui:InvokeWorkflowFile.Arguments>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Endpoint">
-                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="endpoint" />
-                </InArgument>
-                <InArgument x:TypeArguments="x:String" x:Key="in_Payload">
-                  <VisualBasicValue x:TypeArguments="x:String" ExpressionText="payload" />
-                </InArgument>
-                <InArgument x:TypeArguments="sd:DataRow" x:Key="in_Row">
-                  <VisualBasicValue x:TypeArguments="sd:DataRow" ExpressionText="row" />
-                </InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Endpoint">[endpoint]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_Payload">[payload]</InArgument>
+                <InArgument x:TypeArguments="sd:DataRow" x:Key="in_Row">[row]</InArgument>
               </ui:InvokeWorkflowFile.Arguments>
             </ui:InvokeWorkflowFile>
           </Sequence>
