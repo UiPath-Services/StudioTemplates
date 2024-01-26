@@ -1,0 +1,210 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="_15_GetTransactionItem" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object)))" />
+    <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
+    <x:Property sap2010:Annotation.AnnotationText="Stores the transaction item to be updated in the Orchestrator Queue." Name="out_TransactionItem" Type="OutArgument(ui:QueueItem)" />
+    <x:Property Name="out_TargetFile" Type="OutArgument(upr:ILocalResource)" />
+    <x:Property Name="out_TargetFileString" Type="OutArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>640,1812</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>_15_GetTransactionItem_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="74">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Core.Activities.Orchestrator</x:String>
+      <x:String>UiPath.Core.Activities.Storage</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>UiPath.Platform.Triggers</x:String>
+      <x:String>UiPath.Platform.Triggers.Scope</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="104">
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
+      <AssemblyReference>UiPath.DocumentUnderstanding.ML.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="650,1747.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_68">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty Target File" sap:VirtualizedContainerService.HintSize="588,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_25">
+      <Assign.To>
+        <OutArgument x:TypeArguments="upr:ILocalResource">[out_TargetFile]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="upr:ILocalResource">[Nothing]</InArgument>
+      </Assign.Value>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </Assign>
+    <Sequence sap:VirtualizedContainerService.HintSize="588,1214.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_70">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:RetryScope ContinueOnError="False" DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="526,443.3333333333333" sap2010:WorkflowViewState.IdRef="RetryScope_6" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+        <ui:RetryScope.ActivityBody>
+          <ActivityAction>
+            <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="492,220" sap2010:WorkflowViewState.IdRef="Sequence_76">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:GetQueueItem sap2010:Annotation.AnnotationText="Get a transaction item from the specified Orchestrator queue.&#xA;&#xA;The file to be processed is expected to be found under the &quot;TargetFile&quot; key of the transaction item." ContinueOnError="False" DisplayName="Get Item to be Processed" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DU_OrchestratorFolderPath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="450,132.66666666666666" sap2010:WorkflowViewState.IdRef="GetQueueItem_10" QueueType="[in_Config(&quot;Assets&quot;)(&quot;DU_QueueName&quot;).ToString]" TransactionItem="[out_TransactionItem]">
+                <ui:GetQueueItem.Reference>
+                  <InArgument x:TypeArguments="x:String" />
+                </ui:GetQueueItem.Reference>
+                <ui:GetQueueItem.TimeoutMS>
+                  <InArgument x:TypeArguments="x:Int32" />
+                </ui:GetQueueItem.TimeoutMS>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </ui:GetQueueItem>
+            </Sequence>
+          </ActivityAction>
+        </ui:RetryScope.ActivityBody>
+        <ui:RetryScope.Condition>
+          <ActivityFunc x:TypeArguments="x:Boolean" />
+        </ui:RetryScope.Condition>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:RetryScope>
+      <Assign sap:VirtualizedContainerService.HintSize="526,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_27">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[out_TargetFileString]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[out_TransactionItem.SpecificContent("TargetFile").ToString]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ucas:DownloadStorageFile Destination="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Download Storage File" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DU_OrchestratorFolderPath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="526,197.33333333333334" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="[out_TargetFileString]" Result="[out_TargetFile]" StorageBucketName="[in_Config(&quot;Assets&quot;)(&quot;DU_StorageBucketName&quot;).ToString]" />
+      <Assign sap:VirtualizedContainerService.HintSize="526,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_28">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[out_TargetFileString]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[Path.GetFileNameWithoutExtension(out_TargetFileString)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <ui:GetQueueItem sap2010:Annotation.AnnotationText="Get a transaction item from the specified Orchestrator queue.&#xA;&#xA;The file to be processed is expected to be found under the &quot;TargetFile&quot; key of the transaction item." ContinueOnError="False" DisplayName="Get Item to be Processed" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DU_OrchestratorFolderPath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="526,132.66666666666666" sap2010:WorkflowViewState.IdRef="GetQueueItem_11" QueueType="[in_Config(&quot;Assets&quot;)(&quot;DU_QueueName&quot;).ToString]" TransactionItem="[out_TransactionItem]">
+        <ui:GetQueueItem.Reference>
+          <InArgument x:TypeArguments="x:String" />
+        </ui:GetQueueItem.Reference>
+        <ui:GetQueueItem.TimeoutMS>
+          <InArgument x:TypeArguments="x:Int32" />
+        </ui:GetQueueItem.TimeoutMS>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:GetQueueItem>
+    </Sequence>
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="588,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;File downloaded succesfully&quot;]" />
+  </Sequence>
+</Activity>
