@@ -1,6 +1,14 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TestExecutionTemplate" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1150,1728" sap2010:WorkflowViewState.IdRef="TestExecutionTemplate_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="TestExecutionTemplate" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Diagnostics;assembly=System.Diagnostics.Process" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="__invokedWorkflowName__" Type="InArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1089,2352.5</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>TestExecutionTemplate_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="18">
+    <scg:List x:TypeArguments="x:String" Capacity="36">
       <x:String>GlobalConstantsNamespace</x:String>
       <x:String>GlobalVariablesNamespace</x:String>
       <x:String>System</x:String>
@@ -18,6 +26,9 @@
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>UiPath.Shared.Activities</x:String>
       <x:String>UiPath.Testing.Activities</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -67,16 +78,34 @@
       <AssemblyReference>UiPath.UiCoverage.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.ViewModels</AssemblyReference>
+      <AssemblyReference>Microsoft.PowerShell.Commands.Diagnostics</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.FileVersionInfo</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.DiagnosticSource</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.EventLog</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.PerformanceCounter</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.Process</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.TextWriterTraceListener</AssemblyReference>
+      <AssemblyReference>System.Diagnostics.TraceSource</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>TestAutomationFramework.Core</AssemblyReference>
+      <AssemblyReference>TestAutomationFramework.Core</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Test Execution Template with SetUp and TearDown logic.&#xA;This Test Execution Template has best practices in place, error handling and it attaches to a test case at runtime. The test case will run instead of the Placeholder part of the Execution Template." DisplayName="TestFramework" sap:VirtualizedContainerService.HintSize="584.6666666666666,1663.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_4">
+  <Sequence sap2010:Annotation.AnnotationText="Test Execution Template with SetUp and TearDown logic.&#xA;This Test Execution Template has best practices in place, error handling and it attaches to a test case at runtime. The test case will run instead of the Placeholder part of the Execution Template." DisplayName="TestFramework" sap:VirtualizedContainerService.HintSize="584,2287.5" sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="VideoFilePath" />
+      <Variable x:TypeArguments="sd:Process" Name="ffmpegProcess" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch sap2010:Annotation.AnnotationText="Prepare to run the test:&#xA;- Prepare test data&#xA;- Prepare assets and configuration data&#xA;- Prepare the browser&#xA;- Prepare the AUT (Application Under Test)&#xA;" DisplayName="SetUp" sap:VirtualizedContainerService.HintSize="522.6666666666666,307.3333333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch sap2010:Annotation.AnnotationText="Prepare to run the test:&#xA;- Prepare test data&#xA;- Prepare assets and configuration data&#xA;- Prepare the browser&#xA;- Prepare the AUT (Application Under Test)&#xA;" DisplayName="SetUp" sap:VirtualizedContainerService.HintSize="522,720" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -85,14 +114,37 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Run SetUp" sap:VirtualizedContainerService.HintSize="334,115.33333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="TestFramework\SetUp.xaml">
-          <ui:InvokeWorkflowFile.Arguments>
-            <scg:Dictionary x:TypeArguments="x:String, Argument" />
-          </ui:InvokeWorkflowFile.Arguments>
-        </ui:InvokeWorkflowFile>
+        <Sequence DisplayName="Try SetUp" sap:VirtualizedContainerService.HintSize="450,379" sap2010:WorkflowViewState.IdRef="Sequence_21">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Run SetUp" sap:VirtualizedContainerService.HintSize="388,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_7" UnSafe="False" WorkflowFileName="TestFramework\SetUp.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <scg:Dictionary x:TypeArguments="x:String, Argument" />
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="StartRecording.xaml" sap:VirtualizedContainerService.HintSize="388,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_8" UnSafe="False" WorkflowFileName="TestFramework\Utils\StartRecording.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="ffmpegPath">
+                <Literal x:TypeArguments="x:String">C:\Program Files\UiPath\Studio\ffmpeg\ffmpeg.exe</Literal>
+              </InArgument>
+              <OutArgument x:TypeArguments="sd:Process" x:Key="ffmpegProcess">
+                <VisualBasicReference x:TypeArguments="sd:Process" ExpressionText="ffmpegProcess" />
+              </OutArgument>
+              <InArgument x:TypeArguments="x:String" x:Key="testName">
+                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="__invokedWorkflowName__" />
+              </InArgument>
+              <OutArgument x:TypeArguments="x:String" x:Key="videoFilePath">
+                <VisualBasicReference x:TypeArguments="x:String" ExpressionText="VideoFilePath" />
+              </OutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="454,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -103,14 +155,14 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="GeneralException" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="TestSetUpException" sap:VirtualizedContainerService.HintSize="450,298" sap2010:WorkflowViewState.IdRef="Sequence_6">
+            <Sequence DisplayName="TestSetUpException" sap:VirtualizedContainerService.HintSize="450,385" sap2010:WorkflowViewState.IdRef="Sequence_6">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Log message SetUp exception" sap:VirtualizedContainerService.HintSize="388,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[&quot;Applications SetUp failed. &quot; + GeneralException.Message+&quot; at Source: &quot;+GeneralException.Source]" />
-              <uta:VerifyExpression KeepScreenshots="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Applications SetUp failed." ContinueOnFailure="False" DisplayName="Fail Test SetUp" Expression="False" sap:VirtualizedContainerService.HintSize="388,92" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" OutputMessageFormat="[GeneralException.Message+&quot; at Source: &quot;+GeneralException.Source]" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False">
+              <ui:LogMessage DisplayName="Log message SetUp exception" sap:VirtualizedContainerService.HintSize="388,143" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn" Message="[&quot;Applications SetUp failed. &quot; + GeneralException.Message+&quot; at Source: &quot;+GeneralException.Source]" />
+              <uta:VerifyExpression KeepScreenshots="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Applications SetUp failed." ContinueOnFailure="False" DisplayName="Fail Test SetUp" Expression="False" sap:VirtualizedContainerService.HintSize="388,91" sap2010:WorkflowViewState.IdRef="VerifyExpression_2" OutputMessageFormat="[GeneralException.Message+&quot; at Source: &quot;+GeneralException.Source]" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False">
                 <uta:VerifyExpression.Result>
                   <OutArgument x:TypeArguments="x:Boolean" />
                 </uta:VerifyExpression.Result>
@@ -120,30 +172,30 @@
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <TryCatch sap2010:Annotation.AnnotationText="Run the actual TestCase with the time constraint set by TestTimeOut" DisplayName="RunTest" sap:VirtualizedContainerService.HintSize="522.6666666666666,602.6666666666666" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+    <TryCatch sap2010:Annotation.AnnotationText="Run the actual TestCase with the time constraint set by TestTimeOut" DisplayName="RunTest" sap:VirtualizedContainerService.HintSize="522,596.5" sap2010:WorkflowViewState.IdRef="TryCatch_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <ui:TimeoutScope DisplayName="Execution TimeOut" sap:VirtualizedContainerService.HintSize="484,332.6666666666667" sap2010:WorkflowViewState.IdRef="TimeoutScope_3" ThrowExceptionAfter="[TimeSpan.Parse(TestTimeOut)]" TimeoutMessage="[TimeOutMessage + &quot; : &quot; + TestTimeOut]">
+        <ui:TimeoutScope DisplayName="Execution TimeOut" sap:VirtualizedContainerService.HintSize="484,332.5" sap2010:WorkflowViewState.IdRef="TimeoutScope_3" ThrowExceptionAfter="[TimeSpan.Parse(TestTimeOut)]" TimeoutMessage="[TimeOutMessage + &quot; : &quot; + TestTimeOut]">
           <ui:TimeoutScope.Body>
             <ActivityAction x:TypeArguments="Activity">
-              <Sequence DisplayName="Run Test" sap:VirtualizedContainerService.HintSize="450,206" sap2010:WorkflowViewState.IdRef="Sequence_15">
+              <Sequence DisplayName="Run Test" sap:VirtualizedContainerService.HintSize="450,206.5" sap2010:WorkflowViewState.IdRef="Sequence_15">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:Placeholder Description="This placeholder activity will be replaced at build time and can only be used within a workflow template." DisplayName="Test Placeholder" sap:VirtualizedContainerService.HintSize="388,95.33333333333333" sap2010:WorkflowViewState.IdRef="Placeholder_4" />
+                <ui:Placeholder Description="This placeholder activity will be replaced at build time and can only be used within a workflow template." DisplayName="Test Placeholder" sap:VirtualizedContainerService.HintSize="388,95.5" sap2010:WorkflowViewState.IdRef="Placeholder_4" />
               </Sequence>
             </ActivityAction>
           </ui:TimeoutScope.Body>
         </ui:TimeoutScope>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="488.6666666666667,22" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="488,22" sap2010:WorkflowViewState.IdRef="Catch`1_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -154,15 +206,15 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="GeneralException" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="General Exception" sap:VirtualizedContainerService.HintSize="450,298" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Sequence DisplayName="General Exception" sap:VirtualizedContainerService.HintSize="450,385" sap2010:WorkflowViewState.IdRef="Sequence_3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Test encountered Exception" sap:VirtualizedContainerService.HintSize="388,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;Exception encountered: &quot; + GeneralException.Message]" />
-              <uta:VerifyExpression KeepScreenshots="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Test Exception occurred" ContinueOnFailure="True" DisplayName="Failed with exception" Expression="False" sap:VirtualizedContainerService.HintSize="388,92" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="[&quot;Failed with exception: &quot; + GeneralException.Message]" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False">
+              <ui:LogMessage DisplayName="Test encountered Exception" sap:VirtualizedContainerService.HintSize="388,143" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="[&quot;Exception encountered: &quot; + GeneralException.Message]" />
+              <uta:VerifyExpression KeepScreenshots="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Test Exception occurred" ContinueOnFailure="True" DisplayName="Failed with exception" Expression="False" sap:VirtualizedContainerService.HintSize="388,91" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" OutputMessageFormat="[&quot;Failed with exception: &quot; + GeneralException.Message]" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False">
                 <uta:VerifyExpression.Result>
                   <OutArgument x:TypeArguments="x:Boolean" />
                 </uta:VerifyExpression.Result>
@@ -172,7 +224,7 @@
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <TryCatch sap2010:Annotation.AnnotationText="Final actions after the test.&#xA;- Bring the application in the original state&#xA;- Delete created test data&#xA;- Log out&#xA;- Save test results in other formats&#xA;- Check for application errors" DisplayName="TearDown" sap:VirtualizedContainerService.HintSize="522.6666666666666,500.6666666666667" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+    <TryCatch sap2010:Annotation.AnnotationText="Final actions after the test.&#xA;- Bring the application in the original state&#xA;- Delete created test data&#xA;- Log out&#xA;- Save test results in other formats&#xA;- Check for application errors" DisplayName="TearDown" sap:VirtualizedContainerService.HintSize="522,720" sap2010:WorkflowViewState.IdRef="TryCatch_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -181,17 +233,34 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Run TearDown" sap:VirtualizedContainerService.HintSize="334,115.33333333333333" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="TestFramework\TearDown.xaml">
-          <ui:InvokeWorkflowFile.Arguments>
-            <scg:Dictionary x:TypeArguments="x:String, Argument" />
-          </ui:InvokeWorkflowFile.Arguments>
-        </ui:InvokeWorkflowFile>
-      </TryCatch.Try>
-      <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,215.33333333333334" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+        <Sequence DisplayName="Run Teardown" sap:VirtualizedContainerService.HintSize="450,379" sap2010:WorkflowViewState.IdRef="Sequence_27">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Run TearDown" sap:VirtualizedContainerService.HintSize="388,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="TestFramework\TearDown.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <scg:Dictionary x:TypeArguments="x:String, Argument" />
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="StopRecording" sap:VirtualizedContainerService.HintSize="388,114" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_9" UnSafe="False" WorkflowFileName="TestFramework\Utils\StopRecording.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="x:String" x:Key="videoFilePath">
+                <VisualBasicValue x:TypeArguments="x:String" ExpressionText="VideoFilePath" />
+              </InArgument>
+              <InArgument x:TypeArguments="sd:Process" x:Key="ffmpegProcess">
+                <VisualBasicValue x:TypeArguments="sd:Process" ExpressionText="ffmpegProcess" />
+              </InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="454,22" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
@@ -199,7 +268,7 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="GeneralException" />
             </ActivityAction.Argument>
-            <ui:LogMessage DisplayName="Applications failed to close normally" sap:VirtualizedContainerService.HintSize="334,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Warn" Message="[&quot;Applications TearDown failed. &quot; + GeneralException.Message + &quot; at Source: &quot; + GeneralException.Source]" />
+            <ui:LogMessage DisplayName="Applications failed to close normally" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Warn" Message="[&quot;Applications TearDown failed. &quot; + GeneralException.Message + &quot; at Source: &quot; + GeneralException.Source]" />
           </ActivityAction>
         </Catch>
       </TryCatch.Catches>
