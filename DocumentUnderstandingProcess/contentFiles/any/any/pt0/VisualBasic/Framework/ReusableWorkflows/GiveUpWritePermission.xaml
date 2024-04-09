@@ -8,7 +8,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1112,1268</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>928,1357.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GiveUpWritePermission_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -68,18 +68,25 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is recreated. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GiveUpWritePermission" sap:VirtualizedContainerService.HintSize="418.6666666666667,1203.111111111111" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="This approach uses a Queue with a single queue item as a semaphore mechanism.&#xA;&#xA;This workflow never ends, unless the AccessToken is recreated. An external timeout is recommended when Invoking it.&#xA;&#xA;Prerequisite: Have an &quot;AccessQueue&quot; with a SINGLE queue item that does NOT allow automatic retries." DisplayName="GiveUpWritePermission" sap:VirtualizedContainerService.HintSize="449.6,1292.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:Comment DisplayName="Comment - GiveUpWritePermission" sap:VirtualizedContainerService.HintSize="376,163.55555555555554" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
-    <ui:LogMessage DisplayName="Log Message - GiveUpWritePermission" sap:VirtualizedContainerService.HintSize="376,104.44444444444444" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_GiveUpWritePermission&quot;) +Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-    <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" sap2010:Annotation.AnnotationText="ContinueOnError = True" ContinueOnError="True" DisplayName="Set Transaction Status - Success On FileWrite" ErrorType="Application" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="376,268.44444444444446" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_1" Status="Successful" TransactionItem="[in_AccessToken]">
+    <ui:Comment DisplayName="Comment - GiveUpWritePermission" sap:VirtualizedContainerService.HintSize="387.2,152" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Note: when multiple robots are running DU jobs, synchronization mechanism it is mandatory to ensure that only a single robot can update the learning file at a time. This XAML uses a Queue with a single queue item as a semaphore mechanism." />
+    <ui:LogMessage DisplayName="Log Message - GiveUpWritePermission" sap:VirtualizedContainerService.HintSize="387.2,142.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_GiveUpWritePermission&quot;) +Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:SetTransactionStatus ServiceBaseAddress="{x:Null}" sap2010:Annotation.AnnotationText="ContinueOnError = True" ContinueOnError="True" DisplayName="Set Transaction Status - Success On FileWrite" ErrorType="Application" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="387.2,224.8" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_1" Status="Successful" TransactionItem="[in_AccessToken]">
       <ui:SetTransactionStatus.Analytics>
         <scg:Dictionary x:TypeArguments="x:String, InArgument" />
       </ui:SetTransactionStatus.Analytics>
@@ -101,10 +108,10 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:SetTransactionStatus>
-    <ui:RetryScope DisplayName="Retry Scope - Add a New Queue Item" sap:VirtualizedContainerService.HintSize="376,456" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="99999" RetryInterval="00:00:01">
+    <ui:RetryScope DisplayName="Retry Scope - Add a New Queue Item" sap:VirtualizedContainerService.HintSize="387.2,401.6" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;MaxExecutionAttemptsHigh&quot;))]" RetryInterval="[TimeSpan.FromSeconds(cdbl(in_Config(&quot;RetryIntervalLow&quot;)))]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <ui:AddQueueItem ServiceBaseAddress="{x:Null}" sap2010:Annotation.AnnotationText="Create a new &quot;AccessToken&quot;" DisplayName="Add Empty Queue Item" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="334.22222222222223,268.8888888888889" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_AccessQueue]">
+          <ui:AddQueueItem ServiceBaseAddress="{x:Null}" sap2010:Annotation.AnnotationText="Create a new &quot;AccessToken&quot;" DisplayName="Add Empty Queue Item" FolderPath="[in_AccessQueueFolderPath]" sap:VirtualizedContainerService.HintSize="334.4,225.6" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_AccessQueue]">
             <ui:AddQueueItem.ItemInformation>
               <scg:Dictionary x:TypeArguments="x:String, InArgument" />
             </ui:AddQueueItem.ItemInformation>
