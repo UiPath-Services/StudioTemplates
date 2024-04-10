@@ -6,12 +6,12 @@
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="io_ExtractionResults" Type="InOutArgument(p1:ExtractionResult)" />
     <x:Property sap2010:Annotation.AnnotationText="Flag used for deciding if human validation is required in the extraction process." Name="out_AutoExtractionSuccess" Type="OutArgument(x:Boolean)" />
-    <x:Property sap2010:Annotation.AnnotationText="The result of the test" Name="out_TestMessage" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The result of the test." Name="out_TestMessage" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1017.5999999999999,6778.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1560,5920</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>InvoicePostProcessing_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="68">
@@ -108,7 +108,7 @@
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted &#xA;• Verify that all table rows match the rule: Quantity * Unit Price = Line Amount &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00) " DisplayName="InvoicePostProcessing" sap:VirtualizedContainerService.HintSize="1028,6713.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted &#xA;• Verify that all table rows match the rule: Quantity * Unit Price = Line Amount &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00) " DisplayName="InvoicePostProcessing" sap:VirtualizedContainerService.HintSize="1028,5855.2" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataSet" sap2010:Annotation.AnnotationText="Used to store the extracted data from the ExtractionResults in the Export Extraction Results activity." Name="extractedDataSet" />
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="DataTable generated from the extractedDataSet." Name="itemTable" />
@@ -512,7 +512,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:ForEachRow>
-    <utam:MockActivity DisplayName="Mock Extraction Results Check" MockedActivityIdRef="Flowchart_2">
+    <utam:MockActivity DisplayName="Mock Extraction Results Check" sap2010:WorkflowViewState.IdRef="MockActivity_1" MockedActivityIdRef="Flowchart_2">
       <utam:MockActivity.MockedActivity>
         <Flowchart sap2010:Annotation.AnnotationText="In this step, we check to see if we have found any issues up until now in the process. If we did, we skip this flowchart and set the AutoExtraction to False, otherwise, we continue with the checks:&#xA;1. SubTotal - Checks to see if the sum of the line amounts match the extracted Net Amount.&#xA;2. Total - Checks to see if the sum of the additions to the subtotal match the extracted Total. &#xA;3.  Specific Fields - Checks the list (defined in the Config File) with their specific confidence threshold. If they are below that, the process will require manual validation.&#xA;4. Other fields - Checks the list ( defined in the Config File) with the confidence threshold defined for 'other-Confidence'. If they are below that, the process will require manual validation.&#xA;&#xA;If at any point, the above steps return a 'true', the invoice will require manual validation. &#xA;If all the if pass through the 'false' branch, the invoice will skip manual validation and go directly to the next step." DisplayName="Extraction Results Check" sap:VirtualizedContainerService.HintSize="965.3333333333334,878.2222222222222" sap2010:WorkflowViewState.IdRef="Flowchart_2">
           <sap:WorkflowViewStateService.ViewState>
@@ -788,7 +788,7 @@
           <x:Reference>__ReferenceID27</x:Reference>
         </Flowchart>
       </utam:MockActivity.MockedActivity>
-      <Sequence DisplayName="Mock sequence" sap:VirtualizedContainerService.HintSize="1100,1175.2" sap2010:WorkflowViewState.IdRef="">
+      <Sequence DisplayName="Mock sequence" sap:VirtualizedContainerService.HintSize="1100,1175.2" sap2010:WorkflowViewState.IdRef="Sequence_29">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -874,7 +874,7 @@
                     <av:PointCollection x:Key="ConnectorLocation">540,67.3 540,97.3 570.2,97.3 570.2,160</av:PointCollection>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Mock - Subtotal Pass" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_38" Level="{x:Null}" Message="[String.Format(in_Config(&quot;LogMessage_InvoicePostProcessing_SubtotalPass&quot;),subtotal,documentFields(&quot;Net Amount&quot;))+ Environment.NewLine + in_Config(&quot;logKey&quot;)]">
+                <ui:LogMessage DisplayName="Mock - Subtotal Pass" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_38" Message="[String.Format(in_Config(&quot;LogMessage_InvoicePostProcessing_SubtotalPass&quot;),subtotal,documentFields(&quot;Net Amount&quot;))+ Environment.NewLine + in_Config(&quot;logKey&quot;)]">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -945,7 +945,7 @@
                                     <av:PointCollection x:Key="ConnectorLocation">10,380 0,380 0,620 19,620</av:PointCollection>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
-                                <ui:LogMessage DisplayName="Mock - Total Failure" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_39" Level="{x:Null}" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_TotalFailure&quot;) +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
+                                <ui:LogMessage DisplayName="Mock - Total Failure" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_39" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_TotalFailure&quot;) +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -979,7 +979,7 @@
                                     <av:PointCollection x:Key="ConnectorLocation">10,450 0,450 0,620 19,620</av:PointCollection>
                                   </scg:Dictionary>
                                 </sap:WorkflowViewStateService.ViewState>
-                                <ui:LogMessage DisplayName="Mock - Specific Confidence Fields Failure" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_40" Level="{x:Null}" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_ConfidenceFieldsFailure&quot;)  + String.Join(&quot;, &quot;, confidenceFields.Where(Function (confField) If(Not String.IsNullOrEmpty(documentFields(confField)) AndAlso Not io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(missing) missing.IsMissing.Equals(True))(0) AndAlso CDec(io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(actual_field) actual_field.Values.Select(Function(val) val.Confidence))(0)(0))*100 &lt; CDec(in_Config(confField+&quot;-Confidence&quot;)), True, False) = True).ToList) +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
+                                <ui:LogMessage DisplayName="Mock - Specific Confidence Fields Failure" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_40" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_ConfidenceFieldsFailure&quot;)  + String.Join(&quot;, &quot;, confidenceFields.Where(Function (confField) If(Not String.IsNullOrEmpty(documentFields(confField)) AndAlso Not io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(missing) missing.IsMissing.Equals(True))(0) AndAlso CDec(io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(actual_field) actual_field.Values.Select(Function(val) val.Confidence))(0)(0))*100 &lt; CDec(in_Config(confField+&quot;-Confidence&quot;)), True, False) = True).ToList) +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1011,7 +1011,7 @@
                                         <av:PointCollection x:Key="ConnectorLocation">10,520 0,520 0,620 19,620</av:PointCollection>
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
-                                    <ui:LogMessage DisplayName="Mock - Other Confidence fields Failure" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_41" Level="{x:Null}" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_ConfidenceFieldsFailure&quot;) + String.Join(&quot;, &quot;, otherConfidenceFields.Where(Function (confField) If(Not String.IsNullOrEmpty(documentFields(confField)) AndAlso Not io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(missing) missing.IsMissing.Equals(True))(0) AndAlso CDec(io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(actual_field) actual_field.Values.Select(Function(val) val.Confidence))(0)(0))*100 &lt; CDec(in_Config(&quot;other-Confidence&quot;)), True, False) = True).ToList)  +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
+                                    <ui:LogMessage DisplayName="Mock - Other Confidence fields Failure" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_41" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_ConfidenceFieldsFailure&quot;) + String.Join(&quot;, &quot;, otherConfidenceFields.Where(Function (confField) If(Not String.IsNullOrEmpty(documentFields(confField)) AndAlso Not io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(missing) missing.IsMissing.Equals(True))(0) AndAlso CDec(io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(confField)).Select(Function(actual_field) actual_field.Values.Select(Function(val) val.Confidence))(0)(0))*100 &lt; CDec(in_Config(&quot;other-Confidence&quot;)), True, False) = True).ToList)  +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1075,7 +1075,7 @@
                     <av:PointCollection x:Key="ConnectorLocation">10,240 0,240 0,620 19,620</av:PointCollection>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Mock - AutoExtraction Is already False" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_36" Level="{x:Null}" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_AlreadySetFalse&quot;) +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
+                <ui:LogMessage DisplayName="Mock - AutoExtraction Is already False" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_36" Message="[in_Config(&quot;LogMessage_InvoicePostProcessing_AlreadySetFalse&quot;) +  Environment.NewLine + in_Config(&quot;logKey&quot;)]">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>

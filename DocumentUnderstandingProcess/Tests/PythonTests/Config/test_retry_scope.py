@@ -44,8 +44,8 @@ class ConfigTests:
         retry_scope_re = re.compile('((ui:RetryScope).*)')
         # Regex for number of retries
         number_of_retries_re = re.compile('(?<=NumberOfRetries=\").*?(?=\")')
-        # Regex for number of retries value
-        number_of_retries_value_re = re.compile('([0-9])')
+        # Regex for number of retries value; expects to find only digits
+        number_of_retries_value_re = re.compile('^\d+$')
 
         configurable_value = True
 
@@ -55,5 +55,7 @@ class ConfigTests:
             # in each workflow, search for the retry scope and check value in the RetryInterval property
             configurable_value = configurable_value and retry_interval(framework_file, retry_scope_re,
                                                            number_of_retries_re, number_of_retries_value_re)
+            print(framework_file)
+            print(configurable_value)
 
         assert configurable_value
