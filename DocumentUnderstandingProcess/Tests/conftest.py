@@ -14,6 +14,15 @@ NUSPEC_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Nuspec_test_data.yaml"
 USER_GUIDE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "UserGuide_test_data.yaml"
 PROJECT_JSON_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Project_Json_test_data.yaml"
 
+# Dictionary used for the test parametrization hook
+TEST_DATA_MAPPING = {
+    "test_data_folder_structure": DATA_FOLDER_STRUCTURE_TEST_DATA,
+    "test_data_folder_content": DATA_FOLDER_STRUCTURE_TEST_DATA,
+    "test_nuspec_version_as_expected": NUSPEC_TEST_DATA,
+    "test_user_guide_version_as_expected": USER_GUIDE_TEST_DATA,
+    "test_project_json_variation_path": PROJECT_JSON_TEST_DATA,
+}
+
 
 def pytest_addoption(parser):
     parser.addoption(
@@ -64,65 +73,18 @@ def load_json():
     return method
 
 
-# TODO: Let's find a way to make this a fixture
-def load_test_data(path):
+def pytest_generate_tests(metafunc):
     """
-    :param path: The full path of the file containing the test data
-    :return: test data
+    Pytest hook that generates parametrized calls to given test functions
+    :param metafunc: Object that helps with test function inspection and test generation
+    :return:
     """
-    data = yaml.safe_load((open(path, "r")))
-    return data
+    test_name_list = [test_name for test_name in TEST_DATA_MAPPING.keys()]
+    test_name = metafunc.function.__name__
 
-
-# @fixture(params=[load_test_data(NUSPEC_TEST_DATA),
-#                  load_test_data(PROJECT_JSON_TEST_DATA),
-#                  load_test_data(USER_GUIDE_TEST_DATA),
-#                  load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA)])
-# def test_data(request):
-#     data = request.param
-#     return data
-
-# @pytest.fixture
-# def thing(request, db):
-#     class ThingFactory(object):
-#         def get(self):
-#             thing = MyModel.objects.create()
-#             request.addfinalizer(thing.delete)
-#             return thing
-#     return ThingFactory()
-# @fixture(scope='function')
-# def get_test_data(request):
-#     class DataFactory(object):
-#         @staticmethod
-#         def load_data(path):
-#             data = yaml.safe_load((open(path, 'r')))
-#             request.addfinalizer(data)
-#             return get_test_data
-#     return DataFactory
-
-
-@fixture(params=load_test_data(NUSPEC_TEST_DATA))
-def get_test_data_nuspec(request):
-    data = request.param
-    return data
-
-
-@fixture(params=load_test_data(PROJECT_JSON_TEST_DATA))
-def get_test_data_project_json(request):
-    data = request.param
-    return data
-
-
-@fixture(params=load_test_data(USER_GUIDE_TEST_DATA))
-def get_test_data_user_guide(request):
-    data = request.param
-    return data
-
-
-@fixture(params=load_test_data(DATA_FOLDER_STRUCTURE_TEST_DATA))
-def get_test_data_folder(request):
-    data = request.param
-    return data
+    if test_name in test_name_list:
+        data = yaml.safe_load((open(TEST_DATA_MAPPING[test_name], "r")))
+        metafunc.parametrize("test_data", data)
 
 
 @fixture(scope="function")
@@ -192,5 +154,90 @@ def get_filenames():
             for name in files:
                 filenames.append(name)
         return filenames
+
+    return method
+
+
+@fixture(scope="function")
+def get_absolute_filenames():
+    """
+    Returns the full paths of the files found in a given folder.
+    :param path: The full path of the folder containing the data
+    :return: List of absolute filenames
+    """
+
+    def method(path):
+        absolute_filenames = []
+        for root, _, files in os.walk(path):
+            for file in files:
+                if file.split(".")[-1].lower() != "xaml":
+                    continue
+                absolute_filenames.append(os.path.join(root, file))
+        return absolute_filenames
+
+    return method
+
+
+@fixture(scope="function")
+def retry_interval():
+    """
+    :param filename: XAML filename in which we search for presence of retry scope activity and RetryInterval property
+           retry_scope_re: regular expression pattern object to search for Retry Scope
+           retry_property_re: regular expression pattern object to search for Property
+           retry_property_value_re: regular expression pattern object to search for Property value
+    :return: True - the file does not have a retry scope activity
+             True - the file has retry scope activity and the property is configurable
+             False - the file has retry scope activity, but the property is not configurable
+    """
+
+    def method(filename, retry_scope_re, retry_property_re, retry_property_value_re):
+        digit_found = False
+
+        with open(filename, "r") as f:
+            content = f.read()
+            retry_scope_tags = retry_scope_re.findall(content)
+            for tag in retry_scope_tags:
+                retry_property_value = retry_property_re.search(tag[0])
+                # Check for NoneType
+                if retry_property_value is not None:
+                    retry_property_value = retry_property_value.group(0)
+                    # check if value is configurable or hard coded
+                    if retry_property_value_re.search(retry_property_value) != None:
+                        print("\nFile " + filename + " has a retry scope with hard coded property")
+                        digit_found = True
+
+        return not digit_found
+
+    return method
+
+
+@fixture(scope="function")
+def extract_argument_direction():
+    """
+    :param filename: XAML filename from which we extract the direction of arguments
+           argument_re: regular expression pattern object to search for argument
+           name_re: regular expression pattern object to search for argument name
+           type_value_re: regular expression pattern object to search for argument direction
+    :return: List of tuples (filename, argument, direction)
+    """
+
+    def method(filename, argument_re, name_re, type_value_re):
+
+        # the list of tuples
+        argument_data = []
+
+        with open(filename, "r") as f:
+            content = f.read()
+            argument_variable_tags = argument_re.findall(content)
+            for tag in argument_variable_tags:
+                direction_value = type_value_re.search(tag[0])
+                # Check for NoneType
+                if direction_value is not None:
+                    direction_value = direction_value.group(0)
+
+                name = name_re.search(tag[0]).group(0)
+
+                argument_data.append((os.path.basename(f.name), name, direction_value))
+        return argument_data
 
     return method
