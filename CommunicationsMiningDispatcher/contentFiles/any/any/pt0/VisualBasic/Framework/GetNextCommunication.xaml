@@ -2,13 +2,12 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property sap2010:Annotation.AnnotationText="The current communication to be processed" Name="out_CurrentResult" Type="OutArgument(ucasm:Result)" />
-    <x:Property sap2010:Annotation.AnnotationText="Whether a stop has been requested from Orchestrator" Name="in_StopRequested" Type="InArgument(x:Boolean)" />
     <x:Property sap2010:Annotation.AnnotationText="The current batch that is getting processed" Name="io_CurrentBatch" Type="InOutArgument(ucasm:FetchResponse)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1514,2216</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1009,2216</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>GetTransactionData_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -114,7 +113,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message Get Transaction Item" sap:VirtualizedContainerService.HintSize="586,141" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[in_Config(&quot;LogMessage_GettingCommunication&quot;).ToString()]" />
-    <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" DisplayName="Do While Results Exist in the Stream" sap:VirtualizedContainerService.HintSize="586,1637" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
+    <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[out_CurrentResult Is nothing and Not io_CurrentBatch.IsEndSequence]" DisplayName="Do While Results Exist in the Stream" sap:VirtualizedContainerService.HintSize="586,1637" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
       <ui:InterruptibleDoWhile.Body>
         <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="552,1501" sap2010:WorkflowViewState.IdRef="Sequence_16">
           <sap:WorkflowViewStateService.ViewState>
@@ -206,9 +205,6 @@
           </If>
         </Sequence>
       </ui:InterruptibleDoWhile.Body>
-      <ui:InterruptibleDoWhile.Condition>
-        <VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="out_CurrentResult Is nothing and Not io_CurrentBatch.IsEndSequence" />
-      </ui:InterruptibleDoWhile.Condition>
     </ui:InterruptibleDoWhile>
   </Sequence>
 </Activity>
