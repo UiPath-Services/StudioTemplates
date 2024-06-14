@@ -8,7 +8,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>761,864</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>761,887</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Main2_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -109,9 +109,10 @@
       <AssemblyReference>UiPath.Cryptography</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
       <AssemblyReference>CommunicationsMiningDispatcher.Core</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <StateMachine InitialState="{x:Reference __ReferenceID3}" sap2010:Annotation.AnnotationText="[Process title]&#xA;[Process description]&#xA;[Additional information (e.g., author, contact information and applications involved and required external setup)]" DisplayName="CommunicationsMiningFramework 24.1.1" sap:VirtualizedContainerService.HintSize="771,799" sap2010:WorkflowViewState.IdRef="StateMachine_1">
+  <StateMachine InitialState="{x:Reference __ReferenceID3}" sap2010:Annotation.AnnotationText="[Process title]&#xA;[Process description]&#xA;[Additional information (e.g., author, contact information and applications involved and required external setup)]" DisplayName="CommunicationsMiningFramework 24.6.1-Preview" sap:VirtualizedContainerService.HintSize="771,799" sap2010:WorkflowViewState.IdRef="StateMachine_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -124,7 +125,7 @@
     </sap:WorkflowViewStateService.ViewState>
     <State x:Name="__ReferenceID0" sap2010:Annotation.AnnotationText="Get the next communication to be processed." DisplayName="Get Communication" sap:VirtualizedContainerService.HintSize="251,113" sap2010:WorkflowViewState.IdRef="State_4">
       <State.Entry>
-        <Sequence sap2010:Annotation.AnnotationText="Retrieve a new transaction data to be processed.&#xA;The TransactionNumber variable holds the current transaction number and incrementing this variable makes the framework retrieve the next transaction. If the framework is retrying a failed transaction, this variable is not incremented until the maximum number of retry attempts is reached." DisplayName="Retrieve Data" sap:VirtualizedContainerService.HintSize="576,1275" sap2010:WorkflowViewState.IdRef="Sequence_25">
+        <Sequence sap2010:Annotation.AnnotationText="Retrieve a new transaction data to be processed.&#xA;The TransactionNumber variable holds the current transaction number and incrementing this variable makes the framework retrieve the next transaction. If the framework is retrying a failed transaction, this variable is not incremented until the maximum number of retry attempts is reached." DisplayName="Retrieve Data" sap:VirtualizedContainerService.HintSize="674,1540" sap2010:WorkflowViewState.IdRef="Sequence_25">
           <Sequence.Variables>
             <Variable x:TypeArguments="x:Boolean" Name="StopRequestedFromOrchestrator" />
           </Sequence.Variables>
@@ -135,15 +136,15 @@
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="Current Result is Nothing" sap:VirtualizedContainerService.HintSize="514,82" sap2010:WorkflowViewState.IdRef="Assign_31">
+          <Assign DisplayName="Current Result is Nothing" sap:VirtualizedContainerService.HintSize="612,82" sap2010:WorkflowViewState.IdRef="Assign_31">
             <Assign.To>
-              <OutArgument x:TypeArguments="ucasm:Result">[CurrentResult]</OutArgument>
+              <OutArgument x:TypeArguments="ucasm:StreamResult">[CurrentResult]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="ucasm:Result">[Nothing]</InArgument>
+              <InArgument x:TypeArguments="ucasm:StreamResult">[Nothing]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:ShouldStop DisplayName="Check Stop Signal" sap:VirtualizedContainerService.HintSize="514,90" sap2010:WorkflowViewState.IdRef="ShouldStop_2" Result="[StopRequestedFromOrchestrator]">
+          <ui:ShouldStop DisplayName="Check Stop Signal" sap:VirtualizedContainerService.HintSize="612,90" sap2010:WorkflowViewState.IdRef="ShouldStop_2" Result="[StopRequestedFromOrchestrator]">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -151,7 +152,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:ShouldStop>
-          <If Condition="[StopRequestedFromOrchestrator]" DisplayName="If Stop Requested from Orchestrator" sap:VirtualizedContainerService.HintSize="514,840" sap2010:WorkflowViewState.IdRef="If_16">
+          <If Condition="[StopRequestedFromOrchestrator]" DisplayName="If Stop Requested from Orchestrator" sap:VirtualizedContainerService.HintSize="612,1105" sap2010:WorkflowViewState.IdRef="If_16">
             <If.Then>
               <Sequence sap:VirtualizedContainerService.HintSize="376,229" sap2010:WorkflowViewState.IdRef="Sequence_34">
                 <sap:WorkflowViewStateService.ViewState>
@@ -163,13 +164,13 @@
               </Sequence>
             </If.Then>
             <If.Else>
-              <Sequence sap:VirtualizedContainerService.HintSize="480,429" sap2010:WorkflowViewState.IdRef="Sequence_35">
+              <Sequence sap:VirtualizedContainerService.HintSize="578,694" sap2010:WorkflowViewState.IdRef="Sequence_35">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <TryCatch DisplayName="Try GetTransactionData" sap:VirtualizedContainerService.HintSize="438,341" sap2010:WorkflowViewState.IdRef="TryCatch_7">
+                <TryCatch DisplayName="Try GetTransactionData" sap:VirtualizedContainerService.HintSize="536,606" sap2010:WorkflowViewState.IdRef="TryCatch_7">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -180,16 +181,16 @@
                     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetNextCommunication.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_20" UnSafe="False" WorkflowFileName="Framework\GetNextCommunication.xaml">
                       <ui:InvokeWorkflowFile.Arguments>
                         <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                        <OutArgument x:TypeArguments="ucasm:Result" x:Key="out_CurrentResult">[CurrentResult]</OutArgument>
-                        <InOutArgument x:TypeArguments="ucasm:FetchResponse" x:Key="io_CurrentBatch">[CurrentBatch]</InOutArgument>
+                        <OutArgument x:TypeArguments="ucasm:StreamResult" x:Key="out_CurrentResult">[CurrentResult]</OutArgument>
+                        <InOutArgument x:TypeArguments="ucasm:GetStreamResultsResponse" x:Key="io_CurrentBatch">[CurrentBatch]</InOutArgument>
                       </ui:InvokeWorkflowFile.Arguments>
                     </ui:InvokeWorkflowFile>
                   </TryCatch.Try>
                   <TryCatch.Catches>
-                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_8">
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="502,443" sap2010:WorkflowViewState.IdRef="Catch`1_8">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
@@ -207,10 +208,10 @@
                           <ui:LogMessage DisplayName="Log message  (Get transaction data error)" sap:VirtualizedContainerService.HintSize="434,141" sap2010:WorkflowViewState.IdRef="LogMessage_28" Level="Fatal" Message="[String.Format(in_Config(&quot;LogMessage_GetTransactionDataError&quot;).ToString(), Exception.Message,Exception.Source)]" />
                           <Assign DisplayName="End Process (Could not get new transaction)" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_23">
                             <Assign.To>
-                              <OutArgument x:TypeArguments="ucasm:Result">[CurrentResult]</OutArgument>
+                              <OutArgument x:TypeArguments="ucasm:StreamResult">[CurrentResult]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="ucasm:Result">[Nothing]</InArgument>
+                              <InArgument x:TypeArguments="ucasm:StreamResult">[Nothing]</InArgument>
                             </Assign.Value>
                           </Assign>
                         </Sequence>
@@ -267,7 +268,7 @@
                       <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="GetDestinationQueue.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="410,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_24" UnSafe="False" WorkflowFileName="Framework\GetDestinationQueue.xaml">
                         <ui:InvokeWorkflowFile.Arguments>
                           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                          <InArgument x:TypeArguments="ucasm:Result" x:Key="in_Communication">[CurrentResult]</InArgument>
+                          <InArgument x:TypeArguments="ucasm:StreamResult" x:Key="in_Communication">[CurrentResult]</InArgument>
                           <OutArgument x:TypeArguments="x:String" x:Key="out_DestinationQueueName">[DestinationQueueName]</OutArgument>
                           <OutArgument x:TypeArguments="x:String" x:Key="out_DestinationQueueFolder">[DestinationQueueFolder]</OutArgument>
                         </ui:InvokeWorkflowFile.Arguments>
@@ -283,7 +284,7 @@
                             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Framework\CreateQueueItem.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_25" UnSafe="False" WorkflowFileName="Framework\CreateQueueItem.xaml">
                               <ui:InvokeWorkflowFile.Arguments>
                                 <InArgument x:TypeArguments="x:String" x:Key="in_DestinationQueueName">[DestinationQueueName]</InArgument>
-                                <InArgument x:TypeArguments="ucasm:Result" x:Key="in_Communication">[CurrentResult]</InArgument>
+                                <InArgument x:TypeArguments="ucasm:StreamResult" x:Key="in_Communication">[CurrentResult]</InArgument>
                                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
                                 <InArgument x:TypeArguments="x:String" x:Key="in_DestinationFolderPath">[DestinationQueueFolder]</InArgument>
                               </ui:InvokeWorkflowFile.Arguments>
@@ -291,8 +292,7 @@
                             <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Framework\Advance Stream.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="334,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_27" UnSafe="False" WorkflowFileName="Framework\AdvanceStream.xaml">
                               <ui:InvokeWorkflowFile.Arguments>
                                 <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
-                                <InArgument x:TypeArguments="x:String" x:Key="in_ToSequenceId">[CurrentResult.SequenceId]</InArgument>
-                                <InArgument x:TypeArguments="ucasm:FetchResponse" x:Key="in_CurrentBatch">[CurrentBatch]</InArgument>
+                                <InArgument x:TypeArguments="ucasm:GetStreamResultsResponse" x:Key="in_CurrentBatch">[CurrentBatch]</InArgument>
                               </ui:InvokeWorkflowFile.Arguments>
                             </ui:InvokeWorkflowFile>
                           </Sequence>
@@ -404,10 +404,10 @@
                               </Assign>
                               <Assign DisplayName="Reset Current Batch" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_30">
                                 <Assign.To>
-                                  <OutArgument x:TypeArguments="ucasm:FetchResponse">[CurrentBatch]</OutArgument>
+                                  <OutArgument x:TypeArguments="ucasm:GetStreamResultsResponse">[CurrentBatch]</OutArgument>
                                 </Assign.To>
                                 <Assign.Value>
-                                  <InArgument x:TypeArguments="ucasm:FetchResponse">[Nothing]</InArgument>
+                                  <InArgument x:TypeArguments="ucasm:GetStreamResultsResponse">[Nothing]</InArgument>
                                 </Assign.Value>
                               </Assign>
                               <If sap2010:Annotation.AnnotationText="An uninitialized Config dictionary indicates that it is the first run of the process." Condition="[in_Config is Nothing]" DisplayName="If first run, read local configuration file" sap:VirtualizedContainerService.HintSize="434,425" sap2010:WorkflowViewState.IdRef="If_1">
@@ -571,10 +571,10 @@
                           </ui:AssignOperation>
                           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
                             <ui:AssignOperation.To>
-                              <OutArgument x:TypeArguments="ucasm:Result">[CurrentResult]</OutArgument>
+                              <OutArgument x:TypeArguments="ucasm:StreamResult">[CurrentResult]</OutArgument>
                             </ui:AssignOperation.To>
                             <ui:AssignOperation.Value>
-                              <InArgument x:TypeArguments="ucasm:Result">[Nothing]</InArgument>
+                              <InArgument x:TypeArguments="ucasm:StreamResult">[Nothing]</InArgument>
                             </ui:AssignOperation.Value>
                           </ui:AssignOperation>
                         </scg:List>
@@ -654,10 +654,10 @@
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
     <StateMachine.Variables>
-      <Variable x:TypeArguments="ucasm:Result" sap2010:Annotation.AnnotationText="Transaction item to be processed. The type of this variable can be changed to match the transaction type in the process. For example, when processing data from a spreadsheet that is read into a DataTable, this type can be changed to DataRow. " Name="CurrentResult" />
+      <Variable x:TypeArguments="ucasm:StreamResult" sap2010:Annotation.AnnotationText="Transaction item to be processed. The type of this variable can be changed to match the transaction type in the process. For example, when processing data from a spreadsheet that is read into a DataTable, this type can be changed to DataRow. " Name="CurrentResult" />
       <Variable x:TypeArguments="s:Exception" sap2010:Annotation.AnnotationText="Used during transitions between states to represent exceptions other than business exceptions." Name="SystemException" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Used to control the number of consecutive system exceptions." Default="0" Name="ConsecutiveSystemExceptions" />
-      <Variable x:TypeArguments="ucasm:FetchResponse" Name="CurrentBatch" />
+      <Variable x:TypeArguments="ucasm:GetStreamResultsResponse" Name="CurrentBatch" />
     </StateMachine.Variables>
   </StateMachine>
 </Activity>

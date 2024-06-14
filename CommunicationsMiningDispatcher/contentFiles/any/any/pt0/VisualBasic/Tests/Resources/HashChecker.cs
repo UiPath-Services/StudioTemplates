@@ -18,6 +18,9 @@ namespace CommunicationsMiningDispatcher.Tests.Resources
             var expected_hash = File.ReadAllBytes(expected_hash_file);
             var hashed_file = SHA256.HashData(file_to_check_bytes);
             
+            // You can use this to re-write the expected hash
+            // File.WriteAllBytes(expected_hash_file, hashed_file);
+            
             return hashed_file.SequenceEqual(expected_hash);
         }
 
