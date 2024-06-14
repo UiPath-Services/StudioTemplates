@@ -1,9 +1,9 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="RetryFetchStream" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ucas="clr-namespace:UiPath.CommunicationsMining.Activities.Streams;assembly=UiPath.CommunicationsMining.Activities" xmlns:ucasm="clr-namespace:UiPath.CommunicationsMining.Activities.Streams.Models;assembly=UiPath.CommunicationsMining.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
-    <x:Property sap2010:Annotation.AnnotationText="The current batch of communications to process" Name="out_CurrentBatch" Type="OutArgument(ucasm:FetchResponse)" />
+    <x:Property sap2010:Annotation.AnnotationText="The current batch of communications to process" Name="out_CurrentBatch" Type="OutArgument(ucasm:GetStreamResultsResponse)" />
   </x:Members>
-  <sap:VirtualizedContainerService.HintSize>1312,954</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1905,1065</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -92,19 +92,20 @@
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Cryptography</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="542,889" sap2010:WorkflowViewState.IdRef="Sequence_8">
+  <Sequence sap:VirtualizedContainerService.HintSize="592,1000" sap2010:WorkflowViewState.IdRef="Sequence_8">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message Fetch Stream" sap:VirtualizedContainerService.HintSize="480,141" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[in_Config(&quot;LogMessage_FetchStream&quot;).ToString()]" />
-    <ui:RetryScope DisplayName="Retry Fetch Stream" sap:VirtualizedContainerService.HintSize="480,597" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[Cint(in_Config(&quot;RetryNumberFetchStream&quot;))]">
+    <ui:LogMessage DisplayName="Log Message Fetch Stream" sap:VirtualizedContainerService.HintSize="530,141" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[in_Config(&quot;LogMessage_FetchStream&quot;).ToString()]" />
+    <ui:RetryScope DisplayName="Retry Fetch Stream" sap:VirtualizedContainerService.HintSize="530,708" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[Cint(in_Config(&quot;RetryNumberFetchStream&quot;))]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <TryCatch DisplayName="Try and Fetch Batch from Stream" sap:VirtualizedContainerService.HintSize="438,422" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+          <TryCatch DisplayName="Try and Fetch Batch from Stream" sap:VirtualizedContainerService.HintSize="488,533" sap2010:WorkflowViewState.IdRef="TryCatch_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -112,17 +113,17 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <TryCatch.Try>
-              <ucas:FetchBatch Dataset="[in_Config(&quot;CommunicationsMiningDatasetName&quot;).ToString()]" DisplayName="Fetch Batch from Stream" sap:VirtualizedContainerService.HintSize="334,194" sap2010:WorkflowViewState.IdRef="FetchBatch_4" Project="[in_Config(&quot;CommunicationsMiningProjectName&quot;).ToString()]" Response="[out_CurrentBatch]" Stream="[in_Config(&quot;CommunicationsMiningStreamName&quot;).ToString()]">
+              <Sequence sap:VirtualizedContainerService.HintSize="450,305" sap2010:WorkflowViewState.IdRef="Sequence_9">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-              </ucas:FetchBatch>
+                <ucas:GetStreamResults Dataset="[in_Config(&quot;CommunicationsMiningDatasetName&quot;).ToString()]" DisplayName="Get Results from Stream" sap:VirtualizedContainerService.HintSize="388,194" sap2010:WorkflowViewState.IdRef="GetStreamResults_1" Project="[in_Config(&quot;CommunicationsMiningProjectName&quot;).ToString()]" Results="[out_CurrentBatch]" Stream="[in_Config(&quot;CommunicationsMiningStreamName&quot;).ToString()]" />
+              </Sequence>
             </TryCatch.Try>
             <TryCatch.Catches>
-              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="454,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -133,7 +134,7 @@
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Catch Get transaction item" sap:VirtualizedContainerService.HintSize="450,231" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                  <Sequence DisplayName="Catch Get transaction item" sap:VirtualizedContainerService.HintSize="450,317" sap2010:WorkflowViewState.IdRef="Sequence_7">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>

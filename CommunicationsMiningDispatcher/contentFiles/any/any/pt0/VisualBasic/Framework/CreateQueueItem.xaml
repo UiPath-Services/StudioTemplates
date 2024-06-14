@@ -1,14 +1,14 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="CreateQueueItem" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:uca="clr-namespace:UiPath.Cryptography.Activities;assembly=UiPath.Cryptography.Activities" xmlns:ucasm="clr-namespace:UiPath.CommunicationsMining.Activities.Streams.Models;assembly=UiPath.CommunicationsMining.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The name of the queue where the item should be created" Name="in_DestinationQueueName" Type="InArgument(x:String)" />
-    <x:Property sap2010:Annotation.AnnotationText="The communication that is currently getting processed" Name="in_Communication" Type="InArgument(ucasm:Result)" />
+    <x:Property sap2010:Annotation.AnnotationText="The communication that is currently getting processed" Name="in_Communication" Type="InArgument(ucasm:StreamResult)" />
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property sap2010:Annotation.AnnotationText="The name of the folder containing the queue where the item should be created" Name="in_DestinationFolderPath" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1724,2303</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1571,2302</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>CreateQueueItem_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -104,7 +104,7 @@
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="CreateQueueItem" sap:VirtualizedContainerService.HintSize="554,2238" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="CreateQueueItem" sap:VirtualizedContainerService.HintSize="554,2237" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="reference" />
     </Sequence.Variables>
@@ -135,7 +135,7 @@
         <Sequence sap2010:WorkflowViewState.IdRef="Sequence_7" />
       </If.Else>
     </If>
-    <ui:Comment DisplayName="" sap:VirtualizedContainerService.HintSize="492,76" sap2010:WorkflowViewState.IdRef="Comment_2" Text="// As comment uids can be longer than the maximum reference length for orchestrator" />
+    <ui:Comment DisplayName="" sap:VirtualizedContainerService.HintSize="492,75" sap2010:WorkflowViewState.IdRef="Comment_2" Text="// As comment uids can be longer than the maximum reference length for orchestrator" />
     <uca:KeyedHashText Encoding="{x:Null}" KeySecureString="{x:Null}" Algorithm="SHA256" DisplayName="Hash Comment Uid" sap:VirtualizedContainerService.HintSize="492,140" sap2010:WorkflowViewState.IdRef="KeyedHashText_1" Input="[in_communication.Comment.Uid]" Key="DO NOT CHANGE THIS VALUE" KeyEncodingString="65001" KeyInputModeSwitch="Key" Result="[reference]" />
     <ui:RetryScope DisplayName="Retry Add Queue Item Stream" sap:VirtualizedContainerService.HintSize="492,1250" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;RetryNumberCreateQueueItem&quot;))]">
       <ui:RetryScope.ActivityBody>
