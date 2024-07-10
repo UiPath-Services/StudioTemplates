@@ -43,10 +43,12 @@
       <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
       <x:String>GlobalVariablesNamespace</x:String>
       <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Numerics</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="55">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="110">
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -100,9 +102,14 @@
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap2010:Annotation.AnnotationText="Flowchart for the Business Rule Validation after the Classification process has been completed." DisplayName="Bussiness Rule Validation" sap:VirtualizedContainerService.HintSize="843.2,686.4" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart sap2010:Annotation.AnnotationText="Flowchart for the Business Rule Validation after the Classification process has been completed." DisplayName="Bussiness Rule Validation" sap:VirtualizedContainerService.HintSize="1159.2,869.6" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="x:Single" sap2010:Annotation.AnnotationText="Contains the minimum Confidence Threshold value set in the Config file." Name="minConfidenceThreshold" />
     </Flowchart.Variables>
@@ -111,8 +118,8 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsPinned">False</x:Boolean>
         <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
-        <av:Size x:Key="ShapeSize">60,75.2</av:Size>
-        <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,97.5</av:PointCollection>
+        <av:Size x:Key="ShapeSize">49.6,49.6</av:Size>
+        <av:PointCollection x:Key="ConnectorLocation">294.8,52.1 294.8,82.1 295.2,82.1 295.2,87.5</av:PointCollection>
         <x:Double x:Key="Width">810</x:Double>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
         <x:Double x:Key="Height">618.5</x:Double>
@@ -121,25 +128,25 @@
     <Flowchart.StartNode>
       <x:Reference>__ReferenceID4</x:Reference>
     </Flowchart.StartNode>
-    <FlowDecision x:Name="__ReferenceID2" Condition="[CBool(in_Config(&quot;AlwaysValidateClassification&quot;))]" DisplayName="Always Validate Manually" sap:VirtualizedContainerService.HintSize="140,87.2" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+    <FlowDecision x:Name="__ReferenceID2" Condition="[CBool(in_Config(&quot;AlwaysValidateClassification&quot;))]" DisplayName="Always Validate Manually" sap:VirtualizedContainerService.HintSize="60,60" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <av:Point x:Key="ShapeLocation">230,180.3</av:Point>
-          <av:Size x:Key="ShapeSize">140,87.2</av:Size>
-          <av:PointCollection x:Key="TrueConnector">230,223.8 140,223.8 140,501.5</av:PointCollection>
-          <av:PointCollection x:Key="FalseConnector">370,223.9 513,223.9 513,323</av:PointCollection>
+          <av:Point x:Key="ShapeLocation">260,200</av:Point>
+          <av:Size x:Key="ShapeSize">60,60</av:Size>
+          <av:PointCollection x:Key="FalseConnector">320,230 468.2,230 468.2,313</av:PointCollection>
+          <av:PointCollection x:Key="TrueConnector">260,230 150.2,230 150.2,355</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <FlowDecision.True>
         <FlowStep x:Name="__ReferenceID0">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <av:Point x:Key="ShapeLocation">9,501.5</av:Point>
-              <av:Size x:Key="ShapeSize">262.4,91.2</av:Size>
+              <av:Point x:Key="ShapeLocation">95,355</av:Point>
+              <av:Size x:Key="ShapeSize">110.4,70.4</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign sap2010:Annotation.AnnotationText="Data will be sent to manual validation" DisplayName="Assign Classification Success" sap:VirtualizedContainerService.HintSize="262.4,91.2" sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign sap2010:Annotation.AnnotationText="Data will be sent to manual validation" DisplayName="Assign Classification Success" sap:VirtualizedContainerService.HintSize="110.4,70.4" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Boolean">[out_AutoClassificationSuccess]</OutArgument>
             </Assign.To>
@@ -148,7 +155,7 @@
             </Assign.Value>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
@@ -159,21 +166,21 @@
         <FlowStep x:Name="__ReferenceID1">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <av:Point x:Key="ShapeLocation">413,323</av:Point>
-              <av:Size x:Key="ShapeSize">200,113.6</av:Size>
-              <av:PointCollection x:Key="ConnectorLocation">513,436.6 513,486.6</av:PointCollection>
+              <av:Point x:Key="ShapeLocation">413,313</av:Point>
+              <av:Size x:Key="ShapeSize">110.4,70.4</av:Size>
+              <av:PointCollection x:Key="ConnectorLocation">468.2,383.4 468.2,436.6</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:Comment DisplayName="Comment - Business Rule Validation" sap:VirtualizedContainerService.HintSize="200,113.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Write your custom Data Classification &amp; Business Rule Validation code here" />
+          <ui:Comment DisplayName="Comment - Business Rule Validation" sap:VirtualizedContainerService.HintSize="110.4,70.4" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Write your custom Data Classification &amp; Business Rule Validation code here" />
           <FlowStep.Next>
             <FlowStep x:Name="__ReferenceID3">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <av:Point x:Key="ShapeLocation">413,486.6</av:Point>
-                  <av:Size x:Key="ShapeSize">200,52.8</av:Size>
+                  <av:Point x:Key="ShapeLocation">413,436.6</av:Point>
+                  <av:Size x:Key="ShapeSize">110.4,70.4</av:Size>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:MultipleAssign DisplayName="Validate Classification Results" sap:VirtualizedContainerService.HintSize="430.4,132" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
+              <ui:MultipleAssign DisplayName="Validate Classification Results" sap:VirtualizedContainerService.HintSize="110.4,70.4" sap2010:WorkflowViewState.IdRef="MultipleAssign_3">
                 <ui:MultipleAssign.AssignOperations>
                   <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                     <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
@@ -205,12 +212,12 @@
     <FlowStep x:Name="__ReferenceID4">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">200,97.5</av:Point>
-          <av:Size x:Key="ShapeSize">200,52.8</av:Size>
-          <av:PointCollection x:Key="ConnectorLocation">300,150.3 300,180.3</av:PointCollection>
+          <av:Point x:Key="ShapeLocation">240,87.5</av:Point>
+          <av:Size x:Key="ShapeSize">110.4,70.4</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">295.2,157.9 295.2,187.9 290,187.9 290,200</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:LogMessage DisplayName="Log Message - Start Business Rule Validation" sap:VirtualizedContainerService.HintSize="200,52.8" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_ClassificationBusinessRuleValidationStart&quot;) + &quot; &quot; + Path.GetFileName(in_TargetDocument) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+      <ui:LogMessage DisplayName="Log Message - Start Business Rule Validation" sap:VirtualizedContainerService.HintSize="110.4,70.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_ClassificationBusinessRuleValidationStart&quot;) + &quot; &quot; + Path.GetFileName(in_TargetDocument) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
       <FlowStep.Next>
         <x:Reference>__ReferenceID2</x:Reference>
       </FlowStep.Next>
