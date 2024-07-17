@@ -2,11 +2,12 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
     <x:Property sap2010:Annotation.AnnotationText="The current batch being processed" Name="in_CurrentBatch" Type="InArgument(ucasm:GetStreamResultsResponse)" />
+    <x:Property Name="in_AdvanceToSequenceId" Type="InArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1571,896</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1656,1141</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Advance_Stream_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -88,17 +89,17 @@
       <AssemblyReference>UiPath.Cryptography</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Advance_Stream" sap:VirtualizedContainerService.HintSize="542,831" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Advance_Stream" sap:VirtualizedContainerService.HintSize="542,836" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message Advance Stream" sap:VirtualizedContainerService.HintSize="480,141" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[in_Config(&quot;LogMessage_AdvanceStream&quot;).ToString()]" />
-    <ui:RetryScope DisplayName="Retry Advance Stream" sap:VirtualizedContainerService.HintSize="480,539" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;RetryNumberAdvanceStream&quot;))]">
+    <ui:RetryScope DisplayName="Retry Advance Stream" sap:VirtualizedContainerService.HintSize="480,544" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[CInt(in_Config(&quot;RetryNumberAdvanceStream&quot;))]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <TryCatch DisplayName="Try and Advance Stream" sap:VirtualizedContainerService.HintSize="438,364" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+          <TryCatch DisplayName="Try and Advance Stream" sap:VirtualizedContainerService.HintSize="438,369" sap2010:WorkflowViewState.IdRef="TryCatch_1">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -106,7 +107,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <TryCatch.Try>
-              <ucas:AdvanceStream Response="{x:Null}" SequenceId="{x:Null}" DisplayName="Advance Stream to ID" sap:VirtualizedContainerService.HintSize="334,136" sap2010:WorkflowViewState.IdRef="AdvanceStream_1" Stream="[in_CurrentBatch]" UseLatestSequenceId="True" />
+              <ucas:AdvanceStream Response="{x:Null}" DisplayName="Advance Stream to ID" sap:VirtualizedContainerService.HintSize="334,141" sap2010:WorkflowViewState.IdRef="AdvanceStream_1" SequenceId="[in_AdvanceToSequenceId]" Stream="[in_CurrentBatch]" UseLatestSequenceId="False" />
             </TryCatch.Try>
             <TryCatch.Catches>
               <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="404,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
@@ -120,7 +121,7 @@
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Catch Get transaction item" sap:VirtualizedContainerService.HintSize="450,231" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <Sequence DisplayName="Catch Get transaction item" sap:VirtualizedContainerService.HintSize="450,317" sap2010:WorkflowViewState.IdRef="Sequence_2">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
