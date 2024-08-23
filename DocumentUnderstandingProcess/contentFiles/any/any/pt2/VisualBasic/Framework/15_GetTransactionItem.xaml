@@ -4,13 +4,13 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
     <x:Property sap2010:Annotation.AnnotationText="Stores the transaction item to be updated in the Orchestrator Queue." Name="out_TransactionItem" Type="OutArgument(ui:QueueItem)" />
-    <x:Property Name="out_TargetFileResource" Type="OutArgument(upr:ILocalResource)" />
-    <x:Property Name="out_TargetFile" Type="OutArgument(x:String)" />
+    <x:Property sap2010:Annotation.AnnotationText="The file resources of the target document that is going to be processed." Name="out_TargetFileResource" Type="OutArgument(upr:ILocalResource)" />
+    <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="out_TargetFile" Type="OutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1067.2,3982.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1233.6,4127.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_15_GetTransactionItem_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="74">
@@ -118,7 +118,7 @@
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="984,3917.6" sap2010:WorkflowViewState.IdRef="Sequence_68">
+  <Sequence sap2010:Annotation.AnnotationText="Gets the next Transaction Item.&#xA;&#xA;Overwrites the TargetFile with the value retrieved from the TransactionItem (expected to be under the  key in the project config)&#xA;&#xA;Loads all the Transaction Item's SpecificContent into the Config dictionary for ease of use. " DisplayName="GetTransactionItem" sap:VirtualizedContainerService.HintSize="984,4062.4" sap2010:WorkflowViewState.IdRef="Sequence_68">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -127,7 +127,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message - GetTransactionItem" sap:VirtualizedContainerService.HintSize="921.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_GetTransactionItem&quot;) + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" />
-    <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty Target File" sap:VirtualizedContainerService.HintSize="921.6,144.8" sap2010:WorkflowViewState.IdRef="Assign_25">
+    <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty TargetFileResource" sap:VirtualizedContainerService.HintSize="449.6,112.80000000000001" sap2010:WorkflowViewState.IdRef="Assign_25">
       <Assign.To>
         <OutArgument x:TypeArguments="upr:ILocalResource">[out_TargetFileResource]</OutArgument>
       </Assign.To>
@@ -140,9 +140,22 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </Assign>
+    <Assign sap2010:Annotation.AnnotationText="Preemptively clear the value" DisplayName="Assign - Empty TargetFile" sap:VirtualizedContainerService.HintSize="921.6,144.8" sap2010:WorkflowViewState.IdRef="Assign_32">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[out_TargetFile]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[Nothing]</InArgument>
+      </Assign.Value>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </Assign>
     <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DU_OrchestratorFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="921.6,226.4" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_Config(&quot;Assets&quot;)(&quot;DU_QueueName&quot;)]">
       <ui:AddQueueItem.ItemInformation>
-        <InArgument x:TypeArguments="x:String" x:Key="TargetFile">PG Bison_Invoice_805060_2022-01-31_1590946_A005.pdf</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="TargetFile">Receipt.jpg</InArgument>
       </ui:AddQueueItem.ItemInformation>
     </ui:AddQueueItem>
     <ui:RetryScope ContinueOnError="False" DisplayName="Retry Scope - GetTransactionItem" sap:VirtualizedContainerService.HintSize="921.6,564" sap2010:WorkflowViewState.IdRef="RetryScope_6" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
@@ -198,7 +211,7 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <Assign sap:VirtualizedContainerService.HintSize="449.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_31">
+                <Assign DisplayName="Assign - TargetFile" sap:VirtualizedContainerService.HintSize="449.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_31">
                   <Assign.To>
                     <OutArgument x:TypeArguments="x:String">[out_TargetFile]</OutArgument>
                   </Assign.To>

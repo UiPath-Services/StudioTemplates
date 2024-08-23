@@ -4,7 +4,7 @@
     <x:Property sap2010:Annotation.AnnotationText="Used to determine if the process ended with an exception and the type of exception that was thrown if the process was aborted during the execution." Name="in_Exception" Type="InArgument(s:Exception)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
-    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -92,7 +92,7 @@
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap2010:Annotation.AnnotationText="Set and log the transaction's status. The approach is similar to the one used by the RE-Framework.&#xA;&#xA;Business Rule Exception characterizes an irregular situation according to the process's rules and prevents the transaction to be processed. The transaction is not retried in this case, since the result will be the same until the problem that causes the exception is solved.&#xA;For example, it can be considered a BusinessRuleException if a process expects to read an email's attachment, but the sender didn't attach any file. In this case, immediate retries of the transaction will not yield a different result.&#xA;&#xA;On the other hand, system exceptions are characterized by exceptions whose types are different than BusinessRuleException. When this kind of exception happens, the transaction item can be retried after closing and reopening the applications involved in the process. The rationale behind this is that the exception was caused by a problem in the applications, which might be solved by restarting them." DisplayName="Set Transaction Status" sap:VirtualizedContainerService.HintSize="1052.8,869.6" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart sap2010:Annotation.AnnotationText="Set and log the transaction's status. The approach is similar to the one used by the RE-Framework.&#xA;&#xA;Business Rule Exception characterizes an irregular situation according to the process's rules and prevents the transaction to be processed. The transaction is not retried in this case, since the result will be the same until the problem that causes the exception is solved.&#xA;For example, it can be considered a BusinessRuleException if a process expects to read an email's attachment, but the sender didn't attach any file. In this case, immediate retries of the transaction will not yield a different result.&#xA;&#xA;On the other hand, system exceptions are characterized by exceptions whose types are different than BusinessRuleException. When this kind of exception happens, the transaction item can be retried after closing and reopening the applications involved in the process. The rationale behind this is that the exception was caused by a problem in the applications, which might be solved by restarting them." DisplayName="Set Transaction Status" sap:VirtualizedContainerService.HintSize="1293.6,869.6" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -138,7 +138,7 @@
                 <ActivityAction>
                   <If Condition="[not in_TransactionItem is Nothing]" DisplayName="If Valid Transaction Item, Mark Success" sap:VirtualizedContainerService.HintSize="483.2,459.2" sap2010:WorkflowViewState.IdRef="If_1">
                     <If.Then>
-                      <ui:SetTransactionStatus ContinueOnError="{x:Null}" ServiceBaseAddress="{x:Null}" DisplayName="Set transaction status (Successful)" ErrorType="Application" FolderPath="[in_Config(&quot;Assets&quot;)(&quot;DocumentUnderstandingQueuePath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,193.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_2" Status="Successful" TransactionItem="[in_TransactionItem]">
+                      <ui:SetTransactionStatus ContinueOnError="{x:Null}" ServiceBaseAddress="{x:Null}" DisplayName="Set transaction status (Successful)" ErrorType="Application" FolderPath="[in_Config(&quot;Assets&quot;)(&quot;DU_QueuePath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,193.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_2" Status="Successful" TransactionItem="[in_TransactionItem]">
                         <ui:SetTransactionStatus.Analytics>
                           <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                         </ui:SetTransactionStatus.Analytics>
@@ -213,7 +213,7 @@
                     <ActivityAction>
                       <If Condition="[not in_TransactionItem is Nothing]" DisplayName="If Valid Transaction Item, Mark BRE" sap:VirtualizedContainerService.HintSize="483.2,511.2" sap2010:WorkflowViewState.IdRef="If_2">
                         <If.Then>
-                          <ui:SetTransactionStatus ContinueOnError="{x:Null}" ServiceBaseAddress="{x:Null}" DisplayName="Set transaction status (Business Exception)" ErrorType="Business" FolderPath="[in_Config(&quot;Constants&quot;)(&quot;DocumentUnderstandingQueuePath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,245.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Reason="[in_Exception.Message]" Status="Failed" TransactionItem="[in_TransactionItem]">
+                          <ui:SetTransactionStatus ContinueOnError="{x:Null}" ServiceBaseAddress="{x:Null}" DisplayName="Set transaction status (Business Exception)" ErrorType="Business" FolderPath="[in_Config(&quot;Assets&quot;)(&quot;DU_QueuePath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,245.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_3" Reason="[in_Exception.Message]" Status="Failed" TransactionItem="[in_TransactionItem]">
                             <ui:SetTransactionStatus.Analytics>
                               <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                             </ui:SetTransactionStatus.Analytics>
@@ -260,7 +260,7 @@
                   <av:Size x:Key="ShapeSize">110.4,70.4</av:Size>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Sequence sap2010:Annotation.AnnotationText="If a system exception occurs during the process, the transaction item's status is updated as Failed (Exception Type: Application)." DisplayName="System Exception" sap:VirtualizedContainerService.HintSize="110.4,70.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <Sequence sap2010:Annotation.AnnotationText="If a system exception occurs during the process, the transaction item's status is updated as Failed (Exception Type: Application)." DisplayName="System Exception" sap:VirtualizedContainerService.HintSize="579.2,1080.8" sap2010:WorkflowViewState.IdRef="Sequence_4">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -273,7 +273,7 @@
                     <ActivityAction>
                       <If Condition="[not in_TransactionItem is Nothing]" DisplayName="If Valid Transaction Item, Mark System Exception" sap:VirtualizedContainerService.HintSize="483.2,511.2" sap2010:WorkflowViewState.IdRef="If_3">
                         <If.Then>
-                          <ui:SetTransactionStatus ContinueOnError="{x:Null}" ServiceBaseAddress="{x:Null}" DisplayName="Set transaction status (System Exception)" ErrorType="Application" FolderPath="[in_Config(&quot;Constants&quot;)(&quot;DocumentUnderstandingQueuePath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,245.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_4" Reason="[in_Exception.Message]" Status="Failed" TransactionItem="[in_TransactionItem]">
+                          <ui:SetTransactionStatus ContinueOnError="{x:Null}" ServiceBaseAddress="{x:Null}" DisplayName="Set transaction status (System Exception)" ErrorType="Application" FolderPath="[in_Config(&quot;Assets&quot;)(&quot;DU_QueuePath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,245.6" sap2010:WorkflowViewState.IdRef="SetTransactionStatus_4" Reason="[in_Exception.Message]" Status="Failed" TransactionItem="[in_TransactionItem]">
                             <ui:SetTransactionStatus.Analytics>
                               <scg:Dictionary x:TypeArguments="x:String, InArgument" />
                             </ui:SetTransactionStatus.Analytics>

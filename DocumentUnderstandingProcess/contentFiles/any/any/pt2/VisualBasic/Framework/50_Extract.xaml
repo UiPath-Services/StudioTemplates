@@ -1,11 +1,11 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="_50_Extract" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:p="http://schemas.uipath.com/workflow/activities/intelligentocr" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uisad="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DocumentClassification;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:uisad1="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DataExtraction;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
-    <x:Property Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
-    <x:Property Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
-    <x:Property Name="in_TargetFileResource" Type="InArgument(upr:IResource)" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
+    <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
+    <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
+    <x:Property sap2010:Annotation.AnnotationText="The file resources of the target document that is going to be processed." Name="in_TargetFileResource" Type="InArgument(upr:IResource)" />
     <x:Property sap2010:Annotation.AnnotationText="The array of classification results given by running the chosen classifier over the target document." Name="in_ClassificationResult" Type="InArgument(uisad:DocumentData)" />
-    <x:Property Name="out_ExtractionResults" Type="OutArgument(uisad1:IDocumentData(uisad1:DictionaryData))" />
+    <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="out_ExtractionResults" Type="OutArgument(uisad1:IDocumentData(uisad1:DictionaryData))" />
   </x:Members>
   <this:_50_Extract.in_RetryInterval>
     <InArgument x:TypeArguments="x:TimeSpan" />
@@ -16,7 +16,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1067.2,1210.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1233.6,2639.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_50_Extract_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -109,47 +109,106 @@
       <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Pre-extraction processing and Data Extraction workflow. Extractors are process-dependant!&#xA;&#xA;Outputs whether Human validation is required." DisplayName="Extract" sap:VirtualizedContainerService.HintSize="608,1145.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Pre-extraction processing and Data Extraction workflow. Extractors are process-dependant!&#xA;&#xA;Outputs whether Human validation is required." DisplayName="Extract" sap:VirtualizedContainerService.HintSize="704,2574.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="545.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_DataExtractionStart&quot;) + in_ClassificationResult.DocumentType.Name + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" />
-    <ui:RetryScope sap2010:Annotation.AnnotationText="Extractors might need to make API calls. The retry mechanism is used to compensate for minor fluctuations in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsExtract overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Extract" sap:VirtualizedContainerService.HintSize="545.6,704.8" sap2010:WorkflowViewState.IdRef="RetryScope_3" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
-      <ui:RetryScope.ActivityBody>
-        <ActivityAction>
-          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,396" sap2010:WorkflowViewState.IdRef="Sequence_7">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <p:ExtractDocumentDataWithDocumentData x:TypeArguments="uisad1:DictionaryData" DocumentBounds="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" ExtractorDocumentType="{x:Null}" ExtractorResult="{x:Null}" PersistenceId="{x:Null}" PredictionId="{x:Null}" Prompt="{x:Null}" ApplyAutoValidation="False" DisplayName="Extract Document Data" DocType="invoices" ExtractionResults="[out_ExtractionResults]" FileInput="[in_TargetFileResource]" GenerateData="False" sap:VirtualizedContainerService.HintSize="449.6,307.2" sap2010:WorkflowViewState.IdRef="ExtractDocumentDataWithDocumentData`1_4" ProjectId="00000000-0000-0000-0000-000000000000" TimeoutInSeconds="3600">
-              <p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
-                <InArgument x:TypeArguments="s:Nullable(x:Int32)">
-                  <Literal x:TypeArguments="s:Nullable(x:Int32)" Value="0" />
-                </InArgument>
-              </p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
-              <p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
-                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-              </p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
-            </p:ExtractDocumentDataWithDocumentData>
-          </Sequence>
-        </ActivityAction>
-      </ui:RetryScope.ActivityBody>
-      <ui:RetryScope.Condition>
-        <ActivityFunc x:TypeArguments="x:Boolean" />
-      </ui:RetryScope.Condition>
-      <sap:WorkflowViewStateService.ViewState>
-        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-        </scg:Dictionary>
-      </sap:WorkflowViewStateService.ViewState>
-    </ui:RetryScope>
-    <ui:Comment sap:VirtualizedContainerService.HintSize="545.6,117.6" sap2010:WorkflowViewState.IdRef="Comment_1" Text="An Extractor that uses a paid license might incur extra costs when re-executing. This should be taken into consideration for the number of retries." />
+    <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="641.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_DataExtractionStart&quot;) + in_ClassificationResult.DocumentType.Name + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" />
+    <Switch x:TypeArguments="x:String" DisplayName="Switch - based on document type" Expression="[in_ClassificationResult.DocumentType.Name]" sap:VirtualizedContainerService.HintSize="641.6,2111.2" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+      <Switch.Default>
+        <Sequence DisplayName="Default" sap:VirtualizedContainerService.HintSize="512,254.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message -no document type" sap:VirtualizedContainerService.HintSize="449.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[&quot;New document types&quot;]" />
+        </Sequence>
+      </Switch.Default>
+      <Sequence x:Key="Invoices" DisplayName="Body" sap:VirtualizedContainerService.HintSize="608,784.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:RetryScope sap2010:Annotation.AnnotationText="Extractors might need to make API calls. The retry mechanism is used to compensate for minor fluctuations in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsExtract overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Extract Invoices" sap:VirtualizedContainerService.HintSize="545.6,696" sap2010:WorkflowViewState.IdRef="RetryScope_4" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,396" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <p:ExtractDocumentDataWithDocumentData x:TypeArguments="uisad1:DictionaryData" DocumentBounds="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" ExtractorDocumentType="{x:Null}" ExtractorResult="{x:Null}" PersistenceId="{x:Null}" PredictionId="{x:Null}" Prompt="{x:Null}" ApplyAutoValidation="False" DisplayName="Extract Document Data - Invoices" DocType="invoices" ExtractionResults="[out_ExtractionResults]" FileInput="[in_TargetFileResource]" GenerateData="False" sap:VirtualizedContainerService.HintSize="449.6,307.2" sap2010:WorkflowViewState.IdRef="ExtractDocumentDataWithDocumentData`1_5" ProjectId="00000000-0000-0000-0000-000000000000" TimeoutInSeconds="3600">
+                  <p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
+                    <InArgument x:TypeArguments="s:Nullable(x:Int32)">
+                      <Literal x:TypeArguments="s:Nullable(x:Int32)" Value="0" />
+                    </InArgument>
+                  </p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
+                  <p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+                </p:ExtractDocumentDataWithDocumentData>
+              </Sequence>
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean" />
+          </ui:RetryScope.Condition>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:RetryScope>
+      </Sequence>
+      <Sequence x:Key="Receipts" DisplayName="Body" sap:VirtualizedContainerService.HintSize="608,768.8" sap2010:WorkflowViewState.IdRef="Sequence_10">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:RetryScope sap2010:Annotation.AnnotationText="Extractors might need to make API calls. The retry mechanism is used to compensate for minor fluctuations in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsExtract overrides the default number of execution attempts." ContinueOnError="False" DisplayName="Retry Scope - Extract Receipts" sap:VirtualizedContainerService.HintSize="545.6,680" sap2010:WorkflowViewState.IdRef="RetryScope_5" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,380" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <p:ExtractDocumentDataWithDocumentData x:TypeArguments="uisad1:DictionaryData" DocumentBounds="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" ExtractorDocumentType="{x:Null}" ExtractorResult="{x:Null}" PersistenceId="{x:Null}" PredictionId="{x:Null}" Prompt="{x:Null}" ApplyAutoValidation="False" DisplayName="Extract Document Data - Receipts" DocType="receipts" ExtractionResults="[out_ExtractionResults]" FileInput="[in_TargetFileResource]" GenerateData="False" sap:VirtualizedContainerService.HintSize="449.6,291.2" sap2010:WorkflowViewState.IdRef="ExtractDocumentDataWithDocumentData`1_6" ProjectId="00000000-0000-0000-0000-000000000000" TimeoutInSeconds="3600">
+                  <p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
+                    <InArgument x:TypeArguments="s:Nullable(x:Int32)">
+                      <Literal x:TypeArguments="s:Nullable(x:Int32)" Value="0" />
+                    </InArgument>
+                  </p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
+                  <p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+                </p:ExtractDocumentDataWithDocumentData>
+              </Sequence>
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean" />
+          </ui:RetryScope.Condition>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </ui:RetryScope>
+      </Sequence>
+    </Switch>
+    <ui:Comment sap:VirtualizedContainerService.HintSize="641.6,140" sap2010:WorkflowViewState.IdRef="Comment_1" Text="An Extractor that uses a paid license might incur extra costs when &#xD;&#xA;re-executing. This should be taken into consideration for the number of &#xD;&#xA;retries." />
   </Sequence>
 </Activity>
