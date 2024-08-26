@@ -9,7 +9,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1233.6,7078.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1045.6,7789.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>InvoicePostProcessing_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="68">
@@ -126,7 +126,7 @@
       <AssemblyReference>UiPath.Locator</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted &#xA;• Verify that all table rows match the rule: Quantity * Unit Price = Line Amount &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00) " DisplayName="InvoicePostProcessing" sap:VirtualizedContainerService.HintSize="704,7013.6" sap2010:WorkflowViewState.IdRef="Sequence_43">
+  <Sequence sap2010:Annotation.AnnotationText="Default post-processing rules &amp; steps: &#xA;• Verify that all Mandatory Fields and Columns are extracted &#xA;• Verify that all table rows match the rule: Quantity * Unit Price = Line Amount &#xA;• Verify that the sum of all Line Amounts = Net Amount &#xA;• Sum up Net Amount with all the values defined as Config &quot;SubTotalAdditions&quot;. Verify that the sum of Net Amount + &quot;SubTotalAdditions&quot; = Total &#xA;• Verify the extraction confidence of all defined &quot;ConfidenceFields&quot; against their individual confidence thresholds &#xA;• Verify the extraction confidence of all the other fields against the &quot;other-Confidence&quot; threshold &#xA;&#xA;This should NOT be used as-is, except for demo purposes. For a real implementation, the post-processing &amp; validation should be tailored to the specifics of the business process. &#xA;The default implementation uses EN-US culture information. This means '.' is the decimal separator and &quot;,&quot; is the thousand separator. (e.g.: 10,000.00) " DisplayName="InvoicePostProcessing" sap:VirtualizedContainerService.HintSize="704,7724.8" sap2010:WorkflowViewState.IdRef="Sequence_43">
     <Sequence.Variables>
       <Variable x:TypeArguments="sd:DataTable" sap2010:Annotation.AnnotationText="DataTable generated from the extractedDataSet." Name="itemTable" />
       <Variable x:TypeArguments="s:DateTime" sap2010:Annotation.AnnotationText="Extracted Invoice Date." Name="invoiceDate" />
@@ -139,6 +139,8 @@
       <Variable x:TypeArguments="scg:List(x:String)" sap2010:Annotation.AnnotationText="Generic Confidence field. All the elements of the list will be checked against a single confidence value." Name="otherConfidenceFields" />
       <Variable x:TypeArguments="scg:Dictionary(x:String, x:String)" sap2010:Annotation.AnnotationText="Dictionary containing the fields from the taxonomy and the extracted data." Default="[new Dictionary(Of String, String)]" Name="documentFields" />
       <Variable x:TypeArguments="x:Int32" sap2010:Annotation.AnnotationText="Contains the number of decimal points in the Line Amount." Name="decimalPoints" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Regex text that will be used for cleanup of variables." Name="regexText" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Contains the Line Amount value converted to String." Name="lineAmountString" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -248,7 +250,7 @@
             <InArgument x:TypeArguments="scg:List(x:String)">[in_Config("InvoicePostProcessing")("OtherConfidenceFields").Split(","c).Select(Function(value) value.Trim).ToList]</InArgument>
           </Assign.Value>
         </Assign>
-        <Assign sap:VirtualizedContainerService.HintSize="449.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_52">
+        <Assign DisplayName="Assign itemTable" sap:VirtualizedContainerService.HintSize="449.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_52">
           <Assign.To>
             <OutArgument x:TypeArguments="sd:DataTable">[itemTable]</OutArgument>
           </Assign.To>
@@ -360,7 +362,7 @@
         </If.Else>
       </If>
     </Sequence>
-    <Sequence sap2010:Annotation.AnnotationText="In the Value Cleanup part we're removing empty fields, symbols, extra text (OCR errors), and everything that is NOT a number or a decimal point from the extracted field. This will allows us to perform mathematical operations with the values." DisplayName="Value Cleanup" sap:VirtualizedContainerService.HintSize="641.6,740" sap2010:WorkflowViewState.IdRef="Sequence_20">
+    <Sequence sap2010:Annotation.AnnotationText="In the Value Cleanup part we're removing empty fields, symbols, extra text (OCR errors), and everything that is NOT a number or a decimal point from the extracted field. This will allows us to perform mathematical operations with the values." DisplayName="Value Cleanup" sap:VirtualizedContainerService.HintSize="641.6,853.6" sap2010:WorkflowViewState.IdRef="Sequence_20">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -368,12 +370,20 @@
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
+      <Assign DisplayName="Assign RegexText" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_55">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[regexText]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[^0-9\.]+</InArgument>
+        </Assign.Value>
+      </Assign>
       <Assign DisplayName="Assign - Tax Amount" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_44">
         <Assign.To>
           <OutArgument x:TypeArguments="x:String">[documentFields("Tax Amount")]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Tax Amount")) orElse (documentFields("Tax Amount").Equals("0") orElse documentFields("Tax Amount").Equals("0.0")), "0.00", documentFields("Tax Amount").Replace(" ",""))]</InArgument>
+          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Tax Amount")) orElse (documentFields("Tax Amount").Equals("0") orElse documentFields("Tax Amount").Equals("0.0")), "0.00", regex.Replace(documentFields("Tax Amount"), regexText, "").Replace(" ",""))]</InArgument>
         </Assign.Value>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -387,7 +397,7 @@
           <OutArgument x:TypeArguments="x:String">[documentFields("Discount")]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Discount")) OrElse (documentFields("Discount").Equals("0") OrElse documentFields("Discount").Equals("0.0")), "0.00", documentFields("Discount").Replace(" ",""))]</InArgument>
+          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Discount")) OrElse (documentFields("Discount").Equals("0") OrElse documentFields("Discount").Equals("0.0")), "0.00", regex.Replace(documentFields("Discount"), regexText, "").Replace(" ",""))]</InArgument>
         </Assign.Value>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -401,7 +411,7 @@
           <OutArgument x:TypeArguments="x:String">[documentFields("Shipping Charges")]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Shipping Charges")) OrElse (documentFields("Shipping Charges").Equals("0") OrElse documentFields("Shipping Charges").Equals("0.0")), "0.00", documentFields("Shipping Charges").Replace(" ",""))]</InArgument>
+          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Shipping Charges")) OrElse (documentFields("Shipping Charges").Equals("0") OrElse documentFields("Shipping Charges").Equals("0.0")), "0.00", Regex.Replace(documentFields("Shipping Charges"), regexText, "").Replace(" ",""))]</InArgument>
         </Assign.Value>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -415,7 +425,7 @@
           <OutArgument x:TypeArguments="x:String">[documentFields("Net Amount")]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Net Amount")) OrElse (documentFields("Net Amount").Equals("0") OrElse documentFields("Net Amount").Equals("0.0")), "0.00", documentFields("Net Amount").Replace(" ",""))]</InArgument>
+          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Net Amount")) OrElse (documentFields("Net Amount").Equals("0") OrElse documentFields("Net Amount").Equals("0.0")), "0.00", Regex.Replace(documentFields("Net Amount"), regexText, "").Replace(" ",""))]</InArgument>
         </Assign.Value>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -429,7 +439,7 @@
           <OutArgument x:TypeArguments="x:String">[documentFields("Total Amount")]</OutArgument>
         </Assign.To>
         <Assign.Value>
-          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Total Amount")) OrElse (documentFields("Total Amount").Equals("0") OrElse documentFields("Total Amount").Equals("0.0")), "0.00", documentFields("Total Amount").Replace(" ",""))]</InArgument>
+          <InArgument x:TypeArguments="x:String">[If(String.IsNullOrEmpty(documentFields("Total Amount")) OrElse (documentFields("Total Amount").Equals("0") OrElse documentFields("Total Amount").Equals("0.0")), "0.00", Regex.Replace(documentFields("Total Amount"), regexText, "").Replace(" ",""))]</InArgument>
         </Assign.Value>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -439,19 +449,50 @@
         </sap:WorkflowViewStateService.ViewState>
       </Assign>
     </Sequence>
-    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="This is where we are doing the math operations on the Quantity, Unit Price, and Line Amounts to make sure they match to their extracted counterparts. &#xA;Before doing anything like that though, we repeat a similar operation as we did in the previous sequence where we remove any non-numeric characters from the variables.&#xA;If at any point, the math doesn't add up, we break this loop and we move to manual validation." DataTable="[itemTable]" DisplayName="For Each Row - Line Verification" sap:VirtualizedContainerService.HintSize="641.6,1621.6" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+    <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" sap2010:Annotation.AnnotationText="This is where we are doing the math operations on the Quantity, Unit Price, and Line Amounts to make sure they match to their extracted counterparts. &#xA;Before doing anything like that though, we repeat a similar operation as we did in the previous sequence where we remove any non-numeric characters from the variables.&#xA;If at any point, the math doesn't add up, we break this loop and we move to manual validation." DataTable="[itemTable]" DisplayName="For Each Row - Line Verification" sap:VirtualizedContainerService.HintSize="641.6,2219.2" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
       <ui:ForEachRow.Body>
         <ActivityAction x:TypeArguments="sd:DataRow">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Line Computation" sap:VirtualizedContainerService.HintSize="608,1332" sap2010:WorkflowViewState.IdRef="Sequence_14">
+          <Sequence DisplayName="Line Computation" sap:VirtualizedContainerService.HintSize="608,1929.6" sap2010:WorkflowViewState.IdRef="Sequence_14">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <Sequence sap2010:Annotation.AnnotationText="Count the number of decimal points in the Line Amount value." DisplayName="Number of decimal places" sap:VirtualizedContainerService.HintSize="545.6,552.8" sap2010:WorkflowViewState.IdRef="Sequence_28">
+            <Sequence DisplayName="Remove currency symbols and empty spaces" sap:VirtualizedContainerService.HintSize="545.6,452.8" sap2010:WorkflowViewState.IdRef="Sequence_52">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign DisplayName="Assign - Unit Price" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_56">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Object">[CurrentRow("Unit Price")]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Object">[If(String.IsNullOrEmpty(CurrentRow("Unit Price").ToString) OrElse (CurrentRow("Unit Price").Equals("0") OrElse CurrentRow("Unit Price").Equals("0.0")), "0.00", Regex.Replace(CurrentRow("Unit Price").ToString, regexText, "").Replace(" ",""))]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign - Quantity" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_57">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Object">[CurrentRow("Quantity")]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Object">[If(String.IsNullOrEmpty(CurrentRow("Quantity").ToString) OrElse (CurrentRow("Quantity").Equals("0") OrElse CurrentRow("Quantity").Equals("0.0")), "0.00", Regex.Replace(CurrentRow("Quantity").ToString, regexText, "").Replace(" ",""))]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign DisplayName="Assign - Line Amount" sap:VirtualizedContainerService.HintSize="449.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_58">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Object">[CurrentRow("Line Amount")]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Object">[If(String.IsNullOrEmpty(CurrentRow("Line Amount").ToString) OrElse (CurrentRow("Line Amount").Equals("0") OrElse CurrentRow("Line Amount").Equals("0.0")), "0.00", Regex.Replace(CurrentRow("Line Amount").ToString, regexText, "").Replace(" ",""))]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </Sequence>
+            <Sequence sap2010:Annotation.AnnotationText="Count the number of decimal points in the Line Amount value." DisplayName="Number of decimal places" sap:VirtualizedContainerService.HintSize="545.6,697.6" sap2010:WorkflowViewState.IdRef="Sequence_28">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -459,7 +500,20 @@
                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <If sap2010:Annotation.AnnotationText="Check for the &quot;.&quot;" Condition="[CurrentRow(&quot;Line Amount&quot;).ToString.IndexOf(&quot;.&quot;) = -1]" DisplayName="Check for number of decimals" sap:VirtualizedContainerService.HintSize="483.2,400.8" sap2010:WorkflowViewState.IdRef="If_10">
+              <Assign sap2010:Annotation.AnnotationText="Save the line amount into a variable and convert to string" DisplayName="Setting line amount" sap:VirtualizedContainerService.HintSize="483.2,144.8" sap2010:WorkflowViewState.IdRef="Assign_59">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[lineAmountString]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[CurrentRow("Line Amount").ToString]</InArgument>
+                </Assign.Value>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </Assign>
+              <If sap2010:Annotation.AnnotationText="Check for the &quot;.&quot;" Condition="[lineAmountString.IndexOf(&quot;.&quot;) = -1]" DisplayName="Check for number of decimals" sap:VirtualizedContainerService.HintSize="483.2,400.8" sap2010:WorkflowViewState.IdRef="If_10">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -481,7 +535,7 @@
                       <OutArgument x:TypeArguments="x:Int32">[decimalPoints]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="x:Int32">[CurrentRow("Line Amount").ToString.Substring(CurrentRow("Line Amount").ToString.IndexOf(".") + 1).Length]</InArgument>
+                      <InArgument x:TypeArguments="x:Int32">[lineAmountString.Substring(lineAmountString.IndexOf(".") + 1).Length]</InArgument>
                     </Assign.Value>
                   </Assign>
                 </If.Else>
@@ -567,10 +621,7 @@
           </Assign.Value>
         </Assign>
       </FlowStep>
-      <FlowDecision x:Name="__ReferenceID5" DisplayName="Subtotal Issue?" sap:VirtualizedContainerService.HintSize="60,60" sap2010:WorkflowViewState.IdRef="FlowDecision_16">
-        <FlowDecision.Condition>
-          <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="NOT ( documentFields(&quot;Net Amount&quot;) isNot Nothing AndAlso subtotal = CDec(documentFields(&quot;Net Amount&quot;))  orElse (documentFields(&quot;Net Amount&quot;) is Nothing) orElse ( documentFields(&quot;Net Amount&quot;) isNot Nothing AndAlso (CDec(documentFields(&quot;Net Amount&quot;)) = 0) ) )" />
-        </FlowDecision.Condition>
+      <FlowDecision x:Name="__ReferenceID5" Condition="[NOT ( documentFields(&quot;Net Amount&quot;) isNot Nothing AndAlso subtotal = CDec(documentFields(&quot;Net Amount&quot;))  orElse (documentFields(&quot;Net Amount&quot;) is Nothing) orElse ( documentFields(&quot;Net Amount&quot;) isNot Nothing AndAlso (CDec(documentFields(&quot;Net Amount&quot;)) = 0) ) )]" DisplayName="Subtotal Issue?" sap:VirtualizedContainerService.HintSize="60,60" sap2010:WorkflowViewState.IdRef="FlowDecision_16">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -640,10 +691,7 @@
                   </sap:WorkflowViewStateService.ViewState>
                 </Assign>
                 <FlowStep.Next>
-                  <FlowDecision x:Name="__ReferenceID2" DisplayName="Total Issue?" sap:VirtualizedContainerService.HintSize="60,60" sap2010:WorkflowViewState.IdRef="FlowDecision_15">
-                    <FlowDecision.Condition>
-                      <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="Not total = CDec(documentFields(&quot;Total Amount&quot;).ToString)" />
-                    </FlowDecision.Condition>
+                  <FlowDecision x:Name="__ReferenceID2" Condition="[Not total = CDec(documentFields(&quot;Total Amount&quot;).ToString)]" DisplayName="Total Issue?" sap:VirtualizedContainerService.HintSize="60,60" sap2010:WorkflowViewState.IdRef="FlowDecision_15">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
