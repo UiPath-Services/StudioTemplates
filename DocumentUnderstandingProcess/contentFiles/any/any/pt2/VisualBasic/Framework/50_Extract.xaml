@@ -16,7 +16,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1045.6,2639.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1031.2,3402.4</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_50_Extract_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -117,7 +117,7 @@
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="641.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_DataExtractionStart&quot;) + in_ClassificationResult.DocumentType.Name + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" />
-    <Switch x:TypeArguments="x:String" DisplayName="Switch - based on document type" Expression="[in_ClassificationResult.DocumentType.Name]" sap:VirtualizedContainerService.HintSize="641.6,2111.2" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+    <Switch x:TypeArguments="x:String" DisplayName="Switch - based on document type" Expression="[in_ClassificationResult.DocumentType.DisplayName]" sap:VirtualizedContainerService.HintSize="641.6,2874.4" sap2010:WorkflowViewState.IdRef="Switch`1_1">
       <Switch.Default>
         <Sequence DisplayName="Default" sap:VirtualizedContainerService.HintSize="512,254.4" sap2010:WorkflowViewState.IdRef="Sequence_8">
           <sap:WorkflowViewStateService.ViewState>
@@ -206,6 +206,39 @@
               <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
+        </ui:RetryScope>
+      </Sequence>
+      <Sequence x:Key="Certificate of incorporation" DisplayName="Body" sap:VirtualizedContainerService.HintSize="608,708.8" sap2010:WorkflowViewState.IdRef="Sequence_13">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="545.6,620" sap2010:WorkflowViewState.IdRef="RetryScope_6" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+          <ui:RetryScope.ActivityBody>
+            <ActivityAction>
+              <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,396" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <p:ExtractDocumentDataWithDocumentData x:TypeArguments="uisad1:DictionaryData" DocumentBounds="{x:Null}" DocumentObjectModel="{x:Null}" DocumentPath="{x:Null}" DocumentText="{x:Null}" ExtractorDocumentType="{x:Null}" ExtractorResult="{x:Null}" PersistenceId="{x:Null}" PredictionId="{x:Null}" Prompt="{x:Null}" ApplyAutoValidation="False" DisplayName="Extract Document Data - Certificate of incorporation" DocType="certificates_incorporation" ExtractionResults="[out_ExtractionResults]" FileInput="[in_TargetFileResource]" GenerateData="False" sap:VirtualizedContainerService.HintSize="449.6,307.2" sap2010:WorkflowViewState.IdRef="ExtractDocumentDataWithDocumentData`1_7" ProjectId="00000000-0000-0000-0000-000000000000" TimeoutInSeconds="3600">
+                  <p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
+                    <InArgument x:TypeArguments="s:Nullable(x:Int32)">
+                      <Literal x:TypeArguments="s:Nullable(x:Int32)" Value="0" />
+                    </InArgument>
+                  </p:ExtractDocumentDataWithDocumentData.AutoValidationConfidenceThreshold>
+                  <p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+                    <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                  </p:ExtractDocumentDataWithDocumentData.GptPromptWithVariables>
+                </p:ExtractDocumentDataWithDocumentData>
+              </Sequence>
+            </ActivityAction>
+          </ui:RetryScope.ActivityBody>
+          <ui:RetryScope.Condition>
+            <ActivityFunc x:TypeArguments="x:Boolean" />
+          </ui:RetryScope.Condition>
         </ui:RetryScope>
       </Sequence>
     </Switch>

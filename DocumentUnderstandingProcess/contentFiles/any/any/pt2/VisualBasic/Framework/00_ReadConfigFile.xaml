@@ -3,12 +3,12 @@
     <x:Property sap2010:Annotation.AnnotationText="Path to the configuration file that defines settings, constants and assets." Name="in_ConfigFile" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="out_MaxAttempts" Type="OutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="out_RetryInterval" Type="OutArgument(x:TimeSpan)" />
-    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="out_ConfigDic" Type="OutArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="out_Config" Type="OutArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1045.6,2075.2</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1031.2,2075.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_00_ReadConfigFile_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="60">
@@ -152,7 +152,7 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:Comment sap:VirtualizedContainerService.HintSize="449.6,126.4" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// TO DO" />
+                  <ui:Comment sap:VirtualizedContainerService.HintSize="449.6,126.4" sap2010:WorkflowViewState.IdRef="Comment_1" Text="// TO DO Change Orch folder path to some name containing Cross Platform" />
                   <ucas:DownloadStorageFile TimeoutMS="{x:Null}" Destination="Data\config.json" DisplayName="Download config file" FolderPath="Shared" sap:VirtualizedContainerService.HintSize="449.6,218.4" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="config.json" Result="[ConfigFileResource]" StorageBucketName="Cross_Platform" />
                 </Sequence>
               </ActivityAction>
@@ -165,9 +165,9 @@
         </Sequence>
       </If.Else>
     </If>
-    <Assign DisplayName="Assign - ConfigDic" sap:VirtualizedContainerService.HintSize="641.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_8">
+    <Assign DisplayName="Assign - Config" sap:VirtualizedContainerService.HintSize="641.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_8">
       <Assign.To>
-        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))">[out_ConfigDic]</OutArgument>
+        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))">[out_Config]</OutArgument>
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, Dictionary(Of String, String)))(JsonString)]</InArgument>
@@ -178,7 +178,7 @@
         <OutArgument x:TypeArguments="x:Int32">[out_MaxAttempts]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:Int32">[CInt(out_ConfigDic("Constants")("MaxExecutionAttempts"))]</InArgument>
+        <InArgument x:TypeArguments="x:Int32">[CInt(out_Config("Constants")("MaxExecutionAttempts"))]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign DisplayName="Assign - RetryInterval" sap:VirtualizedContainerService.HintSize="641.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_6">
@@ -186,12 +186,12 @@
         <OutArgument x:TypeArguments="x:TimeSpan">[out_RetryInterval]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:TimeSpan">[TimeSpan.Parse(out_ConfigDic("Constants")("RetryInterval"))]</InArgument>
+        <InArgument x:TypeArguments="x:TimeSpan">[TimeSpan.Parse(out_Config("Constants")("RetryInterval"))]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign DisplayName="Assign - LogKey" sap:VirtualizedContainerService.HintSize="641.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_9">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[out_ConfigDic("Constants")("logKey")]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[out_Config("Constants")("logKey")]</OutArgument>
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="x:String">[Guid.NewGuid().ToString +"_" +Now.ToString("yyyyMMddhhmmss")]</InArgument>
