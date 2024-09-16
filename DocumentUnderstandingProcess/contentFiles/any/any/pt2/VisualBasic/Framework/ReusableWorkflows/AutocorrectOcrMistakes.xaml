@@ -7,7 +7,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1073.6,4946.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1132,4945.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AutocorrectOcrMistakes_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -109,7 +109,7 @@
       <AssemblyReference>System.Security.Permissions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="AutocorrectOcrMistakes" sap:VirtualizedContainerService.HintSize="800,4881.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="AutocorrectOcrMistakes" sap:VirtualizedContainerService.HintSize="800,4880.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject containing all of the information related to the corrections made in Human in the Loop." Name="currentFieldCorrectionDataJson" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field before Human in the Loop." Name="valueBeforeHitL" />
@@ -124,7 +124,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="737.6,4792.8" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="737.6,4792" sap2010:WorkflowViewState.IdRef="TryCatch_3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -132,7 +132,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence sap2010:Annotation.AnnotationText="Detect and automatically correct common OCR mistakes for fields with set values (E.g. Logo) by saving repetitive corrections made in Action Center.&#xA;&#xA;This should NOT be used as-is. For a real implementation, the auto correction should be tailored to the specifics of the business process." DisplayName="Try" sap:VirtualizedContainerService.HintSize="704,4221.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence sap2010:Annotation.AnnotationText="Detect and automatically correct common OCR mistakes for fields with set values (E.g. Logo) by saving repetitive corrections made in Action Center.&#xA;&#xA;This should NOT be used as-is. For a real implementation, the auto correction should be tailored to the specifics of the business process." DisplayName="Try" sap:VirtualizedContainerService.HintSize="704,4220.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="njl:JObject" Name="correctionDataJson" />
           </Sequence.Variables>
@@ -146,7 +146,7 @@
           <ui:RetryScope DisplayName="Retry Scope - Read Storage Text" sap:VirtualizedContainerService.HintSize="641.6,450.4" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[Math.Max(cint(in_Config(&quot;Constants&quot;)(&quot;MaxExecutionAttempts&quot;)), 1)]" RetryInterval="[TimeSpan.Parse(in_Config(&quot;Constants&quot;)(&quot;RetryInterval&quot;))]">
             <ui:RetryScope.ActivityBody>
               <ActivityAction>
-                <ucas:ReadStorageText TimeoutMS="{x:Null}" DisplayName="Read Storage Text - Common OCR Mistakes" sap:VirtualizedContainerService.HintSize="449.6,195.2" sap2010:WorkflowViewState.IdRef="ReadStorageText_1" Path="[in_Config(&quot;AutocorrectOcrMistakes&quot;)(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" Result="[correctionDataString]" StorageBucketName="[in_Config(&quot;Assets&quot;)(&quot;DU_StorageBucketName&quot;)]" />
+                <ucas:ReadStorageText TimeoutMS="{x:Null}" DisplayName="Read Storage Text - Common OCR Mistakes" sap:VirtualizedContainerService.HintSize="449.6,195.2" sap2010:WorkflowViewState.IdRef="ReadStorageText_1" Path="[in_Config(&quot;AutocorrectOcrMistakes&quot;)(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" Result="[correctionDataString]" StorageBucketName="[in_Config(&quot;Assets&quot;)(&quot;StorageBucketName&quot;)]" />
               </ActivityAction>
             </ui:RetryScope.ActivityBody>
             <ui:RetryScope.Condition>
@@ -710,14 +710,14 @@
           <ui:RetryScope DisplayName="Retry Scope - Write Storage Text" sap:VirtualizedContainerService.HintSize="641.6,502.4" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[Math.Max(cint(in_Config(&quot;Constants&quot;)(&quot;MaxExecutionAttempts&quot;)), 1)]" RetryInterval="[TimeSpan.Parse(in_Config(&quot;Constants&quot;)(&quot;RetryInterval&quot;))]">
             <ui:RetryScope.ActivityBody>
               <ActivityAction>
-                <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text - Common Ocr Mistakes" sap:VirtualizedContainerService.HintSize="449.6,247.2" sap2010:WorkflowViewState.IdRef="WriteStorageText_1" Path="[in_Config(&quot;AutocorrectOcrMistakes&quot;)(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" StorageBucketName="[in_Config(&quot;Assets&quot;)(&quot;DU_StorageBucketName&quot;)]" Text="[Newtonsoft.Json.JsonConvert.SerializeObject(correctionDataJson)]" />
+                <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text - Common Ocr Mistakes" sap:VirtualizedContainerService.HintSize="449.6,247.2" sap2010:WorkflowViewState.IdRef="WriteStorageText_1" Path="[in_Config(&quot;AutocorrectOcrMistakes&quot;)(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" StorageBucketName="[in_Config(&quot;Assets&quot;)(&quot;StorageBucketName&quot;)]" Text="[Newtonsoft.Json.JsonConvert.SerializeObject(correctionDataJson)]" />
               </ActivityAction>
             </ui:RetryScope.ActivityBody>
             <ui:RetryScope.Condition>
               <ActivityFunc x:TypeArguments="x:Boolean" />
             </ui:RetryScope.Condition>
           </ui:RetryScope>
-          <ui:LogMessage DisplayName="Log Message - AutocorrectOcrMistakes End" sap:VirtualizedContainerService.HintSize="642,166" sap2010:WorkflowViewState.IdRef="LogMessage_13" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_AutocorrectOcrMistakesFinished&quot;)]" />
+          <ui:LogMessage DisplayName="Log Message - AutocorrectOcrMistakes End" sap:VirtualizedContainerService.HintSize="641.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_13" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_AutocorrectOcrMistakesFinished&quot;)]" />
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
