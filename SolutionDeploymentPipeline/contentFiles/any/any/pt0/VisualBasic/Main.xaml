@@ -1,0 +1,1944 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" this:Main.AppendBuildNumberToSolutionVersion="True" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upa="clr-namespace:UiPath.Pipelines.Activities;assembly=UiPath.Pipelines.Activities" xmlns:upaf="clr-namespace:UiPath.Persistence.Activities.FormTask;assembly=UiPath.Persistence.Activities" xmlns:upasd="clr-namespace:UiPath.Pipelines.Activities.Solutions.Dtos;assembly=UiPath.Pipelines.Activities" xmlns:upat="clr-namespace:UiPath.Persistence.Activities.Tasks;assembly=UiPath.Persistence.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="AnalyzePolicy" Type="InArgument(upa:AnalyzePolicy)" />
+    <x:Property Name="OrchestratorUrl" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionProjectName" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionPackageName" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionPackageVersion" Type="InArgument(x:String)" />
+    <x:Property Name="AppendBuildNumberToSolutionVersion" Type="InArgument(x:Boolean)" />
+    <x:Property Name="SolutionPackageDescription" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionRootFolder" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionPipelineConfigurationFile" Type="InArgument(x:String)" />
+    <x:Property Name="FirstTenant" Type="InArgument(x:String)" />
+    <x:Property Name="FirstDeploymentFolder" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionFirstDeploymentName" Type="InArgument(x:String)" />
+    <x:Property Name="DeployToSecondEnvironment" Type="InArgument(x:Boolean)" />
+    <x:Property Name="SecondTenant" Type="InArgument(x:String)" />
+    <x:Property Name="SecondDeploymentFolder" Type="InArgument(x:String)" />
+    <x:Property Name="SolutionSecondDeploymentName" Type="InArgument(x:String)" />
+    <x:Property Name="TestingFolder" Type="InArgument(x:String)" />
+    <x:Property Name="SkipTesting" Type="InArgument(x:Boolean)" />
+    <x:Property Name="ApproverEmailAddress" Type="InArgument(x:String)" />
+    <x:Property Name="SupportUserEmailAddress" Type="InArgument(x:String)" />
+    <x:Property Name="SkipSync" Type="InArgument(x:Boolean)" />
+    <x:Property Name="SkipValidation" Type="InArgument(x:Boolean)" />
+    <x:Property Name="RepositoryUrl" Type="InArgument(x:String)" />
+    <x:Property Name="RepositoryBranch" Type="InArgument(x:String)" />
+    <x:Property Name="RepositoryType" Type="InArgument(x:String)" />
+    <x:Property Name="CommitSha" Type="InArgument(x:String)" />
+    <x:Property Name="CommitterUsername" Type="InArgument(x:String)" />
+    <x:Property Name="ProjectPath" Type="InArgument(x:String)" />
+    <x:Property Name="BuildNumber" Type="InArgument(x:String)" />
+  </x:Members>
+  <VisualBasic.Settings>
+    <x:Null />
+  </VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1814,13433</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.CompilerServices</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Persistence.Activities</x:String>
+      <x:String>UiPath.Persistence.Activities.BaseTask</x:String>
+      <x:String>UiPath.Persistence.Activities.FormTask</x:String>
+      <x:String>UiPath.Persistence.Activities.Model.Task</x:String>
+      <x:String>UiPath.Persistence.Activities.Tasks</x:String>
+      <x:String>UiPath.Pipelines.Activities</x:String>
+      <x:String>UiPath.Pipelines.Activities.BaseActivities</x:String>
+      <x:String>UiPath.Pipelines.Activities.Solutions</x:String>
+      <x:String>UiPath.Pipelines.Activities.Solutions.Dtos</x:String>
+      <x:String>UiPath.Platform.ResourceHandling</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>UiPath.Shared.Telemetry</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>UiPath.Orchestrator.Client.Api.Models</x:String>
+      <x:String>UiPath.Pipelines.Activities.Models</x:String>
+      <x:String>UiPath.Pipelines.Activities.Persistence</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.Common</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Drawing.Common</AssemblyReference>
+      <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Mail</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Constants</AssemblyReference>
+      <AssemblyReference>UiPath.Pipelines.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+      <AssemblyReference>System.Reflection.DispatchProxy</AssemblyReference>
+      <AssemblyReference>System.Reflection.TypeExtensions</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>UiPath.Workflow</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Security.Permissions</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.ComponentModel</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>UiPath.OrchestratorClient</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>UiPath.Persistence.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>System.Runtime.CompilerServices.VisualC</AssemblyReference>
+      <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.Linq.Async.Queryable</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
+      <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>netstandard</AssemblyReference>
+      <AssemblyReference>UiPath.Orchestrator.Client</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="750,13368" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="pathToSolutionPackage" />
+      <Variable x:TypeArguments="x:String" Name="repositoryPath" />
+      <Variable x:TypeArguments="x:String" Name="processPackagePath" />
+      <Variable x:TypeArguments="x:String" Name="pathToSolutionDeploymentConfigurationFile" />
+      <Variable x:TypeArguments="x:String" Name="firstDeploymentConfigurationFileContent" />
+      <Variable x:TypeArguments="x:String" Name="pathToUpdatedSolutionDeploymentConfigurationFile" />
+      <Variable x:TypeArguments="upasd:SolutionProjectSyncOption" Name="syncOption" />
+      <Variable x:TypeArguments="x:String" Name="solutionAssetValue" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="projectPaths" />
+      <Variable x:TypeArguments="scg:List(s:Tuple(x:String, x:String, x:String, x:String, x:String))" Name="projects" />
+      <Variable x:TypeArguments="x:Boolean" Name="rebuildAutomations" />
+      <Variable x:TypeArguments="x:Boolean" Name="suspendOnDeploymentErrors" />
+      <Variable x:TypeArguments="x:String" Name="fullFirstDeploymentFolder" />
+      <Variable x:TypeArguments="x:String" Name="fullSecondDeploymentFolder" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Processing arguments" sap:VirtualizedContainerService.HintSize="688,531" sap2010:WorkflowViewState.IdRef="Sequence_103">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[String.IsNullOrWhiteSpace(SolutionPipelineConfigurationFile)]" DisplayName="Look for the Solution pipeline configuration argument" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="If_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_47">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_10" Message="[&quot;You did not provide a solution pipeline configuration file. No projects will get built! Please read the documentation on how to provide such a file.&quot;]" />
+            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_22">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Boolean">[rebuildAutomations]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_48">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+      <Assign DisplayName="Check if it should suspend on deployment errors" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="Assign_27">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Boolean">[suspendOnDeploymentErrors]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Boolean">[not String.IsNullOrWhiteSpace(SupportUserEmailAddress)]</InArgument>
+        </Assign.Value>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </Assign>
+      <If Condition="[String.IsNullOrWhiteSpace(SolutionSecondDeploymentName)]" DisplayName="If second deployment name is not provided, fallback to the first deployment name" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="If_27">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_104">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_28">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[SolutionSecondDeploymentName]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[SolutionFirstDeploymentName]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_105">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </Sequence>
+        </If.Else>
+      </If>
+      <If Condition="[String.IsNullOrWhiteSpace(FirstDeploymentFolder)]" DisplayName="Calculate the full first deployment folder" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="If_28">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_106">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_29">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[fullFirstDeploymentFolder]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[SolutionRootFolder]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_107">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_30">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[fullFirstDeploymentFolder]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[FirstDeploymentFolder +"/" + SolutionRootFolder]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Else>
+      </If>
+      <If Condition="[String.IsNullOrWhiteSpace(SecondDeploymentFolder)]" DisplayName="Calculate the full second deployment folder" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="If_29">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_108">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_31">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[fullSecondDeploymentFolder]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[SolutionRootFolder]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_109">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_32">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[fullSecondDeploymentFolder]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[SecondDeploymentFolder +"/" + SolutionRootFolder]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Else>
+      </If>
+    </Sequence>
+    <upa:Stage DisplayName="Clone" sap:VirtualizedContainerService.HintSize="688,52" sap2010:WorkflowViewState.IdRef="Stage_37">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,173" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <upa:Clone AccessToken="{x:Null}" ContinueOnError="{x:Null}" DestinationPath="{x:Null}" CommitSha="[CommitSha]" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Clone_1" RepoUrl="[RepositoryUrl]" RepositoryPath="[repositoryPath]" TimeoutMS="60000" />
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <If Condition="[AppendBuildNumberToSolutionVersion]" DisplayName="Set Solution package number" sap:VirtualizedContainerService.HintSize="688,52" sap2010:WorkflowViewState.IdRef="If_11">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_54">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_11">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[SolutionPackageVersion]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[SolutionPackageVersion + "-" + BuildNumber]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_55">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
+    </If>
+    <upa:Stage DisplayName="Get projects from solution file" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_28">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="620,1042" sap2010:WorkflowViewState.IdRef="Sequence_36">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="pathToSolutionPipelineConfigurationFile" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[String.IsNullOrWhiteSpace(SolutionPipelineConfigurationFile)]" DisplayName="If solution pipeline configuration has not been provided" sap:VirtualizedContainerService.HintSize="586,982" sap2010:WorkflowViewState.IdRef="If_23">
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_95">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="552,740" sap2010:WorkflowViewState.IdRef="Sequence_96">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_5">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[pathToSolutionPipelineConfigurationFile]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[Path.Combine(repositoryPath, SolutionPipelineConfigurationFile)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <If Condition="[File.Exists(pathToSolutionPipelineConfigurationFile)]" DisplayName="Check for the file on disk" sap:VirtualizedContainerService.HintSize="518,566" sap2010:WorkflowViewState.IdRef="If_10">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,67" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="518,722" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <TryCatch.Try>
+                            <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="484,255" sap2010:WorkflowViewState.IdRef="Sequence_110">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadSolutionFile.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="450,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ReadSolutionPipelineConfigurationFile.xaml">
+                                <ui:InvokeWorkflowFile.Arguments>
+                                  <OutArgument x:TypeArguments="scg:List(s:Tuple(x:String, x:String, x:String, x:String, x:String))" x:Key="out_Projects" />
+                                  <InArgument x:TypeArguments="x:String" x:Key="in_PathToConfigurationFile">[pathToSolutionPipelineConfigurationFile]</InArgument>
+                                </ui:InvokeWorkflowFile.Arguments>
+                              </ui:InvokeWorkflowFile>
+                            </Sequence>
+                          </TryCatch.Try>
+                          <TryCatch.Catches>
+                            <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                              <ActivityAction x:TypeArguments="s:Exception">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_111">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:LogMessage DisplayName="Log Message about solution configuration file not being parsed" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="LogMessage_37" Message="[&quot;Solution pipeline configuration file could not be read: &quot; + exception.Message]">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </ui:LogMessage>
+                                  <Rethrow sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+                                </Sequence>
+                              </ActivityAction>
+                            </Catch>
+                          </TryCatch.Catches>
+                          <TryCatch.Finally>
+                            <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_112">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                            </Sequence>
+                          </TryCatch.Finally>
+                        </TryCatch>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,338" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_11" Message="[&quot;The solution pipeline configuration (&quot; + pathToSolutionPipelineConfigurationFile + &quot;) file is missing. No projects will be built. A solution pipeline configuration needs to be placed in the repository to identify projects that are part of the solution. More details in documentation.&quot;]" />
+                        <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_21">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[rebuildAutomations]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Rebuild automations" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_29">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Rebuild Automations Activities" sap:VirtualizedContainerService.HintSize="824,3454" sap2010:WorkflowViewState.IdRef="Sequence_37">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[rebuildAutomations]" DisplayName="If automations will be rebuilt" sap:VirtualizedContainerService.HintSize="790,3394" sap2010:WorkflowViewState.IdRef="If_24">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="756,3208" sap2010:WorkflowViewState.IdRef="Sequence_98">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:ForEach x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="722,3148" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[projects]">
+                    <ui:ForEach.Body>
+                      <ActivityAction x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)" Name="project" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Rebuild Automation" sap:VirtualizedContainerService.HintSize="688,2961" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="x:String" Name="projectPath" />
+                            <Variable x:TypeArguments="x:String" Name="packageName" />
+                            <Variable x:TypeArguments="x:String" Name="orchestratorFolder" />
+                            <Variable x:TypeArguments="x:String" Name="processName" />
+                            <Variable x:TypeArguments="x:String" Name="projectRepositoryUrl" />
+                            <Variable x:TypeArguments="x:Boolean" Name="runTests" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_6">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[projectPath]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[project.Item1]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_7">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[packageName]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[project.Item2]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_8">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[orchestratorFolder]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[project.Item3]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_9">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:String">[processName]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:String">[project.Item4]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_20">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="x:Boolean">[runTests]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="x:Boolean">[Boolean.Parse(project.Item5)]</InArgument>
+                            </Assign.Value>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </Assign>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="LogMessage_12" Message="[&quot;Building project: &quot; + projectPath]">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:LogMessage>
+                          <upa:Stage DisplayName="Analyze" sap:VirtualizedContainerService.HintSize="654,1581" sap2010:WorkflowViewState.IdRef="Stage_40">
+                            <upa:Stage.Activities>
+                              <ActivityAction>
+                                <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="620,1486" sap2010:WorkflowViewState.IdRef="Sequence_86">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If Condition="[AnalyzePolicy IsNot Nothing]" sap:VirtualizedContainerService.HintSize="586,1426" sap2010:WorkflowViewState.IdRef="If_20">
+                                    <If.Then>
+                                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="552,1041" sap2010:WorkflowViewState.IdRef="Sequence_83">
+                                        <Sequence.Variables>
+                                          <Variable x:TypeArguments="sd:DataTable" Name="analysisResult" />
+                                        </Sequence.Variables>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:LogMessage DisplayName="Log analyze" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="LogMessage_25" Level="Trace" Message="[&quot;Analyzing project: &quot; +projectPath + &quot; with policy &quot; + AnalyzePolicy.PolicyIdentifier]" />
+                                        <upa:Analyze ContinueOnError="{x:Null}" AnalysisResult="[analysisResult]" AnalyzePolicy="[AnalyzePolicy]" sap:VirtualizedContainerService.HintSize="518,224" sap2010:WorkflowViewState.IdRef="Analyze_1" ProjectPath="[projectPath]" RepositoryPath="[repositoryPath]" />
+                                        <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[analysisResult]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="518,420" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                                          <ui:ForEachRow.Body>
+                                            <ActivityAction x:TypeArguments="sd:DataRow">
+                                              <ActivityAction.Argument>
+                                                <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                                              </ActivityAction.Argument>
+                                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_84">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <ui:LogMessage DisplayName="Log result" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_26" Level="Info" Message="[CurrentRow(0).ToString() + &quot; | &quot;  + CurrentRow(&quot;ErrorCode&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;RuleName&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;WorkflowDisplayName&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;ActivityDisplayName&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;FilePath&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;ActivityIdRef&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;AnalyzerItemName&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;AnalyzerItemType&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;Recommendation&quot;).ToString()+ &quot; | &quot;  + CurrentRow(&quot;DocumentationLink&quot;).ToString()]" />
+                                              </Sequence>
+                                            </ActivityAction>
+                                          </ui:ForEachRow.Body>
+                                        </ui:ForEachRow>
+                                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518,164" sap2010:WorkflowViewState.IdRef="LogMessage_27" Level="Info" Message="[&quot;Analyzed project: &quot; +projectPath]" />
+                                      </Sequence>
+                                    </If.Then>
+                                    <If.Else>
+                                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_85">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_28" Level="Trace" Message="[&quot;No policy provided. Skipping workflow analysis&quot;]" />
+                                      </Sequence>
+                                    </If.Else>
+                                  </If>
+                                </Sequence>
+                              </ActivityAction>
+                            </upa:Stage.Activities>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </upa:Stage>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Get repository url for NuGet package" sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_6" UnSafe="False" WorkflowFileName="ComputerRepositoryUrl.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_RepositoryUrl">[RepositoryUrl]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_RepositoryBranch">[RepositoryBranch]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_ProjectPath">[projectPath]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="in_RepositoryType">[RepositoryType]</InArgument>
+                              <OutArgument x:TypeArguments="x:String" x:Key="out_ProjectRepositoryUrl">[projectRepositoryUrl]</OutArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:InvokeWorkflowFile>
+                          <upa:Stage DisplayName="Run tests" sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Stage_42">
+                            <upa:Stage.Activities>
+                              <ActivityAction>
+                                <Sequence DisplayName="Run tests Activities" sap:VirtualizedContainerService.HintSize="552,1290" sap2010:WorkflowViewState.IdRef="Sequence_91">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If Condition="[(SkipTesting = true) OR  (SkipTesting = false  AND runTests = false)]" sap:VirtualizedContainerService.HintSize="518,1230" sap2010:WorkflowViewState.IdRef="If_21">
+                                    <If.Then>
+                                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_92">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:LogMessage DisplayName="Log skip testing" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_29" Level="Trace" Message="[&quot;Tests were skipped&quot;]" />
+                                      </Sequence>
+                                    </If.Then>
+                                    <If.Else>
+                                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,845" sap2010:WorkflowViewState.IdRef="Sequence_89">
+                                        <Sequence.Variables>
+                                          <Variable x:TypeArguments="x:String" Name="testResultFilePath" />
+                                        </Sequence.Variables>
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:LogMessage DisplayName="Log run tests" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_30" Level="Trace" Message="[&quot;Running tests from: &quot; +projectPath + &quot; on &quot; + OrchestratorUrl + &quot;, test folder: &quot;+ TestingFolder]">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:LogMessage>
+                                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_33" Message="[&quot;ProjectRepositoryUrl: &quot; + projectRepositoryUrl + &quot; CommitSha: &quot;+ CommitSha + &quot; Repository type: &quot; + RepositoryType + &quot; Repository Branch: &quot; + RepositoryBranch]" />
+                                        <upa:RunTests ContinueOnError="{x:Null}" Version="{x:Null}" Author="[CommitterUsername]" DisplayName="Run Tests" FolderName="[TestingFolder]" sap:VirtualizedContainerService.HintSize="450,275" sap2010:WorkflowViewState.IdRef="RunTests_1" OrchestratorUrl="[OrchestratorUrl]" ProjectPath="[projectPath]" RepositoryBranch="[RepositoryBranch]" RepositoryCommit="[CommitSha]" RepositoryPath="[repositoryPath]" RepositoryType="[RepositoryType]" RepositoryUrl="[projectRepositoryUrl]" ResultFilePath="[testResultFilePath]" SkipValidate="[SkipValidation]">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </upa:RunTests>
+                                        <ui:LogMessage DisplayName="Log ran tests" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_31" Level="Info" Message="[&quot;Tests from project&quot; +ProjectPath + &quot; have been executed on &quot; + OrchestratorUrl + &quot;, test folder: &quot;+ TestingFolder + &quot;. Results can be found here:: &quot; + testResultFilePath]">
+                                          <sap:WorkflowViewStateService.ViewState>
+                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                            </scg:Dictionary>
+                                          </sap:WorkflowViewStateService.ViewState>
+                                        </ui:LogMessage>
+                                      </Sequence>
+                                    </If.Else>
+                                  </If>
+                                </Sequence>
+                              </ActivityAction>
+                            </upa:Stage.Activities>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </upa:Stage>
+                          <If Condition="[System.IO.Directory.Exists(repositoryPath) = false]" DisplayName="Re-cloning if necessary in case resumed on another machine" sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="If_22">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,173" sap2010:WorkflowViewState.IdRef="Sequence_93">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <upa:Clone AccessToken="{x:Null}" ContinueOnError="{x:Null}" DestinationPath="{x:Null}" CommitSha="[CommitSha]" DisplayName="Clone source code" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Clone_2" RepoUrl="[RepositoryUrl]" RepositoryPath="[repositoryPath]" TimeoutMS="60000" />
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_94">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="BuildToUpdateProcess.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="654,807" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="BuildToUpdateProcess.xaml">
+                            <ui:InvokeWorkflowFile.Arguments>
+                              <InArgument x:TypeArguments="x:String" x:Key="BuildNumber">[BuildNumber]</InArgument>
+                              <InArgument x:TypeArguments="upa:AnalyzePolicy" x:Key="AnalyzePolicy">[AnalyzePolicy]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="OrchestratorUrl">[OrchestratorUrl]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="CommitterUsername">[CommitterUsername]</InArgument>
+                              <InArgument x:TypeArguments="x:Boolean" x:Key="SkipValidation">[SkipValidation]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="RepositoryType">[RepositoryType]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="RepositoryBranch">[RepositoryBranch]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="ProjectPath">[projectPath]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="CommitSha">[CommitSha]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="OrchestratorFolder">[orchestratorFolder]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="ProcessName">[processName]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="NuGetRepositoryUrl">[projectRepositoryUrl]</InArgument>
+                              <InArgument x:TypeArguments="x:String" x:Key="RepositoryPath">[repositoryPath]</InArgument>
+                            </ui:InvokeWorkflowFile.Arguments>
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:InvokeWorkflowFile>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEach.Body>
+                  </ui:ForEach>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_97">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Re-sync Solution project" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_14">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="552,526" sap2010:WorkflowViewState.IdRef="Sequence_6">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[SkipSync = false]" sap:VirtualizedContainerService.HintSize="518,466" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <upa:ResyncSolutionProject ContinueOnError="False" DisplayName="Re-sync Solution Project" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="ResyncSolutionProject_1" SolutionProjectName="[SolutionProjectName]" SolutionSyncOption="[UiPath.Pipelines.Activities.Solutions.Dtos.SolutionProjectSyncOption.Reset]" TenantName="[FirstTenant]" TimeoutMS="120000" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_26">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Publish solution package" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_19">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,550" sap2010:WorkflowViewState.IdRef="Sequence_18">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <upa:PublishSolutionPackage ContinueOnError="{x:Null}" SolutionPackageDescription="{x:Null}" DisplayName="Publish Solution Package" sap:VirtualizedContainerService.HintSize="450,326" sap2010:WorkflowViewState.IdRef="PublishSolutionPackage_1" SolutionPackageName="[SolutionPackageName]" SolutionPackageVersion="[SolutionPackageVersion]" SolutionProjectName="[SolutionProjectName]" SolutionRootFolder="[SolutionRootFolder]" TenantName="[FirstTenant]" TimeoutMS="120000">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </upa:PublishSolutionPackage>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[&quot;Built and published solution: &quot; + SolutionPackageName]" />
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Download Solution configuration" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_18">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,565" sap2010:WorkflowViewState.IdRef="Sequence_17">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <upa:DownloadSolutionPackageConfiguration ContinueOnError="{x:Null}" SolutionPackageConfigurationFormat="{x:Null}" DisplayName="Download Solution Package Configuration" sap:VirtualizedContainerService.HintSize="450,224" sap2010:WorkflowViewState.IdRef="DownloadSolutionPackageConfiguration_1" PathToSolutionPackageConfiguration="[pathToSolutionDeploymentConfigurationFile]" SolutionPackageName="[SolutionPackageName]" SolutionPackageVersion="[SolutionPackageVersion]" TenantName="[FirstTenant]" TimeoutMS="120000" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,84" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[&quot;Configuration file downloaded to: &quot; + pathToSolutionDeploymentConfigurationFile]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:LogMessage>
+            <ui:ReadTextFile File="{x:Null}" Content="[firstDeploymentConfigurationFileContent]" DisplayName="Read Text File" FileName="[pathToSolutionDeploymentConfigurationFile]" sap:VirtualizedContainerService.HintSize="450,122" sap2010:WorkflowViewState.IdRef="ReadTextFile_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ReadTextFile>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,75" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[firstDeploymentConfigurationFileContent]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:LogMessage>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <Sequence DisplayName="Placeholder for updating the Solution configuration in 1st tenant" sap:VirtualizedContainerService.HintSize="688,113" sap2010:WorkflowViewState.IdRef="Sequence_56">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </Sequence>
+    <upa:Stage DisplayName="Deploy Solution in first tenant" sap:VirtualizedContainerService.HintSize="688,3887" sap2010:WorkflowViewState.IdRef="Stage_30">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Deploy Solution Activities" sap:VirtualizedContainerService.HintSize="654,3792" sap2010:WorkflowViewState.IdRef="Sequence_41">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="upaf:FormTaskData" Name="fixingDeploymentTask" />
+              <Variable x:TypeArguments="scg:List(upat:TaskUserAssignment)" Name="fixingDeploymentlTaskAssignmentList" />
+              <Variable x:TypeArguments="x:String" Name="fixingDeploymentReason" />
+              <Variable x:TypeArguments="x:Boolean" Name="isFixed" />
+              <Variable x:TypeArguments="scg:List(upat:TaskAssignmentResponse)" Name="failedAssignmentList" />
+              <Variable x:TypeArguments="x:String" Name="approvalTaskTitle" />
+              <Variable x:TypeArguments="x:Boolean" Name="deployedFailed" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log Deploy" sap:VirtualizedContainerService.HintSize="620,173" sap2010:WorkflowViewState.IdRef="LogMessage_13" Message="[&quot;Deploying &quot; + SolutionPackageName +&quot; version: &quot; + SolutionPackageVersion]" />
+            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="620,663" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <TryCatch.Try>
+                <upa:DeploySolution ContinueOnError="{x:Null}" DestinationFolder="[FirstDeploymentFolder]" DisplayName="Deploy Solution" sap:VirtualizedContainerService.HintSize="450,345" sap2010:WorkflowViewState.IdRef="DeploySolution_2" PathToSolutionPackageConfiguration="[pathToSolutionDeploymentConfigurationFile]" SolutionDeploymentName="[SolutionFirstDeploymentName]" SolutionPackageName="[SolutionPackageName]" SolutionPackageVersion="[SolutionPackageVersion]" SolutionRootFolderName="[SolutionRootFolder]" TenantName="[FirstTenant]" TimeoutMS="120000">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </upa:DeploySolution>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,338" sap2010:WorkflowViewState.IdRef="Sequence_59">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="450,114" sap2010:WorkflowViewState.IdRef="Assign_16">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[deployedFailed]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_20" Level="[UiPath.Core.Activities.LogLevel.Error]" Message="[&quot;Deployment failed: &quot; + exception.Message]" />
+                    </Sequence>
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+              <TryCatch.Finally>
+                <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_65">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </TryCatch.Finally>
+            </TryCatch>
+            <If Condition="[deployedFailed = true AND suspendOnDeploymentErrors = true]" sap:VirtualizedContainerService.HintSize="620,2896" sap2010:WorkflowViewState.IdRef="If_16">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="586,2260" sap2010:WorkflowViewState.IdRef="Sequence_71">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence DisplayName="Deployment failed, ask for user input" sap:VirtualizedContainerService.HintSize="552,2200" sap2010:WorkflowViewState.IdRef="Sequence_66">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_14">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[approvalTaskTitle]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">["Pipeline #" +BuildNumber +" Fix deployment for Solution " + SolutionFirstDeploymentName]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <upaf:CreateFormTask BucketFolderPath="{x:Null}" BucketName="{x:Null}" BulkFormLayout="{x:Null}" DynamicFormPath="{x:Null}" ExternalTag="{x:Null}" Labels="{x:Null}" TaskCatalog="{x:Null}" TimeoutMs="{x:Null}" BulkFormLayoutGuid="5aa09558-dbfe-48ef-845b-3a347672511f" DisplayName="Create Form Task" EnableBulkEdit="False" EnableDynamicForms="False" EnableV2="False" FormLayout="%[{&quot;mask&quot;:false,&quot;customClass&quot;:&quot;uipath-button-container&quot;,&quot;tableView&quot;:true,&quot;alwaysEnabled&quot;:false,&quot;type&quot;:&quot;table&quot;,&quot;input&quot;:false,&quot;key&quot;:&quot;key&quot;,&quot;label&quot;:&quot;label&quot;,&quot;rows&quot;:[[{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]}]],&quot;numRows&quot;:1,&quot;numCols&quot;:6,&quot;reorder&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;Deployment failed&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;\n&lt;p&gt;You can manually and fix it in Solutions Management, wait for the status to become Successful, then come back here and Submit this form to resume the Pipeline. &lt;/p&gt;\n&lt;p&gt;Learn to update the solution package configuration file as part of the pipeline so it no longer breaks.&lt;/p&gt;&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html2&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;hideOnChildrenHidden&quot;:false},{&quot;input&quot;:false,&quot;key&quot;:&quot;columns&quot;,&quot;tableView&quot;:false,&quot;label&quot;:&quot;Columns&quot;,&quot;type&quot;:&quot;columns&quot;,&quot;columns&quot;:[{&quot;components&quot;:[{&quot;label&quot;:&quot;Solution name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Orchestrator tenant&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_OrchestratorTenant&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution deployment name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionDeploymentName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Orchestrator folder&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_OrchestratorFolder&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package version&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageVersion&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package description&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageDescription&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;&lt;b&gt;[NOTE]&lt;/b&gt; Wait until the Status is Successful, before Submitting this form.&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html1&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Have you fixed it?&quot;,&quot;tableView&quot;:true,&quot;defaultValue&quot;:false,&quot;key&quot;:&quot;out_isFixed&quot;,&quot;type&quot;:&quot;checkbox&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Additional information&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;out_AdditionalInformation&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}],&quot;width&quot;:6,&quot;offset&quot;:0,&quot;push&quot;:0,&quot;pull&quot;:0,&quot;size&quot;:&quot;md&quot;,&quot;currentWidth&quot;:6},{&quot;components&quot;:[{&quot;label&quot;:&quot;Solution package configuration&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageConfiguration&quot;,&quot;type&quot;:&quot;textarea&quot;,&quot;rows&quot;:30,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}],&quot;width&quot;:6,&quot;offset&quot;:0,&quot;push&quot;:0,&quot;pull&quot;:0,&quot;size&quot;:&quot;md&quot;,&quot;currentWidth&quot;:6}]},{&quot;type&quot;:&quot;button&quot;,&quot;label&quot;:&quot;Submit&quot;,&quot;key&quot;:&quot;submit&quot;,&quot;disableOnInvalid&quot;:true,&quot;input&quot;:true,&quot;alwaysEnabled&quot;:false,&quot;tableView&quot;:true}]" FormLayoutGuid="80a7afe0-fcb4-4d6a-b71c-84f4246fda57" GenerateInputFields="True" sap:VirtualizedContainerService.HintSize="518,357" sap2010:WorkflowViewState.IdRef="CreateFormTask_3" TaskOutput="[fixingDeploymentTask]" TaskPriority="[TaskPriority.Medium]" TaskTitle="[approvalTaskTitle]">
+                      <upaf:CreateFormTask.FormData>
+                        <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isFixed">[isFixed]</OutArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageName">[SolutionPackageName]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageVersion">[SolutionPackageVersion]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionDeploymentName">[SolutionFirstDeploymentName]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_OrchestratorTenant">[FirstTenant]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_OrchestratorFolder">[fullFirstDeploymentFolder]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageDescription">[SolutionPackageDescription]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageConfiguration">[firstDeploymentConfigurationFileContent]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionName">[SolutionProjectName]</InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="out_AdditionalInformation">[fixingDeploymentReason]</OutArgument>
+                      </upaf:CreateFormTask.FormData>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </upaf:CreateFormTask>
+                    <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_15">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="scg:List(upat:TaskUserAssignment)">[fixingDeploymentlTaskAssignmentList]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="scg:List(upat:TaskUserAssignment)">[new List(Of TaskUserAssignment) From{ New TaskUserAssignment With { .TaskId = fixingDeploymentTask.Id, .UserNameOrEmail = ApproverEmailAddress}}]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <upat:AssignTasks TaskUserAssignments="{x:Null}" TimeoutMs="{x:Null}" DisplayName="Assign Approval Task" EnableMultipleAssignments="False" FailedTaskAssignments="[failedAssignmentList]" sap:VirtualizedContainerService.HintSize="518,321" sap2010:WorkflowViewState.IdRef="AssignTasks_3" MigrateV144="True" TaskAssignmentType="[TaskAssignmentType.Assign]" TaskId="[fixingDeploymentTask.Id.Value]" UserNameOrEmail="[SupportUserEmailAddress]">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </upat:AssignTasks>
+                    <If Condition="[failedAssignmentList.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="518,326" sap2010:WorkflowViewState.IdRef="If_14">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,67" sap2010:WorkflowViewState.IdRef="Sequence_68">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="LogMessage_18" Message="[&quot;Automatic task assignment failed&quot;]" />
+                          <ui:ForEach x:TypeArguments="upat:TaskAssignmentResponse" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="518,411" sap2010:WorkflowViewState.IdRef="ForEach`1_6" Values="[failedAssignmentList]">
+                            <ui:ForEach.Body>
+                              <ActivityAction x:TypeArguments="upat:TaskAssignmentResponse">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="upat:TaskAssignmentResponse" Name="currentItem" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_67">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_19" Message="[&quot;TaskId: &quot; +currentItem.TaskId.ToString() + &quot;Username: &quot; + currentItem.UserNameOrEmail + &quot;UserId: &quot; +currentItem.UserId.ToString() +  &quot;ErrorCode: &quot; +currentItem.ErrorCode.ToString() +  &quot;Error message: &quot; +currentItem.ErrorMessage]" />
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:ForEach.Body>
+                          </ui:ForEach>
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_69">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="LogMessage_35" Message="[&quot;Deployment failed and an Action Center task has been assigned to unblock it&quot;]" />
+                    <upaf:WaitForFormTaskAndResume StatusMessage="{x:Null}" TaskAction="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" DisplayName="Wait for Approval" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="WaitForFormTaskAndResume_3" TaskInput="[fixingDeploymentTask]" TaskOutput="[fixingDeploymentTask]">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </upaf:WaitForFormTaskAndResume>
+                    <If Condition="[Not(isFixed)]" DisplayName="Check for approval result" sap:VirtualizedContainerService.HintSize="518,539" sap2010:WorkflowViewState.IdRef="If_15">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Throw sap2010:Annotation.AnnotationText="To halt the Workflow&#xA;" DisplayName="Throw in case of rejection " Exception="[new InvalidOperationException(&quot;Fix deployment failed/rejected: &quot; + fixingDeploymentReason)]" sap:VirtualizedContainerService.HintSize="450,132" sap2010:WorkflowViewState.IdRef="Throw_3">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Throw>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_70">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_46" Message="[&quot;Additional information: &quot; + fixingDeploymentReason]" />
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="552,475" sap2010:WorkflowViewState.IdRef="Sequence_72">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[deployedFailed]" sap:VirtualizedContainerService.HintSize="518,415" sap2010:WorkflowViewState.IdRef="If_25">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,173" sap2010:WorkflowViewState.IdRef="Sequence_99">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Throw Exception="[new InvalidOperationException(&quot;Solution deployment failed&quot;)]" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Throw_5" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_100">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Activate Solution Deployment" sap:VirtualizedContainerService.HintSize="688,319" sap2010:WorkflowViewState.IdRef="Stage_32">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_42">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <upa:ActivateSolutionDeployment ContinueOnError="{x:Null}" DisplayName="Activate Solution Deployment" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="ActivateSolutionDeployment_2" SolutionDeploymentName="[SolutionFirstDeploymentName]" TenantName="[FirstTenant]" TimeoutMS="120000" />
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <If Condition="[DeployToSecondEnvironment = False]" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="If_33">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,281" sap2010:WorkflowViewState.IdRef="Sequence_117">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_42" Message="[&quot;Only deployment to the first environment has been performed&quot;]" />
+          <ui:Return sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="Return_1" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_118">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+      </If.Else>
+    </If>
+    <upa:Stage DisplayName="Approval" sap:VirtualizedContainerService.HintSize="688,2676" sap2010:WorkflowViewState.IdRef="Stage_33">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Approval tasks" sap:VirtualizedContainerService.HintSize="620,2581" sap2010:WorkflowViewState.IdRef="Sequence_40">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="approvalTaskTitle" />
+              <Variable x:TypeArguments="scg:List(upat:TaskAssignmentResponse)" Name="failedAssignmentList" />
+              <Variable x:TypeArguments="x:Boolean" Name="isApproved" />
+              <Variable x:TypeArguments="x:String" Name="approvalReason" />
+              <Variable x:TypeArguments="scg:List(upat:TaskUserAssignment)" Name="approvalTaskAssignmentList" />
+              <Variable x:TypeArguments="upaf:FormTaskData" Name="approvalTask" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="586,114" sap2010:WorkflowViewState.IdRef="Assign_3">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[approvalTaskTitle]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">["Pipeline #" +BuildNumber +" Approve solution deployment " + SolutionSecondDeploymentName]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <upaf:CreateFormTask BucketFolderPath="{x:Null}" BucketName="{x:Null}" BulkFormLayout="{x:Null}" DynamicFormPath="{x:Null}" ExternalTag="{x:Null}" Labels="{x:Null}" TaskCatalog="{x:Null}" TimeoutMs="{x:Null}" BulkFormLayoutGuid="badd25f8-34a5-48ce-9d51-4957a27fa76c" DisplayName="Create Form Task for approval" EnableBulkEdit="False" EnableDynamicForms="False" EnableV2="False" FormLayout="%[{&quot;mask&quot;:false,&quot;customClass&quot;:&quot;uipath-button-container&quot;,&quot;tableView&quot;:true,&quot;alwaysEnabled&quot;:false,&quot;type&quot;:&quot;table&quot;,&quot;input&quot;:false,&quot;key&quot;:&quot;key&quot;,&quot;label&quot;:&quot;label&quot;,&quot;rows&quot;:[[{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]},{&quot;components&quot;:[]}]],&quot;numRows&quot;:1,&quot;numCols&quot;:6,&quot;reorder&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;&lt;h4&gt;Approve the Solution deployment in the destination environment&lt;/h4&gt;\n&lt;p&gt;Please test before approval, and provide reasoning.&lt;/p&gt;\n&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;title&quot;:&quot;Solution details&quot;,&quot;collapsible&quot;:false,&quot;key&quot;:&quot;solutionDetails&quot;,&quot;type&quot;:&quot;panel&quot;,&quot;label&quot;:&quot;Panel&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;components&quot;:[{&quot;label&quot;:&quot;Solution name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package version&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageVersion&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}]},{&quot;input&quot;:false,&quot;key&quot;:&quot;columns&quot;,&quot;tableView&quot;:false,&quot;label&quot;:&quot;Columns&quot;,&quot;type&quot;:&quot;columns&quot;,&quot;columns&quot;:[{&quot;components&quot;:[{&quot;title&quot;:&quot;Source&quot;,&quot;collapsible&quot;:false,&quot;key&quot;:&quot;source&quot;,&quot;type&quot;:&quot;panel&quot;,&quot;label&quot;:&quot;Panel&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;components&quot;:[{&quot;label&quot;:&quot;Tenant&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_FirstTenant&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Folder&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_FirstFolder&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Deployment name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_FirstDeploymentName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}],&quot;hideOnChildrenHidden&quot;:false}],&quot;width&quot;:6,&quot;offset&quot;:0,&quot;push&quot;:0,&quot;pull&quot;:0,&quot;size&quot;:&quot;md&quot;,&quot;currentWidth&quot;:6},{&quot;components&quot;:[{&quot;title&quot;:&quot;Destination&quot;,&quot;collapsible&quot;:false,&quot;key&quot;:&quot;destination&quot;,&quot;type&quot;:&quot;panel&quot;,&quot;label&quot;:&quot;Panel&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;components&quot;:[{&quot;label&quot;:&quot;Tenant&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SecondTenant&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Folder&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SecondFolder&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Deployment name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SecondDeploymentName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}],&quot;hideOnChildrenHidden&quot;:false}],&quot;width&quot;:6,&quot;offset&quot;:0,&quot;push&quot;:0,&quot;pull&quot;:0,&quot;size&quot;:&quot;md&quot;,&quot;currentWidth&quot;:6}]},{&quot;title&quot;:&quot;Checklist&quot;,&quot;collapsible&quot;:false,&quot;key&quot;:&quot;checklist&quot;,&quot;type&quot;:&quot;panel&quot;,&quot;label&quot;:&quot;Panel&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;components&quot;:[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt; Please follow this checklist:&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html1&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Review architecture&quot;,&quot;tableView&quot;:false,&quot;defaultValue&quot;:false,&quot;key&quot;:&quot;checkbox&quot;,&quot;type&quot;:&quot;checkbox&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Review code&quot;,&quot;tableView&quot;:false,&quot;key&quot;:&quot;checkbox1&quot;,&quot;type&quot;:&quot;checkbox&quot;,&quot;input&quot;:true,&quot;defaultValue&quot;:false,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Perform manual tests&quot;,&quot;tableView&quot;:false,&quot;key&quot;:&quot;performManualTests&quot;,&quot;type&quot;:&quot;checkbox&quot;,&quot;input&quot;:true,&quot;defaultValue&quot;:false,&quot;hideOnChildrenHidden&quot;:false}]},{&quot;label&quot;:&quot;Do you Approve it?&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;out_qaApproval&quot;,&quot;type&quot;:&quot;checkbox&quot;,&quot;input&quot;:true,&quot;defaultValue&quot;:false},{&quot;label&quot;:&quot;Additional feedback&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;out_reason&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true},{&quot;type&quot;:&quot;button&quot;,&quot;label&quot;:&quot;Submit&quot;,&quot;key&quot;:&quot;submit&quot;,&quot;disableOnInvalid&quot;:true,&quot;input&quot;:true,&quot;alwaysEnabled&quot;:false,&quot;tableView&quot;:true}]" FormLayoutGuid="25b59c85-9031-41cb-8577-962da928835f" GenerateInputFields="True" sap:VirtualizedContainerService.HintSize="586,357" sap2010:WorkflowViewState.IdRef="CreateFormTask_1" TaskOutput="[approvalTask]" TaskPriority="[TaskPriority.Medium]" TaskTitle="[approvalTaskTitle]">
+              <upaf:CreateFormTask.FormData>
+                <OutArgument x:TypeArguments="x:Boolean" x:Key="out_qaApproval">[isApproved]</OutArgument>
+                <OutArgument x:TypeArguments="x:String" x:Key="out_reason">[approvalReason]</OutArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageName">[SolutionPackageName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageVersion">[SolutionPackageVersion]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SolutionName">[SolutionProjectName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_FirstTenant">[FirstTenant]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_FirstFolder">[fullFirstDeploymentFolder]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_FirstDeploymentName">[SolutionFirstDeploymentName]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SecondTenant">[SecondTenant]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SecondFolder">[fullSecondDeploymentFolder]</InArgument>
+                <InArgument x:TypeArguments="x:String" x:Key="in_SecondDeploymentName">[SolutionSecondDeploymentName]</InArgument>
+              </upaf:CreateFormTask.FormData>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </upaf:CreateFormTask>
+            <Assign sap:VirtualizedContainerService.HintSize="586,114" sap2010:WorkflowViewState.IdRef="Assign_4">
+              <Assign.To>
+                <OutArgument x:TypeArguments="scg:List(upat:TaskUserAssignment)">[approvalTaskAssignmentList]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="scg:List(upat:TaskUserAssignment)">[new List(Of TaskUserAssignment) From{ New TaskUserAssignment With { .TaskId = approvalTask.Id, .UserNameOrEmail = ApproverEmailAddress}}]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <upat:AssignTasks TaskUserAssignments="{x:Null}" TimeoutMs="{x:Null}" DisplayName="Assign Approval Task" EnableMultipleAssignments="False" FailedTaskAssignments="[failedAssignmentList]" sap:VirtualizedContainerService.HintSize="586,321" sap2010:WorkflowViewState.IdRef="AssignTasks_1" MigrateV144="True" TaskAssignmentType="[TaskAssignmentType.Assign]" TaskId="[approvalTask.Id.Value]" UserNameOrEmail="[ApproverEmailAddress]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </upat:AssignTasks>
+            <If Condition="[failedAssignmentList.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="586,903" sap2010:WorkflowViewState.IdRef="If_7">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="552,644" sap2010:WorkflowViewState.IdRef="Sequence_44">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="LogMessage_8" Message="[&quot;Automatic task assignment failed&quot;]" />
+                  <ui:ForEach x:TypeArguments="upat:TaskAssignmentResponse" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="518,411" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[failedAssignmentList]">
+                    <ui:ForEach.Body>
+                      <ActivityAction x:TypeArguments="upat:TaskAssignmentResponse">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="upat:TaskAssignmentResponse" Name="currentItem" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_9" Message="[&quot;TaskId: &quot; +currentItem.TaskId.ToString() + &quot;Username: &quot; + currentItem.UserNameOrEmail + &quot;UserId: &quot; +currentItem.UserId.ToString() +  &quot;ErrorCode: &quot; +currentItem.ErrorCode.ToString() +  &quot;Error message: &quot; +currentItem.ErrorMessage]" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ForEach.Body>
+                  </ui:ForEach>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_45">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </If.Else>
+            </If>
+            <upaf:WaitForFormTaskAndResume StatusMessage="{x:Null}" TaskAction="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" DisplayName="Wait for Approval" sap:VirtualizedContainerService.HintSize="586,173" sap2010:WorkflowViewState.IdRef="WaitForFormTaskAndResume_1" TaskInput="[approvalTask]" TaskOutput="[approvalTask]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </upaf:WaitForFormTaskAndResume>
+            <If Condition="[Not(isApproved)]" DisplayName="Check for approval result" sap:VirtualizedContainerService.HintSize="586,539" sap2010:WorkflowViewState.IdRef="If_8">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Throw sap2010:Annotation.AnnotationText="To halt the Workflow&#xA;" DisplayName="Throw in case of rejection " Exception="[new InvalidOperationException(&quot;Approval failed/rejected: &quot; + approvalReason)]" sap:VirtualizedContainerService.HintSize="450,132" sap2010:WorkflowViewState.IdRef="Throw_1">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Throw>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_44" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Additional information:&quot; +approvalReason]" />
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Download Solution package" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_31">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="552,470" sap2010:WorkflowViewState.IdRef="Sequence_39">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[SecondTenant = FirstTenant]" DisplayName="If second tenant is the same as the first one, skip download" sap:VirtualizedContainerService.HintSize="518,410" sap2010:WorkflowViewState.IdRef="If_30">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_113">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Download Solution package" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_38" Message="[&quot;Only one tenant. Solution package download is not necessary.&quot;]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_114">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <upa:DownloadSolutionPackage ContinueOnError="{x:Null}" DisplayName="Download Solution Package" sap:VirtualizedContainerService.HintSize="450,224" sap2010:WorkflowViewState.IdRef="DownloadSolutionPackage_2" PathToSolutionPackage="[pathToSolutionPackage]" SolutionPackageName="[SolutionPackageName]" SolutionPackageVersion="[SolutionPackageVersion]" TenantName="[FirstTenant]" TimeoutMS="120000">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </upa:DownloadSolutionPackage>
+                  <ui:LogMessage DisplayName="Log Download Solution package" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Downloaded solution package to: &quot; + pathToSolutionPackage]" />
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Upload Solution Package" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_16">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="552,842" sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[SecondTenant = FirstTenant]" sap:VirtualizedContainerService.HintSize="518,782" sap2010:WorkflowViewState.IdRef="If_31">
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_115">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log Download Solution package" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_39" Message="[&quot;Only one tenant. Solution package re-upload is not necessary.&quot;]" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,397" sap2010:WorkflowViewState.IdRef="Sequence_116">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <upa:UploadSolutionPackage ContinueOnError="{x:Null}" DisplayName="Upload Solution Package" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="UploadSolutionPackage_1" PathToSolutionPackage="[pathToSolutionPackage]" TenantName="[SecondTenant]" TimeoutMS="120000" />
+                  <ui:LogMessage DisplayName="Log Download Solution package" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_41" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Uploaded solution package to: &quot; + SecondTenant]" />
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Download Solution configuration" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_38">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,565" sap2010:WorkflowViewState.IdRef="Sequence_58">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <upa:DownloadSolutionPackageConfiguration ContinueOnError="{x:Null}" SolutionPackageConfigurationFormat="{x:Null}" DisplayName="Download Solution Package Configuration" sap:VirtualizedContainerService.HintSize="450,224" sap2010:WorkflowViewState.IdRef="DownloadSolutionPackageConfiguration_2" PathToSolutionPackageConfiguration="[pathToSolutionDeploymentConfigurationFile]" SolutionPackageName="[SolutionPackageName]" SolutionPackageVersion="[SolutionPackageVersion]" TenantName="[SecondTenant]" TimeoutMS="120000" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,84" sap2010:WorkflowViewState.IdRef="LogMessage_14" Message="[&quot;Configuration file downloaded to: &quot; + pathToSolutionDeploymentConfigurationFile]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:LogMessage>
+            <ui:ReadTextFile File="{x:Null}" Content="[firstDeploymentConfigurationFileContent]" DisplayName="Read Text File" FileName="[pathToSolutionDeploymentConfigurationFile]" sap:VirtualizedContainerService.HintSize="450,122" sap2010:WorkflowViewState.IdRef="ReadTextFile_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:ReadTextFile>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,75" sap2010:WorkflowViewState.IdRef="LogMessage_15" Message="[firstDeploymentConfigurationFileContent]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:LogMessage>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <Sequence DisplayName="Placeholder for updating the Solution configuration in 2nd tenant" sap:VirtualizedContainerService.HintSize="688,121" sap2010:WorkflowViewState.IdRef="Sequence_57">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </Sequence>
+    <upa:Stage DisplayName="Deploy Solution in second environment" sap:VirtualizedContainerService.HintSize="688,3831" sap2010:WorkflowViewState.IdRef="Stage_39">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Deploy Solution Activities to second environment" sap:VirtualizedContainerService.HintSize="654,3736" sap2010:WorkflowViewState.IdRef="Sequence_73">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="upaf:FormTaskData" Name="fixingDeploymentTask" />
+              <Variable x:TypeArguments="scg:List(upat:TaskUserAssignment)" Name="fixingDeploymentTaskAssignmentList" />
+              <Variable x:TypeArguments="x:String" Name="fixingDeploymentReason" />
+              <Variable x:TypeArguments="x:Boolean" Name="isFixed" />
+              <Variable x:TypeArguments="scg:List(upat:TaskAssignmentResponse)" Name="failedAssignmentList" />
+              <Variable x:TypeArguments="x:String" Name="approvalTaskTitle" />
+              <Variable x:TypeArguments="x:Boolean" Name="deployedFailed" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log Deploy" sap:VirtualizedContainerService.HintSize="620,173" sap2010:WorkflowViewState.IdRef="LogMessage_21" Message="[&quot;Deploying &quot; + SolutionPackageName +&quot; version: &quot; + SolutionPackageVersion]" />
+            <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="620,1008" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <TryCatch.Try>
+                <upa:DeploySolution ContinueOnError="{x:Null}" DestinationFolder="[SecondDeploymentFolder]" DisplayName="Deploy Solution" sap:VirtualizedContainerService.HintSize="450,345" sap2010:WorkflowViewState.IdRef="DeploySolution_3" PathToSolutionPackageConfiguration="[pathToSolutionDeploymentConfigurationFile]" SolutionDeploymentName="[SolutionFirstDeploymentName]" SolutionPackageName="[SolutionPackageName]" SolutionPackageVersion="[SolutionPackageVersion]" SolutionRootFolderName="[SolutionRootFolder]" TenantName="[SecondTenant]" TimeoutMS="120000">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </upa:DeploySolution>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                    </ActivityAction.Argument>
+                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,338" sap2010:WorkflowViewState.IdRef="Sequence_74">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="450,114" sap2010:WorkflowViewState.IdRef="Assign_17">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[deployedFailed]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_22" Level="[UiPath.Core.Activities.LogLevel.Error]" Message="[&quot;Deployment failed:&quot; + exception.Message]" />
+                    </Sequence>
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+              <TryCatch.Finally>
+                <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_75">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </Sequence>
+              </TryCatch.Finally>
+            </TryCatch>
+            <If Condition="[deployedFailed = true AND suspendOnDeploymentErrors = true]" sap:VirtualizedContainerService.HintSize="620,2495" sap2010:WorkflowViewState.IdRef="If_17">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="586,1859" sap2010:WorkflowViewState.IdRef="Sequence_81">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence DisplayName="Deployment failed, ask for user input" sap:VirtualizedContainerService.HintSize="552,1799" sap2010:WorkflowViewState.IdRef="Sequence_80">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_18">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[approvalTaskTitle]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">["Pipeline #" +BuildNumber +" Fix deployment for Solution " + SolutionFirstDeploymentName]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <upaf:CreateFormTask BucketFolderPath="{x:Null}" BucketName="{x:Null}" BulkFormLayout="{x:Null}" DynamicFormPath="{x:Null}" ExternalTag="{x:Null}" Labels="{x:Null}" TaskCatalog="{x:Null}" TimeoutMs="{x:Null}" BulkFormLayoutGuid="5bb28552-6745-4448-854e-b8e7aaa921b1" DisplayName="Create Form Task for second deployment" EnableBulkEdit="False" EnableDynamicForms="False" EnableV2="False" FormLayout="%[{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;Deployment failed&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;\n&lt;p&gt;You can manually and fix it in Solutions Management, wait for the status to become Successful, then come back here and Submit this form to resume the Pipeline. &lt;/p&gt;\n&lt;p&gt;Learn to update the solution package configuration file as part of the pipeline so it no longer breaks.&lt;/p&gt;&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html2&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;hideOnChildrenHidden&quot;:false},{&quot;input&quot;:false,&quot;key&quot;:&quot;columns&quot;,&quot;tableView&quot;:false,&quot;label&quot;:&quot;Columns&quot;,&quot;type&quot;:&quot;columns&quot;,&quot;columns&quot;:[{&quot;components&quot;:[{&quot;label&quot;:&quot;Solution name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Orchestrator tenant&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_OrchestratorTenant&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution deployment name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionDeploymentName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Orchestrator folder&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_OrchestratorFolder&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package name&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageName&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package version&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageVersion&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Solution package description&quot;,&quot;disabled&quot;:true,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageDescription&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;HTML&quot;,&quot;attrs&quot;:[{&quot;attr&quot;:&quot;&quot;,&quot;value&quot;:&quot;&quot;}],&quot;content&quot;:&quot;&lt;span&gt;&lt;b&gt;[NOTE]&lt;/b&gt; Wait until the Status is Successful, before Submitting this form.&lt;/span&gt;&quot;,&quot;refreshOnChange&quot;:false,&quot;key&quot;:&quot;html1&quot;,&quot;type&quot;:&quot;htmlelement&quot;,&quot;input&quot;:false,&quot;tableView&quot;:false,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Have you fixed it?&quot;,&quot;tableView&quot;:true,&quot;defaultValue&quot;:false,&quot;key&quot;:&quot;out_isFixed&quot;,&quot;type&quot;:&quot;checkbox&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false},{&quot;label&quot;:&quot;Additional information&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;out_AdditionalInformation&quot;,&quot;type&quot;:&quot;textfield&quot;,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}],&quot;width&quot;:6,&quot;offset&quot;:0,&quot;push&quot;:0,&quot;pull&quot;:0,&quot;size&quot;:&quot;md&quot;,&quot;currentWidth&quot;:6},{&quot;components&quot;:[{&quot;label&quot;:&quot;Solution package configuration&quot;,&quot;tableView&quot;:true,&quot;key&quot;:&quot;in_SolutionPackageConfiguration&quot;,&quot;type&quot;:&quot;textarea&quot;,&quot;rows&quot;:30,&quot;input&quot;:true,&quot;hideOnChildrenHidden&quot;:false}],&quot;width&quot;:6,&quot;offset&quot;:0,&quot;push&quot;:0,&quot;pull&quot;:0,&quot;size&quot;:&quot;md&quot;,&quot;currentWidth&quot;:6}]},{&quot;type&quot;:&quot;button&quot;,&quot;label&quot;:&quot;Submit&quot;,&quot;key&quot;:&quot;submit&quot;,&quot;disableOnInvalid&quot;:true,&quot;input&quot;:true,&quot;alwaysEnabled&quot;:false,&quot;tableView&quot;:true}]" FormLayoutGuid="19674271-9231-4b5a-a3a0-80f1b799da94" GenerateInputFields="True" sap:VirtualizedContainerService.HintSize="518,357" sap2010:WorkflowViewState.IdRef="CreateFormTask_5" TaskOutput="[fixingDeploymentTask]" TaskPriority="[TaskPriority.Medium]" TaskTitle="[approvalTaskTitle]">
+                      <upaf:CreateFormTask.FormData>
+                        <OutArgument x:TypeArguments="x:Boolean" x:Key="out_isFixed">[isFixed]</OutArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageName">[SolutionPackageName]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageVersion">[SolutionPackageVersion]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionDeploymentName">[SolutionFirstDeploymentName]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_OrchestratorTenant">[SecondTenant]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_OrchestratorFolder">[fullSecondDeploymentFolder]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageDescription">[SolutionPackageDescription]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionPackageConfiguration">[firstDeploymentConfigurationFileContent]</InArgument>
+                        <InArgument x:TypeArguments="x:String" x:Key="in_SolutionName">[SolutionProjectName]</InArgument>
+                        <OutArgument x:TypeArguments="x:String" x:Key="out_AdditionalInformation">[fixingDeploymentReason]</OutArgument>
+                      </upaf:CreateFormTask.FormData>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </upaf:CreateFormTask>
+                    <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_19">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="scg:List(upat:TaskUserAssignment)">[fixingDeploymentTaskAssignmentList]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="scg:List(upat:TaskUserAssignment)">[new List(Of TaskUserAssignment) From{ New TaskUserAssignment With { .TaskId = fixingDeploymentTask.Id, .UserNameOrEmail = ApproverEmailAddress}}]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <upat:AssignTasks TaskUserAssignments="{x:Null}" TimeoutMs="{x:Null}" DisplayName="Assign Approval Task" EnableMultipleAssignments="False" FailedTaskAssignments="[failedAssignmentList]" sap:VirtualizedContainerService.HintSize="518,321" sap2010:WorkflowViewState.IdRef="AssignTasks_4" MigrateV144="True" TaskAssignmentType="[TaskAssignmentType.Assign]" TaskId="[fixingDeploymentTask.Id.Value]" UserNameOrEmail="[SupportUserEmailAddress]">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </upat:AssignTasks>
+                    <If Condition="[failedAssignmentList.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="518,57" sap2010:WorkflowViewState.IdRef="If_18">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="552,644" sap2010:WorkflowViewState.IdRef="Sequence_77">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="LogMessage_23" Message="[&quot;Automatic task assignment failed&quot;]" />
+                          <ui:ForEach x:TypeArguments="upat:TaskAssignmentResponse" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="518,411" sap2010:WorkflowViewState.IdRef="ForEach`1_7" Values="[failedAssignmentList]">
+                            <ui:ForEach.Body>
+                              <ActivityAction x:TypeArguments="upat:TaskAssignmentResponse">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="upat:TaskAssignmentResponse" Name="currentItem" />
+                                </ActivityAction.Argument>
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_76">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_24" Message="[&quot;TaskId: &quot; +currentItem.TaskId.ToString() + &quot;Username: &quot; + currentItem.UserNameOrEmail + &quot;UserId: &quot; +currentItem.UserId.ToString() +  &quot;ErrorCode: &quot; +currentItem.ErrorCode.ToString() +  &quot;Error message: &quot; +currentItem.ErrorMessage]" />
+                                </Sequence>
+                              </ActivityAction>
+                            </ui:ForEach.Body>
+                          </ui:ForEach>
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_78">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="LogMessage_36" Message="[&quot;Deployment failed and an Action Center task has been assigned to unblock it&quot;]" />
+                    <upaf:WaitForFormTaskAndResume StatusMessage="{x:Null}" TaskAction="{x:Null}" TimeoutMs="{x:Null}" WaitItemDataObject="{x:Null}" DisplayName="Wait for Approval" sap:VirtualizedContainerService.HintSize="518,173" sap2010:WorkflowViewState.IdRef="WaitForFormTaskAndResume_4" TaskInput="[fixingDeploymentTask]" TaskOutput="[fixingDeploymentTask]">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </upaf:WaitForFormTaskAndResume>
+                    <If Condition="[Not(isFixed)]" DisplayName="Check for approval result" sap:VirtualizedContainerService.HintSize="518,407" sap2010:WorkflowViewState.IdRef="If_19">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Throw sap2010:Annotation.AnnotationText="To halt the Workflow&#xA;" DisplayName="Throw in case of rejection " Exception="[new InvalidOperationException(&quot;Fix deployment failed/rejected: &quot; + fixingDeploymentReason)]" sap:VirtualizedContainerService.HintSize="450,132" sap2010:WorkflowViewState.IdRef="Throw_4">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Throw>
+                      </If.Then>
+                      <If.Else>
+                        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_79">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="LogMessage_45" Message="[&quot;Additional information:&quot; + fixingDeploymentReason]" />
+                        </Sequence>
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="552,475" sap2010:WorkflowViewState.IdRef="Sequence_82">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[deployedFailed]" sap:VirtualizedContainerService.HintSize="518,415" sap2010:WorkflowViewState.IdRef="If_26">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,173" sap2010:WorkflowViewState.IdRef="Sequence_101">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Throw Exception="[new InvalidOperationException(&quot;Solution deployment failed&quot;)]" sap:VirtualizedContainerService.HintSize="450,113" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_102">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <upa:Stage DisplayName="Activate Solution Deployment" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_24">
+      <upa:Stage.Activities>
+        <ActivityAction>
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,224" sap2010:WorkflowViewState.IdRef="Sequence_24">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <upa:ActivateSolutionDeployment ContinueOnError="{x:Null}" DisplayName="Activate Solution Deployment" sap:VirtualizedContainerService.HintSize="450,164" sap2010:WorkflowViewState.IdRef="ActivateSolutionDeployment_1" SolutionDeploymentName="[SolutionFirstDeploymentName]" TenantName="[SecondTenant]" TimeoutMS="120000" />
+          </Sequence>
+        </ActivityAction>
+      </upa:Stage.Activities>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </upa:Stage>
+    <ui:LogMessage DisplayName="Log Download Solution package" sap:VirtualizedContainerService.HintSize="688,75" sap2010:WorkflowViewState.IdRef="LogMessage_40" Message="[&quot;Only one tenant. Solution package download is not necessary.&quot;]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:LogMessage>
+  </Sequence>
+</Activity>
