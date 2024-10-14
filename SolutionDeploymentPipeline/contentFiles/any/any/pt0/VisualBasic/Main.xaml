@@ -33,7 +33,7 @@
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1814,13433</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1685,14447</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -142,7 +142,7 @@
       <AssemblyReference>UiPath.Orchestrator.Client</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="750,13368" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="750,14382" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="pathToSolutionPackage" />
       <Variable x:TypeArguments="x:String" Name="repositoryPath" />
@@ -154,7 +154,7 @@
       <Variable x:TypeArguments="x:String" Name="solutionAssetValue" />
       <Variable x:TypeArguments="scg:List(x:String)" Name="projectPaths" />
       <Variable x:TypeArguments="scg:List(s:Tuple(x:String, x:String, x:String, x:String, x:String))" Name="projects" />
-      <Variable x:TypeArguments="x:Boolean" Name="rebuildAutomations" />
+      <Variable x:TypeArguments="x:Boolean" Name="skipRebuildAutomations" />
       <Variable x:TypeArguments="x:Boolean" Name="suspendOnDeploymentErrors" />
       <Variable x:TypeArguments="x:String" Name="fullFirstDeploymentFolder" />
       <Variable x:TypeArguments="x:String" Name="fullSecondDeploymentFolder" />
@@ -180,20 +180,20 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_47">
+          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="492,351" sap2010:WorkflowViewState.IdRef="Sequence_47">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_10" Message="[&quot;You did not provide a solution pipeline configuration file. No projects will get built! Please read the documentation on how to provide such a file.&quot;]" />
-            <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_22">
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_10" Message="[&quot;You did not provide a solution pipeline configuration file. No projects will get built! Please read the documentation on how to provide such a file.&quot;]" />
+            <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_22">
               <Assign.To>
-                <OutArgument x:TypeArguments="x:Boolean">[rebuildAutomations]</OutArgument>
+                <OutArgument x:TypeArguments="x:Boolean">[skipRebuildAutomations]</OutArgument>
               </Assign.To>
               <Assign.Value>
-                <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                <InArgument x:TypeArguments="x:Boolean">True</InArgument>
               </Assign.Value>
             </Assign>
           </Sequence>
@@ -400,10 +400,10 @@
         </Sequence>
       </If.Else>
     </If>
-    <upa:Stage DisplayName="Get projects from solution file" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_28">
+    <upa:Stage DisplayName="Get projects from solution file" sap:VirtualizedContainerService.HintSize="688,1258" sap2010:WorkflowViewState.IdRef="Stage_28">
       <upa:Stage.Activities>
         <ActivityAction>
-          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="620,1042" sap2010:WorkflowViewState.IdRef="Sequence_36">
+          <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="644,1173" sap2010:WorkflowViewState.IdRef="Sequence_36">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="pathToSolutionPipelineConfigurationFile" />
             </Sequence.Variables>
@@ -412,9 +412,9 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[String.IsNullOrWhiteSpace(SolutionPipelineConfigurationFile)]" DisplayName="If solution pipeline configuration has not been provided" sap:VirtualizedContainerService.HintSize="586,982" sap2010:WorkflowViewState.IdRef="If_23">
+            <If Condition="[String.IsNullOrWhiteSpace(SolutionPipelineConfigurationFile)]" DisplayName="If solution pipeline configuration has not been provided" sap:VirtualizedContainerService.HintSize="602,1085" sap2010:WorkflowViewState.IdRef="If_23">
               <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,81" sap2010:WorkflowViewState.IdRef="Sequence_95">
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,80" sap2010:WorkflowViewState.IdRef="Sequence_95">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -424,14 +424,14 @@
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="552,740" sap2010:WorkflowViewState.IdRef="Sequence_96">
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="568,823" sap2010:WorkflowViewState.IdRef="Sequence_96">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_5">
+                  <Assign sap:VirtualizedContainerService.HintSize="526,82" sap2010:WorkflowViewState.IdRef="Assign_5">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:String">[pathToSolutionPipelineConfigurationFile]</OutArgument>
                     </Assign.To>
@@ -439,7 +439,7 @@
                       <InArgument x:TypeArguments="x:String">[Path.Combine(repositoryPath, SolutionPipelineConfigurationFile)]</InArgument>
                     </Assign.Value>
                   </Assign>
-                  <If Condition="[File.Exists(pathToSolutionPipelineConfigurationFile)]" DisplayName="Check for the file on disk" sap:VirtualizedContainerService.HintSize="518,566" sap2010:WorkflowViewState.IdRef="If_10">
+                  <If Condition="[File.Exists(pathToSolutionPipelineConfigurationFile)]" DisplayName="Check for the file on disk" sap:VirtualizedContainerService.HintSize="526,613" sap2010:WorkflowViewState.IdRef="If_10">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -447,14 +447,14 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                     <If.Then>
-                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,67" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="568,806" sap2010:WorkflowViewState.IdRef="Sequence_50">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                             <x:Boolean x:Key="IsPinned">False</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="518,722" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+                        <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="526,718" sap2010:WorkflowViewState.IdRef="TryCatch_3">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -462,16 +462,16 @@
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
                           <TryCatch.Try>
-                            <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="484,255" sap2010:WorkflowViewState.IdRef="Sequence_110">
+                            <Sequence DisplayName="Try" sap:VirtualizedContainerService.HintSize="492,260" sap2010:WorkflowViewState.IdRef="Sequence_110">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadSolutionFile.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="450,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ReadSolutionPipelineConfigurationFile.xaml">
+                              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ReadSolutionFile.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="450,172" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ReadSolutionPipelineConfigurationFile.xaml">
                                 <ui:InvokeWorkflowFile.Arguments>
-                                  <OutArgument x:TypeArguments="scg:List(s:Tuple(x:String, x:String, x:String, x:String, x:String))" x:Key="out_Projects" />
+                                  <OutArgument x:TypeArguments="scg:List(s:Tuple(x:String, x:String, x:String, x:String, x:String))" x:Key="out_Projects">[projects]</OutArgument>
                                   <InArgument x:TypeArguments="x:String" x:Key="in_PathToConfigurationFile">[pathToSolutionPipelineConfigurationFile]</InArgument>
                                 </ui:InvokeWorkflowFile.Arguments>
                               </ui:InvokeWorkflowFile>
@@ -483,13 +483,13 @@
                                 <ActivityAction.Argument>
                                   <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                                 </ActivityAction.Argument>
-                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,165" sap2010:WorkflowViewState.IdRef="Sequence_111">
+                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="492,205" sap2010:WorkflowViewState.IdRef="Sequence_111">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
-                                  <ui:LogMessage DisplayName="Log Message about solution configuration file not being parsed" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="LogMessage_37" Message="[&quot;Solution pipeline configuration file could not be read: &quot; + exception.Message]">
+                                  <ui:LogMessage DisplayName="Log Message about solution configuration file not being parsed" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="LogMessage_37" Message="[&quot;Solution pipeline configuration file could not be read: &quot; + exception.Message]">
                                     <sap:WorkflowViewStateService.ViewState>
                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                         <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -497,7 +497,7 @@
                                       </scg:Dictionary>
                                     </sap:WorkflowViewStateService.ViewState>
                                   </ui:LogMessage>
-                                  <Rethrow sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+                                  <Rethrow sap:VirtualizedContainerService.HintSize="450,25" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
                                 </Sequence>
                               </ActivityAction>
                             </Catch>
@@ -515,19 +515,19 @@
                       </Sequence>
                     </If.Then>
                     <If.Else>
-                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="484,338" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="492,351" sap2010:WorkflowViewState.IdRef="Sequence_51">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
-                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,173" sap2010:WorkflowViewState.IdRef="LogMessage_11" Message="[&quot;The solution pipeline configuration (&quot; + pathToSolutionPipelineConfigurationFile + &quot;) file is missing. No projects will be built. A solution pipeline configuration needs to be placed in the repository to identify projects that are part of the solution. More details in documentation.&quot;]" />
-                        <Assign sap:VirtualizedContainerService.HintSize="450,105" sap2010:WorkflowViewState.IdRef="Assign_21">
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_11" Message="[&quot;The solution pipeline configuration (&quot; + pathToSolutionPipelineConfigurationFile + &quot;) file is missing. No projects will be built. A solution pipeline configuration needs to be placed in the repository to identify projects that are part of the solution. More details in documentation.&quot;]" />
+                        <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_21">
                           <Assign.To>
-                            <OutArgument x:TypeArguments="x:Boolean">[rebuildAutomations]</OutArgument>
+                            <OutArgument x:TypeArguments="x:Boolean">[skipRebuildAutomations]</OutArgument>
                           </Assign.To>
                           <Assign.Value>
-                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
                           </Assign.Value>
                         </Assign>
                       </Sequence>
@@ -541,22 +541,22 @@
       </upa:Stage.Activities>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </upa:Stage>
-    <upa:Stage DisplayName="Rebuild automations" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_29">
+    <upa:Stage DisplayName="Rebuild automations" sap:VirtualizedContainerService.HintSize="688,52" sap2010:WorkflowViewState.IdRef="Stage_29">
       <upa:Stage.Activities>
         <ActivityAction>
-          <Sequence DisplayName="Rebuild Automations Activities" sap:VirtualizedContainerService.HintSize="824,3454" sap2010:WorkflowViewState.IdRef="Sequence_37">
+          <Sequence DisplayName="Rebuild Automations Activities" sap:VirtualizedContainerService.HintSize="568,490" sap2010:WorkflowViewState.IdRef="Sequence_37">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[rebuildAutomations]" DisplayName="If automations will be rebuilt" sap:VirtualizedContainerService.HintSize="790,3394" sap2010:WorkflowViewState.IdRef="If_24">
+            <If Condition="[skipRebuildAutomations = False]" DisplayName="If automations will be rebuilt" sap:VirtualizedContainerService.HintSize="526,402" sap2010:WorkflowViewState.IdRef="If_24">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -564,19 +564,19 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
               <If.Then>
-                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="756,3208" sap2010:WorkflowViewState.IdRef="Sequence_98">
+                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="492,140" sap2010:WorkflowViewState.IdRef="Sequence_98">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:ForEach x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="722,3148" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[projects]">
+                  <ui:ForEach x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="450,52" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[projects]">
                     <ui:ForEach.Body>
                       <ActivityAction x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)">
                         <ActivityAction.Argument>
                           <DelegateInArgument x:TypeArguments="s:Tuple(x:String, x:String, x:String, x:String, x:String)" Name="project" />
                         </ActivityAction.Argument>
-                        <Sequence DisplayName="Rebuild Automation" sap:VirtualizedContainerService.HintSize="688,2961" sap2010:WorkflowViewState.IdRef="Sequence_38">
+                        <Sequence DisplayName="Rebuild Automation" sap:VirtualizedContainerService.HintSize="696,3379" sap2010:WorkflowViewState.IdRef="Sequence_38">
                           <Sequence.Variables>
                             <Variable x:TypeArguments="x:String" Name="projectPath" />
                             <Variable x:TypeArguments="x:String" Name="packageName" />
@@ -591,7 +591,7 @@
                               <x:Boolean x:Key="IsPinned">False</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_6">
+                          <Assign sap:VirtualizedContainerService.HintSize="654,52" sap2010:WorkflowViewState.IdRef="Assign_6">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">[projectPath]</OutArgument>
                             </Assign.To>
@@ -605,7 +605,7 @@
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
                           </Assign>
-                          <Assign sap:VirtualizedContainerService.HintSize="654,57" sap2010:WorkflowViewState.IdRef="Assign_7">
+                          <Assign sap:VirtualizedContainerService.HintSize="654,52" sap2010:WorkflowViewState.IdRef="Assign_7">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">[packageName]</OutArgument>
                             </Assign.To>
@@ -869,11 +869,17 @@
                         </Sequence>
                       </ActivityAction>
                     </ui:ForEach.Body>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
                   </ui:ForEach>
                 </Sequence>
               </If.Then>
               <If.Else>
-                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25" sap2010:WorkflowViewState.IdRef="Sequence_97">
+                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,80" sap2010:WorkflowViewState.IdRef="Sequence_97">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -893,7 +899,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </upa:Stage>
-    <upa:Stage DisplayName="Re-sync Solution project" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_14">
+    <upa:Stage DisplayName="Re-sync Solution project" sap:VirtualizedContainerService.HintSize="688,52" sap2010:WorkflowViewState.IdRef="Stage_14">
       <upa:Stage.Activities>
         <ActivityAction>
           <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="552,526" sap2010:WorkflowViewState.IdRef="Sequence_6">
@@ -935,7 +941,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </upa:Stage>
-    <upa:Stage DisplayName="Publish solution package" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_19">
+    <upa:Stage DisplayName="Publish solution package" sap:VirtualizedContainerService.HintSize="688,52" sap2010:WorkflowViewState.IdRef="Stage_19">
       <upa:Stage.Activities>
         <ActivityAction>
           <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,550" sap2010:WorkflowViewState.IdRef="Sequence_18">
@@ -963,7 +969,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </upa:Stage>
-    <upa:Stage DisplayName="Download Solution configuration" sap:VirtualizedContainerService.HintSize="688,84" sap2010:WorkflowViewState.IdRef="Stage_18">
+    <upa:Stage DisplayName="Download Solution configuration" sap:VirtualizedContainerService.HintSize="688,52" sap2010:WorkflowViewState.IdRef="Stage_18">
       <upa:Stage.Activities>
         <ActivityAction>
           <Sequence DisplayName="Activities" sap:VirtualizedContainerService.HintSize="484,565" sap2010:WorkflowViewState.IdRef="Sequence_17">
@@ -1007,7 +1013,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </upa:Stage>
-    <Sequence DisplayName="Placeholder for updating the Solution configuration in 1st tenant" sap:VirtualizedContainerService.HintSize="688,113" sap2010:WorkflowViewState.IdRef="Sequence_56">
+    <Sequence DisplayName="Placeholder for updating the Solution configuration in 1st tenant" sap:VirtualizedContainerService.HintSize="688,81" sap2010:WorkflowViewState.IdRef="Sequence_56">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
