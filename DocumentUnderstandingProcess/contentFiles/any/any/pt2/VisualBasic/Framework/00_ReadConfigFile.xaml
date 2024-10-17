@@ -1,14 +1,14 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_00_ReadConfigFile" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_00_ReadConfigFile" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Path to the configuration file that defines settings, constants and assets." Name="in_ConfigFile" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="out_MaxAttempts" Type="OutArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="out_RetryInterval" Type="OutArgument(x:TimeSpan)" />
-    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="out_ConfigDic" Type="OutArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object)))" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="out_Config" Type="OutArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>502,1407</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1546.4,1948.8</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_00_ReadConfigFile_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="60">
@@ -49,6 +49,7 @@
       <x:String>UiPath.Core.Activities.Storage</x:String>
       <x:String>UiPath.Platform.ResourceHandling</x:String>
       <x:String>UiPath.Web.Activities</x:String>
+      <x:String>System.Linq.Expressions</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -103,15 +104,19 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic.Core</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Loading the settings from the Config File.&#xA;&#xA;The file should be accessible - no retry mechanisms are used here!" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="512,1342" sap2010:WorkflowViewState.IdRef="Sequence_3">
+  <Sequence sap2010:Annotation.AnnotationText="Loading the settings from the Config File.&#xA;&#xA;The file should be accessible - no retry mechanisms are used here!" DisplayName="ReadConfigFile" sap:VirtualizedContainerService.HintSize="704,1884" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <Sequence.Variables>
-      <Variable x:TypeArguments="upr:ILocalResource" Name="ConfigFilePath" />
-      <Variable x:TypeArguments="x:String" Name="JsonString" />
-      <Variable x:TypeArguments="njl:JArray" Name="Jarray" />
-      <Variable x:TypeArguments="upr:ILocalResource" Name="ConfigFileResource" />
-      <Variable x:TypeArguments="x:String" Name="OrchestratorFolderPath" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Confile file content in string format." Name="JsonString" />
+      <Variable x:TypeArguments="upr:ILocalResource" sap2010:Annotation.AnnotationText="Config file as ILocalResource variable." Name="ConfigFileResource" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -119,37 +124,73 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Read Config File" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Process started. Reading Config File...&quot;]" />
-    <ui:LogMessage DisplayName="Log Message - InitStarted" sap:VirtualizedContainerService.HintSize="450,141" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[&quot;Reading config &amp; creating dictionary started&quot;]" />
-    <ucas:DownloadStorageFile TimeoutMS="{x:Null}" Destination="Data\config.json" DisplayName="Download Storage File" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,194" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="config.json" Result="[ConfigFileResource]" StorageBucketName="DU_StorageBucket" />
-    <ui:ReadTextFile FileName="{x:Null}" Content="[JsonString]" DisplayName="Read Text File" File="[ConfigFileResource]" sap:VirtualizedContainerService.HintSize="450,90" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
-    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_8">
+    <ui:LogMessage DisplayName="Log Message - Read Config File" sap:VirtualizedContainerService.HintSize="641.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[&quot;Process started. Reading Config File...&quot; + Environment.NewLine + &quot;Reading config &amp; creating dictionary started&quot;]" />
+    <If Condition="[file.Exists(&quot;Data/config.json&quot;)]" DisplayName="If - config file already present locally" sap:VirtualizedContainerService.HintSize="641.6,1115.2" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="512,202.4" sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:ReadTextFile File="{x:Null}" Content="[JsonString]" DisplayName="Read Config File" FileName="Data/config.json" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="ReadTextFile_2" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="608,742.4" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:RetryScope DisplayName="Retry Scope - Download config file from Storage Bucket" sap:VirtualizedContainerService.HintSize="545.6,540" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="3" RetryInterval="00:00:30">
+            <ui:RetryScope.ActivityBody>
+              <ActivityAction>
+                <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,307.2" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ucas:DownloadStorageFile TimeoutMS="{x:Null}" Destination="Data\config.json" DisplayName="Download config file" FolderPath="Cross-platform" sap:VirtualizedContainerService.HintSize="449.6,218.4" sap2010:WorkflowViewState.IdRef="DownloadStorageFile_2" Path="config.json" Result="[ConfigFileResource]" StorageBucketName="Cross-platform" />
+                </Sequence>
+              </ActivityAction>
+            </ui:RetryScope.ActivityBody>
+            <ui:RetryScope.Condition>
+              <ActivityFunc x:TypeArguments="x:Boolean" />
+            </ui:RetryScope.Condition>
+          </ui:RetryScope>
+          <ui:ReadTextFile FileName="{x:Null}" Content="[JsonString]" DisplayName="Read json Config File" File="[ConfigFileResource]" sap:VirtualizedContainerService.HintSize="545.6,113.6" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" />
+        </Sequence>
+      </If.Else>
+    </If>
+    <Assign DisplayName="Assign - Config" sap:VirtualizedContainerService.HintSize="641.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_8">
       <Assign.To>
-        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))">[out_ConfigDic]</OutArgument>
+        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))">[out_Config]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, Dictionary(Of String, Object)))(JsonString)]</InArgument>
+        <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:String))">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of Dictionary(Of String, Dictionary(Of String, String)))(JsonString)]</InArgument>
       </Assign.Value>
     </Assign>
-    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_5">
+    <Assign DisplayName="Assign - MaxAttempts" sap:VirtualizedContainerService.HintSize="641.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_5">
       <Assign.To>
         <OutArgument x:TypeArguments="x:Int32">[out_MaxAttempts]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:Int32">[CInt(out_ConfigDic("Constants")("MaxExecutionAttempts"))]</InArgument>
+        <InArgument x:TypeArguments="x:Int32">[CInt(out_Config("Constants")("MaxExecutionAttempts"))]</InArgument>
       </Assign.Value>
     </Assign>
-    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_6">
+    <Assign DisplayName="Assign - RetryInterval" sap:VirtualizedContainerService.HintSize="641.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_6">
       <Assign.To>
         <OutArgument x:TypeArguments="x:TimeSpan">[out_RetryInterval]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:TimeSpan">[TimeSpan.Parse(out_ConfigDic("Constants")("RetryInterval").ToString)]</InArgument>
+        <InArgument x:TypeArguments="x:TimeSpan">[TimeSpan.Parse(out_Config("Constants")("RetryInterval"))]</InArgument>
       </Assign.Value>
     </Assign>
-    <Assign sap:VirtualizedContainerService.HintSize="450,82" sap2010:WorkflowViewState.IdRef="Assign_9">
+    <Assign DisplayName="Assign - LogKey" sap:VirtualizedContainerService.HintSize="641.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_9">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:Object">[out_ConfigDic("Constants")("logkey")]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[out_Config("Constants")("logKey")]</OutArgument>
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="x:String">[Guid.NewGuid().ToString +"_" +Now.ToString("yyyyMMddhhmmss")]</InArgument>

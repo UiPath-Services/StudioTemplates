@@ -2,14 +2,14 @@
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="The custom progress status of the current transaction item." Name="in_Progress" Type="InArgument(x:String)" />
     <x:Property sap2010:Annotation.AnnotationText="Stores the transaction item to be updated in the Orchestrator Queue." Name="in_TransactionItem" Type="InArgument(ui:QueueItem)" />
-    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object)))" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the number of attempts of retrying in case of a system exception." Name="in_MaxAttempts" Type="InArgument(x:Int32)" />
     <x:Property sap2010:Annotation.AnnotationText="Used to control the amount of time between retries in the Retry Scope activity." Name="in_RetryInterval" Type="InArgument(x:TimeSpan)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>578,944</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1055.2,1025.6</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>SetTransactionProgress_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -49,6 +49,7 @@
       <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
       <x:String>UiPath.IntelligentOCR.StudioWeb.Activities</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts</x:String>
+      <x:String>System.Linq.Expressions</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -92,26 +93,31 @@
       <AssemblyReference>ExtendedExtractionRe.MPIqC4lWsGC1qHlla2KNFTJ2</AssemblyReference>
       <AssemblyReference>UiPath.Platform</AssemblyReference>
       <AssemblyReference>UiPath.DocumentProcessing.Contracts</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
+      <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Updates the TransactionProgress. The TransactionItem must exist." DisplayName="SetTransactionProgress" sap:VirtualizedContainerService.HintSize="588,879.3333333333334" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Updates the TransactionProgress. The TransactionItem must exist." DisplayName="SetTransactionProgress" sap:VirtualizedContainerService.HintSize="608,960.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="526,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_SetTransactionProgress&quot;).ToString + &quot; &quot; + in_Progress + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logkey&quot;).ToString]" />
-    <ui:RetryScope DisplayName="Retry Scope" sap:VirtualizedContainerService.HintSize="526,553.3333333333334" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
+    <ui:LogMessage DisplayName="Log Message - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="545.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_SetTransactionProgress&quot;) + &quot; &quot; + in_Progress + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" />
+    <ui:RetryScope sap2010:Annotation.AnnotationText="Although unusual, the connection to the Orchestrator might time-out. The retry mechanism is used to compensate for minor fluctuatios in network stability and other recoverable issues.&#xA;&#xA;NOTE: ContinueOnError = TRUE - failing to update the transaction progress should not stop the processing of the transaction." DisplayName="Retry Scope - SetTransactionProgress" sap:VirtualizedContainerService.HintSize="545.6,666.4" sap2010:WorkflowViewState.IdRef="RetryScope_2" NumberOfRetries="[in_MaxAttempts]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>
-          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="492,330" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,350.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:SetTransactionProgress sap2010:Annotation.AnnotationText="The LogKey is added to the progress message in order to facilitate finding the job that is processing the item." DisplayName="Set Transaction Progress with LogKey" FolderPath="[in_Config(&quot;Assets&quot;)(&quot;DU_QueuePath&quot;).ToString]" sap:VirtualizedContainerService.HintSize="450,242.66666666666666" sap2010:WorkflowViewState.IdRef="SetTransactionProgress_3" Progress="[in_Progress + &quot;_&quot; + in_Config(&quot;Constants&quot;)(&quot;logkey&quot;).ToString]" TransactionItem="[in_TransactionItem]">
+            <ui:SetTransactionProgress sap2010:Annotation.AnnotationText="The LogKey is added to the progress message in order to facilitate finding the job that is processing the item." DisplayName="Set Transaction Progress with LogKey" FolderPath="[in_Config(&quot;Assets&quot;)(&quot;DocumentUnderstandingOrchestratorFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,261.6" sap2010:WorkflowViewState.IdRef="SetTransactionProgress_3" Progress="[in_Progress + &quot;_&quot; + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" TransactionItem="[in_TransactionItem]">
               <ui:SetTransactionProgress.TimeoutMS>
                 <InArgument x:TypeArguments="x:Int32" />
               </ui:SetTransactionProgress.TimeoutMS>
@@ -127,6 +133,11 @@
       <ui:RetryScope.Condition>
         <ActivityFunc x:TypeArguments="x:Boolean" />
       </ui:RetryScope.Condition>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
     </ui:RetryScope>
   </Sequence>
 </Activity>

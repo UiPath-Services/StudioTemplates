@@ -1,16 +1,13 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="_70_Export" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:this="clr-namespace:" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uisad="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DataExtraction;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:uisaseib="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.SWEntities.ExtendedExtractionResultsForDocumentData.Invoices.Bundle;assembly=ExtendedExtractionRe.MPIqC4lWsGC1qHlla2KNFTJ2" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_70_Export" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uisad="clr-namespace:UiPath.IntelligentOCR.StudioWeb.Activities.DataExtraction;assembly=UiPath.IntelligentOCR.StudioWeb.Activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="out_DataTableExtracted" Type="OutArgument(scg:List(sd:DataTable))" />
-    <x:Property Name="in_TargetFileString" Type="InArgument(x:String)" />
-    <x:Property Name="in_extractedDocumentData" Type="InArgument(uisad:IDocumentData(uisaseib:Invoices))" />
+    <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, scg:Dictionary(x:String, x:String)))" />
+    <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="in_ExtractionResults" Type="InArgument(uisad:IDocumentData(uisad:DictionaryData))" />
+    <x:Property sap2010:Annotation.AnnotationText="The file path of the target document that is going to be processed." Name="in_TargetFile" Type="InArgument(x:String)" />
   </x:Members>
-  <this:_70_Export.in_extractedDocumentData>
-    <InArgument x:TypeArguments="uisad:IDocumentData(uisaseib:Invoices)" />
-  </this:_70_Export.in_extractedDocumentData>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1031.3333333333333,1098.6666666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>1090.4,1795.2</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>_70_Export_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -52,6 +49,9 @@
       <x:String>Newtonsoft.Json</x:String>
       <x:String>UiPath.Core.Activities.Storage</x:String>
       <x:String>UiPath.Core.Activities.Orchestrator</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>UiPath.Platform</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -101,43 +101,51 @@
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.Watcher</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
+      <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
+      <AssemblyReference>UiPath.CodedWorkflows</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="_70_Export" sap:VirtualizedContainerService.HintSize="512,1034" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Post-extraction &amp; Data Export&#xA;&#xA;Post extraction - any logic that must be executed after data extraction and prior to the data export belongs here (eg: format the data according to an export schema)&#xA;&#xA;Data Export - output the data to make it usable by the Business users or by subsequent processes. We recommend using UiPath's DataService." DisplayName="Export" sap:VirtualizedContainerService.HintSize="512,1730.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:Int32" Name="Index" />
-      <Variable x:TypeArguments="x:String" Name="JsonFields" />
-      <Variable x:TypeArguments="upr:ILocalResource" Name="ExportDataPath" />
-      <Variable x:TypeArguments="x:String" Name="JsonLineDetails" />
+      <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Serialize extracted data to save in Json file." Name="JsonFields" />
+      <Variable x:TypeArguments="scg:List(sd:DataTable)" sap2010:Annotation.AnnotationText="The extracted fields." Name="DataTableExtracted" />
+      <Variable x:TypeArguments="upr:ILocalResource" sap2010:Annotation.AnnotationText="The file resources of the target document that is going to be processed." Name="targetFile" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <ui:LogMessage DisplayName="Log Message - Start Data Export" sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;Constants&quot;)(&quot;LogMessage_DataExportStart&quot;) + &quot; &quot; + in_ExtractionResults.DocumentType.Name + Environment.NewLine + in_Config(&quot;Constants&quot;)(&quot;logKey&quot;)]" />
+    <ui:Comment DisplayName="Comment - Example Export" sap:VirtualizedContainerService.HintSize="449.6,148.8" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Please note that the below example is intended for illustrative purposes only.&#xA;The export to json was just an example to then use the data extracted in &#xA;another process." />
+    <Assign DisplayName="Assign - DataTableExtracted" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
-        <OutArgument x:TypeArguments="scg:List(sd:DataTable)">[out_DataTableExtracted]</OutArgument>
+        <OutArgument x:TypeArguments="scg:List(sd:DataTable)">[DataTableExtracted]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[in_extractedDocumentData.DocumentMetadata.ResultsAsDataTables]</InArgument>
+        <InArgument x:TypeArguments="scg:List(sd:DataTable)">[in_ExtractionResults.DocumentMetadata.ResultsAsDataTables]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:MergeDataTable Destination="[out_DataTableExtracted(0)]" DisplayName="Merge Data Table" sap:VirtualizedContainerService.HintSize="450,144.66666666666666" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[out_DataTableExtracted(1)]" />
-    <Assign sap:VirtualizedContainerService.HintSize="450,85.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_4">
+    <ui:MergeDataTable Destination="[DataTableExtracted(0)]" DisplayName="Merge Tables" sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[DataTableExtracted(1)]" />
+    <Assign DisplayName="Assign - serialize the data" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_4">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[JsonFields]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[JsonConvert.SerializeObject(out_DataTableExtracted(0))]</InArgument>
+        <InArgument x:TypeArguments="x:String">[JsonConvert.SerializeObject(DataTableExtracted(0))]</InArgument>
       </Assign.Value>
     </Assign>
-    <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,250" sap2010:WorkflowViewState.IdRef="WriteStorageText_3" Path="[in_TargetFileString+&quot;_Fields&quot;+&quot;.json&quot;]" StorageBucketName="DU_StorageBucket" Text="[JsonFields]" />
-    <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add Queue Item" FolderPath="DU_CrossPlatform" sap:VirtualizedContainerService.HintSize="450,198" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="Document_Understanding_Queue">
+    <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write the extracted data to json file and save in Storage Bucket" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DocumentUnderstandingOrchestratorFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,279.2" sap2010:WorkflowViewState.IdRef="WriteStorageText_3" Path="[system.io.Path.GetFileNameWithoutExtension(in_TargetFile) +&quot;_Fields&quot;+&quot;.json&quot;]" StorageBucketName="[in_Config(&quot;Assets&quot;)(&quot;StorageBucketName&quot;)]" Text="[JsonFields]" />
+    <ui:AddQueueItem ServiceBaseAddress="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Add new Queue Item to Output quque" FolderPath="[in_Config(&quot;Settings&quot;)(&quot;DocumentUnderstandingOrchestratorFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="449.6,226.4" sap2010:WorkflowViewState.IdRef="AddQueueItem_1" Priority="Normal" QueueType="[in_Config(&quot;Assets&quot;)(&quot;DocumentUnderstandingOutputQueueName&quot;)]">
       <ui:AddQueueItem.ItemInformation>
-        <InArgument x:TypeArguments="x:String" x:Key="RegularFields">[in_TargetFileString+"_RegularFields"+".json"]</InArgument>
-        <InArgument x:TypeArguments="x:String" x:Key="LineDetails">[in_TargetFileString+"_LineDetails"+".json"]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="ExtractionOutput">[path.GetFileNameWithoutExtension(in_TargetFile)+"_Fields"+".json"]</InArgument>
       </ui:AddQueueItem.ItemInformation>
     </ui:AddQueueItem>
+    <ui:PathExists Exists="{x:Null}" DisplayName="Path Exists - in_TargetFile" sap:VirtualizedContainerService.HintSize="449.6,173.6" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[in_TargetFile]" PathType="File" Resource="[targetFile]" />
+    <ui:Delete ContinueOnError="{x:Null}" Path="{x:Null}" DisplayName="Delete Target File" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Delete_1" ResourceFile="[targetFile]" />
   </Sequence>
 </Activity>
