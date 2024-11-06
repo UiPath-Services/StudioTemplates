@@ -21,7 +21,7 @@ class UserGuideTests:
         user_guide = read_pdf(app_constants.USER_GUIDE)
 
         # Extract text
-        output = user_guide.pages[4].extract_text()
+        output = user_guide.pages[5].extract_text()
         output = output.split("\n")[-1].replace("  ", "|").replace(" ", "")
         # check for the presence of the release version in the user guide
         found = re.search(test_data["release_version"], output) is not None
