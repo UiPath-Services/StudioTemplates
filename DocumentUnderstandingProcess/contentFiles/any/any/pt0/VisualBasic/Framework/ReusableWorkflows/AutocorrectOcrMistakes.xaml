@@ -1,20 +1,16 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="AutocorrectOcrMistakes" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.ComponentModel;assembly=System.ComponentModel.TypeConverter" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:this="clr-namespace:" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="AutocorrectOcrMistakes" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:njl="clr-namespace:Newtonsoft.Json.Linq;assembly=Newtonsoft.Json" xmlns:p="http://schemas.uipath.com/workflow/activities/document-processing-contracts/results" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.ComponentModel;assembly=System.ComponentModel.TypeConverter" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:ucas="clr-namespace:UiPath.Core.Activities.Storage;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property sap2010:Annotation.AnnotationText="Dictionary structure to store configuration data of the process (settings, constants and assets)." Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:String))" />
     <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="io_ExtractionResults" Type="InOutArgument(p:ExtractionResult)" />
     <x:Property sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="io_ValidatedExtractionResults" Type="InOutArgument(p:ExtractionResult)" />
-    <x:Property sap2010:Annotation.AnnotationText="The name of the logo field to be corrected as present in taxonomy." Name="in_FieldName" Type="InArgument(x:String)" />
   </x:Members>
-  <this:AutocorrectOcrMistakes.in_FieldName>
-    <InArgument x:TypeArguments="x:String" />
-  </this:AutocorrectOcrMistakes.in_FieldName>
   <VisualBasic.Settings>
     <x:Null />
   </VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>1023,633</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>963.2,7680</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>AutocorrectOcrMistakes_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <scg:List x:TypeArguments="x:String" Capacity="38">
+    <scg:List x:TypeArguments="x:String" Capacity="76">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -53,10 +49,14 @@
       <x:String>System.Dynamic</x:String>
       <x:String>System.Collections.Specialized</x:String>
       <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.DocumentProcessing.Contracts</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
+      <x:String>System.Numerics</x:String>
     </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <scg:List x:TypeArguments="AssemblyReference" Capacity="59">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="118">
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
       <AssemblyReference>Newtonsoft.Json</AssemblyReference>
@@ -115,23 +115,25 @@
       <AssemblyReference>System.Windows.Forms.Design</AssemblyReference>
       <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
       <AssemblyReference>System.Runtime.InteropServices.RuntimeInformation</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="AutocorrectOcrMistakes" sap:VirtualizedContainerService.HintSize="496,484" sap2010:WorkflowViewState.IdRef="Sequence_38">
+  <Sequence DisplayName="AutocorrectOcrMistakes" sap:VirtualizedContainerService.HintSize="944.8,7615.2" sap2010:WorkflowViewState.IdRef="Sequence_38">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <TryCatch DisplayName="Try Catch - autocorrect ocr mistakes" sap:VirtualizedContainerService.HintSize="434,373" sap2010:WorkflowViewState.IdRef="TryCatch_6">
+    <TryCatch DisplayName="Try Catch - autocorrect ocr mistakes" sap:VirtualizedContainerService.HintSize="882.4,7526.4" sap2010:WorkflowViewState.IdRef="TryCatch_6">
       <TryCatch.Variables>
-        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject containing all of the information related to the corrections made in Human in the Loop." Name="commonOcrMistakesJson" />
         <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field before Human in the Loop." Name="valueBeforeHitL" />
         <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Value of the field after Human in the Loop." Name="valueAfterHitL" />
         <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The corrected value to be used for autocorrection that matches the extracted field value." Name="correctedValue" />
-        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Serialized string of the commonOcrMistakesJson read from the storage bucket." Name="commonOcrMistakesString" />
-        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject from the commonOcrMistakesJson containing only the autocorrection information that matches the current extracted field value." Name="currentCorrectionJson" />
+        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Serialized string of the correctionDataJson read from the storage bucket." Name="correctionDataString" />
+        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject from the correctionDataJson containing only the autocorrection information that matches the current extracted field value." Name="currentCorrectionJson" />
         <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="&quot;Corrected Values&quot; item with highest number of repetitions that matches current extracted field value." Name="mostRelevantCorrectedValue" />
+        <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject containing all of the information related to the corrections made in Human in the Loop." Name="correctionDataJson" />
       </TryCatch.Variables>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -140,7 +142,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence sap2010:Annotation.AnnotationText="Detect and automatically correct common OCR mistakes for fields with set values (E.g. Logo) by saving repetitive corrections made in Action Center.&#xA;&#xA;This should NOT be used as-is. For a real implementation, the auto correction should be tailored to the specifics of the business process." DisplayName="Do" sap:VirtualizedContainerService.HintSize="694,8522" sap2010:WorkflowViewState.IdRef="Sequence_37">
+        <Sequence sap2010:Annotation.AnnotationText="Detect and automatically correct common OCR mistakes for fields with repetitive values (E.g. Logo) by saving corrections made in Action Center.&#xA;&#xA;This should NOT be used as-is. For a real implementation, the auto correction should be tailored to the specifics of the business process." DisplayName="Do" sap:VirtualizedContainerService.HintSize="845.6,7272" sap2010:WorkflowViewState.IdRef="Sequence_37">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -148,11 +150,11 @@
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Log Message - AutocorrectOcrMistakes Start" sap:VirtualizedContainerService.HintSize="632,141" sap2010:WorkflowViewState.IdRef="LogMessage_28" Message="[in_Config(&quot;LogMessage_AutocorrectOcrMistakesStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
-          <ui:RetryScope DisplayName="Retry Scope - Read Storage Text" sap:VirtualizedContainerService.HintSize="632,308" sap2010:WorkflowViewState.IdRef="RetryScope_5" NumberOfRetries="[Math.Max(cint(in_Config(&quot;MaxExecutionAttempts&quot;)), 1)]" RetryInterval="[TimeSpan.FromSeconds(cdbl(in_Config(&quot;RetryInterval&quot;)))]">
+          <ui:LogMessage DisplayName="Log Message - AutocorrectOcrMistakes Start" sap:VirtualizedContainerService.HintSize="783.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_28" Message="[in_Config(&quot;LogMessage_AutocorrectOcrMistakesStart&quot;) + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+          <ui:RetryScope DisplayName="Retry Scope - Read Storage Text" sap:VirtualizedContainerService.HintSize="783.2,342.4" sap2010:WorkflowViewState.IdRef="RetryScope_5" NumberOfRetries="[Math.Max(cint(in_Config(&quot;MaxExecutionAttempts&quot;)), 1)]" RetryInterval="[TimeSpan.FromSeconds(cdbl(in_Config(&quot;RetryInterval&quot;)))]">
             <ui:RetryScope.ActivityBody>
               <ActivityAction>
-                <ucas:ReadStorageText TimeoutMS="{x:Null}" DisplayName="Read Storage Text - Common OCR Mistakes" sap:VirtualizedContainerService.HintSize="334,133" sap2010:WorkflowViewState.IdRef="ReadStorageText_4" Path="[in_Config(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" Result="[commonOcrMistakesString]" StorageBucketName="[in_Config(&quot;StorageBucketName&quot;)]" />
+                <ucas:ReadStorageText TimeoutMS="{x:Null}" DisplayName="Read Storage Text - Correction Data String" sap:VirtualizedContainerService.HintSize="334.4,134.4" sap2010:WorkflowViewState.IdRef="ReadStorageText_4" Path="[in_Config(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" Result="[correctionDataString]" StorageBucketName="[in_Config(&quot;StorageBucketName&quot;)]" />
               </ActivityAction>
             </ui:RetryScope.ActivityBody>
             <ui:RetryScope.Condition>
@@ -165,7 +167,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </ui:RetryScope>
-          <TryCatch sap2010:Annotation.AnnotationText="Deserialize the saved autocorrection information data table." DisplayName="Try Catch - Deserialize Json String" sap:VirtualizedContainerService.HintSize="632,341" sap2010:WorkflowViewState.IdRef="TryCatch_5">
+          <TryCatch sap2010:Annotation.AnnotationText="Deserialize the saved autocorrection information." DisplayName="Try Catch - Deserialize correction data" sap:VirtualizedContainerService.HintSize="670.4,376" sap2010:WorkflowViewState.IdRef="TryCatch_5">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -174,17 +176,17 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <TryCatch.Try>
-              <Assign DisplayName="Assign - deserialize commonOcrMistakesJson" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_27">
+              <Assign DisplayName="Assign - deserialize correction data" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_27">
                 <Assign.To>
-                  <OutArgument x:TypeArguments="njl:JObject">[commonOcrMistakesJson]</OutArgument>
+                  <OutArgument x:TypeArguments="njl:JObject">[correctionDataJson]</OutArgument>
                 </Assign.To>
                 <Assign.Value>
-                  <InArgument x:TypeArguments="njl:JObject">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of JObject)(commonOcrMistakesString)]</InArgument>
+                  <InArgument x:TypeArguments="njl:JObject">[Newtonsoft.Json.JsonConvert.DeserializeObject(Of JObject)(correctionDataString)]</InArgument>
                 </Assign.Value>
               </Assign>
             </TryCatch.Try>
             <TryCatch.Catches>
-              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="438,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="436.8,23.2" sap2010:WorkflowViewState.IdRef="Catch`1_4">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -195,19 +197,19 @@
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Deserialize Json failed" sap:VirtualizedContainerService.HintSize="450,203" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                  <Sequence DisplayName="Deserialize Json failed" sap:VirtualizedContainerService.HintSize="416,203.2" sap2010:WorkflowViewState.IdRef="Sequence_28">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
-                    <Throw DisplayName="Throw - failed to deserialize json" Exception="[New Exception(&quot;Failed to deserialize commonOcrMistakesJson from storage bucket file - &quot; + exception.Message)]" sap:VirtualizedContainerService.HintSize="388,90" sap2010:WorkflowViewState.IdRef="Throw_7" />
+                    <Throw DisplayName="Throw - failed to deserialize json" Exception="[New Exception(&quot;Failed to deserialize the correction data from storage bucket file; make sure the file contains a valid json  - &quot; + exception.Message)]" sap:VirtualizedContainerService.HintSize="353.6,113.6" sap2010:WorkflowViewState.IdRef="Throw_7" />
                   </Sequence>
                 </ActivityAction>
               </Catch>
             </TryCatch.Catches>
           </TryCatch>
-          <If sap2010:Annotation.AnnotationText="If the flow is called before human in the loop, validated extraction result is going to be null and we will only use the normal extraction results." Condition="[io_ValidatedExtractionResults is Nothing]" DisplayName="If - before human in the loop" sap:VirtualizedContainerService.HintSize="632,306" sap2010:WorkflowViewState.IdRef="If_15">
+          <If sap2010:Annotation.AnnotationText="If the flow is called before human in the loop, validated extraction result is going to be null and we will only use the normal extraction results." Condition="[io_ValidatedExtractionResults is Nothing]" DisplayName="If - before human in the loop" sap:VirtualizedContainerService.HintSize="783.2,423.2" sap2010:WorkflowViewState.IdRef="If_15">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -216,7 +218,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Assign DisplayName="Assign - io_ValidatedExtractionResults" sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_28">
+              <Assign DisplayName="Assign - io_ValidatedExtractionResults" sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_28">
                 <Assign.To>
                   <OutArgument x:TypeArguments="p:ExtractionResult">[io_ValidatedExtractionResults]</OutArgument>
                 </Assign.To>
@@ -226,391 +228,553 @@
               </Assign>
             </If.Then>
             <If.Else>
-              <Sequence DisplayName="" sap2010:WorkflowViewState.IdRef="Sequence_39" />
-            </If.Else>
-          </If>
-          <If sap2010:Annotation.AnnotationText="Can't correct ocr mistakes if the field is missing" Condition="[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().IsMissing]" DisplayName="If - field is missing" sap:VirtualizedContainerService.HintSize="632,303" sap2010:WorkflowViewState.IdRef="If_16">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <If.Then>
-              <Throw DisplayName="Throw - field is missing" Exception="[new BusinessRuleException(in_FieldName + &quot; field is missing - can not auto correct ocr mistakes&quot;)]" sap:VirtualizedContainerService.HintSize="334,90" sap2010:WorkflowViewState.IdRef="Throw_8" />
-            </If.Then>
-            <If.Else>
-              <Sequence DisplayName="" sap2010:WorkflowViewState.IdRef="Sequence_40" />
-            </If.Else>
-          </If>
-          <ui:MultipleAssign DisplayName="Multiple Assign - field values before &amp; after hitl" sap:VirtualizedContainerService.HintSize="632,147" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
-            <ui:MultipleAssign.AssignOperations>
-              <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[valueBeforeHitL]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[if(io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().IsMissing, "", io_ExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().Values(0).Value)]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
-                <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
-                  <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[valueAfterHitL]</OutArgument>
-                  </ui:AssignOperation.To>
-                  <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().Values(0).Value]</InArgument>
-                  </ui:AssignOperation.Value>
-                </ui:AssignOperation>
-              </scg:List>
-            </ui:MultipleAssign.AssignOperations>
-          </ui:MultipleAssign>
-          <If sap2010:Annotation.AnnotationText="There are some generic values that can be read as OCR mistakes that can not be mapped to a single correct value so they should be blacklisted (E.g. 'Bank Of' is an incomplete OCR reading that may be any bank)" Condition="[commonOcrMistakesJson.ContainsKey(valueAfterHitL) AndAlso CBool(commonOcrMistakesJson(valueAfterHitL)(&quot;Is Black Listed&quot;))]" DisplayName="If - value is black listed" sap:VirtualizedContainerService.HintSize="632,613" sap2010:WorkflowViewState.IdRef="If_17">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <If.Then>
-              <Sequence DisplayName="Value is blacklisted" sap:VirtualizedContainerService.HintSize="376,359" sap2010:WorkflowViewState.IdRef="Sequence_29">
+              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,104.8" sap2010:WorkflowViewState.IdRef="Sequence_39">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message - value is black listed" sap:VirtualizedContainerService.HintSize="334,141" sap2010:WorkflowViewState.IdRef="LogMessage_29" Message="[&quot;Value '&quot;+valueAfterHitL+&quot;' is blacklisted -&gt; will not autocorrect&quot;]" />
-                <Throw DisplayName="Throw - Blacklisted" Exception="[new BusinessRuleException(&quot;OCR Value is blacklisted - will not autocorrect&quot;)]" sap:VirtualizedContainerService.HintSize="334,90" sap2010:WorkflowViewState.IdRef="Throw_9" />
               </Sequence>
-            </If.Then>
-            <If.Else>
-              <Sequence DisplayName="" sap2010:WorkflowViewState.IdRef="Sequence_41" />
             </If.Else>
           </If>
-          <If sap2010:Annotation.AnnotationText="We try to correct the the ocr value read from the document regardless if the document will go to hitl or not, even after returning from hitl as well." Condition="[commonOcrMistakesJson.ContainsKey(valueAfterHitL)]" DisplayName="If - value found in mistakesDT" sap:VirtualizedContainerService.HintSize="632,1671" sap2010:WorkflowViewState.IdRef="If_19">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <If.Then>
-              <Sequence DisplayName="Value found in mistakesDT" sap:VirtualizedContainerService.HintSize="521,1306" sap2010:WorkflowViewState.IdRef="Sequence_31">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message - value found" sap:VirtualizedContainerService.HintSize="479,141" sap2010:WorkflowViewState.IdRef="LogMessage_30" Message="[in_FieldName+&quot; '&quot;+valueAfterHitL+&quot;' was found in the mistakes list&quot;]" />
-                <Assign sap2010:Annotation.AnnotationText="Get matching entry from the collection" DisplayName="Assign - currentCorrectionJson" sap:VirtualizedContainerService.HintSize="479,113" sap2010:WorkflowViewState.IdRef="Assign_29">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="njl:JObject">[currentCorrectionJson]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="njl:JObject">[CType(commonOcrMistakesJson(valueAfterHitL), JObject)]</InArgument>
-                  </Assign.Value>
+          <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each - field id in config" sap:VirtualizedContainerService.HintSize="783.2,5238.4" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[in_Config(&quot;AutocorrectionFieldIdList&quot;).Split(&quot;,&quot;)]">
+            <ui:ForEach.Body>
+              <ActivityAction x:TypeArguments="x:String">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:String" Name="currentFieldId" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="749.6,5092" sap2010:WorkflowViewState.IdRef="Sequence_43">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="JObject from the correctionDataJson containing all of the autocorrection information for the current taxonomy field." Name="currentFieldCorrectionDataJson" />
+                  </Sequence.Variables>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Assign>
-                <Assign sap2010:Annotation.AnnotationText="Pick the corrected value with most repetitions" DisplayName="Assign - mostRelevantCorrectedValue" sap:VirtualizedContainerService.HintSize="479,113" sap2010:WorkflowViewState.IdRef="Assign_31">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="njl:JObject">[mostRelevantCorrectedValue]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="njl:JObject">[CType(currentCorrectionJson("Corrected Values").MaxBy(Function(item) item("Number Of Repetitions")), JObject)]</InArgument>
-                  </Assign.Value>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Assign>
-                <If sap2010:Annotation.AnnotationText="A minimum number of repetitions of the correction in Action Center needs to be met before we will autocorrect the value." Condition="[CInt(mostRelevantCorrectedValue(&quot;Number Of Repetitions&quot;)) &gt;= CInt(in_Config(&quot;MinimumNumberOfRepetitions&quot;))]" DisplayName="If - MinimumNumberOfRepetitions is met" sap:VirtualizedContainerService.HintSize="478.6666666666667,731.3333333333334" sap2010:WorkflowViewState.IdRef="If_18">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <If.Then>
-                    <Sequence DisplayName="Minimum number of repetitions is met" sap:VirtualizedContainerService.HintSize="400,358.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_30">
-                      <sap:WorkflowViewStateService.ViewState>
-                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        </scg:Dictionary>
-                      </sap:WorkflowViewStateService.ViewState>
-                      <Assign DisplayName="Assign - correctedValue" sap:VirtualizedContainerService.HintSize="338,63.333333333333336" sap2010:WorkflowViewState.IdRef="Assign_32">
-                        <Assign.To>
-                          <OutArgument x:TypeArguments="x:String">[correctedValue]</OutArgument>
-                        </Assign.To>
-                        <Assign.Value>
-                          <InArgument x:TypeArguments="x:String">[mostRelevantCorrectedValue("Value").ToString]</InArgument>
-                        </Assign.Value>
-                      </Assign>
-                      <ui:LogMessage DisplayName="Log Message - Minimum number of repetitions met" sap:VirtualizedContainerService.HintSize="338,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_31" Message="[&quot;Changing &quot; + in_FieldName + &quot; from &quot; + valueAfterHitL + &quot; to &quot; + correctedValue]" />
-                    </Sequence>
-                  </If.Then>
-                  <If.Else>
-                    <ui:LogMessage DisplayName="Log Message - Minimum number of repetitions not met" sap:VirtualizedContainerService.HintSize="334,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_32" Message="[&quot;Minimum repetition number not met -&gt; will not update value&quot;]" />
-                  </If.Else>
-                </If>
-              </Sequence>
-            </If.Then>
-            <If.Else>
-              <ui:LogMessage DisplayName="Log Message - value not found in Data Table" sap:VirtualizedContainerService.HintSize="334,141" sap2010:WorkflowViewState.IdRef="LogMessage_33" Message="[in_FieldName+&quot; '&quot;+valueAfterHitL+&quot;' was not found in the mistakes DT&quot;]" />
-            </If.Else>
-          </If>
-          <If Condition="[Not String.isNullOrEmpty(valueBeforeHitL) AndAlso not valueAfterHitL.Equals(valueBeforeHitL)]" DisplayName="If - update learning file" sap:VirtualizedContainerService.HintSize="632,2982" sap2010:WorkflowViewState.IdRef="If_20">
+                  <ui:IfElseIfV2 sap2010:Annotation.AnnotationText="Skip autocorrection if the field is not relevant to the current document type or if it is missing after hitl" Condition="[io_ValidatedExtractionResults.GetFields(Function(field) field.FieldId.Equals(currentFieldId)).Count.Equals(0)]" DisplayName="Else If - skip autocorrection" sap:VirtualizedContainerService.HintSize="687.2,132.8" sap2010:WorkflowViewState.IdRef="IfElseIfV2_1">
+                    <ui:IfElseIfV2.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,255.33333333333334" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="354,167.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_44" Message="[&quot;Correcting &quot; + io_ValidatedExtractionResults.GetField(currentFieldId).FieldName]">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:LogMessage>
+                      </Sequence>
+                    </ui:IfElseIfV2.Else>
+                    <ui:IfElseIfV2.ElseIfs>
+                      <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                        <ui:IfElseIfBlock BlockType="ElseIf" Condition="[io_ValidatedExtractionResults.GetField(currentFieldId).IsMissing]" DisplayName="If else if block" sap2010:WorkflowViewState.IdRef="IfElseIfBlock_4">
+                          <ui:IfElseIfBlock.Then>
+                            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="416,312.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="354,176.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_42" Message="[io_ValidatedExtractionResults.GetField(currentFieldId).FieldName + &quot; is missing - skiping autocorrect.&quot;]">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </ui:LogMessage>
+                              <ui:Continue sap:VirtualizedContainerService.HintSize="354,48" sap2010:WorkflowViewState.IdRef="Continue_1" />
+                            </Sequence>
+                          </ui:IfElseIfBlock.Then>
+                        </ui:IfElseIfBlock>
+                      </sc:BindingList>
+                    </ui:IfElseIfV2.ElseIfs>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:IfElseIfV2.Then>
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,255.33333333333334" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="354,167.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_45" Message="[currentFieldId + &quot; is not one of the processed document type fields - skiping autocorrect.&quot;]">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:LogMessage>
+                      </Sequence>
+                    </ui:IfElseIfV2.Then>
+                  </ui:IfElseIfV2>
+                  <If Condition="[correctionDataJson.ContainsKey(currentFieldId)]" DisplayName="If - current field is configured in the correctionDataJson" sap:VirtualizedContainerService.HintSize="687.2,624" sap2010:WorkflowViewState.IdRef="If_23">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="496,193.6" sap2010:WorkflowViewState.IdRef="Sequence_46">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="Assign - currentFieldCorrectionDataJson" sap:VirtualizedContainerService.HintSize="433.6,104.8" sap2010:WorkflowViewState.IdRef="Assign_43">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="njl:JObject">[currentFieldCorrectionDataJson]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="njl:JObject">[CType(correctionDataJson(currentFieldId), JObject)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="540.8,260" sap2010:WorkflowViewState.IdRef="Sequence_47">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:MultipleAssign DisplayName="Multiple Assign - add new field entry to correction data" sap:VirtualizedContainerService.HintSize="478.4,171.2" sap2010:WorkflowViewState.IdRef="MultipleAssign_10">
+                          <ui:MultipleAssign.AssignOperations>
+                            <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_19">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="njl:JObject">[currentFieldCorrectionDataJson]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="njl:JObject">[new JObject()]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_20">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="njl:JToken">[correctionDataJson(currentFieldId)]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="njl:JToken">[currentFieldCorrectionDataJson]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                            </scg:List>
+                          </ui:MultipleAssign.AssignOperations>
+                        </ui:MultipleAssign>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                  <ui:MultipleAssign DisplayName="Multiple Assign - field values before &amp; after hitl" sap:VirtualizedContainerService.HintSize="687.2,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[valueBeforeHitL]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">[if(io_ExtractionResults.GetField(currentFieldId).IsMissing,"",io_ExtractionResults.GetField(currentFieldId).Values(0).Value)]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[valueAfterHitL]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">[io_ValidatedExtractionResults.GetField(currentFieldId).Values(0).Value]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                  </ui:MultipleAssign>
+                  <If sap2010:Annotation.AnnotationText="There are some generic values that can be read as OCR mistakes that can not be mapped to a single correct value so they should be blacklisted (E.g. 'Bank Of' is an incomplete OCR reading that may be any bank)" Condition="[currentFieldCorrectionDataJson.ContainsKey(valueAfterHitL) AndAlso CBool(currentFieldCorrectionDataJson(valueAfterHitL)(&quot;Is Black Listed&quot;))]" DisplayName="If - value is black listed" sap:VirtualizedContainerService.HintSize="687.2,196.8" sap2010:WorkflowViewState.IdRef="If_17">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Value is blacklisted" sap:VirtualizedContainerService.HintSize="416,312.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_29">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message - value is black listed" sap:VirtualizedContainerService.HintSize="354,176.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_29" Message="[&quot;Value '&quot;+valueAfterHitL+&quot;' is blacklisted -&gt; will not autocorrect&quot;]" />
+                        <ui:Continue sap:VirtualizedContainerService.HintSize="354,48" sap2010:WorkflowViewState.IdRef="Continue_2" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,25.333333333333332" sap2010:WorkflowViewState.IdRef="Sequence_41">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                  <If sap2010:Annotation.AnnotationText="If the field value is found in the list of mistakes previously corrected in hitl, we need to retrieve the corrected value and check if the minimun number of repetitions is met." Condition="[currentFieldCorrectionDataJson.ContainsKey(valueAfterHitL)]" DisplayName="If - value found in correction data" sap:VirtualizedContainerService.HintSize="625.6,1648" sap2010:WorkflowViewState.IdRef="If_19">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Value found in correction data" sap:VirtualizedContainerService.HintSize="592,1298.4" sap2010:WorkflowViewState.IdRef="Sequence_31">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message - value found" sap:VirtualizedContainerService.HintSize="529.6,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_30" Message="[&quot;'&quot;+valueAfterHitL+&quot;' was found in the mistakes list&quot;]" />
+                        <Assign sap2010:Annotation.AnnotationText="Get matching entry from the collection" DisplayName="Assign - currentCorrectionJson" sap:VirtualizedContainerService.HintSize="529.6,144.8" sap2010:WorkflowViewState.IdRef="Assign_29">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="njl:JObject">[currentCorrectionJson]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="njl:JObject">[CType(currentFieldCorrectionDataJson(valueAfterHitL), JObject)]</InArgument>
+                          </Assign.Value>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Assign>
+                        <Assign sap2010:Annotation.AnnotationText="Pick the corrected value with most repetitions" DisplayName="Assign - mostRelevantCorrectedValue" sap:VirtualizedContainerService.HintSize="529.6,144.8" sap2010:WorkflowViewState.IdRef="Assign_31">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="njl:JObject">[mostRelevantCorrectedValue]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="njl:JObject">[CType(currentCorrectionJson("Corrected Values").MaxBy(Function(item) item("Number Of Repetitions")), JObject)]</InArgument>
+                          </Assign.Value>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Assign>
+                        <If sap2010:Annotation.AnnotationText="A minimum number of repetitions of the correction in Action Center needs to be met before we will autocorrect the value." Condition="[CInt(mostRelevantCorrectedValue(&quot;Number Of Repetitions&quot;)) &gt;= CInt(in_Config(&quot;MinimumNumberOfRepetitions&quot;))]" DisplayName="If - MinimumNumberOfRepetitions is met" sap:VirtualizedContainerService.HintSize="529.6,745.6" sap2010:WorkflowViewState.IdRef="If_18">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <Sequence DisplayName="Minimum number of repetitions is met" sap:VirtualizedContainerService.HintSize="496,372.6666666666667" sap2010:WorkflowViewState.IdRef="Sequence_30">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Assign DisplayName="Assign - correctedValue" sap:VirtualizedContainerService.HintSize="434,117.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_32">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[correctedValue]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[mostRelevantCorrectedValue("Value").ToString]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <ui:LogMessage DisplayName="Log Message - Minimum number of repetitions met" sap:VirtualizedContainerService.HintSize="434,167.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_31" Message="[&quot;Changing from &quot; + valueAfterHitL + &quot; to &quot; + correctedValue]" />
+                            </Sequence>
+                          </If.Then>
+                          <If.Else>
+                            <ui:LogMessage DisplayName="Log Message - Minimum number of repetitions not met" sap:VirtualizedContainerService.HintSize="336.6666666666667,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_32" Message="[&quot;Minimum repetition number not met -&gt; will not update value&quot;]" />
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <ui:LogMessage DisplayName="Log Message - value not found in Data Table" sap:VirtualizedContainerService.HintSize="337.3333333333333,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_33" Message="[&quot;'&quot;+valueAfterHitL+&quot;' was not found in the mistakes list&quot;]" />
+                    </If.Else>
+                  </If>
+                  <If sap2010:Annotation.AnnotationText="If the value was changed in hitl, we need to update the learning file." Condition="[Not String.isNullOrEmpty(valueBeforeHitL) AndAlso not valueAfterHitL.Equals(valueBeforeHitL)]" DisplayName="If - update learning file" sap:VirtualizedContainerService.HintSize="687.2,3031.2" sap2010:WorkflowViewState.IdRef="If_20">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Value changed in HitL" sap:VirtualizedContainerService.HintSize="653.6,2694.4" sap2010:WorkflowViewState.IdRef="Sequence_35">
+                        <Sequence.Variables>
+                          <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="The new item to be added to the &quot;Corrected Values&quot; JArray." Default="[new JObject]" Name="newCorrectedValueJson" />
+                        </Sequence.Variables>
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:LogMessage DisplayName="Log Message - value changed after HitL" sap:VirtualizedContainerService.HintSize="591.2,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_34" Message="[&quot;Value was changed in HitL -&gt; updating mapping&quot;]" />
+                        <ui:IfElseIf sap2010:Annotation.AnnotationText="When updating the mapping we search for valueBeforeHitL as the mistake and valueAfterHitL as the correction.&#xA;&#xA;If not present in our mapping we add it with repetition set to 1, otherwise increment the repetition number." DisplayName="Else If - value already present in the correction data" sap:VirtualizedContainerService.HintSize="591.2,2408" sap2010:WorkflowViewState.IdRef="IfElseIf_3">
+                          <ui:IfElseIf.ConditionBlocks>
+                            <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                              <ui:IfElseIfBlock BlockType="If" Condition="[currentCorrectionJson is Nothing]" sap:VirtualizedContainerService.HintSize="334.4,24.799999999999997" sap2010:WorkflowViewState.IdRef="IfElseIfBlock_1">
+                                <ui:IfElseIfBlock.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="If currentCorrectionJson is null, the valueBeforeHitL is not in the commonOcrMistakesjson and needs to be added." DisplayName="Add new entry to mapping" sap:VirtualizedContainerService.HintSize="540.8,775.2" sap2010:WorkflowViewState.IdRef="Sequence_32">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="Json for the new mistake to be added in the commonOcrMistakesJson." Default="[new JObject]" Name="newMistakeJson" />
+                                    </Sequence.Variables>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:LogMessage DisplayName="Log Message - new entry" sap:VirtualizedContainerService.HintSize="478.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_35" Message="[&quot;Adding new key to correction data json&quot;]" />
+                                    <ui:MultipleAssign DisplayName="Multiple Assign - new corrected value json" sap:VirtualizedContainerService.HintSize="478.4,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_8">
+                                      <ui:MultipleAssign.AssignOperations>
+                                        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
+                                            <ui:AssignOperation.To>
+                                              <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Value")]</OutArgument>
+                                            </ui:AssignOperation.To>
+                                            <ui:AssignOperation.Value>
+                                              <InArgument x:TypeArguments="njl:JToken">[valueAfterHitL]</InArgument>
+                                            </ui:AssignOperation.Value>
+                                          </ui:AssignOperation>
+                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_16">
+                                            <ui:AssignOperation.To>
+                                              <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Number Of Repetitions")]</OutArgument>
+                                            </ui:AssignOperation.To>
+                                            <ui:AssignOperation.Value>
+                                              <InArgument x:TypeArguments="njl:JToken">[1]</InArgument>
+                                            </ui:AssignOperation.Value>
+                                          </ui:AssignOperation>
+                                        </scg:List>
+                                      </ui:MultipleAssign.AssignOperations>
+                                    </ui:MultipleAssign>
+                                    <ui:MultipleAssign DisplayName="Multiple Assign - new mistake json" sap:VirtualizedContainerService.HintSize="478.6666666666667,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_9">
+                                      <ui:MultipleAssign.AssignOperations>
+                                        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
+                                            <ui:AssignOperation.To>
+                                              <OutArgument x:TypeArguments="njl:JToken">[newMistakeJson("Corrected Values")]</OutArgument>
+                                            </ui:AssignOperation.To>
+                                            <ui:AssignOperation.Value>
+                                              <InArgument x:TypeArguments="njl:JToken">[new JArray(newCorrectedValueJson)]</InArgument>
+                                            </ui:AssignOperation.Value>
+                                          </ui:AssignOperation>
+                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
+                                            <ui:AssignOperation.To>
+                                              <OutArgument x:TypeArguments="njl:JToken">[newMistakeJson("Is Black Listed")]</OutArgument>
+                                            </ui:AssignOperation.To>
+                                            <ui:AssignOperation.Value>
+                                              <InArgument x:TypeArguments="njl:JToken">[False]</InArgument>
+                                            </ui:AssignOperation.Value>
+                                          </ui:AssignOperation>
+                                        </scg:List>
+                                      </ui:MultipleAssign.AssignOperations>
+                                    </ui:MultipleAssign>
+                                    <Assign DisplayName="Assign - add new entry" sap:VirtualizedContainerService.HintSize="478.6666666666667,108" sap2010:WorkflowViewState.IdRef="Assign_38">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="njl:JToken">[currentFieldCorrectionDataJson(valueBeforeHitL)]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="njl:JToken">[newMistakeJson]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </Sequence>
+                                </ui:IfElseIfBlock.Then>
+                              </ui:IfElseIfBlock>
+                              <ui:IfElseIfBlock BlockType="ElseIf" Condition="[currentCorrectionJson isNot Nothing AndAlso currentCorrectionJson(&quot;Corrected Values&quot;).Any(Function(item) item(&quot;Value&quot;).ToString.Equals(valueAfterHitL))]" sap2010:WorkflowViewState.IdRef="IfElseIfBlock_2">
+                                <ui:IfElseIfBlock.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="The current correction is already present in the corrected values array, hence we need to increment the number of repetition." DisplayName="Increment repetition" sap:VirtualizedContainerService.HintSize="496,535.3333333333334" sap2010:WorkflowViewState.IdRef="Sequence_33">
+                                    <Sequence.Variables>
+                                      <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="&quot;Corrected Values&quot; item from current mistake that contains our valueAfterHitL and it's number of repetitions." Name="currentCorrectedValue" />
+                                    </Sequence.Variables>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <Assign DisplayName="Assign - currentCorrectedValue" sap:VirtualizedContainerService.HintSize="434,117.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_39">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="njl:JObject">[currentCorrectedValue]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="njl:JObject">[CType(currentCorrectionJson("Corrected Values").Where(Function(item) item("Value").ToString.Equals(valueAfterHitL)).First, JObject)]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <Assign DisplayName="Assign - increment repetition counter" sap:VirtualizedContainerService.HintSize="434,117.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_35">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="njl:JToken">[currentCorrectedValue("Number Of Repetitions")]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="njl:JToken">[CInt(currentCorrectedValue("Number Of Repetitions"))+1]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                    <ui:LogMessage DisplayName="Log Message - increment repetition number" sap:VirtualizedContainerService.HintSize="434,167.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_36" Message="[&quot;Incremented repetition number: &quot;+currentCorrectedValue(&quot;Number Of Repetitions&quot;).ToString]" />
+                                  </Sequence>
+                                </ui:IfElseIfBlock.Then>
+                              </ui:IfElseIfBlock>
+                              <ui:IfElseIfBlock BlockType="Else" sap2010:WorkflowViewState.IdRef="IfElseIfBlock_3">
+                                <ui:IfElseIfBlock.Then>
+                                  <Sequence sap2010:Annotation.AnnotationText="The current correction is not present in the corrected values array, hence we need to add it as a new corrected value with number of repetitions set to 1" DisplayName="New Corrected value for current mistake" sap:VirtualizedContainerService.HintSize="540.6666666666666,648" sap2010:WorkflowViewState.IdRef="Sequence_34">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:MultipleAssign DisplayName="Multiple Assign - new corrected value" sap:VirtualizedContainerService.HintSize="478.6666666666667,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_7">
+                                      <ui:MultipleAssign.AssignOperations>
+                                        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
+                                            <ui:AssignOperation.To>
+                                              <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Value")]</OutArgument>
+                                            </ui:AssignOperation.To>
+                                            <ui:AssignOperation.Value>
+                                              <InArgument x:TypeArguments="njl:JToken">[valueAfterHitL]</InArgument>
+                                            </ui:AssignOperation.Value>
+                                          </ui:AssignOperation>
+                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
+                                            <ui:AssignOperation.To>
+                                              <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Number Of Repetitions")]</OutArgument>
+                                            </ui:AssignOperation.To>
+                                            <ui:AssignOperation.Value>
+                                              <InArgument x:TypeArguments="njl:JToken">[1]</InArgument>
+                                            </ui:AssignOperation.Value>
+                                          </ui:AssignOperation>
+                                        </scg:List>
+                                      </ui:MultipleAssign.AssignOperations>
+                                    </ui:MultipleAssign>
+                                    <InvokeMethod DisplayName="Invoke Method - Add to Corrected Values" sap:VirtualizedContainerService.HintSize="478.6666666666667,167.33333333333334" sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="Add">
+                                      <InvokeMethod.TargetObject>
+                                        <InArgument x:TypeArguments="njl:JArray">[CType(currentCorrectionJson("Corrected Values"), JArray)]</InArgument>
+                                      </InvokeMethod.TargetObject>
+                                      <InArgument x:TypeArguments="njl:JObject">[newCorrectedValueJson]</InArgument>
+                                    </InvokeMethod>
+                                    <ui:LogMessage DisplayName="Log Message - new corrected value entry" sap:VirtualizedContainerService.HintSize="478.6666666666667,167.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_37" Message="[&quot;Added &quot;&quot;&quot;+valueAfterHitL+&quot;&quot;&quot; as a new correction for &quot;&quot;&quot;+valueBeforeHitL+&quot;&quot;&quot;&quot;]" />
+                                  </Sequence>
+                                </ui:IfElseIfBlock.Then>
+                              </ui:IfElseIfBlock>
+                            </sc:BindingList>
+                          </ui:IfElseIf.ConditionBlocks>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ui:IfElseIf>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <ui:LogMessage DisplayName="Log Message - value not changed after HitL" sap:VirtualizedContainerService.HintSize="334,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_38" Message="[&quot;Value was not changed in HitL&quot;]" />
+                    </If.Else>
+                  </If>
+                  <If sap2010:Annotation.AnnotationText="If correctedValue is populated, we need to update the extraction results object." Condition="[Not String.IsNullOrEmpty(correctedValue)]" DisplayName="If -  corrected value is not empty" sap:VirtualizedContainerService.HintSize="574.6666666666666,674" sap2010:WorkflowViewState.IdRef="If_21">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence DisplayName="Correct ExtractionResult" sap:VirtualizedContainerService.HintSize="540.6666666666666,376" sap2010:WorkflowViewState.IdRef="Sequence_36">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign DisplayName="Assign - extraction result value" sap:VirtualizedContainerService.HintSize="478.6666666666667,117.33333333333333" sap2010:WorkflowViewState.IdRef="Assign_37">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:String">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldId.Equals(currentFieldId)).First().Values(0).Value]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:String">[correctedValue]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <ui:MultipleAssign DisplayName="Multiple Assign - extraction result confidence" sap:VirtualizedContainerService.HintSize="478.6666666666667,170.66666666666666" sap2010:WorkflowViewState.IdRef="MultipleAssign_6">
+                          <ui:MultipleAssign.AssignOperations>
+                            <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:Single">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldId.Equals(currentFieldId)).First().Values(0).OcrConfidence]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:Single">1</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_12">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:Single">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldId.Equals(currentFieldId)).First().Values(0).Confidence]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:Single">1</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                            </scg:List>
+                          </ui:MultipleAssign.AssignOperations>
+                        </ui:MultipleAssign>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,104.66666666666667" sap2010:WorkflowViewState.IdRef="Sequence_42">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                      </Sequence>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </ActivityAction>
+            </ui:ForEach.Body>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If.Then>
-              <Sequence DisplayName="Value changed in HitL" sap:VirtualizedContainerService.HintSize="598,2659.3333333333335" sap2010:WorkflowViewState.IdRef="Sequence_35">
-                <Sequence.Variables>
-                  <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="The new item to be added to the &quot;Corrected Values&quot; JArray." Default="[new JObject]" Name="newCorrectedValueJson" />
-                </Sequence.Variables>
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log Message - value changed after HitL" sap:VirtualizedContainerService.HintSize="536,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_34" Message="[in_FieldName+&quot; value was changed in HitL -&gt; updating mapping&quot;]" />
-                <ui:IfElseIf sap2010:Annotation.AnnotationText="When updating the mapping we search for valueBeforeHitL as the mistake and valueAfterHitL as the corrected.&#xA;&#xA;If not present in our mapping we add it with repetition set to 1, otherwise increment the repetition number." DisplayName="Else If - value already present in mistakesDT" sap:VirtualizedContainerService.HintSize="536,2364" sap2010:WorkflowViewState.IdRef="IfElseIf_3">
-                  <ui:IfElseIf.ConditionBlocks>
-                    <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
-                      <ui:IfElseIfBlock BlockType="If" Condition="[currentCorrectionJson is Nothing]">
-                        <ui:IfElseIfBlock.Then>
-                          <Sequence sap2010:Annotation.AnnotationText="If currentCorrectionJson is null, the valueBeforeHitL is not in the commonOcrMistakesjson and needs to be added." DisplayName="Add new entry to mapping" sap:VirtualizedContainerService.HintSize="484.6666666666667,746.6666666666666" sap2010:WorkflowViewState.IdRef="Sequence_32">
-                            <Sequence.Variables>
-                              <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="Json for the new mistake to be added in the commonOcrMistakesJson." Default="[new JObject]" Name="newMistakeJson" />
-                            </Sequence.Variables>
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                            <ui:LogMessage DisplayName="Log Message - new entry" sap:VirtualizedContainerService.HintSize="422.6666666666667,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_35" Message="[&quot;Adding new row to mistakesDT&quot;]" />
-                            <ui:MultipleAssign DisplayName="Multiple Assign - new corrected value json" sap:VirtualizedContainerService.HintSize="422.6666666666667,131.33333333333334" sap2010:WorkflowViewState.IdRef="MultipleAssign_8">
-                              <ui:MultipleAssign.AssignOperations>
-                                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
-                                    <ui:AssignOperation.To>
-                                      <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Value")]</OutArgument>
-                                    </ui:AssignOperation.To>
-                                    <ui:AssignOperation.Value>
-                                      <InArgument x:TypeArguments="njl:JToken">[valueAfterHitL]</InArgument>
-                                    </ui:AssignOperation.Value>
-                                  </ui:AssignOperation>
-                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_16">
-                                    <ui:AssignOperation.To>
-                                      <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Number Of Repetitions")]</OutArgument>
-                                    </ui:AssignOperation.To>
-                                    <ui:AssignOperation.Value>
-                                      <InArgument x:TypeArguments="njl:JToken">[1]</InArgument>
-                                    </ui:AssignOperation.Value>
-                                  </ui:AssignOperation>
-                                </scg:List>
-                              </ui:MultipleAssign.AssignOperations>
-                            </ui:MultipleAssign>
-                            <ui:MultipleAssign DisplayName="Multiple Assign - new mistake json" sap:VirtualizedContainerService.HintSize="422.6666666666667,131.33333333333334" sap2010:WorkflowViewState.IdRef="MultipleAssign_9">
-                              <ui:MultipleAssign.AssignOperations>
-                                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
-                                    <ui:AssignOperation.To>
-                                      <OutArgument x:TypeArguments="njl:JToken">[newMistakeJson("Corrected Values")]</OutArgument>
-                                    </ui:AssignOperation.To>
-                                    <ui:AssignOperation.Value>
-                                      <InArgument x:TypeArguments="njl:JToken">[new JArray(newCorrectedValueJson)]</InArgument>
-                                    </ui:AssignOperation.Value>
-                                  </ui:AssignOperation>
-                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
-                                    <ui:AssignOperation.To>
-                                      <OutArgument x:TypeArguments="njl:JToken">[newMistakeJson("Is Black Listed")]</OutArgument>
-                                    </ui:AssignOperation.To>
-                                    <ui:AssignOperation.Value>
-                                      <InArgument x:TypeArguments="njl:JToken">[False]</InArgument>
-                                    </ui:AssignOperation.Value>
-                                  </ui:AssignOperation>
-                                </scg:List>
-                              </ui:MultipleAssign.AssignOperations>
-                            </ui:MultipleAssign>
-                            <Assign DisplayName="Assign - add new entry" sap:VirtualizedContainerService.HintSize="422.6666666666667,63.333333333333336" sap2010:WorkflowViewState.IdRef="Assign_38">
-                              <Assign.To>
-                                <OutArgument x:TypeArguments="njl:JToken">[commonOcrMistakesJson(valueBeforeHitL)]</OutArgument>
-                              </Assign.To>
-                              <Assign.Value>
-                                <InArgument x:TypeArguments="njl:JToken">[newMistakeJson]</InArgument>
-                              </Assign.Value>
-                            </Assign>
-                          </Sequence>
-                        </ui:IfElseIfBlock.Then>
-                      </ui:IfElseIfBlock>
-                      <ui:IfElseIfBlock BlockType="ElseIf" Condition="[currentCorrectionJson isNot Nothing AndAlso currentCorrectionJson(&quot;Corrected Values&quot;).Any(Function(item) item(&quot;Value&quot;).ToString.Equals(valueAfterHitL))]">
-                        <ui:IfElseIfBlock.Then>
-                          <Sequence sap2010:Annotation.AnnotationText="The current correction is already present in the corrected values array, hence we need to increment the number of repetition." DisplayName="Increment repetition" sap:VirtualizedContainerService.HintSize="400,507.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_33">
-                            <Sequence.Variables>
-                              <Variable x:TypeArguments="njl:JObject" sap2010:Annotation.AnnotationText="&quot;Corrected Values&quot; item from current mistake that contains our valueAfterHitL and it's number of repetitions." Name="currentCorrectedValue" />
-                            </Sequence.Variables>
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                            <Assign DisplayName="Assign - currentCorrectedValue" sap:VirtualizedContainerService.HintSize="338,63.333333333333336" sap2010:WorkflowViewState.IdRef="Assign_39">
-                              <Assign.To>
-                                <OutArgument x:TypeArguments="njl:JObject">[currentCorrectedValue]</OutArgument>
-                              </Assign.To>
-                              <Assign.Value>
-                                <InArgument x:TypeArguments="njl:JObject">[CType(currentCorrectionJson("Corrected Values").Where(Function(item) item("Value").ToString.Equals(valueAfterHitL)).First, JObject)]</InArgument>
-                              </Assign.Value>
-                            </Assign>
-                            <Assign DisplayName="Assign - increment repetition counter" sap:VirtualizedContainerService.HintSize="338,63.333333333333336" sap2010:WorkflowViewState.IdRef="Assign_35">
-                              <Assign.To>
-                                <OutArgument x:TypeArguments="njl:JToken">[currentCorrectedValue("Number Of Repetitions")]</OutArgument>
-                              </Assign.To>
-                              <Assign.Value>
-                                <InArgument x:TypeArguments="njl:JToken">[CInt(currentCorrectedValue("Number Of Repetitions"))+1]</InArgument>
-                              </Assign.Value>
-                            </Assign>
-                            <ui:LogMessage DisplayName="Log Message - increment repetition number" sap:VirtualizedContainerService.HintSize="338,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_36" Message="[&quot;Incremented repetition number: &quot;+currentCorrectedValue(&quot;Number Of Repetitions&quot;).ToString]" />
-                          </Sequence>
-                        </ui:IfElseIfBlock.Then>
-                      </ui:IfElseIfBlock>
-                      <ui:IfElseIfBlock BlockType="Else">
-                        <ui:IfElseIfBlock.Then>
-                          <Sequence sap2010:Annotation.AnnotationText="The current correction is not present in the corrected values array, hence we need to add it as a new corrected value with number of repetitions set to 1" DisplayName="New Corrected value for current mistake" sap:VirtualizedContainerService.HintSize="484.6666666666667,647.3333333333334" sap2010:WorkflowViewState.IdRef="Sequence_34">
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                            <ui:MultipleAssign DisplayName="Multiple Assign - new corrected value" sap:VirtualizedContainerService.HintSize="422.6666666666667,131.33333333333334" sap2010:WorkflowViewState.IdRef="MultipleAssign_7">
-                              <ui:MultipleAssign.AssignOperations>
-                                <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
-                                    <ui:AssignOperation.To>
-                                      <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Value")]</OutArgument>
-                                    </ui:AssignOperation.To>
-                                    <ui:AssignOperation.Value>
-                                      <InArgument x:TypeArguments="njl:JToken">[valueAfterHitL]</InArgument>
-                                    </ui:AssignOperation.Value>
-                                  </ui:AssignOperation>
-                                  <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
-                                    <ui:AssignOperation.To>
-                                      <OutArgument x:TypeArguments="njl:JToken">[newCorrectedValueJson("Number Of Repetitions")]</OutArgument>
-                                    </ui:AssignOperation.To>
-                                    <ui:AssignOperation.Value>
-                                      <InArgument x:TypeArguments="njl:JToken">[1]</InArgument>
-                                    </ui:AssignOperation.Value>
-                                  </ui:AssignOperation>
-                                </scg:List>
-                              </ui:MultipleAssign.AssignOperations>
-                            </ui:MultipleAssign>
-                            <InvokeMethod DisplayName="Invoke Method - Add to Corrected Values" sap:VirtualizedContainerService.HintSize="422.6666666666667,135.33333333333334" sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="Add">
-                              <InvokeMethod.TargetObject>
-                                <InArgument x:TypeArguments="njl:JArray">[CType(currentCorrectionJson("Corrected Values"), JArray)]</InArgument>
-                              </InvokeMethod.TargetObject>
-                              <InArgument x:TypeArguments="njl:JObject">[newCorrectedValueJson]</InArgument>
-                            </InvokeMethod>
-                            <ui:LogMessage DisplayName="Log Message - new corrected value entry" sap:VirtualizedContainerService.HintSize="422.6666666666667,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_37" Message="[&quot;Added &quot;&quot;&quot;+valueAfterHitL+&quot;&quot;&quot; as a new correction for &quot;&quot;&quot;+valueBeforeHitL+&quot;&quot;&quot;&quot;]" />
-                          </Sequence>
-                        </ui:IfElseIfBlock.Then>
-                      </ui:IfElseIfBlock>
-                    </sc:BindingList>
-                  </ui:IfElseIf.ConditionBlocks>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </ui:IfElseIf>
-              </Sequence>
-            </If.Then>
-            <If.Else>
-              <ui:LogMessage DisplayName="Log Message - value not changed after HitL" sap:VirtualizedContainerService.HintSize="334,141" sap2010:WorkflowViewState.IdRef="LogMessage_38" Message="[in_FieldName+&quot; value was not changed in HitL&quot;]" />
-            </If.Else>
-          </If>
-          <If sap2010:Annotation.AnnotationText="If correctedValue is populated, we need to update the extraction results object." Condition="[Not String.IsNullOrEmpty(correctedValue)]" DisplayName="If -  corrected value is not empty" sap:VirtualizedContainerService.HintSize="632,570" sap2010:WorkflowViewState.IdRef="If_21">
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-            <If.Then>
-              <Sequence DisplayName="Correct ExtractionResult" sap:VirtualizedContainerService.HintSize="521,357" sap2010:WorkflowViewState.IdRef="Sequence_36">
-                <sap:WorkflowViewStateService.ViewState>
-                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                  </scg:Dictionary>
-                </sap:WorkflowViewStateService.ViewState>
-                <Assign DisplayName="Assign - extraction result value" sap:VirtualizedContainerService.HintSize="479,82" sap2010:WorkflowViewState.IdRef="Assign_37">
-                  <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().Values(0).Value]</OutArgument>
-                  </Assign.To>
-                  <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[correctedValue]</InArgument>
-                  </Assign.Value>
-                </Assign>
-                <ui:MultipleAssign DisplayName="Multiple Assign - extraction result confidence" sap:VirtualizedContainerService.HintSize="479,147" sap2010:WorkflowViewState.IdRef="MultipleAssign_6">
-                  <ui:MultipleAssign.AssignOperations>
-                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_11">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="x:Single">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().Values(0).OcrConfidence]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:Single">1</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_12">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="x:Single">[io_ValidatedExtractionResults.ResultsDocument.Fields.Where(Function(field) field.FieldName.Equals(in_FieldName)).First().Values(0).Confidence]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:Single">1</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                    </scg:List>
-                  </ui:MultipleAssign.AssignOperations>
-                </ui:MultipleAssign>
-              </Sequence>
-            </If.Then>
-            <If.Else>
-              <Sequence DisplayName="" sap2010:WorkflowViewState.IdRef="Sequence_42" />
-            </If.Else>
-          </If>
-          <ui:RetryScope DisplayName="Retry Scope - Write Storage Text" sap:VirtualizedContainerService.HintSize="632,361" sap2010:WorkflowViewState.IdRef="RetryScope_6" NumberOfRetries="[Math.Max(cint(in_Config(&quot;MaxExecutionAttempts&quot;)), 1)]" RetryInterval="[TimeSpan.FromSeconds(cdbl(in_Config(&quot;RetryInterval&quot;)))]">
+          </ui:ForEach>
+          <ui:RetryScope DisplayName="Retry Scope - Write Storage Text" sap:VirtualizedContainerService.HintSize="670.6666666666666,402" sap2010:WorkflowViewState.IdRef="RetryScope_6" NumberOfRetries="[Math.Max(cint(in_Config(&quot;MaxExecutionAttempts&quot;)), 1)]" RetryInterval="[TimeSpan.FromSeconds(cdbl(in_Config(&quot;RetryInterval&quot;)))]">
             <ui:RetryScope.ActivityBody>
               <ActivityAction>
-                <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text - Common Ocr Mistakes" sap:VirtualizedContainerService.HintSize="334,186" sap2010:WorkflowViewState.IdRef="WriteStorageText_3" Path="[in_Config(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" StorageBucketName="[in_Config(&quot;StorageBucketName&quot;)]" Text="[Newtonsoft.Json.JsonConvert.SerializeObject(commonOcrMistakesJson)]" />
+                <ucas:WriteStorageText TimeoutMS="{x:Null}" DisplayName="Write Storage Text - Common Ocr Mistakes" sap:VirtualizedContainerService.HintSize="334,191.33333333333334" sap2010:WorkflowViewState.IdRef="WriteStorageText_3" Path="[in_Config(&quot;AutocorrectStorageBucketDirectoryPath&quot;)]" StorageBucketName="[in_Config(&quot;StorageBucketName&quot;)]" Text="[Newtonsoft.Json.JsonConvert.SerializeObject(correctionDataJson)]" />
               </ActivityAction>
             </ui:RetryScope.ActivityBody>
             <ui:RetryScope.Condition>
               <ActivityFunc x:TypeArguments="x:Boolean" />
             </ui:RetryScope.Condition>
           </ui:RetryScope>
-          <ui:LogMessage DisplayName="Log Message - AutocorrectOcrMistakes End" sap:VirtualizedContainerService.HintSize="632,141" sap2010:WorkflowViewState.IdRef="LogMessage_39" Message="[in_Config(&quot;LogMessage_AutocorrectOcrMistakesFinished&quot;)]" />
+          <ui:LogMessage DisplayName="Log Message - AutocorrectOcrMistakes End" sap:VirtualizedContainerService.HintSize="670.6666666666666,167.33333333333334" sap2010:WorkflowViewState.IdRef="LogMessage_39" Message="[in_Config(&quot;LogMessage_AutocorrectOcrMistakesFinished&quot;)]" />
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="400,210" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="737.3333333333334,23.333333333333332" sap2010:WorkflowViewState.IdRef="Catch`1_5">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
               <x:Boolean x:Key="IsPinned">False</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
@@ -618,7 +782,7 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <ui:LogMessage DisplayName="Log Message - Failed to autocorrect" sap:VirtualizedContainerService.HintSize="334,141" sap2010:WorkflowViewState.IdRef="LogMessage_40" Level="Warn" Message="[&quot;Failed to autocorrect ocr mistakes - &quot; + exception.Message]" />
+            <ui:LogMessage DisplayName="Log Message - Failed to autocorrect" sap:VirtualizedContainerService.HintSize="334,144.66666666666666" sap2010:WorkflowViewState.IdRef="LogMessage_40" Level="Warn" Message="[&quot;Failed to autocorrect ocr mistakes - &quot; + exception.Message]" />
           </ActivityAction>
         </Catch>
       </TryCatch.Catches>

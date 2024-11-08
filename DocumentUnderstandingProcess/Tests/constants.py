@@ -5,11 +5,13 @@ class Constants:
         self.PROJECT = {
             "VB": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/VisualBasic/",
             "CSharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/CSharp/",
+            "Cross-platform": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt2/VisualBasic/",
         }[env]
 
         self.TEMPLATE_JSON = {
             "VB": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt0/.local/template.json",
             "CSharp": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt1/.local/template.json",
+            "Cross-platform": "../../DocumentUnderstandingProcess/contentFiles/any/any/pt2/.local/template.json",
         }[env]
 
         # Project Constants
