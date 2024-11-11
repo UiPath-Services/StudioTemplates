@@ -14,6 +14,10 @@ class ProjectFolderTests:
     @staticmethod
     def test_project_folder_structure(app_constants, load_test_input):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP34
+
         Check that the number of folders and files are correct in the project root
         """
         # count folders/files in project folder
@@ -30,6 +34,10 @@ class ProjectFolderTests:
     @staticmethod
     def test_project_folder_content(app_constants, load_test_input):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP35
+
         Check that the all the folders and files are correct in the project root
         """
         # get the folder content

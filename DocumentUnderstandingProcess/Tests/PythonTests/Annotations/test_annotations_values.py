@@ -1,5 +1,4 @@
 from pytest import mark
-import os
 import yaml
 import re
 
@@ -10,24 +9,14 @@ class AnnotationsValuesTests:
 
     @staticmethod
     # TODO: Make a test for every folder (Tests, Framework, Mock, etc..)
-    def test_annotations_values(app_constants):
+    def test_annotations_values(app_constants, get_absolute_filenames):
         """
+        alpha.uipath.com/dualphatests
+        Test Manager project: Document Understanding Process
+        Test Case: DUP27
+
         Check the values of annotations from the Framework files.
         """
-
-        def get_absolute_filenames(path):
-            """
-            Returns the full paths of the files found in a given folder.
-            :param path: The full path of the folder containing the data
-            :return: List of absolute filenames
-            """
-            absolute_filenames = []
-            for root, _, files in os.walk(path):
-                for file in files:
-                    if file.split(".")[-1].lower() != "xaml":
-                        continue
-                    absolute_filenames.append(os.path.join(root, file))
-            return absolute_filenames
 
         def extract_annotations(filename):
             """
@@ -83,16 +72,12 @@ class AnnotationsValuesTests:
 
         # Read input test data
         test_input = yaml.safe_load(
-            # TODO: Make a variable somewhere for the path
-            (open(app_constants.ROOT_TEST_DATA_INPUT + "\\StandardAnnotations_test_input.yaml", "r"))
+            (open(app_constants.STANDARD_ANNOTATIONS_TEST_DATA, "r"))
         )
         var_to_annot = {v: key for key, value in test_input.items() for v in value}
 
-        # Get path to where the XAMLs are stored
-        framework_folder_path = app_constants.PROJECT
-
-        # Iterate through each XAML
-        framework_files = get_absolute_filenames(framework_folder_path)
+        # Iterate through each XAML in the project
+        framework_files = get_absolute_filenames(app_constants.PROJECT)
         for framework_file in framework_files:
             extracted_data.extend(extract_annotations(framework_file))
         extracted_input = transform_extracted_annotations(extracted_data)
