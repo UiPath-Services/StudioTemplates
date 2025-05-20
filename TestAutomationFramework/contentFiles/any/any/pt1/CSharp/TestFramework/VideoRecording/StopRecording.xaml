@@ -1,18 +1,18 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="StopRecording" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Diagnostics;assembly=System.Diagnostics.Process" xmlns:this="clr-namespace:" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="in_ffmpegProcess" Type="InArgument(sd:Process)" />
-    <x:Property Name="in_isOrchBuild" Type="InArgument(x:Boolean)" />
     <x:Property Name="in_VideoFilePath" Type="InArgument(x:String)" />
+    <x:Property Name="in_startRecording" Type="InArgument(x:Boolean)" />
   </x:Members>
   <this:StopRecording.in_ffmpegProcess>
     <InArgument x:TypeArguments="sd:Process" />
   </this:StopRecording.in_ffmpegProcess>
-  <this:StopRecording.in_isOrchBuild>
-    <InArgument x:TypeArguments="x:Boolean" />
-  </this:StopRecording.in_isOrchBuild>
   <this:StopRecording.in_VideoFilePath>
     <InArgument x:TypeArguments="x:String" />
   </this:StopRecording.in_VideoFilePath>
+  <this:StopRecording.in_startRecording>
+    <InArgument x:TypeArguments="x:Boolean" />
+  </this:StopRecording.in_startRecording>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
@@ -112,23 +112,23 @@
       <AssemblyReference>System.Diagnostics.TextWriterTraceListener</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="StopRecording" sap:VirtualizedContainerService.HintSize="1024,1686" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="StopRecording" sap:VirtualizedContainerService.HintSize="986.2,1682.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message to stop recording process" sap:VirtualizedContainerService.HintSize="454,175" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info">
+    <ui:LogMessage DisplayName="Log message to stop recording process" sap:VirtualizedContainerService.HintSize="452.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">"Stop recording process"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <If DisplayName="If isOrchBuild" sap:VirtualizedContainerService.HintSize="454,1488" sap2010:WorkflowViewState.IdRef="If_2">
+    <If DisplayName="If isOrchBuild" sap:VirtualizedContainerService.HintSize="452.8,1484.8" sap2010:WorkflowViewState.IdRef="If_2">
       <If.Condition>
         <InArgument x:TypeArguments="x:Boolean">
-          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">in_isOrchBuild</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">in_startRecording</CSharpValue>
         </InArgument>
       </If.Condition>
       <sap:WorkflowViewStateService.ViewState>
@@ -138,28 +138,28 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="452,1132" sap2010:WorkflowViewState.IdRef="Sequence_6">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="451.2,1129.6" sap2010:WorkflowViewState.IdRef="Sequence_6">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <TryCatch DisplayName="Try Stop Recording" sap:VirtualizedContainerService.HintSize="418,1072" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+          <TryCatch DisplayName="Try Stop Recording" sap:VirtualizedContainerService.HintSize="417.6,1069.6" sap2010:WorkflowViewState.IdRef="TryCatch_1">
             <TryCatch.Try>
-              <Sequence DisplayName="Try StopRecording" sap:VirtualizedContainerService.HintSize="416,423" sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <Sequence DisplayName="Try StopRecording" sap:VirtualizedContainerService.HintSize="416,422.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:InvokeCode ContinueOnError="{x:Null}" Code="Process.StandardInput.WriteLine(&quot;q&quot;)&#xA;Process.StandardInput.Flush()&#xA;Process.WaitForExit()" DisplayName="Stop Recording" sap:VirtualizedContainerService.HintSize="382,197" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+                <ui:InvokeCode ContinueOnError="{x:Null}" Code="Process.StandardInput.WriteLine(&quot;q&quot;)&#xA;Process.StandardInput.Flush()&#xA;Process.WaitForExit()" DisplayName="Stop Recording" sap:VirtualizedContainerService.HintSize="382.4,196.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
                   <ui:InvokeCode.Arguments>
                     <InArgument x:TypeArguments="sd:Process" x:Key="Process">
                       <CSharpValue x:TypeArguments="sd:Process" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">in_ffmpegProcess</CSharpValue>
                     </InArgument>
                   </ui:InvokeCode.Arguments>
                 </ui:InvokeCode>
-                <ui:LogMessage DisplayName="Log Stop Recording" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info">
+                <ui:LogMessage DisplayName="Log Stop Recording" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info">
                   <ui:LogMessage.Message>
                     <InArgument x:TypeArguments="x:Object">
                       <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">"Recording has stopped"</CSharpValue>
@@ -180,7 +180,7 @@
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
                   </ActivityAction.Argument>
-                  <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" ProcessName="{x:Null}" DisplayName="Kill ffmpeg recording Process" sap:VirtualizedContainerService.HintSize="416,135" sap2010:WorkflowViewState.IdRef="KillProcess_1">
+                  <ui:KillProcess AppliesTo="{x:Null}" ContinueOnError="{x:Null}" ProcessName="{x:Null}" DisplayName="Kill ffmpeg recording Process" sap:VirtualizedContainerService.HintSize="416,134.4" sap2010:WorkflowViewState.IdRef="KillProcess_1">
                     <ui:KillProcess.Process>
                       <InArgument x:TypeArguments="sd:Process">
                         <CSharpValue x:TypeArguments="sd:Process" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">in_ffmpegProcess</CSharpValue>
@@ -191,20 +191,20 @@
               </Catch>
             </TryCatch.Catches>
             <TryCatch.Finally>
-              <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="416,349" sap2010:WorkflowViewState.IdRef="Sequence_5">
+              <Sequence DisplayName="Finally" sap:VirtualizedContainerService.HintSize="416,348" sap2010:WorkflowViewState.IdRef="Sequence_5">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <uta:AttachDocument ContinueOnError="{x:Null}" Tags="{x:Null}" DisplayName="Attach Recording to TestCase" sap:VirtualizedContainerService.HintSize="382,123" sap2010:WorkflowViewState.IdRef="AttachDocument_1">
+                <uta:AttachDocument ContinueOnError="{x:Null}" Tags="{x:Null}" DisplayName="Attach Recording to TestCase" sap:VirtualizedContainerService.HintSize="382.4,122.4" sap2010:WorkflowViewState.IdRef="AttachDocument_1">
                   <uta:AttachDocument.FilePath>
                     <InArgument x:TypeArguments="x:String">
                       <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">in_VideoFilePath</CSharpValue>
                     </InArgument>
                   </uta:AttachDocument.FilePath>
                 </uta:AttachDocument>
-                <ui:LogMessage DisplayName="Recording Attached Message" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info">
+                <ui:LogMessage DisplayName="Recording Attached Message" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info">
                   <ui:LogMessage.Message>
                     <InArgument x:TypeArguments="x:Object">
                       <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"Recording attached to test case"</CSharpValue>
@@ -217,16 +217,16 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="452,226" sap2010:WorkflowViewState.IdRef="Sequence_7">
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="451.2,225.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Skip Local Build Message" sap:VirtualizedContainerService.HintSize="418,166" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info">
+          <ui:LogMessage DisplayName="Skip Local Build Message" sap:VirtualizedContainerService.HintSize="417.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info">
             <ui:LogMessage.Message>
               <InArgument x:TypeArguments="x:Object">
-                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">"Local Build. Skiping recording Stop"</CSharpValue>
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">"Recording not started. Skiping recording Stop"</CSharpValue>
               </InArgument>
             </ui:LogMessage.Message>
           </ui:LogMessage>

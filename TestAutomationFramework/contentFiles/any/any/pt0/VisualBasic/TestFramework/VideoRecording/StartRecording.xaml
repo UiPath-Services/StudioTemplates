@@ -1,9 +1,9 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="StartRecording" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Diagnostics;assembly=System.Diagnostics.Process" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_isOrchBuild" Type="InArgument(x:Boolean)" />
     <x:Property Name="in_TestName" Type="InArgument(x:String)" />
     <x:Property Name="out_ffmpegProcess" Type="OutArgument(sd:Process)" />
     <x:Property Name="out_VideoFilePath" Type="OutArgument(x:String)" />
+    <x:Property Name="in_startRecording" Type="InArgument(x:Boolean)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -97,16 +97,17 @@
       <AssemblyReference>System.IO.FileSystem.AccessControl</AssemblyReference>
       <AssemblyReference>System.IO.FileSystem.DriveInfo</AssemblyReference>
       <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="StartRecording" sap:VirtualizedContainerService.HintSize="1024,2462" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="StartRecording" sap:VirtualizedContainerService.HintSize="986.2,2456" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message for recording start" sap:VirtualizedContainerService.HintSize="730.5,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;StartRecording&quot;]" />
-    <If Condition="[in_isOrchBuild]" DisplayName="If isOrchBuild Start Video Recording" sap:VirtualizedContainerService.HintSize="730.5,2264" sap2010:WorkflowViewState.IdRef="If_1">
+    <ui:LogMessage DisplayName="Log message for recording start" sap:VirtualizedContainerService.HintSize="732.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;StartRecording&quot;]" />
+    <If Condition="[in_startRecording]" DisplayName="If isOrchBuild Start Video Recording" sap:VirtualizedContainerService.HintSize="732.8,2258.4" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -114,7 +115,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="728.5,1908" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="731.2,1903.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="x:String" Name="fileUniqueName" />
             <Variable x:TypeArguments="x:Boolean" Name="perMachineExists" />
@@ -125,7 +126,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MultipleAssign DisplayName="Define Recording Variabiles" sap:VirtualizedContainerService.HintSize="694.5,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+          <ui:MultipleAssign DisplayName="Define Recording Variabiles" sap:VirtualizedContainerService.HintSize="697.6,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -133,7 +134,7 @@
                     <OutArgument x:TypeArguments="x:String">[fileUniqueName]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String">[Path.GetFileNameWithoutExtension(in_TestName) + "_" + Guid.NewGuid().ToString()]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[in_TestName + "_" + Guid.NewGuid().ToString()]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -147,8 +148,8 @@
               </scg:List>
             </ui:MultipleAssign.AssignOperations>
           </ui:MultipleAssign>
-          <ui:PathExists DisplayName="Studio Per-Machine Install" Exists="[PerMachineExists]" sap:VirtualizedContainerService.HintSize="694.5,149" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[Environment.GetEnvironmentVariable(&quot;ProgramFiles&quot;) + &quot;\UiPath\Studio\ffmpeg\ffmpeg.exe&quot;]" PathType="File" Resource="[ffMpegPath]" />
-          <If Condition="[not perMachineExists]" DisplayName="If PerMachineExists Not Found" sap:VirtualizedContainerService.HintSize="694.5,1156" sap2010:WorkflowViewState.IdRef="If_2">
+          <ui:PathExists DisplayName="Studio Per-Machine Install" Exists="[PerMachineExists]" sap:VirtualizedContainerService.HintSize="697.6,148" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[Environment.GetEnvironmentVariable(&quot;ProgramFiles&quot;) + &quot;\UiPath\Studio\ffmpeg\ffmpeg.exe&quot;]" PathType="File" Resource="[ffMpegPath]" />
+          <If Condition="[not perMachineExists]" DisplayName="If PerMachineExists Not Found" sap:VirtualizedContainerService.HintSize="697.6,1152.8" sap2010:WorkflowViewState.IdRef="If_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -156,7 +157,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="692.5,791" sap2010:WorkflowViewState.IdRef="Sequence_4">
+              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="696,788.8" sap2010:WorkflowViewState.IdRef="Sequence_4">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="x:Boolean" Name="studioExists" />
                 </Sequence.Variables>
@@ -165,60 +166,60 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:PathExists DisplayName="Studio User Install" Exists="[StudioExists]" sap:VirtualizedContainerService.HintSize="658.5,149" sap2010:WorkflowViewState.IdRef="PathExists_4" Path="[Environment.GetEnvironmentVariable(&quot;LocalAppData&quot;) + &quot;\Programs\UiPath\Studio\ffmpeg\ffmpeg.exe&quot;]" PathType="File" Resource="[ffMpegPath]" />
-                <If Condition="[studioExists]" DisplayName="If Studio User Install" sap:VirtualizedContainerService.HintSize="658.5,582" sap2010:WorkflowViewState.IdRef="If_3">
+                <ui:PathExists DisplayName="Studio User Install" Exists="[StudioExists]" sap:VirtualizedContainerService.HintSize="662.4,148" sap2010:WorkflowViewState.IdRef="PathExists_4" Path="[Environment.GetEnvironmentVariable(&quot;LocalAppData&quot;) + &quot;\Programs\UiPath\Studio\ffmpeg\ffmpeg.exe&quot;]" PathType="File" Resource="[ffMpegPath]" />
+                <If Condition="[studioExists]" DisplayName="If Studio User Install" sap:VirtualizedContainerService.HintSize="662.4,580.8" sap2010:WorkflowViewState.IdRef="If_3">
                   <If.Then>
-                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,226" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,225.6" sap2010:WorkflowViewState.IdRef="Sequence_5">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log message for ffmpeg path found" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Found ffmpeg at: &quot; + ffMpegPath.LocalPath]" />
+                      <ui:LogMessage DisplayName="Log message for ffmpeg path found" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Found ffmpeg at: &quot; + ffMpegPath.LocalPath]" />
                     </Sequence>
                   </If.Then>
                   <If.Else>
-                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,226" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,225.6" sap2010:WorkflowViewState.IdRef="Sequence_6">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log error for missing ffmpeg" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;Could not find ffmpeg&quot;]" />
+                      <ui:LogMessage DisplayName="Log error for missing ffmpeg" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Error" Message="[&quot;Could not find ffmpeg&quot;]" />
                     </Sequence>
                   </If.Else>
                 </If>
               </Sequence>
             </If.Then>
             <If.Else>
-              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="692.5,226" sap2010:WorkflowViewState.IdRef="Sequence_7">
+              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="696,225.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log message for found ffmpeg path" sap:VirtualizedContainerService.HintSize="658.5,166" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Found ffmpeg at: &quot; + ffMpegPath.LocalPath]" />
+                <ui:LogMessage DisplayName="Log message for found ffmpeg path" sap:VirtualizedContainerService.HintSize="662.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Found ffmpeg at: &quot; + ffMpegPath.LocalPath]" />
               </Sequence>
             </If.Else>
           </If>
-          <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim startInfo As New ProcessStartInfo()&#xA;process = New Process()&#xA;startInfo.FileName = ffmpegPath&#xA;Dim cmd  = &quot;-probesize 500M -analyzeduration 1000 -f gdigrab -framerate 4 -thread_queue_size 32 -i desktop -vf &quot;&quot;scale=iw*0.71:ih*0.71&quot;&quot; -c:v libvpx -crf 50 -b:v 1M -force_key_frames &quot;&quot;expr:gte(t,n_forced*10)&quot;&quot; -deadline realtime -cpu-used 8 -pix_fmt yuv420p -y &quot;&quot;&quot; + VideoPath + &quot;&quot;&quot;&quot;&#xA;startInfo.Arguments =cmd&#xA;&#xA;startInfo.UseShellExecute = False&#xA;startInfo.CreateNoWindow = True&#xA;startInfo.RedirectStandardInput = True&#xA;&#xA;process.StartInfo = startInfo&#xA;&#xA;process.Start()&#xA;process.WaitForExitAsync()" DisplayName="Invoke Start Recording Code" sap:VirtualizedContainerService.HintSize="694.5,197" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+          <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim startInfo As New ProcessStartInfo()&#xA;process = New Process()&#xA;startInfo.FileName = ffmpegPath&#xA;Dim cmd  = &quot;-probesize 500M -analyzeduration 1000 -f gdigrab -framerate 4 -thread_queue_size 32 -i desktop -vf &quot;&quot;scale=iw*0.71:ih*0.71&quot;&quot; -c:v libvpx -crf 50 -b:v 1M -force_key_frames &quot;&quot;expr:gte(t,n_forced*10)&quot;&quot; -deadline realtime -cpu-used 8 -pix_fmt yuv420p -y &quot;&quot;&quot; + VideoPath + &quot;&quot;&quot;&quot;&#xA;startInfo.Arguments =cmd&#xA;&#xA;startInfo.UseShellExecute = False&#xA;startInfo.CreateNoWindow = True&#xA;startInfo.RedirectStandardInput = True&#xA;&#xA;process.StartInfo = startInfo&#xA;&#xA;process.Start()&#xA;process.WaitForExitAsync()" DisplayName="Invoke Start Recording Code" sap:VirtualizedContainerService.HintSize="697.6,196.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
             <ui:InvokeCode.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="ffmpegPath">[ffMpegPath.LocalPath]</InArgument>
               <InArgument x:TypeArguments="x:String" x:Key="VideoPath">[out_VideoFilePath]</InArgument>
               <OutArgument x:TypeArguments="sd:Process" x:Key="process">[out_ffmpegProcess]</OutArgument>
             </ui:InvokeCode.Arguments>
           </ui:InvokeCode>
-          <ui:LogMessage DisplayName="Log Start Recording" sap:VirtualizedContainerService.HintSize="694.5,166" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Video Recording started&quot;]" />
+          <ui:LogMessage DisplayName="Log Start Recording" sap:VirtualizedContainerService.HintSize="697.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Video Recording started&quot;]" />
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="728.5,226" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="731.2,225.6" sap2010:WorkflowViewState.IdRef="Sequence_3">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Skip Recording Message" sap:VirtualizedContainerService.HintSize="694.5,166" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Local Build Skip video recording&quot;]" />
+          <ui:LogMessage DisplayName="Skip Recording Message" sap:VirtualizedContainerService.HintSize="697.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Recording not active. Skip video recording&quot;]" />
         </Sequence>
       </If.Else>
     </If>
