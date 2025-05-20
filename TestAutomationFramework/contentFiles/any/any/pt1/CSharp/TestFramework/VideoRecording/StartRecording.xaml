@@ -1,9 +1,9 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="StartRecording" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Diagnostics;assembly=System.Diagnostics.Process" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:upr="clr-namespace:UiPath.Platform.ResourceHandling;assembly=UiPath.Platform" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="in_isOrchBuild" Type="InArgument(x:Boolean)" />
     <x:Property Name="in_TestName" Type="InArgument(x:String)" />
     <x:Property Name="out_ffmpegProcess" Type="OutArgument(sd:Process)" />
     <x:Property Name="out_VideoFilePath" Type="OutArgument(x:String)" />
+    <x:Property Name="in_startRecording" Type="InArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
@@ -100,23 +100,23 @@
       <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="StartRecording" sap:VirtualizedContainerService.HintSize="1024,2462" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="StartRecording" sap:VirtualizedContainerService.HintSize="986.2,2456" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message for recording start" sap:VirtualizedContainerService.HintSize="785,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info">
+    <ui:LogMessage DisplayName="Log message for recording start" sap:VirtualizedContainerService.HintSize="756.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
           <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">"StartRecording"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
-    <If DisplayName="If isOrchBuild Start Video Recording" sap:VirtualizedContainerService.HintSize="785,2264" sap2010:WorkflowViewState.IdRef="If_1">
+    <If DisplayName="If isOrchBuild Start Video Recording" sap:VirtualizedContainerService.HintSize="756.8,2258.4" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Condition>
         <InArgument x:TypeArguments="x:Boolean">
-          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">in_isOrchBuild</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">in_startRecording</CSharpValue>
         </InArgument>
       </If.Condition>
       <sap:WorkflowViewStateService.ViewState>
@@ -126,7 +126,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="783,1908" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="755.2,1903.2" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
             <Variable x:TypeArguments="x:String" Name="fileUniqueName" />
             <Variable x:TypeArguments="x:Boolean" Name="perMachineExists" />
@@ -137,7 +137,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:MultipleAssign DisplayName="Define Recording Variabiles" sap:VirtualizedContainerService.HintSize="749,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+          <ui:MultipleAssign DisplayName="Define Recording Variabiles" sap:VirtualizedContainerService.HintSize="721.6,180" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
             <ui:MultipleAssign.AssignOperations>
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
@@ -167,7 +167,7 @@
               </scg:List>
             </ui:MultipleAssign.AssignOperations>
           </ui:MultipleAssign>
-          <ui:PathExists DisplayName="Studio Per-Machine Install" sap:VirtualizedContainerService.HintSize="749,149" sap2010:WorkflowViewState.IdRef="PathExists_1" PathType="File">
+          <ui:PathExists DisplayName="Studio Per-Machine Install" sap:VirtualizedContainerService.HintSize="721.6,148" sap2010:WorkflowViewState.IdRef="PathExists_1" PathType="File">
             <ui:PathExists.Exists>
               <OutArgument x:TypeArguments="x:Boolean">
                 <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">perMachineExists</CSharpReference>
@@ -184,14 +184,14 @@
               </OutArgument>
             </ui:PathExists.Resource>
           </ui:PathExists>
-          <If DisplayName="If PerMachineExists Not Found" sap:VirtualizedContainerService.HintSize="749,1156" sap2010:WorkflowViewState.IdRef="If_2">
+          <If DisplayName="If PerMachineExists Not Found" sap:VirtualizedContainerService.HintSize="721.6,1152.8" sap2010:WorkflowViewState.IdRef="If_2">
             <If.Condition>
               <InArgument x:TypeArguments="x:Boolean">
                 <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">! perMachineExists</CSharpValue>
               </InArgument>
             </If.Condition>
             <If.Then>
-              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="715,791" sap2010:WorkflowViewState.IdRef="Sequence_3">
+              <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="720,788.8" sap2010:WorkflowViewState.IdRef="Sequence_3">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="x:Boolean" Name="studioExists" />
                 </Sequence.Variables>
@@ -200,7 +200,7 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:PathExists DisplayName="Studio User Install" sap:VirtualizedContainerService.HintSize="681,149" sap2010:WorkflowViewState.IdRef="PathExists_2" PathType="File">
+                <ui:PathExists DisplayName="Studio User Install" sap:VirtualizedContainerService.HintSize="686.4,148" sap2010:WorkflowViewState.IdRef="PathExists_2" PathType="File">
                   <ui:PathExists.Exists>
                     <OutArgument x:TypeArguments="x:Boolean">
                       <CSharpReference x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpReference`1_5">studioExists</CSharpReference>
@@ -217,20 +217,20 @@
                     </OutArgument>
                   </ui:PathExists.Resource>
                 </ui:PathExists>
-                <If DisplayName="If Studio User Install" sap:VirtualizedContainerService.HintSize="681,582" sap2010:WorkflowViewState.IdRef="If_3">
+                <If DisplayName="If Studio User Install" sap:VirtualizedContainerService.HintSize="686.4,580.8" sap2010:WorkflowViewState.IdRef="If_3">
                   <If.Condition>
                     <InArgument x:TypeArguments="x:Boolean">
                       <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">studioExists</CSharpValue>
                     </InArgument>
                   </If.Condition>
                   <If.Then>
-                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,226" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                    <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,225.6" sap2010:WorkflowViewState.IdRef="Sequence_4">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log message for ffmpeg path found" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info">
+                      <ui:LogMessage DisplayName="Log message for ffmpeg path found" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info">
                         <ui:LogMessage.Message>
                           <InArgument x:TypeArguments="x:Object">
                             <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_10">"Found ffmpeg at: " + ffMpegPath.LocalPath</CSharpValue>
@@ -240,13 +240,13 @@
                     </Sequence>
                   </If.Then>
                   <If.Else>
-                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,226" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                    <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,225.6" sap2010:WorkflowViewState.IdRef="Sequence_5">
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <ui:LogMessage DisplayName="Log error for missing ffmpeg" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error">
+                      <ui:LogMessage DisplayName="Log error for missing ffmpeg" sap:VirtualizedContainerService.HintSize="382.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error">
                         <ui:LogMessage.Message>
                           <InArgument x:TypeArguments="x:Object">
                             <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_17">"Could not find ffmpeg"</CSharpValue>
@@ -259,13 +259,13 @@
               </Sequence>
             </If.Then>
             <If.Else>
-              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="715,226" sap2010:WorkflowViewState.IdRef="Sequence_6">
+              <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="720,225.6" sap2010:WorkflowViewState.IdRef="Sequence_6">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:LogMessage DisplayName="Log message for found ffmpeg path" sap:VirtualizedContainerService.HintSize="681,166" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info">
+                <ui:LogMessage DisplayName="Log message for found ffmpeg path" sap:VirtualizedContainerService.HintSize="686.4,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info">
                   <ui:LogMessage.Message>
                     <InArgument x:TypeArguments="x:Object">
                       <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"Found ffmpeg at: " + ffMpegPath.LocalPath</CSharpValue>
@@ -275,7 +275,7 @@
               </Sequence>
             </If.Else>
           </If>
-          <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim startInfo As New ProcessStartInfo()&#xA;process = New Process()&#xA;startInfo.FileName = ffmpegPath&#xA;Dim cmd  = &quot;-probesize 500M -analyzeduration 1000 -f gdigrab -framerate 4 -thread_queue_size 32 -i desktop -vf &quot;&quot;scale=iw*0.71:ih*0.71&quot;&quot; -c:v libvpx -crf 50 -b:v 1M -force_key_frames &quot;&quot;expr:gte(t,n_forced*10)&quot;&quot; -deadline realtime -cpu-used 8 -pix_fmt yuv420p -y &quot;&quot;&quot; + VideoPath + &quot;&quot;&quot;&quot;&#xA;startInfo.Arguments =cmd&#xA;&#xA;startInfo.UseShellExecute = False&#xA;startInfo.CreateNoWindow = True&#xA;startInfo.RedirectStandardInput = True&#xA;&#xA;process.StartInfo = startInfo&#xA;&#xA;process.Start()&#xA;process.WaitForExitAsync()" DisplayName="Invoke Start Recording Code" sap:VirtualizedContainerService.HintSize="749,197" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+          <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim startInfo As New ProcessStartInfo()&#xA;process = New Process()&#xA;startInfo.FileName = ffmpegPath&#xA;Dim cmd  = &quot;-probesize 500M -analyzeduration 1000 -f gdigrab -framerate 4 -thread_queue_size 32 -i desktop -vf &quot;&quot;scale=iw*0.71:ih*0.71&quot;&quot; -c:v libvpx -crf 50 -b:v 1M -force_key_frames &quot;&quot;expr:gte(t,n_forced*10)&quot;&quot; -deadline realtime -cpu-used 8 -pix_fmt yuv420p -y &quot;&quot;&quot; + VideoPath + &quot;&quot;&quot;&quot;&#xA;startInfo.Arguments =cmd&#xA;&#xA;startInfo.UseShellExecute = False&#xA;startInfo.CreateNoWindow = True&#xA;startInfo.RedirectStandardInput = True&#xA;&#xA;process.StartInfo = startInfo&#xA;&#xA;process.Start()&#xA;process.WaitForExitAsync()" DisplayName="Invoke Start Recording Code" sap:VirtualizedContainerService.HintSize="721.6,196.8" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
             <ui:InvokeCode.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="ffmpegPath">
                 <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_14">ffMpegPath.LocalPath</CSharpValue>
@@ -288,7 +288,7 @@
               </OutArgument>
             </ui:InvokeCode.Arguments>
           </ui:InvokeCode>
-          <ui:LogMessage DisplayName="Log Start Recording" sap:VirtualizedContainerService.HintSize="749,166" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info">
+          <ui:LogMessage DisplayName="Log Start Recording" sap:VirtualizedContainerService.HintSize="721.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info">
             <ui:LogMessage.Message>
               <InArgument x:TypeArguments="x:Object">
                 <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">"Video Recording started"</CSharpValue>
@@ -298,16 +298,16 @@
         </Sequence>
       </If.Then>
       <If.Else>
-        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,226" sap2010:WorkflowViewState.IdRef="Sequence_7">
+        <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="755.2,225.6" sap2010:WorkflowViewState.IdRef="Sequence_7">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Skip Recording Message" sap:VirtualizedContainerService.HintSize="382,166" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info">
+          <ui:LogMessage DisplayName="Skip Recording Message" sap:VirtualizedContainerService.HintSize="721.6,165.6" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info">
             <ui:LogMessage.Message>
               <InArgument x:TypeArguments="x:Object">
-                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_16">"Local Build Skip video recording"</CSharpValue>
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_18">"Recording not active. Skip video recording"</CSharpValue>
               </InArgument>
             </ui:LogMessage.Message>
           </ui:LogMessage>
