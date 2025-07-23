@@ -70,9 +70,13 @@ foreach ($directory in $set) {
     $nuspecPath = Get-ChildItem $directoryPath -Recurse -Depth 1 -Filter *.nuspec | Select-Object -First 1 | % { $_.FullName }
     Write-Host ".nuspec path is $nuspecPath"
     if ($nuspecPath -And (Test-Path $nuspecPath)) {          
-        $Command = "nuget pack $nuspecPath  -NoDefaultExcludes -OutputDirectory $outputDirectory"
-        Write-Host $Command
-        Invoke-Expression $Command
+		if ($directory -eq "TestAutomationFramework") {
+			$Command = "nuget pack `"$nuspecPath`" -NoDefaultExcludes -OutputDirectory `"$outputDirectory`""
+		} else {
+			$Command = "nuget pack `"$nuspecPath`" -OutputDirectory `"$outputDirectory`""
+		}
+		Write-Host $Command
+		Invoke-Expression $Command
     } else {
         Write-Host "##vso[task.LogIssue type=warning;] $nuspecPath file not found"
     }
