@@ -80,7 +80,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="DetectLocalBuild" sap:VirtualizedContainerService.HintSize="943,666.6566666666666" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="curentDirectory" />
+      <Variable x:TypeArguments="x:String" Name="currentDirectory" />
       <Variable x:TypeArguments="s:String[]" Default="[{&quot;.nuget&quot;, &quot;packages&quot;, &quot;lib&quot;, &quot;net45&quot;}]" Name="RunDetection" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
@@ -88,21 +88,21 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message for Orch Build detection" sap:VirtualizedContainerService.HintSize="480,48" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Determining execution source...&quot;]">
+    <ui:LogMessage DisplayName="Log message for Orch Build detection" sap:VirtualizedContainerService.HintSize="480,48" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;DetectLocalBuild - Determining execution source&quot;]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:LogMessage>
-    <ui:GetEnvironmentVariable DisplayName="Get &quot;CurrentDirectory&quot; environment variable" sap:VirtualizedContainerService.HintSize="480,48" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_1" TargetFramework="Portable" Variable="CurrentDirectory" VariableValue="[curentDirectory]">
+    <ui:GetEnvironmentVariable DisplayName="Get &quot;CurrentDirectory&quot; environment variable" sap:VirtualizedContainerService.HintSize="480,48" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_1" TargetFramework="Portable" Variable="CurrentDirectory" VariableValue="[currentDirectory]">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:GetEnvironmentVariable>
-    <If Condition="[RunDetection.FirstOrDefault(Function(name) curentDirectory.ToUpper().Contains(name.ToUpper())) Is Nothing]" DisplayName="Check If is Orhestrator Build" sap:VirtualizedContainerService.HintSize="480,360" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[RunDetection.FirstOrDefault(Function(name) currentDirectory.ToUpper().Contains(name.ToUpper())) Is Nothing]" DisplayName="Check If is Orchestrator Build" sap:VirtualizedContainerService.HintSize="480,360" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -129,7 +129,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </Assign>
-          <ui:LogMessage DisplayName="Log message for orchestration build status Studio" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Execution source: Studio&quot;]">
+          <ui:LogMessage DisplayName="Log message for orchestration build status Studio" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;DetectLocalBuild - Execution source: Studio&quot;]">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -158,7 +158,7 @@
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
           </Assign>
-          <ui:LogMessage DisplayName="Log message for orchestration build status Orchestrator" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Execution source: Orchestrator&quot;]">
+          <ui:LogMessage DisplayName="Log message for orchestration build status Orchestrator" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;DetectLocalBuild - Execution source: Orchestrator&quot;]">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
