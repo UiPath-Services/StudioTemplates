@@ -1,32 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
-using TestAutomationFramework.ObjectRepository;
-using UiPath.Activities.System.Jobs.Coded;
 using UiPath.CodedWorkflows;
 using UiPath.Core;
-using UiPath.Core.Activities.Storage;
-using UiPath.Orchestrator.Client.Models;
-using UiPath.Testing;
-using UiPath.Testing.Activities.Api.Models;
-using UiPath.Testing.Activities.Models;
-using UiPath.Testing.Activities.TestData;
-using UiPath.Testing.Activities.TestDataQueues.Enums;
-using UiPath.Testing.Enums;
-using UiPath.UIAutomationNext.API.Contracts;
-using UiPath.UIAutomationNext.API.Models;
-using UiPath.UIAutomationNext.Enums;
 
 namespace TestAutomationFramework.TestFramework.VideoRecording
 {
     public class StartRecording : CodedWorkflow
     {
         [Workflow]
-        public (Process out_ffmpegProcess, string out_VideoFilePath) Execute(string in_TestName, bool in_startRecording)
+        public (Process out_ffmpegProcess, String out_VideoFilePath) Execute(String in_TestName, Boolean in_startRecording)
         {
-            Log("StartRecording");
+            Log("StartRecording - Start");
 
             Process out_ffmpegProcess = null;
             string out_VideoFilePath = string.Empty;
@@ -45,7 +30,7 @@ namespace TestAutomationFramework.TestFramework.VideoRecording
                 if (File.Exists(perMachineFFmpegPath))
                 {
                     ffmpegExePath = perMachineFFmpegPath;
-                    Log("Found ffmpeg at: " + ffmpegExePath);
+                    Log("StartRecording - Found ffmpeg at: " + ffmpegExePath);
                 }
                 else
                 {
@@ -56,11 +41,11 @@ namespace TestAutomationFramework.TestFramework.VideoRecording
                     if (File.Exists(userFFmpegPath))
                     {
                         ffmpegExePath = userFFmpegPath;
-                        Log("Found ffmpeg at: " + ffmpegExePath);
+                        Log("StartRecording - Found ffmpeg at: " + ffmpegExePath);
                     }
                     else
                     {
-                        Log("Could not find ffmpeg", LogLevel.Error);
+                        Log("StartRecording - Could not find ffmpeg", LogLevel.Error);
                     }
                 }
 
@@ -82,12 +67,12 @@ namespace TestAutomationFramework.TestFramework.VideoRecording
 
                     out_ffmpegProcess = new Process { StartInfo = startInfo };
                     out_ffmpegProcess.Start();
-                    Log("Video Recording started");
+                    Log("StartRecording - Video recording started");
                 }
             }
             else
             {
-                Log("Recording not active. Skip video recording");
+                Log("StartRecording - Recording not active, skipping");
             }
 
             return (out_ffmpegProcess, out_VideoFilePath);

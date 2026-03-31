@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="KillAllProcesses" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1045,1269.5" sap2010:WorkflowViewState.IdRef="CloseAllApplications_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity x:Class="StopBrowser" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1045,1269.5" sap2010:WorkflowViewState.IdRef="CloseAllApplications_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>GlobalConstantsNamespace</x:String>
@@ -11,7 +11,6 @@
       <x:String>System.Collections.Generic</x:String>
       <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.ComponentModel</x:String>
-
       <x:String>System.Drawing</x:String>
       <x:String>System.Linq</x:String>
       <x:String>System.Linq.Expressions</x:String>
@@ -49,7 +48,6 @@
       <AssemblyReference>System.Console</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
-
       <AssemblyReference>System.Drawing</AssemblyReference>
       <AssemblyReference>System.Drawing.Common</AssemblyReference>
       <AssemblyReference>System.Drawing.Primitives</AssemblyReference>
@@ -97,10 +95,10 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message (Kill processes)" sap:VirtualizedContainerService.HintSize="456,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace" Message="[&quot;Stop browsers...&quot;]" />
+    <ui:LogMessage DisplayName="Log message (Kill processes)" sap:VirtualizedContainerService.HintSize="456,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;StopBrowser - Start&quot;]" />
     <TryCatch DisplayName="Stop Browser - Try Catch" sap:VirtualizedContainerService.HintSize="456,653" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <ui:LogMessage DisplayName="Log message for stopping the browser" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Fatal" Message="[&quot;Add Here your custom flow to Stop the browser&quot;]" />
+        <ui:LogMessage DisplayName="Log message for stopping the browser" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn" Message="[&quot;StopBrowser - TODO: Add custom flow to stop the browser&quot;]" />
       </TryCatch.Try>
       <TryCatch.Catches>
         <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="422,464" sap2010:WorkflowViewState.IdRef="Catch`1_1">
@@ -120,8 +118,8 @@
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:LogMessage DisplayName="Log warning for browser shutdown issues" sap:VirtualizedContainerService.HintSize="382,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;Teardown had issues closing the browser. Doing a force shuddown&quot;]" />
-              <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" AppliesTo="OnlyCurrentDesktop" DisplayName="Terminate a browser process" sap:VirtualizedContainerService.HintSize="382,158" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="[TestSetup(&quot;Browser&quot;).ToString]" />
+              <ui:LogMessage DisplayName="Log warning for browser shutdown issues" sap:VirtualizedContainerService.HintSize="382,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Warn" Message="[&quot;StopBrowser - TearDown had issues closing the browser, forcing shutdown&quot;]" />
+              <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" AppliesTo="OnlyCurrentDesktop" DisplayName="Terminate a browser process" sap:VirtualizedContainerService.HintSize="382,158" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="[If(TestSetup(&quot;Browser&quot;).ToString.Equals(&quot;Edge&quot;, StringComparison.OrdinalIgnoreCase), &quot;msedge&quot;, TestSetup(&quot;Browser&quot;).ToString.ToLower())]" />
             </Sequence>
           </ActivityAction>
         </Catch>
@@ -136,5 +134,6 @@
         </Sequence>
       </TryCatch.Finally>
     </TryCatch>
+    <ui:LogMessage DisplayName="Log message for stop browser end" sap:VirtualizedContainerService.HintSize="456,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;StopBrowser - End&quot;]" />
   </Sequence>
 </Activity>

@@ -10,7 +10,7 @@ namespace TestAutomationFramework.TestFramework.VideoRecording
         [Workflow]
         public void Execute(Process in_ffmpegProcess, string in_VideoFilePath, bool in_startRecording)
         {
-            Log("Stop recording process");
+            Log("StopRecording - Start");
 
             if (in_startRecording)
             {
@@ -19,21 +19,22 @@ namespace TestAutomationFramework.TestFramework.VideoRecording
                     in_ffmpegProcess.StandardInput.WriteLine("q");
                     in_ffmpegProcess.StandardInput.Flush();
                     in_ffmpegProcess.WaitForExit();
-                    Log("Recording has stopped");
+                    Log("StopRecording - Recording has stopped");
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Log("StopRecording - Graceful stop failed, forcing kill: " + ex.Message, LogLevel.Warn);
                     in_ffmpegProcess.Kill();
                 }
                 finally
                 {
                     testing.AttachDocument(in_VideoFilePath);
-                    Log("Recording attached to test case");
+                    Log("StopRecording - Recording attached to test case");
                 }
             }
             else
             {
-                Log("Recording not started. Skiping recording Stop");
+                Log("StopRecording - Recording not started, skipping");
             }
         }
     }
