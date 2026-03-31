@@ -33,8 +33,8 @@ Each variant is self-contained with its own `project.json`, workflows, and tests
 **Key differences between variants:**
 - pt0/pt1 (Windows): Support both `App` and `Web` test types
 - pt2/pt3 (Portable): Support `Web` test type only (no Application workflows)
-- pt0: Uses coded workflows (.cs) for video recording; pt1/pt2/pt3 use XAML
-- pt0: Has `.json` metadata files per workflow and coded workflow entry points in `project.json`
+- All variants use coded workflows (.cs) for video recording
+- pt0: Has `.json` metadata files per workflow (others don't)
 
 ### Test Execution Lifecycle
 
