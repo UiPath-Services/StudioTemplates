@@ -85,7 +85,7 @@
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="DetectLocalBuild" sap:VirtualizedContainerService.HintSize="943,666.6566666666666" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="curentDirectory" />
+      <Variable x:TypeArguments="x:String" Name="currentDirectory" />
       <Variable x:TypeArguments="s:String[]" Name="RunDetection">
         <Variable.Default>
           <CSharpValue x:TypeArguments="s:String[]" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">new string[] { ".nuget", "packages", "lib", "net45" }</CSharpValue>
@@ -100,7 +100,7 @@
     <ui:LogMessage DisplayName="Log message for Orch Build detection" sap:VirtualizedContainerService.HintSize="480,48" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">"Determining execution source..."</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9">"DetectLocalBuild - Determining execution source"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
       <sap:WorkflowViewStateService.ViewState>
@@ -112,7 +112,7 @@
     <ui:GetEnvironmentVariable DisplayName="Get &quot;CurrentDirectory&quot; environment variable" sap:VirtualizedContainerService.HintSize="480,48" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_1" TargetFramework="Portable" Variable="CurrentDirectory">
       <ui:GetEnvironmentVariable.VariableValue>
         <OutArgument x:TypeArguments="x:String">
-          <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">curentDirectory</CSharpReference>
+          <CSharpReference x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">currentDirectory</CSharpReference>
         </OutArgument>
       </ui:GetEnvironmentVariable.VariableValue>
       <sap:WorkflowViewStateService.ViewState>
@@ -121,10 +121,10 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </ui:GetEnvironmentVariable>
-    <If DisplayName="Check If is Orhestrator Build" sap:VirtualizedContainerService.HintSize="480,360" sap2010:WorkflowViewState.IdRef="If_1">
+    <If DisplayName="Check If is Orchestrator Build" sap:VirtualizedContainerService.HintSize="480,360" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Condition>
         <InArgument x:TypeArguments="x:Boolean">
-          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">RunDetection.FirstOrDefault(name =&gt; curentDirectory.ToUpper().Contains(name.ToUpper())) == null;</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">RunDetection.FirstOrDefault(name =&gt; currentDirectory.ToUpper().Contains(name.ToUpper())) == null;</CSharpValue>
         </InArgument>
       </If.Condition>
       <sap:WorkflowViewStateService.ViewState>
@@ -160,7 +160,7 @@
           <ui:LogMessage DisplayName="Log message for orchestration build status Studio" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info">
             <ui:LogMessage.Message>
               <InArgument x:TypeArguments="x:Object">
-                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">"Execution source: Studio"</CSharpValue>
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">"DetectLocalBuild - Execution source: Studio"</CSharpValue>
               </InArgument>
             </ui:LogMessage.Message>
             <sap:WorkflowViewStateService.ViewState>
@@ -198,7 +198,7 @@
           <ui:LogMessage DisplayName="Log message for orchestration build status Orchestrator" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info">
             <ui:LogMessage.Message>
               <InArgument x:TypeArguments="x:Object">
-                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"Execution source: Orchestrator"</CSharpValue>
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"DetectLocalBuild - Execution source: Orchestrator"</CSharpValue>
               </InArgument>
             </ui:LogMessage.Message>
             <sap:WorkflowViewStateService.ViewState>
