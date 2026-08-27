@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="StartBrowser" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="953.2,2376.4" sap2010:WorkflowViewState.IdRef="StartBrowser_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity x:Class="StartBrowser" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="953.2,2376.4" sap2010:WorkflowViewState.IdRef="StartBrowser_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -91,21 +91,20 @@
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>NPOI</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
-      <AssemblyReference>SOSR.AppLibrary</AssemblyReference>
-      <AssemblyReference>RPA_T_BA_SOSR_Test.Core</AssemblyReference>
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="StartBrowser" sap:VirtualizedContainerService.HintSize="969,1806.5" sap2010:WorkflowViewState.IdRef="Sequence_5">
+  <Sequence sap2010:Annotation.AnnotationText="Configure and start the browser for web testing.&#xA;- Determines the browser type (Chrome, Firefox, Edge)&#xA;- Defaults to Chrome if no browser is specified&#xA;- Sets the runtime browser for the test session&#xA;- Add your custom browser navigation logic at the end" DisplayName="StartBrowser" sap:VirtualizedContainerService.HintSize="969,1806.5" sap2010:WorkflowViewState.IdRef="Sequence_5">
     <Sequence.Variables>
       <Variable x:TypeArguments="uix:NBrowserType" Name="RuntimeBrowser" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Start Message" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[&quot;Start Browser Setup&quot;]" />
+    <ui:LogMessage DisplayName="Log Start Message" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;StartBrowser - Start&quot;]" />
     <If Condition="[String.IsNullOrEmpty(TestSetup(&quot;Browser&quot;).ToString)]" DisplayName="If Browser is null" sap:VirtualizedContainerService.HintSize="502,505" sap2010:WorkflowViewState.IdRef="If_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -120,7 +119,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:LogMessage DisplayName="Log message for browser not set" sap:VirtualizedContainerService.HintSize="434,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn" Message="[&quot;Browser was not set! Setting default Browser to Chrome&quot;]" />
+          <ui:LogMessage DisplayName="Log message for browser not set" sap:VirtualizedContainerService.HintSize="434,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn" Message="[&quot;StartBrowser - Browser was not set, defaulting to Chrome&quot;]" />
           <Assign DisplayName="Assign Browser Type for Testing" sap:VirtualizedContainerService.HintSize="434,106" sap2010:WorkflowViewState.IdRef="Assign_6">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Object">[TestSetup("Browser")]</OutArgument>
@@ -184,7 +183,7 @@
         </Assign.Value>
       </Assign>
     </Switch>
-    <ui:LogMessage DisplayName="Log the browser used in automation" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Message="[&quot;Using &quot; + RuntimeBrowser.ToString  + &quot; browser&quot;]" />
+    <ui:LogMessage DisplayName="Log the browser used in automation" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;StartBrowser - Using &quot; + RuntimeBrowser.ToString  + &quot; browser&quot;]" />
     <uix:NSetRuntimeBrowser BrowserType="[RuntimeBrowser]" DisplayName="Configure runtime browser for automation" sap:VirtualizedContainerService.HintSize="502,120" sap2010:WorkflowViewState.IdRef="NSetRuntimeBrowser_1" Version="V3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -193,6 +192,7 @@
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
     </uix:NSetRuntimeBrowser>
-    <ui:LogMessage DisplayName="Log message for starting the browser" sap:VirtualizedContainerService.HintSize="502,166" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Fatal" Message="[&quot;Add Here your custom flow to Start the browser&quot;]" />
+    <ui:LogMessage DisplayName="Log message for starting the browser" sap:VirtualizedContainerService.HintSize="502,166" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Warn" Message="[&quot;StartBrowser - TODO: Add custom flow to start the browser&quot;]" />
+    <ui:LogMessage DisplayName="Log message for browser end" sap:VirtualizedContainerService.HintSize="502,166" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;StartBrowser - End&quot;]" />
   </Sequence>
 </Activity>

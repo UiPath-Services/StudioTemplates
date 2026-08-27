@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="DetectLocalBuild" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity x:Class="DetectLocalBuild" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="out_isOrchBuild" Type="OutArgument(x:Object)" />
   </x:Members>
@@ -83,19 +83,20 @@
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="DetectLocalBuild" sap:VirtualizedContainerService.HintSize="1024,1123" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Detect whether the test is running locally from Studio or remotely from Orchestrator.&#xA;This information is stored in TestSetup(&quot;OrchBuild&quot;) and can be used to&#xA;conditionally execute logic depending on the execution source." DisplayName="DetectLocalBuild" sap:VirtualizedContainerService.HintSize="470,1123" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="x:String" Name="curentDirectory" />
+      <Variable x:TypeArguments="x:String" Name="currentDirectory" />
       <Variable x:TypeArguments="s:String[]" Default="[{&quot;.nuget&quot;, &quot;packages&quot;, &quot;lib&quot;, &quot;net45&quot;}]" Name="RunDetection" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message for Orch Build detection" sap:VirtualizedContainerService.HintSize="470,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Determining execution source...&quot;]" />
-    <ui:GetEnvironmentVariable DisplayName="Get &quot;CurrentDirectory&quot; environment variable" sap:VirtualizedContainerService.HintSize="470,113" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_1" Variable="CurrentDirectory" VariableValue="[curentDirectory]" />
-    <If Condition="[RunDetection.FirstOrDefault(Function(name) curentDirectory.ToUpper().Contains(name.ToUpper())) is Nothing]" DisplayName="Check If is Orhestrator Build" sap:VirtualizedContainerService.HintSize="470,812" sap2010:WorkflowViewState.IdRef="If_1">
+    <ui:LogMessage DisplayName="Log message for Orch Build detection" sap:VirtualizedContainerService.HintSize="470,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;DetectLocalBuild - Determining execution source&quot;]" />
+    <ui:GetEnvironmentVariable DisplayName="Get &quot;CurrentDirectory&quot; environment variable" sap:VirtualizedContainerService.HintSize="470,113" sap2010:WorkflowViewState.IdRef="GetEnvironmentVariable_1" TargetFramework="Windows" Variable="CurrentDirectory" VariableValue="[currentDirectory]" />
+    <If Condition="[RunDetection.FirstOrDefault(Function(name) currentDirectory.ToUpper().Contains(name.ToUpper())) is Nothing]" DisplayName="Check If is Orchestrator Build" sap:VirtualizedContainerService.HintSize="470,812" sap2010:WorkflowViewState.IdRef="If_1">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -117,7 +118,7 @@
               <InArgument x:TypeArguments="x:Boolean">False</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:LogMessage DisplayName="Log message for orchestration build status" sap:VirtualizedContainerService.HintSize="434,166" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot; Execution source: Studio&quot;]" />
+          <ui:LogMessage DisplayName="Log message for orchestration build status" sap:VirtualizedContainerService.HintSize="434,166" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;DetectLocalBuild - Execution source: Studio&quot;]" />
         </Sequence>
       </If.Then>
       <If.Else>
@@ -135,7 +136,7 @@
               <InArgument x:TypeArguments="x:Boolean">True</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:LogMessage DisplayName="Log message for orchestration build status" sap:VirtualizedContainerService.HintSize="434,166" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot; Execution source: Orchestrator&quot;]" />
+          <ui:LogMessage DisplayName="Log message for orchestration build status" sap:VirtualizedContainerService.HintSize="434,166" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;DetectLocalBuild - Execution source: Orchestrator&quot;]" />
         </Sequence>
       </If.Else>
     </If>

@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="TearDown" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1141,4475" sap2010:WorkflowViewState.IdRef="TearDown_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity x:Class="TearDown" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1141,4475" sap2010:WorkflowViewState.IdRef="TearDown_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>GlobalConstantsNamespace</x:String>
@@ -77,7 +77,6 @@
       <AssemblyReference>System.ComponentModel.EventBasedAsync</AssemblyReference>
       <AssemblyReference>Microsoft.Win32.Primitives</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Primitives</AssemblyReference>
-      <AssemblyReference>RPA_T_BA_SOSR_Test.Core</AssemblyReference>
       <AssemblyReference>System.Private.ServiceModel</AssemblyReference>
       <AssemblyReference>System.Private.DataContractSerialization</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
@@ -86,14 +85,14 @@
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Final actions after the test.&#xA;E.g.&#xA;- Bring the application in a original state&#xA;- Delete created test data&#xA;- Logout&#xA;- Save test results in other fortmats&#xA;- Check for application errors&#xA;" DisplayName="TearDown" sap:VirtualizedContainerService.HintSize="1024,1500" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Final actions after the test.&#xA;E.g.&#xA;- Bring the application in a original state&#xA;- Delete created test data&#xA;- Logout&#xA;- Save test results in other formats&#xA;- Check for application errors&#xA;" DisplayName="TearDown" sap:VirtualizedContainerService.HintSize="1024,1500" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log message for TearDown start" sap:VirtualizedContainerService.HintSize="418,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Trace" Message="[&quot;Start TearDown&quot;]" />
+    <ui:LogMessage DisplayName="Log message for TearDown start" sap:VirtualizedContainerService.HintSize="418,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;TearDown - Start&quot;]" />
     <Switch x:TypeArguments="x:String" DisplayName="Test Automation Framework" Expression="[TestSetup(&quot;TestType&quot;).ToString]" sap:VirtualizedContainerService.HintSize="418,1226" sap2010:WorkflowViewState.IdRef="Switch`1_1">
       <Switch.Default>
         <Sequence DisplayName="Default" sap:VirtualizedContainerService.HintSize="416,174" sap2010:WorkflowViewState.IdRef="Sequence_6">
@@ -111,8 +110,8 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:LogMessage DisplayName="Log message for browser testing" sap:VirtualizedContainerService.HintSize="382,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;This is UiPath App Test Killing Apps&quot;]" />
-        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="StopApplication - Invoke Workflow File (TestFramework\Application\StopApplication.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="TestFramework\Application\StopApplication.xaml">
+        <ui:LogMessage DisplayName="Log message for app testing" sap:VirtualizedContainerService.HintSize="382,175" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;TearDown - Stopping application&quot;]" />
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="StopApplication - Invoke Workflow File (TestFramework\Application\StopApplication.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="TestFramework\Application\StopApplication.xaml">
           <ui:InvokeWorkflowFile.Arguments>
             <scg:Dictionary x:TypeArguments="x:String, Argument" />
           </ui:InvokeWorkflowFile.Arguments>
@@ -124,13 +123,14 @@
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:LogMessage DisplayName="Log message for browser testing information" sap:VirtualizedContainerService.HintSize="382,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;This is UiPath Browser Test Killing Browser&quot;]" />
-        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke KillAllProcesses Workflow" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="TestFramework\Browser\StopBrowser.xaml">
+        <ui:LogMessage DisplayName="Log message for browser testing information" sap:VirtualizedContainerService.HintSize="382,175" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;TearDown - Stopping browser&quot;]" />
+        <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="StopBrowser - Invoke Workflow File (TestFramework\Browser\StopBrowser.xaml)" sap:VirtualizedContainerService.HintSize="382,168" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="TestFramework\Browser\StopBrowser.xaml">
           <ui:InvokeWorkflowFile.Arguments>
             <scg:Dictionary x:TypeArguments="x:String, Argument" />
           </ui:InvokeWorkflowFile.Arguments>
         </ui:InvokeWorkflowFile>
       </Sequence>
     </Switch>
+    <ui:LogMessage DisplayName="Log message for TearDown end" sap:VirtualizedContainerService.HintSize="418,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;TearDown - End&quot;]" />
   </Sequence>
 </Activity>
