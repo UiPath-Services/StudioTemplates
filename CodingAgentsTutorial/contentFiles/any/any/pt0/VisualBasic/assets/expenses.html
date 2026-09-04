@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ExpenseFlow 4.2 - New Expense Claim</title>
+<!--
+  ExpenseFlow - the practice portal for the "Coding Agents Tutorial" course.
+
+  A deliberately old-fashioned corporate intranet screen: table layout, beveled
+  panels, gradient title bars, a sidebar full of links that go nowhere. It looks
+  like the internal tools this automation is really aimed at.
+
+  Everything is client side. No network calls, no external assets, no login.
+  Refreshing the page resets it, which makes reruns clean.
+
+  ---------------------------------------------------------------------------
+  STABLE AUTOMATION CONTRACT - these ids will not change
+  ---------------------------------------------------------------------------
+    employee-id        text      Employee ID
+    expense-date       date      Expense date (yyyy-MM-dd)
+    category           select    Travel | Meals | Software | Other
+    amount             number    Amount
+    currency           select    USD | EUR | RON
+    receipt-attached   checkbox  Receipt attached
+    notes              textarea  Notes
+    submit-btn         button    Submits the claim
+    error-msg          div       Hidden until validation fails
+    confirmation-msg   div       Hidden until a claim is accepted
+    confirmation-id    strong    Just the confirmation number, e.g. EXP-0001
+    submissions-table  tbody     One row appended per accepted claim
+
+  No generated ids. No shadow DOM. No iframes.
+
+  ---------------------------------------------------------------------------
+  BUSINESS RULES ENFORCED HERE
+  ---------------------------------------------------------------------------
+    Receipt rule - an amount of 50 or more with "Receipt attached" unticked is
+                   rejected. 50.00 exactly IS rejected.
+    Notes rule   - category "Other" requires notes.
+
+  A rejected claim shows #error-msg and is NOT added to the submissions table.
+  An accepted claim gets a sequential id (EXP-0001 upward) shown in
+  #confirmation-msg and appended to #submissions-table, after a fixed 400ms
+  delay. The delay is deterministic, so an automation must wait for the
+  confirmation rather than race it, but it never flakes.
+-->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #6b7a8d;
+    font-family: Verdana, Tahoma, "MS Sans Serif", Geneva, sans-serif;
+    font-size: 11px;
+    color: #222222;
+  }
+  a { color: #14417a; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  #page {
+    width: 1000px;
+    margin: 10px auto 24px;
+    background: #ffffff;
+    border: 1px solid #2a3a4d;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ---------- masthead ---------- */
+  .masthead {
+    background: #1d4d8f;
+    background: linear-gradient(#3f7dc4 0%, #1d4d8f 55%, #143a6d 100%);
+    border-bottom: 1px solid #0d2749;
+    padding: 0 10px;
+    height: 54px;
+  }
+  .masthead table { width: 100%; border-collapse: collapse; }
+  .masthead td { vertical-align: middle; }
+  .brand { color: #ffffff; }
+  .brand .mark { vertical-align: middle; margin-right: 8px; }
+  .brand .name {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: -0.3px;
+    text-shadow: 1px 1px 1px #0b2244;
+    vertical-align: middle;
+  }
+  .brand .app {
+    font-size: 10px;
+    color: #bcd4ee;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-left: 10px;
+    vertical-align: middle;
+  }
+  .userbox { text-align: right; color: #d7e5f5; font-size: 10px; line-height: 1.6; }
+  .userbox b { color: #ffffff; }
+  .userbox a { color: #ffffff; text-decoration: underline; }
+
+  /* ---------- tab nav ---------- */
+  .navbar {
+    background: #d4dfec;
+    background: linear-gradient(#eaf1f8, #c8d6e6);
+    border-bottom: 1px solid #8fa4bd;
+    padding: 4px 8px 0;
+    height: 23px;
+  }
+  .navbar ul { list-style: none; margin: 0; padding: 0; }
+  .navbar li { float: left; margin-right: 2px; }
+  .navbar a {
+    display: block;
+    padding: 4px 14px 3px;
+    font-size: 11px;
+    color: #14417a;
+    border: 1px solid #8fa4bd;
+    border-bottom: 0;
+    background: linear-gradient(#fdfefe, #dde7f1);
+    border-radius: 3px 3px 0 0;
+  }
+  .navbar a:hover { background: linear-gradient(#ffffff, #eef4fa); text-decoration: none; }
+  .navbar li.on a {
+    background: #ffffff;
+    font-weight: bold;
+    color: #1d3f6d;
+    padding-bottom: 4px;
+    position: relative;
+    top: 1px;
+  }
+
+  /* ---------- breadcrumb ---------- */
+  .crumbs {
+    clear: both;
+    background: #f4f6f9;
+    border-bottom: 1px solid #d3dae4;
+    padding: 5px 12px;
+    font-size: 10px;
+    color: #5d6774;
+  }
+  .crumbs b { color: #333333; }
+
+  /* ---------- layout ---------- */
+  table.layout { width: 100%; border-collapse: collapse; }
+  table.layout > tbody > tr > td { vertical-align: top; }
+  td.sidebar {
+    width: 194px;
+    background: #eef2f7;
+    border-right: 1px solid #d3dae4;
+    padding: 10px 8px 24px;
+  }
+  td.content { padding: 12px 14px 26px; }
+
+  /* ---------- sidebar boxes ---------- */
+  .box { margin-bottom: 12px; border: 1px solid #b6c4d6; background: #ffffff; }
+  .box h3 {
+    margin: 0;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #1d3f6d;
+    background: linear-gradient(#e3ecf6, #c9d9ea);
+    border-bottom: 1px solid #b6c4d6;
+  }
+  .box ul { list-style: none; margin: 0; padding: 5px 0; }
+  .box li { padding: 3px 8px 3px 18px; position: relative; }
+  .box li:before {
+    content: "\00BB";
+    position: absolute;
+    left: 8px;
+    color: #7d93ae;
+  }
+  .box p { margin: 0; padding: 7px 8px; line-height: 1.55; color: #444c57; }
+  .box dl { margin: 0; padding: 6px 8px; }
+  .box dt { float: left; clear: left; width: 74px; color: #5d6774; }
+  .box dd { margin: 0 0 3px 78px; }
+  .ok-dot { color: #1a7a35; font-weight: bold; }
+
+  /* ---------- notice ---------- */
+  .notice {
+    border: 1px solid #d9bd63;
+    background: #fdf6df;
+    padding: 6px 9px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    color: #5a4713;
+  }
+  .notice .ico { font-size: 13px; padding-right: 5px; }
+
+  /* ---------- panels ---------- */
+  .panel { border: 1px solid #9fb0c6; margin-bottom: 14px; background: #ffffff; }
+  .panel > .hd {
+    padding: 5px 9px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #ffffff;
+    background: #4a7ab0;
+    background: linear-gradient(#6f9dcd, #3d6da3);
+    border-bottom: 1px solid #2f5980;
+  }
+  .panel > .hd .right { float: right; font-weight: normal; color: #dbe8f6; }
+  .panel > .bd { padding: 10px 11px 12px; background: #fbfcfd; }
+
+  /* ---------- form ---------- */
+  fieldset {
+    border: 1px solid #c8d2df;
+    margin: 0 0 11px;
+    padding: 8px 11px 11px;
+    background: #ffffff;
+  }
+  legend {
+    font-size: 11px;
+    font-weight: bold;
+    color: #2f5980;
+    padding: 0 5px;
+  }
+  table.form { border-collapse: collapse; width: 100%; }
+  table.form td { padding: 4px 6px 4px 0; vertical-align: top; font-size: 11px; }
+  table.form td.lbl { width: 168px; text-align: right; padding-top: 6px; color: #33383f; }
+  table.form td.lbl label { font-weight: bold; }
+  .req { color: #b3261e; font-weight: bold; padding-left: 2px; }
+  .fhint { color: #6b7480; font-size: 10px; padding-left: 6px; }
+
+  input[type="text"], input[type="date"], input[type="number"], select, textarea {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    color: #1a1a1a;
+    padding: 3px 4px;
+    border: 1px solid #7c8da3;
+    border-top-color: #5f7085;
+    border-left-color: #5f7085;
+    background: #ffffff;
+  }
+  input[type="text"], input[type="date"] { width: 190px; }
+  input[type="number"] { width: 110px; text-align: right; }
+  select { width: 194px; }
+  textarea {
+    width: 420px;
+    height: 58px;
+    resize: vertical;
+    font-family: Verdana, Tahoma, sans-serif;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: 1px dotted #1d4d8f;
+    background: #fffdf2;
+  }
+  input[type="checkbox"] { vertical-align: middle; margin: 0 5px 0 0; }
+  .cbwrap { padding-top: 5px; }
+  .cbwrap label { font-weight: bold; }
+
+  /* ---------- buttons ---------- */
+  .buttonbar {
+    border-top: 1px solid #d3dae4;
+    padding: 10px 2px 2px;
+    text-align: right;
+  }
+  .buttonbar .left { float: left; padding-top: 5px; color: #6b7480; }
+  button {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #17324f;
+    padding: 4px 16px;
+    border: 1px solid #7d93ae;
+    border-top-color: #cddcea;
+    border-left-color: #cddcea;
+    background: linear-gradient(#f7fafd, #d3e0ee 60%, #bed0e4);
+    cursor: pointer;
+  }
+  button:hover { background: linear-gradient(#ffffff, #dfe9f4 60%, #cbdae9); }
+  button:active { border-top-color: #7d93ae; border-left-color: #7d93ae; }
+  button:disabled { color: #8b949f; background: #e4e8ed; border-color: #b9c2cd; cursor: default; }
+  button.secondary { font-weight: normal; }
+
+  /* ---------- messages ---------- */
+  .msg { margin: 11px 0 0; padding: 8px 10px; border: 1px solid; line-height: 1.5; }
+  #error-msg { border-color: #c58b86; background: #fdecea; color: #8f1d16; }
+  #error-msg .ico { font-weight: bold; padding-right: 5px; }
+  #error-msg b { display: inline; }
+  #confirmation-msg { border-color: #94c5a6; background: #eaf6ee; color: #14622f; }
+  #confirmation-msg .ico { font-weight: bold; padding-right: 5px; }
+  #confirmation-id {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  .status { color: #5d6774; padding-left: 10px; font-style: italic; }
+
+  /* ---------- grid ---------- */
+  table.grid { border-collapse: collapse; width: 100%; }
+  table.grid th {
+    font-size: 10px;
+    text-align: left;
+    padding: 4px 7px;
+    color: #1d3f6d;
+    background: linear-gradient(#eaf1f8, #cfdcea);
+    border: 1px solid #b6c4d6;
+    white-space: nowrap;
+  }
+  table.grid th .sort { color: #7d93ae; padding-left: 3px; }
+  table.grid td {
+    padding: 4px 7px;
+    border: 1px solid #dde3ea;
+    font-size: 11px;
+  }
+  table.grid tbody tr:nth-child(even) td { background: #f5f8fb; }
+  table.grid td.num { text-align: right; font-family: "Courier New", monospace; }
+  table.grid td.conf { font-family: "Courier New", monospace; font-weight: bold; }
+  #empty-row td { color: #7b838e; font-style: italic; text-align: center; padding: 12px; }
+  .gridfoot {
+    border: 1px solid #b6c4d6;
+    border-top: 0;
+    background: #f0f4f9;
+    padding: 4px 7px;
+    font-size: 10px;
+    color: #5d6774;
+  }
+
+  /* ---------- status + footer ---------- */
+  .statusbar {
+    clear: both;
+    border-top: 1px solid #b6c4d6;
+    background: linear-gradient(#eef2f7, #dce4ee);
+    padding: 4px 10px;
+    font-size: 10px;
+    color: #4d5663;
+  }
+  .statusbar .right { float: right; }
+  .footer {
+    background: #2a3a4d;
+    color: #9fb0c6;
+    padding: 7px 10px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .footer a { color: #cddcea; text-decoration: underline; }
+
+  /* Panes are shown and hidden by script; the nav tabs are real links. */
+  .navbar a, .box a, .crumbs a, .gridfoot a { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div id="page">
+
+  <div class="masthead">
+    <table>
+      <tr>
+        <td class="brand">
+          <svg class="mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+            <rect x="1" y="1" width="28" height="28" rx="3" fill="#ffffff" opacity="0.14"/>
+            <rect x="1.5" y="1.5" width="27" height="27" rx="3" fill="none" stroke="#cddcea" stroke-width="1"/>
+            <path d="M7 21.5 L12 10 L15 17 L18 12.5 L23 21.5" fill="none" stroke="#ffffff" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"/>
+          </svg>
+          <span class="name">Meridian Group</span>
+          <span class="app">ExpenseFlow&nbsp;4.2</span>
+        </td>
+        <td class="userbox">
+          <!-- Filled in by script. No person's name appears in this file. -->
+          Signed in as <b id="portal-user"></b> <span id="portal-role"></span><br />
+          Last sign-in: <span id="portal-last-login"></span> &nbsp;|&nbsp;
+          <a href="#" data-nav="stub">My Profile</a> &nbsp;|&nbsp;
+          <a href="#" data-nav="stub">Sign Out</a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="navbar">
+    <ul id="main-nav">
+      <li><a href="#" data-tab="home">Home</a></li>
+      <li class="on"><a href="#" data-tab="expenses">Expenses</a></li>
+      <li><a href="#" data-tab="timesheets">Timesheets</a></li>
+      <li><a href="#" data-tab="orders">Purchase Orders</a></li>
+      <li><a href="#" data-tab="directory">Directory</a></li>
+      <li><a href="#" data-tab="reports">Reports</a></li>
+      <li><a href="#" data-tab="helpdesk">Help Desk</a></li>
+    </ul>
+  </div>
+
+  <div class="crumbs" id="crumbs">
+    <a href="#" data-tab="home">Home</a> &nbsp;&rsaquo;&nbsp;
+    <a href="#" data-tab="expenses">Expenses</a> &nbsp;&rsaquo;&nbsp;
+    <a href="#" data-tab="expenses">Claim Management</a> &nbsp;&rsaquo;&nbsp;
+    <b id="crumb-leaf">New Expense Claim</b>
+  </div>
+
+  <table class="layout">
+    <tr>
+
+      <td class="sidebar">
+        <div class="box">
+          <h3>Expense Tasks</h3>
+          <ul>
+            <li><a href="#" data-tab="expenses">New Expense Claim</a></li>
+            <li><a href="#" data-nav="stub">My Draft Claims</a></li>
+            <li><a href="#" data-nav="stub">Awaiting Approval</a></li>
+            <li><a href="#" data-nav="stub">Claim History</a></li>
+            <li><a href="#" data-nav="stub">Mileage Calculator</a></li>
+            <li><a href="#" data-nav="stub">Per Diem Rates</a></li>
+            <li><a href="#" data-nav="stub">Delegate Access</a></li>
+          </ul>
+        </div>
+
+        <div class="box">
+          <h3>Policy Reminders</h3>
+          <p>
+            <b>PL-114</b> &mdash; A receipt must be attached for any single
+            expense of <b>50.00 or more</b>, in any currency.
+          </p>
+          <p>
+            <b>PL-118</b> &mdash; Claims filed under the <b>Other</b> category
+            must carry an explanatory note for the reviewing manager.
+          </p>
+          <p><a href="#" data-nav="stub">Read the full expense policy</a></p>
+        </div>
+
+        <div class="box">
+          <h3>System Status</h3>
+          <dl>
+            <dt>Service</dt>
+            <dd><span class="ok-dot">&#9679;</span> Operational</dd>
+            <dt>Node</dt>
+            <dd>APP-EXF-02</dd>
+            <dt>Release</dt>
+            <dd>4.2.1187</dd>
+            <dt>Period</dt>
+            <dd>FY26 &middot; Q3</dd>
+          </dl>
+        </div>
+      </td>
+
+      <td class="content">
+
+        <div class="notice">
+          <span class="ico">&#9888;</span>
+          <b>Practice environment.</b>
+          This is a training copy of ExpenseFlow used by the Coding Agents
+          Tutorial. Claims submitted here are held in your browser only, are not
+          sent anywhere, and disappear when the page is reloaded.
+        </div>
+
+        <!-- Every other tab renders here. The Expenses pane below is the one the
+             exercise uses, and it is the pane the page always opens on. -->
+        <div class="pane" id="pane-stub" style="display:none">
+          <div class="panel">
+            <div class="hd"><span id="stub-title">Module</span></div>
+            <div class="bd">
+              <table class="grid">
+                <thead>
+                  <tr><th>Reference</th><th>Description</th><th>Raised</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td colspan="4" style="color:#7b838e;font-style:italic;text-align:center;padding:12px">
+                    No records.
+                  </td></tr>
+                </tbody>
+              </table>
+              <div class="gridfoot">
+                This module is not part of the practice environment. Only
+                <a href="#" data-tab="expenses">Expenses</a> is wired up.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pane" id="pane-expenses">
+
+        <div class="panel">
+          <div class="hd">
+            New Expense Claim
+            <span class="right">Fields marked <span class="req">*</span> are required</span>
+          </div>
+          <div class="bd">
+
+            <fieldset>
+              <legend>Claimant Details</legend>
+              <table class="form">
+                <tr>
+                  <td class="lbl"><label for="employee-id">Employee ID</label><span class="req">*</span></td>
+                  <td>
+                    <input type="text" id="employee-id" autocomplete="off" maxlength="12" />
+                    <span class="fhint">Format E-0000</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lbl"><label for="expense-date">Expense date</label><span class="req">*</span></td>
+                  <td>
+                    <input type="date" id="expense-date" />
+                    <span class="fhint">Date the cost was incurred</span>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <fieldset>
+              <legend>Expense Details</legend>
+              <table class="form">
+                <tr>
+                  <td class="lbl"><label for="category">Category</label><span class="req">*</span></td>
+                  <td>
+                    <select id="category">
+                      <option value="Travel">Travel</option>
+                      <option value="Meals">Meals</option>
+                      <option value="Software">Software</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lbl"><label for="amount">Amount</label><span class="req">*</span></td>
+                  <td>
+                    <input type="number" id="amount" step="0.01" min="0" autocomplete="off" />
+                    <span class="fhint">Gross, including tax</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lbl"><label for="currency">Currency</label><span class="req">*</span></td>
+                  <td>
+                    <select id="currency">
+                      <option value="USD">USD &mdash; US Dollar</option>
+                      <option value="EUR">EUR &mdash; Euro</option>
+                      <option value="RON">RON &mdash; Romanian Leu</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lbl">Receipt</td>
+                  <td class="cbwrap">
+                    <input type="checkbox" id="receipt-attached" />
+                    <label for="receipt-attached">Receipt attached</label>
+                    <span class="fhint">Required at 50.00 and above (PL-114)</span>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <fieldset>
+              <legend>Supporting Information</legend>
+              <table class="form">
+                <tr>
+                  <td class="lbl"><label for="notes">Notes</label></td>
+                  <td>
+                    <textarea id="notes"></textarea>
+                    <div class="fhint" style="padding:3px 0 0 0">
+                      Mandatory when the category is <b>Other</b> (PL-118).
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </fieldset>
+
+            <div class="buttonbar">
+              <span class="left">Claim will be routed to your cost-centre approver.</span>
+              <button type="button" id="submit-btn">Submit Claim</button>
+              <span class="status" id="status-msg"></span>
+            </div>
+
+            <!-- Both outcome panels live in the static DOM and are only shown,
+                 hidden and re-texted. Nothing here is created or destroyed at
+                 runtime, so #confirmation-id is a stable target from page load
+                 onwards, exactly as the contract at the top of this file says. -->
+            <div class="msg" id="error-msg" style="display:none">
+              <span class="ico">&#10007;</span><b>Claim rejected.</b>
+              <span id="error-text"></span>
+            </div>
+            <div class="msg" id="confirmation-msg" style="display:none">
+              <span class="ico">&#10003;</span><b>Claim accepted.</b>
+              Confirmation number: <strong id="confirmation-id"></strong>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="hd">
+            Accepted Submissions &mdash; This Session
+            <span class="right" id="row-count-label">0 records</span>
+          </div>
+          <div class="bd" style="padding:10px 11px 11px">
+            <table class="grid">
+              <thead>
+                <tr>
+                  <th>Confirmation<span class="sort">&#9650;</span></th>
+                  <th>Employee</th>
+                  <th>Expense Date</th>
+                  <th>Category</th>
+                  <th style="text-align:right">Amount</th>
+                  <th>Ccy</th>
+                  <th>Receipt</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="submissions-table">
+                <tr id="empty-row"><td colspan="8">No claims have been accepted in this session.</td></tr>
+              </tbody>
+            </table>
+            <div class="gridfoot">
+              Showing session submissions only. Historical claims are in
+              <a href="#" data-nav="stub">Claim History</a>.
+            </div>
+          </div>
+        </div>
+
+        </div><!-- /#pane-expenses -->
+
+      </td>
+    </tr>
+  </table>
+
+  <div class="statusbar">
+    <span class="right">APP-EXF-02 &middot; 4.2.1187 &middot; FY26 Q3</span>
+    <span id="status-bar-text">Ready.</span>
+  </div>
+
+  <div class="footer">
+    Meridian Group &mdash; Corporate Services &middot; ExpenseFlow 4.2 &middot;
+    Internal use only<br />
+    <a href="#" data-nav="stub">Expense Policy</a> &middot;
+    <a href="#" data-nav="stub">Accessibility</a> &middot;
+    <a href="#" data-nav="stub">Report a Problem</a> &middot;
+    <a href="#" data-nav="stub">Privacy Notice</a>
+    <br />
+    Fictional company, practice environment. Nothing entered here leaves this page.
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Fixed, deliberate server-think delay. Deterministic: always the same,
+  // long enough that reading the confirmation without waiting will fail.
+  var SUBMIT_DELAY_MS = 400;
+  var RECEIPT_THRESHOLD = 50;
+
+  // ---------------------------------------------------------------------
+  // Signed-in user. A synthetic service account, not a person — this is a
+  // public template, so no real or invented individual's name appears in it.
+  // Change these two strings if you want different chrome.
+  // ---------------------------------------------------------------------
+  var PORTAL_USER = "MERIDIAN\\finops01";
+  var PORTAL_ROLE = "(Finance Operations)";
+
+  function initIdentity() {
+    document.getElementById("portal-user").textContent = PORTAL_USER;
+    document.getElementById("portal-role").textContent = PORTAL_ROLE;
+
+    // Yesterday at a fixed time, so the header never looks stale and never
+    // varies within a run.
+    var d = new Date();
+    d.setDate(d.getDate() - 1);
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    document.getElementById("portal-last-login").textContent =
+      String(d.getDate()).padStart(2, "0") + " " + months[d.getMonth()] + " " +
+      d.getFullYear() + ", 08:41";
+  }
+
+  // ---------------------------------------------------------------------
+  // Navigation. The tabs are real: they swap panes, move the highlight and
+  // update the breadcrumb. Expenses is the only module with content, and the
+  // page always opens on it, so the form is present the moment the page loads.
+  // ---------------------------------------------------------------------
+  var TABS = {
+    home:       "Home",
+    expenses:   "New Expense Claim",
+    timesheets: "Timesheets",
+    orders:     "Purchase Orders",
+    directory:  "Employee Directory",
+    reports:    "Reports",
+    helpdesk:   "Help Desk"
+  };
+
+  function showTab(tab) {
+    if (!TABS[tab]) { return; }
+    var onExpenses = tab === "expenses";
+
+    document.getElementById("pane-expenses").style.display =
+      onExpenses ? "block" : "none";
+    document.getElementById("pane-stub").style.display =
+      onExpenses ? "none" : "block";
+
+    if (!onExpenses) {
+      document.getElementById("stub-title").textContent = TABS[tab];
+    }
+
+    var links = document.querySelectorAll("#main-nav a");
+    for (var i = 0; i < links.length; i++) {
+      links[i].parentNode.className =
+        links[i].getAttribute("data-tab") === tab ? "on" : "";
+    }
+
+    document.getElementById("crumb-leaf").textContent = TABS[tab];
+    document.getElementById("status-bar-text").textContent = "Ready.";
+    window.scrollTo(0, 0);
+  }
+
+  function initNav() {
+    // One delegated handler for every in-page link: real tabs navigate,
+    // everything else reports honestly that it is not in the practice copy.
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest ? e.target.closest("a") : null;
+      if (!a) { return; }
+
+      var tab = a.getAttribute("data-tab");
+      if (tab) {
+        e.preventDefault();
+        showTab(tab);
+        return;
+      }
+      if (a.getAttribute("data-nav") === "stub") {
+        e.preventDefault();
+        document.getElementById("status-bar-text").textContent =
+          "\"" + a.textContent.trim() +
+          "\" is not included in the practice environment.";
+      }
+    });
+  }
+
+  var nextId = 1;
+  var accepted = 0;
+
+  var els = {
+    employeeId: document.getElementById("employee-id"),
+    expenseDate: document.getElementById("expense-date"),
+    category: document.getElementById("category"),
+    amount: document.getElementById("amount"),
+    currency: document.getElementById("currency"),
+    receipt: document.getElementById("receipt-attached"),
+    notes: document.getElementById("notes"),
+    submit: document.getElementById("submit-btn"),
+    status: document.getElementById("status-msg"),
+    error: document.getElementById("error-msg"),
+    confirmation: document.getElementById("confirmation-msg"),
+    table: document.getElementById("submissions-table"),
+    emptyRow: document.getElementById("empty-row"),
+    rowCount: document.getElementById("row-count-label")
+  };
+
+  // Hide only. Never rebuild the panel's markup — the ids inside it are part of
+  // the automation contract and must survive every submit.
+  function hide(el) {
+    el.style.display = "none";
+  }
+
+  // Called at the start of every submit. Hides both outcome panels AND empties
+  // them, so a caller that reads the confirmation without waiting gets an empty
+  // string rather than the PREVIOUS claim's number. Stable target, no stale value.
+  function resetOutcomes() {
+    hide(els.error);
+    hide(els.confirmation);
+    document.getElementById("error-text").textContent = "";
+    document.getElementById("confirmation-id").textContent = "";
+  }
+
+  function formatId(n) {
+    return "EXP-" + String(n).padStart(4, "0");
+  }
+
+  // Returns a rejection reason, or null when the claim is acceptable.
+  function validate(claim) {
+    if (!claim.employeeId) {
+      return "Employee ID is required.";
+    }
+    if (!claim.expenseDate) {
+      return "Expense date is required.";
+    }
+    if (isNaN(claim.amount) || claim.amount <= 0) {
+      return "Amount must be greater than zero.";
+    }
+    // Receipt rule (PL-114): 50 and above needs a receipt. 50.00 exactly is included.
+    if (claim.amount >= RECEIPT_THRESHOLD && !claim.receipt) {
+      return "A receipt is required for expenses of " +
+             RECEIPT_THRESHOLD.toFixed(2) + " or more.";
+    }
+    // Notes rule (PL-118).
+    if (claim.category === "Other" && !claim.notes) {
+      return "Notes are required when the category is Other.";
+    }
+    return null;
+  }
+
+  function appendRow(id, claim) {
+    if (els.emptyRow && els.emptyRow.parentNode) {
+      els.emptyRow.parentNode.removeChild(els.emptyRow);
+    }
+    var tr = document.createElement("tr");
+    var cells = [
+      { text: id, cls: "conf" },
+      { text: claim.employeeId, cls: "" },
+      { text: claim.expenseDate, cls: "" },
+      { text: claim.category, cls: "" },
+      { text: claim.amount.toFixed(2), cls: "num" },
+      { text: claim.currency, cls: "" },
+      { text: claim.receipt ? "Yes" : "No", cls: "" },
+      { text: "Submitted", cls: "" }
+    ];
+    cells.forEach(function (cell) {
+      var td = document.createElement("td");
+      if (cell.cls) { td.className = cell.cls; }
+      td.textContent = cell.text;
+      tr.appendChild(td);
+    });
+    els.table.appendChild(tr);
+
+    accepted += 1;
+    els.rowCount.textContent = accepted === 1 ? "1 record" : accepted + " records";
+  }
+
+  function readClaim() {
+    return {
+      employeeId: els.employeeId.value.trim(),
+      expenseDate: els.expenseDate.value.trim(),
+      category: els.category.value,
+      amount: parseFloat(els.amount.value),
+      currency: els.currency.value,
+      receipt: els.receipt.checked,
+      notes: els.notes.value.trim()
+    };
+  }
+
+  els.submit.addEventListener("click", function () {
+    // Clear both outcome panels first, so a stale confirmation from the previous
+    // claim can never be mistaken for this one's result.
+    resetOutcomes();
+
+    var claim = readClaim();
+    var reason = validate(claim);
+
+    if (reason) {
+      document.getElementById("error-text").textContent = reason;
+      els.error.style.display = "block";
+      els.status.textContent = "";
+      return;
+    }
+
+    els.submit.disabled = true;
+    els.status.textContent = "Submitting, please wait...";
+
+    window.setTimeout(function () {
+      var id = formatId(nextId);
+      nextId += 1;
+      appendRow(id, claim);
+
+      // #confirmation-id already exists in the page. Only its text changes, so
+      // an automation can read just the confirmation number instead of parsing
+      // it out of the sentence — and a target captured once stays valid.
+      document.getElementById("confirmation-id").textContent = id;
+      els.confirmation.style.display = "block";
+
+      els.status.textContent = "";
+      els.submit.disabled = false;
+    }, SUBMIT_DELAY_MS);
+  });
+
+  initIdentity();
+  initNav();
+  showTab("expenses");
+})();
+</script>
+
+</body>
+</html>
