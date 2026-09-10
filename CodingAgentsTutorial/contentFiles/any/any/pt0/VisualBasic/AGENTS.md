@@ -39,10 +39,66 @@ URL, and `CloseMode` `Never`. The default close mode shuts the browser at the
 end, which destroys the submissions table the learner has to check. Do not
 depend on a tab the learner opened.
 
-**If you cannot capture targets, stop and say so.** Do not commit a half-built
-workflow. Capture needs the browser extension with file-URL access, and on macOS
-Accessibility and Screen Recording granted by hand. Without them `uip rpa uia`
-refuses every command.
+**If you cannot capture targets, fix it before you stop.** Do not commit a
+half-built workflow and do not hand-write selectors to get past it. Diagnose,
+repair what you can, and say what you found and what you changed. Stop only when
+what is left needs a click you cannot make, and then name the exact click.
+
+The failure is quiet. Capture returns success and the wrong tree, so judge the
+tree, not the exit code. Any one of these means the browser bridge is dead:
+
+- The snapshot reports no browser tabs for a window that visibly has tabs.
+- Capture comes back from a desktop-accessibility subsystem rather than the
+  browser DOM.
+- The portal's ids (`employee-id`, `submit-btn`) appear nowhere in the tree.
+
+Four things cause it. Check them in this order, and check rather than assume —
+each is answerable from the machine without asking the user:
+
+1. **The extension is missing, or is the wrong one for this platform.** The name
+   differs between platforms and the wrong one looks plausible. Read the
+   browser's own record of installed extensions to see what is actually there.
+   Do not conclude from a name, and do not tell the user to install anything
+   before you have looked.
+2. **Local-file access is off.** The portal is a `file://` page, so the
+   extension's granted host permissions have to include local files. This is the
+   same switch as "Allow access to file URLs"; read the granted permissions
+   rather than asking the user to go and look. If it is off, that is the fix —
+   give them the click path from `course/SETUP.md`.
+3. **The browser cannot reach UiPath's native messaging host.** The browser
+   keeps a manifest naming the host program, and a product upgrade can leave it
+   pointing at a file that has moved. Check that what the manifest names still
+   exists. This produces all three signals above even with the right extension
+   and file access on, so gather all four findings before concluding anything —
+   the numbering is the order to look in, not permission to stop at the first
+   thing that looks wrong.
+   Repair it by reinstalling the extension from Assistant or Studio, which
+   rewrites the manifest. Offer that before editing anything by hand, and do not
+   write a product path of your own into it.
+4. **The operating system has not granted automation permissions** to Studio,
+   Assistant and the terminal.
+5. **The tool opened a different browser than the one that is set up.**
+   `uip rpa uia interact browser open` uses the machine's default browser. On
+   macOS that is often Safari, which has no per-extension file-URL switch at all,
+   so a portal opened there comes back as a discarded tab with no page tree while
+   every check above reports healthy. Look at which browser the output names. If
+   it is not the one carrying the UiPath extension, say so and open the portal in
+   that one instead — this is the cause the others miss, and the one that looks
+   least like a fault.
+
+Where a browser keeps this state differs by browser, platform and version, and
+product paths move between releases. Find it on the machine in front of you.
+Never carry over a path, an extension id or a version from another machine, from
+these notes, or from memory: a stale path is the cause of failure 3, not a way
+to diagnose it.
+
+A marker on a tab saying it is a local or restricted page means that tab is not
+inspectable. No marker means it is. Absence is the good case; do not read it as
+missing information.
+
+**Report the prerequisite problem even when you fix it.** Name what was wrong
+and what you did. A silent repair teaches nothing, and this is the setup most
+likely to bite them again on their own machine. Then go back to the step.
 
 **One unconfigured UI target fails `validate`, `build` and `run` for the whole
 project**, including `Main.xaml` and the test. An unfinished step 3 makes steps
@@ -110,7 +166,18 @@ Studio.
 **Never skip ahead.** If the user insists on skipping a step, comply and log it
 as `skipped`.
 
-**Commit after each step.** Name the step in the message.
+**Commit after the learner has confirmed the check, not when the work is
+done.** Name the step in the message. Finishing the work is not finishing the
+step; their confirmation is. If you have not asked what they see and had an
+answer back, you have not reached the commit.
+
+**If you commit before they have reviewed, say so and put it back.** Undo it
+yourself rather than handing them a command to run: this learner works in
+Studio's Git panel and the course assumes no git command line. The change
+returns to pending, where they can review it and commit it themselves. Then
+correct the `course/PROGRESS.md` row, and say which rows you corrected. A row
+asserting a check they never gave is the worse half of the mistake, because the
+commit is easy to undo and the record is what survives.
 
 **Append one row to `course/PROGRESS.md` after each step.** The format is fixed:
 
@@ -118,12 +185,29 @@ as `skipped`.
 
 `Status` is `done`, `skipped` or `failed`. Nothing else.
 
+This sequence begins after they have confirmed, never before.
+
 The row names the commit that holds the work, so it cannot be in that commit.
 Commit the step, read the hash, write the row, then commit the row yourself with
 the message `Step N: log progress`. Every step, step 1 included. Stage everything
 that is modified, so the step ends with a clean working tree. A learner who opens
 the Git panel and sees a change they did not make will think something went
-wrong.
+wrong. Never revert a modified file quietly to get to a clean tree: if a file you
+did not expect has changed, name it and say why before you touch it.
+
+**A scripted edit puts back the exact bytes it found at the file's edges.** Two
+of these bite. Line endings: Studio writes CRLF on Windows, these copies are LF,
+and normalising a whole file turns a twenty-line change into hundreds. And the
+trailing newline: most `.xaml` here and `project.json` end mid-line, with no
+final newline at all. Add one and git reports `\ No newline at end of file` as a
+deletion on a line you never touched. `validate`, `build` and `run` all stay
+green through both, so nothing warns you — only the diff does.
+
+**A diff much larger than the change you made is a stop, not a curiosity.**
+Check the size of the diff after editing and before you report. If it is out of
+proportion to what you did, find out why and fix it before the learner sees it.
+An unreviewable diff fails the step even when the build passes, because reviewing
+the diff is the step.
 
 **Never edit `README.md`.** It holds the course. Do not reword it, tidy it, or
 "improve" it the way you might in another project. Committing the learner's own
@@ -263,7 +347,8 @@ uip rpa run --file-path "Main.xaml" --project-dir "<this folder>"
 uip rpa run --file-path "Tests/ValidateExpense_Tests.xaml" --project-dir "<this folder>"
 ```
 
-`Data/summary.xlsx` is generated output. It is gitignored. Do not commit it.
+`Data/summary.xlsx` is generated output, rewritten by every run. Do not commit
+it, and do not stage it when you stage a step.
 
 Conventions:
 

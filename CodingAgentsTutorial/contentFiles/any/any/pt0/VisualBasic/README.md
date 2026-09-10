@@ -132,8 +132,10 @@ The agent writes a test, runs it, reads the result and fixes what fails.
 
 One instruction changes every workflow in the project. Try Catch and logging
 across a project is an afternoon of clicking in the designer; here it is one
-sentence and a diff review. "Every workflow" is five files: `Main.xaml`, the
-three in `Workflows/`, and the one from step 3. Leave the test alone.
+sentence and a diff review. "Every workflow" is `Main.xaml`, the three in
+`Workflows/`, and whatever step 3 added — five files if step 3 went the usual
+way, four if you reverted it. The agent tells you the number it found. Leave the
+tests alone.
 
 **Say to the agent:**
 
@@ -142,7 +144,7 @@ three in `Workflows/`, and the one from step 3. Leave the test alone.
 
 **Check:**
 
-- The diff touches all five files.
+- The diff touches every workflow the agent named, and nothing else.
 - The project still runs and still gives three accepted submissions.
 - No business logic changed. Read the diff; do not take its word.
 
@@ -174,7 +176,7 @@ exists to reuse. When a request goes wrong, one of those was missing.
 | Revert | Undo a change already on disk. |
 | Repository | The folder plus its history. |
 | Stage | Choosing which changes go into the next commit. |
-| Skill | A markdown file of instructions an agent loads when relevant. This course is two of them; the agent shows you where after step 5. |
+| Skill | A markdown file of instructions an agent loads when relevant. This course is run by a few such files in this project; the agent shows you which after step 5. |
 | Context window | How much the agent can hold at once. Long conversations forget the start. |
 | Hallucination | Confident nonsense. Why you check the diff. |
 

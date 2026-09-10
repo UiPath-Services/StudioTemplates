@@ -34,7 +34,7 @@ header line.
 | `course/PROGRESS.md` | Agent-written log, one row per step. |
 | `course/agent/PROCEDURE.md` | How the agent runs a step. Pointed to from `AGENTS.md`. |
 
-`Data/summary.xlsx` is generated and gitignored.
+`Data/summary.xlsx` is generated output, rewritten by every run. Never staged.
 
 ## Conventions
 
@@ -81,7 +81,7 @@ or Linux. That is one reason this project is `Portable`.
 
 Delete `.local/` before sharing this folder. `uip` and Studio regenerate it on
 every run, and it contains absolute paths from whoever built last. It is
-gitignored, so a git share is clean; a folder copy or zip is not.
+not tracked, so a git share is clean; a folder copy or zip is not.
 
 ```bash
 rm -rf ".../Coding Agents Tutorial/.local"
