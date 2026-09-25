@@ -8,7 +8,7 @@
 * Uses *State Machine* layout for the phases of automation project
 * Offers high level logging, exception handling and recovery
 * Keeps external settings in the *Data/Config.json* file; Orchestrator artifacts (queues, assets) are solution resources referenced through bindings
-* Pulls credentials from Orchestrator assets and *Windows Credential Manager*
+* Pulls credentials from Orchestrator assets
 * Gets transaction data from Orchestrator queue and updates back status
 * Takes screenshots in case of system exceptions
 
@@ -17,7 +17,6 @@
 
 1. **INITIALIZE PROCESS**
  + ./Framework/*InitAllSettings* - Load configuration data (settings and constants) from the Data/Config.json file
- + ./Framework/*GetAppCredential* - Retrieve credentials from Orchestrator assets or local Windows Credential Manager
  + ./Framework/*InitiAllApplications* - Open and login to applications used throughout the process
 
 2. **GET TRANSACTION DATA**
