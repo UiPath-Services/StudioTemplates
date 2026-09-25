@@ -37,4 +37,13 @@ Copy from there rather than hand-editing XAML; the Windows/Portable delta is onl
   dropped it. Newer pins will not restore on a Legacy project.
 - **Cross-platform variants drop Excel and Mail** — the activities that matter need the desktop
   Office apps. Studio's own `Blank/Portable` template does the same.
+- **The payload must be a flat project, never a solution.** Studio's New Project wizard creates
+  one project whose root is the destination folder: it writes `project.json` there from
+  `template.json`, drops any `project.json` nested in the payload, and never opens a `.uipx`.
+  A payload shaped as `<name>.uipx` + `<name>/project.json` therefore becomes one project rooted
+  one level too high, and every project-relative Invoke Workflow File path breaks. Users get a
+  solution by ticking *Create in solution* in the wizard.
+- **Set `DotNetVersion` in Portable `template.json`.** Without it Studio writes no `dotNetVersion`
+  into the generated `project.json`, the project compiles against .NET 8 references, and the
+  `CodedWorkflows` helper fails with CS1705 on a .NET 10 Studio.
 - Release channels are `master/<Template>` branches; work in `feature/<target>/<name>`.
