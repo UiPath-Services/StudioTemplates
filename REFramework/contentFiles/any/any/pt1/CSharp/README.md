@@ -8,7 +8,7 @@
 * Uses *State Machine* layout for the phases of automation project
 * Offers high level logging, exception handling and recovery
 * Keeps external settings in *Config.xlsx* file and Orchestrator assets
-* Pulls credentials from Orchestrator assets and *Windows Credential Manager*
+* Pulls credentials from Orchestrator assets
 * Gets transaction data from Orchestrator queue and updates back status
 * Takes screenshots in case of system exceptions
 
@@ -17,7 +17,6 @@
 
 1. **INITIALIZE PROCESS**
  + ./Framework/*InitiAllSettings* - Load configuration data from Config.xlsx file and from assets
- + ./Framework/*GetAppCredential* - Retrieve credentials from Orchestrator assets or local Windows Credential Manager
  + ./Framework/*InitiAllApplications* - Open and login to applications used throughout the process
 
 2. **GET TRANSACTION DATA**
