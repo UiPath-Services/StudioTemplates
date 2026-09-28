@@ -9,7 +9,6 @@ as part of a UiPath Solution, tick *Create in solution* in Studio's New Project 
 * The transaction queue is named in `Config.json` (`OrchestratorQueueName`, `OrchestratorQueueFolder`)
 * Credentials come from Orchestrator assets
 * Gets transaction data from an Orchestrator queue and writes the status back
-* Takes a screenshot when a transaction fails with a system exception
 
 Full reference documentation is in the **Documentation** folder.
 
@@ -28,7 +27,6 @@ Full reference documentation is in the **Documentation** folder.
  + *Process* - Your business logic; runs once per transaction
  + ./Framework/*SetTransactionStatus* - Records the outcome: Success, Business Rule Exception or System Exception
  + ./Framework/*RetryCurrentTransaction* - Decides whether a system exception is retried
- + ./Framework/*TakeScreenshot* - Invoked on a system exception only
 
 4. **END PROCESS**
  + ./Framework/*CloseAllApplications* - Logs out and closes the applications used
@@ -79,20 +77,6 @@ framework's own per-state handling is what classifies and routes the exception.
 When a queue manages retries, keep `MaxRetryNumber` at 0 and configure the retry count on the queue
 in Orchestrator. `MaxConsecutiveSystemExceptions` stops the job once that many system exceptions
 occur back to back; 0 disables that guard.
-
-
-### Exception Screenshots ###
-
-When a transaction fails with a **system exception**, `Framework/SetTransactionStatus.xaml` invokes
-`Framework/TakeScreenshot.xaml`, which captures the whole desktop and writes a PNG into the folder
-named by the `ExScreenshotsFolderPath` Global Constant (`Exceptions_Screenshots` by default).
-Successful transactions and business rule exceptions produce no screenshot.
-
-The file name is the path passed in with a timestamp inserted before the extension, for example
-`Exceptions_Screenshots/ExceptionScreenshot_2026-08-28_112451_186.png`. The coded workflow returns
-the path it actually wrote; `TakeScreenshot.xaml` assigns that back to `io_FilePath` and logs
-`Screenshot saved at: <path>`, and `SetTransactionStatus.xaml` puts the same path into the queue
-item's `Details` field.
 
 
 ### Logging ###
@@ -151,7 +135,6 @@ Excel installation. `Tests/MainTestCase.xaml` is the only Excel consumer in the 
 | `OrchestratorQueueFolder` | `String` | `""` | Orchestrator folder that holds the queue. Leave empty to use the folder the process runs in. |
 | `MaxRetryNumber` | `Int32` | `0` | Must be 0 if working with Orchestrator queues. If > 0, the robot will retry the same transaction which failed with a system exception. Must be an integer value. |
 | `MaxConsecutiveSystemExceptions` | `Int32` | `0` | The number of consecutive system exceptions allowed. If MaxConsecutiveSystemExceptions is reached, the job is stopped. To disable this feature, set the value to 0. |
-| `ExScreenshotsFolderPath` | `String` | `"Exceptions_Screenshots"` | Where to save exceptions screenshots - can be a full or a relative path. |
 | `LogMessage_GetTransactionData` | `String` | `"Processing Transaction Number: "` | Static part of logging message. Calling Get Transaction Data. |
 | `LogMessage_GetTransactionDataError` | `String` | `"Error getting transaction data for Transaction Number: "` | Static part of logging message. Error retrieving Transaction Data. |
 | `LogMessage_Success` | `String` | `"Transaction Successful."` | Static part of logging message. Processed Transaction succesful. |
