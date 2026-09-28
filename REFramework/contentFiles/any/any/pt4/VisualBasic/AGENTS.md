@@ -100,9 +100,8 @@ invoke them from `Process.xaml`, passing `in_Config` and the data they need.
 - Throw a business rule exception when the data breaks a rule: *Throw* with `New
   BusinessRuleException("Invoice amount is negative")`. The transaction is marked as a business
   exception and skipped.
-- Let every other exception propagate. The framework classifies it as a system exception, takes a
-  screenshot, retries the transaction if retries are configured, and re-initialises the
-  applications.
+- Let every other exception propagate. The framework classifies it as a system exception, retries
+  the transaction if retries are configured, and re-initialises the applications.
 
 ### 6. Fill in the logging fields
 
@@ -142,7 +141,6 @@ Data/Config.json                 configuration: Settings + Constants
 Framework/                       the framework workflows
 Tests/                           test cases, plus Tests.xlsx
 Documentation/                   reference PDF
-Exceptions_Screenshots/          written on system-exception failures
 ```
 
 ### Configuration
@@ -150,8 +148,8 @@ Exceptions_Screenshots/          written on system-exception failures
 `Data/Config.json` has two objects: **Settings** (values that change per environment) and
 **Constants** (values that rarely change). `Framework/InitAllSettings.xaml` reads both (argument
 `in_ConfigSections`) into one `Config` dictionary during the Initialization state. Every framework
-workflow except `KillAllProcesses`, `CloseAllApplications` and `TakeScreenshot` receives it as the
-`in_Config` argument. Read a value with `CInt(in_Config("MaxRetryNumber"))` or
+workflow except `KillAllProcesses` and `CloseAllApplications` receives it as the `in_Config`
+argument. Read a value with `CInt(in_Config("MaxRetryNumber"))` or
 `in_Config("logF_BusinessProcessName").ToString`. To add a tunable value, add a key to the Settings
 or Constants object.
 
@@ -162,7 +160,6 @@ or Constants object.
 | `OrchestratorQueueFolder` | empty | Folder that holds the queue. Empty means the folder the process runs in. |
 | `MaxRetryNumber` | `0` | In-process retries after a system exception. `0` with a queue. |
 | `MaxConsecutiveSystemExceptions` | `0` | Stops the job after this many system exceptions in a row. `0` disables it. |
-| `ExScreenshotsFolderPath` | `Exceptions_Screenshots` | Where exception screenshots are written. Full or relative path. |
 | `RetryNumberGetTransactionItem` | `2` | Retries of *Get Transaction Item* when it throws. |
 | `RetryNumberSetTransactionStatus` | `2` | Retries of *Set Transaction Status* when it throws. |
 | `ShouldMarkJobAsFaulted` | `False` | Mark the job as Faulted when Initialization fails or `MaxConsecutiveSystemExceptions` is reached. |
@@ -176,7 +173,7 @@ or Constants object.
 |---|---|---|
 | Initialization | Read the configuration (first run only), kill leftover processes, open the applications. Success goes to Get Transaction Data, failure to End Process. After a system exception the framework comes back here, so applications are re-initialised before the next transaction. | `InitAllSettings`, `KillAllProcesses`, `InitAllApplications` |
 | Get Transaction Data | Fetch the next transaction. None left, or an error, goes to End Process; otherwise Process Transaction. | `GetTransactionData` |
-| Process Transaction | Process one transaction and record the outcome: Success, Business Exception or System Exception. | `Process`, `SetTransactionStatus` (which may invoke `RetryCurrentTransaction`, `TakeScreenshot`, `CloseAllApplications`, `KillAllProcesses`) |
+| Process Transaction | Process one transaction and record the outcome: Success, Business Exception or System Exception. | `Process`, `SetTransactionStatus` (which may invoke `RetryCurrentTransaction`, `CloseAllApplications`, `KillAllProcesses`) |
 | End Process | Close all applications and finish. Reached on normal completion and on abort alike. | `CloseAllApplications`, `KillAllProcesses` |
 
 ### Shared variables
@@ -204,7 +201,6 @@ Declared in `Main.xaml` and passed to the invoked workflows.
 | `Process.xaml` | **Your business logic**, once per transaction | `in_TransactionItem`, `in_Config` |
 | `SetTransactionStatus.xaml` | Records and logs the outcome, updates the queue item | `in_TransactionItem`, `in_Config`, `in_SystemException`, `in_BusinessException`, `in_TransactionID`, `in_TransactionField1`, `in_TransactionField2`, `io_RetryNumber`, `io_TransactionNumber`, `io_ConsecutiveSystemExceptions` |
 | `RetryCurrentTransaction.xaml` | Decides whether to retry the same transaction | `in_Config`, `in_SystemException`, `in_QueueRetry`, `io_RetryNumber`, `io_TransactionNumber` |
-| `TakeScreenshot.xaml` | Captures the desktop on a system exception | `in_Folder`, `io_FilePath` |
 | `CloseAllApplications.xaml` | Closes the applications. Runs on every exit path | none |
 
 ### The transaction queue
@@ -228,15 +224,6 @@ but is not. `Error code: 1002` means the named queue does not exist in that fold
 With a queue, retries are the queue's (its *Max # retries* setting) and `MaxRetryNumber` stays `0`.
 Without a queue, `MaxRetryNumber` sets how many times the same transaction is retried in process.
 `MaxConsecutiveSystemExceptions` stops a persistent fault from failing every remaining transaction.
-
-### Exception screenshots
-
-On a system exception, `SetTransactionStatus.xaml` invokes `TakeScreenshot.xaml`, which writes a PNG
-of the desktop into `ExScreenshotsFolderPath` with a timestamp in the file name.
-`TakeScreenshot.xaml` invokes the coded workflow `Framework/NTakeScreenshot_Coded.cs`, which
-captures the desktop through the UIAutomation coded API. The path is logged and, for a queue item,
-written to its details so it can be found from Orchestrator. Successful transactions and business
-exceptions produce no screenshot.
 
 ### Logging
 
