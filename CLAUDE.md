@@ -43,7 +43,10 @@ Copy from there rather than hand-editing XAML; the Windows/Portable delta is onl
   A payload shaped as `<name>.uipx` + `<name>/project.json` therefore becomes one project rooted
   one level too high, and every project-relative Invoke Workflow File path breaks. Users get a
   solution by ticking *Create in solution* in the wizard.
-- **Set `DotNetVersion` in Portable `template.json`.** Without it Studio writes no `dotNetVersion`
-  into the generated `project.json`, the project compiles against .NET 8 references, and the
-  `CodedWorkflows` helper fails with CS1705 on a .NET 10 Studio.
+- **Studio builds `project.json` from `template.json`, not from the payload.** The payload's
+  `project.json` is replaced, so its `runtimeOptions` and `dotNetVersion` never reach the user.
+  Set `RequiresUserInteraction` in `template.json` (Studio's own Blank template does); when it is
+  absent Studio defaults to `true` (foreground). The .NET version cannot be set from a template:
+  the user picks it in the wizard or in Project Settings, and a missing `dotNetVersion` means
+  .NET 8.
 - Release channels are `master/<Template>` branches; work in `feature/<target>/<name>`.

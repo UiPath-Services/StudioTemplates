@@ -270,7 +270,7 @@ uip rpa run --file-path Tests/InitAllSettingsTestCase.xaml
 | `Error code: 1002` | The named queue does not exist in that folder. |
 | Workflow compiler cannot be found | .NET SDK 8.0 must be on `PATH`; the compiler requires it by name. |
 | `WorkflowRunnerService does not exist` after the first `uip rpa run` | Clear `.local/.codedworkflows`, `.local/.jit` and `.local/install` before each CLI run. Studio is unaffected. |
-| CS1705 about `System.Runtime` 10.0.0.0 vs 8.0.0.0 when compiling `CodedWorkflows` | `project.json` is missing `"dotNetVersion": "net10.0"`. Add it, close the project, delete `.local` and reopen. |
+| CS1705 about `System.Runtime` 10.0.0.0 vs 8.0.0.0 when compiling `CodedWorkflows` | The project targets .NET 8 (no `dotNetVersion` in `project.json`) while Studio runs on .NET 10. Set the .NET version to 10 in Project Settings, close the project, delete `.local` and reopen. |
 
 ---
 
