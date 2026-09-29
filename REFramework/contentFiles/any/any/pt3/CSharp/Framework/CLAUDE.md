@@ -20,10 +20,6 @@ reference material for those steps.
 | Transaction source | Orchestrator queue by default; any other source can replace it |
 | Licence | MIT |
 
-Prose documentation ships at `Documentation/`. **Its configuration sections are out of date**: they
-describe Studio Global Constants, which this project no longer uses. Where it and this file
-disagree, this file is correct.
-
 ## What the framework is
 
 The Robotic Enterprise Framework (REFramework) is a template for **transactional** automations. A
@@ -146,7 +142,6 @@ Main.xaml                        the state machine
 Data/Config.json                 configuration: Settings + Constants
 Framework/                       the framework workflows
 Tests/                           test cases, plus Tests.xlsx
-Documentation/                   reference PDF
 ```
 
 ### Configuration
