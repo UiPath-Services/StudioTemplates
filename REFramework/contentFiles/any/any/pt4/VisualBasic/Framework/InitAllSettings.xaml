@@ -75,10 +75,10 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Initialize, populate and output a configuration Dictionary to be used throughout the project.&#xA;Settings and constants are read from the local JSON configuration file, one section at a time (by default the Settings and Constants sections).&#xA;The transaction queue is set in the Settings section (OrchestratorQueueName, OrchestratorQueueFolder). Keep credentials out of this file: store them as Orchestrator assets." DisplayName="Initialize All Settings" sap:VirtualizedContainerService.HintSize="1397.2,1800" sap2010:WorkflowViewState.IdRef="Sequence_18">
+  <Sequence sap2010:Annotation.AnnotationText="Initialize, populate and output a configuration Dictionary to be used throughout the project.&#xA;Settings and constants are read from the local JSON configuration file, one section at a time (by default the Settings and Constants sections).&#xA;Keep credentials out of this file: store them as Orchestrator assets." DisplayName="Initialize All Settings" sap:VirtualizedContainerService.HintSize="1397.2,1800" sap2010:WorkflowViewState.IdRef="Sequence_18">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Raw text content of the JSON configuration file." Name="ConfigJson" />
-      <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" sap2010:Annotation.AnnotationText="Configuration file deserialized into sections of key/value pairs." Name="dict_ConfigSections" />
+      <Variable x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))" sap2010:Annotation.AnnotationText="Configuration file deserialized into sections of key/value pairs." Name="ConfigSections" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -96,9 +96,9 @@
       </Assign.Value>
     </Assign>
     <ui:ReadTextFile sap2010:Annotation.AnnotationText="Read the whole JSON configuration file. The path is relative to the project folder." DisplayName="Read Text File (configuration file)" sap2010:WorkflowViewState.IdRef="ReadTextFile_1" FileName="[in_ConfigFile]" Content="[ConfigJson]" />
-    <Assign sap2010:Annotation.AnnotationText="Deserialize the configuration file: each top-level JSON object is a section (e.g. Settings, Constants) holding key/value pairs." DisplayName="Assign dict_ConfigSections (deserialize configuration file)" sap2010:WorkflowViewState.IdRef="Assign_2">
+    <Assign sap2010:Annotation.AnnotationText="Deserialize the configuration file: each top-level JSON object is a section (e.g. Settings, Constants) holding key/value pairs." DisplayName="Assign ConfigSections (deserialize configuration file)" sap2010:WorkflowViewState.IdRef="Assign_2">
       <Assign.To>
-        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))">[dict_ConfigSections]</OutArgument>
+        <OutArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))">[ConfigSections]</OutArgument>
       </Assign.To>
       <Assign.Value>
         <InArgument x:TypeArguments="scg:Dictionary(x:String, scg:Dictionary(x:String, x:Object))">[JsonConvert.DeserializeObject(Of Dictionary(Of String, Dictionary(Of String, Object)))(ConfigJson)]</InArgument>
@@ -117,10 +117,10 @@
                 <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If sap2010:Annotation.AnnotationText="Fail fast if a required section is missing from the configuration file." Condition="[dict_ConfigSections.ContainsKey(Section)]" DisplayName="If configuration section exists" sap2010:WorkflowViewState.IdRef="If_1">
+            <If sap2010:Annotation.AnnotationText="Fail fast if a required section is missing from the configuration file." Condition="[ConfigSections.ContainsKey(Section)]" DisplayName="If configuration section exists" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Then>
                 <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Sequence_13">
-                  <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:Object)" CurrentIndex="{x:Null}" DisplayName="For each configuration entry" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[dict_ConfigSections(Section)]">
+                  <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:Object)" CurrentIndex="{x:Null}" DisplayName="For each configuration entry" sap2010:WorkflowViewState.IdRef="ForEach`1_4" Values="[ConfigSections(Section)]">
                     <ui:ForEach.Body>
                       <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:Object)">
                         <ActivityAction.Argument>

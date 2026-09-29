@@ -7,7 +7,7 @@
 * Built on top of *Transactional Business Process* template
 * Uses *State Machine* layout for the phases of automation project
 * Offers high level logging, exception handling and recovery
-* Keeps external settings in the *Data/Config.json* file; Orchestrator artifacts (queues, assets) are solution resources referenced through bindings
+* Keeps external settings in the *Data/Config.json* file; the transaction queue is selected on *Get Transaction Item* and recorded as a resource
 * Pulls credentials from Orchestrator assets
 * Gets transaction data from Orchestrator queue and updates back status
 * Takes screenshots in case of system exceptions
@@ -20,7 +20,7 @@
  + ./Framework/*InitiAllApplications* - Open and login to applications used throughout the process
 
 2. **GET TRANSACTION DATA**
- + ./Framework/*GetTransactionData* - Fetches transactions from the Orchestrator queue bound to the solution resource *TransactionQueue* or any other configured data source
+ + ./Framework/*GetTransactionData* - Fetches transactions from the Orchestrator queue selected on *Get Transaction Item* or any other configured data source
 
 3. **PROCESS TRANSACTION**
  + *Process* - Process trasaction and invoke other workflows related to the process being automated 

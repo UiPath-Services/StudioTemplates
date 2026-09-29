@@ -6,7 +6,7 @@ as part of a UiPath Solution, tick *Create in solution* in Studio's New Project 
 * State Machine layout for the phases of the automation
 * High-level logging, exception handling and recovery
 * Tunable values live in **`Data/Config.json`**
-* The transaction queue is named in `Config.json` (`OrchestratorQueueName`, `OrchestratorQueueFolder`)
+* The transaction queue is selected on *Get Transaction Item* and recorded as a queue resource
 * Credentials come from Orchestrator assets
 * Gets transaction data from an Orchestrator queue and writes the status back
 
@@ -21,7 +21,7 @@ Full reference documentation is in the **Documentation** folder.
  + ./Framework/*InitAllApplications* - Opens and logs in to the applications the process uses
 
 2. **GET TRANSACTION DATA**
- + ./Framework/*GetTransactionData* - Fetches the next transaction from the queue named by `OrchestratorQueueName` in `Config.json`. Returning nothing ends the process
+ + ./Framework/*GetTransactionData* - Fetches the next transaction from the queue selected on *Get Transaction Item*. Returning nothing ends the process
 
 3. **PROCESS TRANSACTION**
  + *Process* - Your business logic; runs once per transaction
@@ -45,15 +45,11 @@ Orchestrator assets and read them with *Get Asset* / *Get Credential*.
 
 ### The Transaction Queue ###
 
-*Get Transaction Item* in `GetTransactionData.xaml` reads the queue named by the
-`OrchestratorQueueName` setting (default `TransactionQueue`) in the folder named by
-`OrchestratorQueueFolder`. The queue is not created for you: create it in Orchestrator, or point the
-setting at an existing one.
+*Get Transaction Item* in `GetTransactionData.xaml` ships with no queue selected. Select the
+Orchestrator queue on the activity before the first run; Studio records it as a queue resource of
+the project, so it can be bound to a queue in each environment when the process is deployed.
 
-`OrchestratorQueueFolder` is empty by default, so the robot's own Orchestrator folder applies and
-the process should run in the folder that holds the queue. Set it to a folder path (for example
-`Shared/Finance`) to read a queue from another folder. Queue activities always need a folder in scope; run
-one outside a folder and Orchestrator answers
+Queue activities always need a folder in scope; run one outside a folder and Orchestrator answers
 `400 - A folder is required for this action. Error code: 1101`, which reads like an authentication
 failure but is not.
 
@@ -95,7 +91,7 @@ Never log sensitive data; logs are not encrypted.
 
 1. Set the values in `Data/Config.json` - at minimum `logF_BusinessProcessName`, which is stamped
    on every log message the framework emits
-2. Set `OrchestratorQueueName` (and `OrchestratorQueueFolder` if needed) to your queue, or replace *Get Transaction Item* in
+2. Select your queue on *Get Transaction Item*, or replace the activity in
    `GetTransactionData.xaml` if the source is not a queue
 3. Implement `InitAllApplications.xaml`, `CloseAllApplications.xaml` and `KillAllProcesses.xaml`
    for the applications your process drives
@@ -123,13 +119,11 @@ Excel installation. `Tests/MainTestCase.xaml` is the only Excel consumer in the 
 
 ### Configuration Values ###
 
-`logF_BusinessProcessName`, `OrchestratorQueueName` and `OrchestratorQueueFolder` are **Settings**; everything below them is a **Constant**.
+`logF_BusinessProcessName` is a **Setting**; everything below it is a **Constant**.
 
 | Name | Type | Value | Description |
 |---|---|---|---|
 | `logF_BusinessProcessName` | `String` | `"Framework"` | Logging field which allows grouping of log data of two or more subprocesses under the same business process name |
-| `OrchestratorQueueName` | `String` | `"TransactionQueue"` | Name of the Orchestrator queue the transactions are read from. |
-| `OrchestratorQueueFolder` | `String` | `""` | Orchestrator folder that holds the queue. Leave empty to use the folder the process runs in. |
 | `MaxRetryNumber` | `Int32` | `0` | Must be 0 if working with Orchestrator queues. If > 0, the robot will retry the same transaction which failed with a system exception. Must be an integer value. |
 | `MaxConsecutiveSystemExceptions` | `Int32` | `0` | The number of consecutive system exceptions allowed. If MaxConsecutiveSystemExceptions is reached, the job is stopped. To disable this feature, set the value to 0. |
 | `LogMessage_GetTransactionData` | `String` | `"Processing Transaction Number: "` | Static part of logging message. Calling Get Transaction Data. |
@@ -157,7 +151,7 @@ Excel installation. `Tests/MainTestCase.xaml` is the only Excel consumer in the 
   *"WorkflowRunnerService does not exist"*. Clear `.local/.codedworkflows`, `.local/.jit` and
   `.local/install` before each CLI run. Studio is unaffected.
 * **`Error code: 1002`** on a queue activity means the named queue does not exist in the folder -
-  check `OrchestratorQueueName` and `OrchestratorQueueFolder` in `Config.json`.
+  check the queue selected on *Get Transaction Item* and the folder the process runs in.
 
 **Dependencies**
 
