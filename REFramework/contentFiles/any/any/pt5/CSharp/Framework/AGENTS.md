@@ -117,18 +117,6 @@ C#: every expression is a `<CSharpValue>` / `<CSharpReference>` element, never a
 | `InitAllApplicationsTestCase.xaml`, `InitAllSettingsTestCase.xaml` | Start-up/shutdown; configuration loading. |
 | `WorkflowTestCaseTemplate.xaml` | Given/When/Then template. |
 
-### Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `Value for a required activity argument 'Queue name' was not supplied` | Select the queue on *Get Transaction Item*. |
-| `The <path> workflow cannot be found` | Path not relative to the project root, or the project was opened one folder too high. |
-| `feature not available` | Assign a Studio licence to the user on this organization. |
-| Workflow compiler not found (CLI) | Put the .NET SDK 8.0 on `PATH`. |
-| `WorkflowRunnerService does not exist` after the first `uip rpa run` | Clear `.local/.codedworkflows`, `.local/.jit`, `.local/install` before each CLI run. |
-| CS1705 (`System.Runtime` 10.0.0.0 vs 8.0.0.0) compiling `CodedWorkflows` | Studio runs on .NET 10, project on .NET 8. Set Minimum Robot version 26.10, close, delete `.local`, reopen (then Robot 26.10+ only). |
-| Job faults at once: `Error converting value "net10.0"` | Robot older than 26.10 (e.g. serverless). Set Minimum Robot version 24.10 and republish. |
-
 ## Publishing
 
 - Process: Studio *Publish*, or `uip rpa pack . <out>` and upload the `.nupkg`.
