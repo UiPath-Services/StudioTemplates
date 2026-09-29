@@ -28,9 +28,6 @@ The **Test Automation Framework** is a UiPath testing template designed for test
 │   ├── Utils/
 │   │   ├── DetectLocalBuild.xaml   # Detect if running from Studio or Orchestrator
 │   │   └── InitAllAssets.xaml      # Load assets from JSON into a dictionary
-│   ├── VideoRecording/
-│   │   ├── StartRecording.cs       # Start ffmpeg video recording (coded workflow)
-│   │   └── StopRecording.cs        # Stop ffmpeg video recording (coded workflow)
 │   ├── SetUp.xaml                  # Test setup dispatcher (routes to App or Web setup)
 │   └── TearDown.xaml               # Test teardown dispatcher (routes to App or Web teardown)
 ├── Tests/
@@ -48,14 +45,13 @@ The **Test Automation Framework** is a UiPath testing template designed for test
 The framework follows a strict lifecycle for every test execution:
 
 ```
-FrameworkSetup → SetUp → RunTest (with TimeOut) → TearDown → VideoRecording Stop
+FrameworkSetup → SetUp → RunTest (with TimeOut) → TearDown
 ```
 
 1. **FrameworkSetup** — Loads assets, detects execution source, configures test variables
 2. **SetUp** — Launches the application or browser based on `TestType` (App/Web)
 3. **RunTest** — Executes the actual test case (injected via Placeholder activity)
 4. **TearDown** — Closes the application or browser, cleans up
-5. **VideoRecording** — Stops recording in the Finally block (always executes)
 
 Each phase is wrapped in a `TryCatch` block for resilience.
 
@@ -115,7 +111,7 @@ The framework supports two test types via the `TestType` argument:
 If `TestType` is not set, a `BusinessRuleException` is thrown.
 
 ### Browser Configuration
-- Supported browsers: `Chrome`, `Firefox`, `Edge`
+- Supported browsers: `Chrome`, `Firefox`, `Edge` (matched case-insensitively)
 - Default: `Chrome` (if no browser is specified)
 - Browser is configurable via the `Browser` argument on `TestFramework.xaml`
 
@@ -137,7 +133,7 @@ All workflow main sequences MUST have an annotation that describes:
 - Place workflows in the appropriate subdirectory under `TestFramework/`
 
 ### Variables
-- Use **camelCase** for local variables: `videoFilePath`, `ffmpegProcess`
+- Use **camelCase** for local variables: `currentDirectory`, `runtimeBrowser`
 - Use **PascalCase** for arguments: `TestType`, `Browser`, `TestExecTimeOut`
 
 ### DisplayNames
@@ -178,7 +174,6 @@ The framework uses shared dictionaries accessible across workflows:
 2. **Use VerifyExpression for test assertions** — Includes screenshots on failure
 3. **Log exceptions at Error level** — Include exception message and source
 4. **TearDown runs even on failure** — Ensures cleanup always happens
-5. **Video recording stops in Finally block** — Guarantees recording is saved
 
 ---
 
@@ -192,20 +187,9 @@ The framework uses shared dictionaries accessible across workflows:
 
 ---
 
-## Video Recording
-
-- Recording is controlled by the `Recording` argument on `TestFramework.xaml`
-- Videos are saved as `.webm` files in the system temp folder with format `{TestName}_{Guid}.webm`
-- Recording starts before SetUp and stops in the Finally block (always executes)
-- ffmpeg path is resolved in two stages: per-machine (`%ProgramFiles%\UiPath\Studio\ffmpeg\ffmpeg.exe`), then per-user (`%LocalAppData%\Programs\UiPath\Studio\ffmpeg\ffmpeg.exe`)
-- Capture settings: gdigrab desktop capture, 4 FPS, 71% scale, VP8 codec, CRF 50, 1M max bitrate
-- Graceful stop via stdin "q" command; Kill() as fallback; video attached via `testing.AttachDocument()` in finally block
-
----
-
 ## Coded Workflow Conventions
 
-Coded workflows (`.cs` files) in this project follow these patterns:
+The framework ships no coded workflows. If you add one (`.cs`), follow these patterns:
 
 ### Class Structure
 - Extend `CodedWorkflow` base class (from `UiPath.CodedWorkflows`)
@@ -213,9 +197,9 @@ Coded workflows (`.cs` files) in this project follow these patterns:
 - Entry method is always named `Execute`
 
 ### Arguments
-- Input arguments use `in_` prefix: `in_TestName`, `in_startRecording`
-- Output arguments use `out_` prefix: `out_ffmpegProcess`, `out_VideoFilePath`
-- Multiple outputs use C# tuple returns: `(Process out_ffmpegProcess, String out_VideoFilePath)`
+- Input arguments use `in_` prefix: `in_TestName`
+- Output arguments use `out_` prefix: `out_ResultPath`
+- Multiple outputs use C# tuple returns: `(string out_ResultPath, bool out_IsValid)`
 
 ### Service API
 - `Log(message)` and `Log(message, LogLevel)` — injected by CodedWorkflow base

@@ -1,12 +1,11 @@
 # Test Automation Framework
 
-A UiPath Studio template for test automation projects. Provides a structured execution lifecycle with built-in exception handling, multi-browser support, video recording, and Orchestrator asset management.
+A UiPath Studio template for test automation projects. Provides a structured execution lifecycle with built-in exception handling, multi-browser support, and Orchestrator asset management.
 
 ## Features
 
 - **Structured test lifecycle** with guaranteed SetUp/TearDown execution
 - **Multi-browser support** — Chrome, Firefox, Edge with automatic fallback
-- **Video recording** — ffmpeg-based desktop capture attached as test evidence
 - **Orchestrator asset integration** — JSON-configured asset loading
 - **BDD test structure** — Given/When/Then pattern for all test cases
 - **Execution context detection** — automatically detects Studio vs Orchestrator runs
@@ -21,9 +20,7 @@ Every test follows a strict, guaranteed execution flow:
 FrameworkSetup
   |-- Load assets from Data/Assets.json
   |-- Detect execution source (Studio or Orchestrator)
-  |-- Configure test variables (TestType, Browser, Timeout, Recording)
-  |
-StartRecording (if enabled)
+  |-- Configure test variables (TestType, Browser, Timeout)
   |
 SetUp
   |-- App: Launch application under test
@@ -35,12 +32,9 @@ RunTest (with configurable timeout)
 TearDown (always executes, even on failure)
   |-- App: Close application
   |-- Web: Close browser (with force-kill fallback)
-  |
-StopRecording (always executes in Finally block)
-  |-- Attach video to test case
 ```
 
-Each phase is wrapped in its own TryCatch. If SetUp fails, TearDown still runs. If recording is active, StopRecording always executes in the Finally block.
+Each phase is wrapped in its own TryCatch. If SetUp fails, TearDown runs before the test is stopped. If the test case fails, the failure is recorded and TearDown still runs.
 
 ## Test Arguments
 
@@ -49,9 +43,8 @@ These arguments are configured on each test case and passed to the execution tem
 | Argument | Type | Values | Default | Description |
 |----------|------|--------|---------|-------------|
 | `TestType` | String | `App`, `Web` | `Web` | Routes SetUp/TearDown to application or browser handlers |
-| `Browser` | String | `Chrome`, `Firefox`, `Edge` | `Chrome` | Browser to use for web tests. Falls back to system default if unrecognized |
+| `Browser` | String | `Chrome`, `Firefox`, `Edge` | `Chrome` | Browser to use for web tests (case-insensitive). Falls back to system default if unrecognized |
 | `TestExecTimeOut` | String | TimeSpan format | `00:20:00` | Maximum execution time for the test case (20 minutes default) |
-| `Recording` | String | `True`, `False` | `False` | Enable ffmpeg desktop recording. Video is attached to test results |
 
 ### Setting Arguments in Test Cases
 
@@ -96,10 +89,7 @@ TestFramework/
     StopBrowser.xaml           # Close browser with force-kill fallback
   Utils/
     DetectLocalBuild.xaml      # Detect Studio vs Orchestrator execution
-    InitAllAssets.xaml          # Load assets from JSON into dictionary
-  VideoRecording/
-    StartRecording.cs          # Start ffmpeg desktop capture
-    StopRecording.cs           # Stop recording and attach to test case
+    InitAllAssets.xaml         # Load assets from JSON into dictionary
 
 Tests/
   TestCaseApp.xaml             # Example desktop app test (Windows only)
@@ -133,21 +123,10 @@ Assets are defined in `Data/Assets.json` and loaded into a shared dictionary dur
 
 Access assets in workflows via: `Assets("MyCredential")`
 
-## Video Recording
-
-Video recording captures the desktop during test execution using ffmpeg.
-
-- **Format**: WebM (VP8 codec, 4 FPS, 71% scale)
-- **Storage**: System temp folder as `{TestName}_{GUID}.webm`
-- **ffmpeg location**: Auto-detected from UiPath Studio installation (per-machine or per-user)
-- **Attachment**: Video is automatically attached to the test case via `testing.AttachDocument()`
-
-Enable by setting `Recording = "True"` on the test case.
-
 ## Adding a New Test Case
 
 1. In UiPath Studio, right-click `Tests/` and create a new test case from the `TestCaseWebTemplate` or `TestCaseAppTemplate`
-2. Verify the **Execution Template** is set to `.templates\TestFramework.xaml` — this is configured in the test case properties under `executionTemplatePath`. Without this, the test lifecycle (SetUp, TearDown, recording, timeout) will not execute
+2. Verify the **Execution Template** is set to `.templates\TestFramework.xaml` — this is configured in the test case properties under `executionTemplatePath`. Without this, the test lifecycle (SetUp, TearDown, timeout) will not execute
 3. Set the `TestType` argument (`App` or `Web`) and optionally `Browser`
 4. Implement your test logic in the **Given**, **When**, **Then** sections:
    - **Given** — Set up preconditions (login, navigate, prepare test data)
@@ -168,9 +147,9 @@ Enable by setting `Recording = "True"` on the test case.
 
 | Package | Version |
 |---------|---------|
-| UiPath.System.Activities | 26.2.1 |
-| UiPath.Testing.Activities | 25.10.1 |
-| UiPath.UIAutomation.Activities | 25.10.28 |
+| UiPath.System.Activities | 26.8.2 |
+| UiPath.Testing.Activities | 25.10.3 |
+| UiPath.UIAutomation.Activities | 26.10.4 |
 
 Requires UiPath Studio 23.10.4 or later.
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-UiPath Test Automation Framework — a NuGet package template (`UiPath.Template.TestAutomationFramework`) that ships four project variants for UiPath Studio testing projects. The package provides scaffolding for test automation with exception handling, video recording, and multi-browser support.
+UiPath Test Automation Framework — a NuGet package template (`UiPath.Template.TestAutomationFramework`) that ships four project variants for UiPath Studio testing projects. The package provides scaffolding for test automation with exception handling and multi-browser support.
 
 ## Build & Package
 
@@ -13,7 +13,7 @@ UiPath Test Automation Framework — a NuGet package template (`UiPath.Template.
 nuget pack UiPath.Template.TestAutomationFramework.nuspec -OutputDirectory ./output
 ```
 
-There is no compile step or test runner in this repo — the `.xaml` and `.cs` files are consumed as UiPath Studio templates at install time.
+There is no compile step or test runner in this repo — the workflow files are consumed as UiPath Studio templates at install time.
 
 ## Architecture
 
@@ -33,20 +33,20 @@ Each variant is self-contained with its own `project.json`, workflows, and tests
 **Key differences between variants:**
 - pt0/pt1 (Windows): Support both `App` and `Web` test types
 - pt2/pt3 (Portable): Support `Web` test type only (no Application workflows)
-- All variants use coded workflows (.cs) for video recording
-- pt0: Has `.json` metadata files per workflow (others don't)
+- **pt0 is the reference variant.** Align pt1–pt3 to it (behaviour, log messages, package pins), not the other way round.
+- Video recording (ffmpeg, `StartRecording.cs`/`StopRecording.cs`, `Recording` argument) was removed from the framework — do not reintroduce it. Variants not yet aligned to pt0 may still contain it.
+- Studio writes a `<Workflow>.json` outline sidecar next to each `.xaml`, embedding the author's absolute local path. These are gitignored; never commit them.
 
 ### Test Execution Lifecycle
 
 Every test follows a strict flow orchestrated by `.templates/TestFramework.xaml`:
 
 ```
-FrameworkSetup → SetUp → RunTest (with TimeOut) → TearDown → VideoRecording Stop (Finally)
+FrameworkSetup → SetUp → RunTest (with TimeOut) → TearDown
 ```
 
 - **SetUp/TearDown** dispatch based on `TestType` argument: `App` routes to `StartApplication`/`StopApplication`, `Web` routes to `StartBrowser`/`StopBrowser`
 - Each phase is wrapped in its own `TryCatch`; TearDown always executes
-- Video recording (ffmpeg-based) stops in the `Finally` block
 - SetUp catch block runs TearDown before failing (cleanup guarantee)
 - `VerifyExpression` with `TakeScreenshotInCaseOfFailingAssertion=True` for visual evidence
 - `ContinueOnFailure` strategy: SetUp catch allows TearDown to run; RunTest catch continues to TearDown; TearDown catch stops immediately
@@ -71,13 +71,13 @@ All log messages must follow: `"WorkflowName - Description"`
 ### Naming
 
 - Workflow files: **PascalCase** (`StartApplication.xaml`)
-- Variables: **camelCase** (`videoFilePath`)
+- Variables: **camelCase** (`currentDirectory`)
 - Arguments: **PascalCase** (`TestType`, `Browser`)
 - Coded workflow arguments: `in_` prefix for inputs, `out_` prefix for outputs
 
 ### Coded Workflows
 
-Coded workflows (.cs) extend `CodedWorkflow` base class with `[Workflow]` attribute on `Execute` method. Use tuple returns for multiple outputs. Log via `Log()` and attach test artifacts via `testing.AttachDocument()`. Follow the same `"WorkflowName - Description"` logging pattern as XAML workflows. See `AGENTS.md` for the full coded workflow conventions.
+The framework ships no coded workflows. Any added coded workflow (.cs) extends `CodedWorkflow` base class with `[Workflow]` attribute on `Execute` method. Use tuple returns for multiple outputs. Log via `Log()` and attach test artifacts via `testing.AttachDocument()`. Follow the same `"WorkflowName - Description"` logging pattern as XAML workflows. See `AGENTS.md` for the full coded workflow conventions.
 
 ### Test Cases
 
