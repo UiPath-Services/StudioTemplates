@@ -46,7 +46,12 @@ Copy from there rather than hand-editing XAML; the Windows/Portable delta is onl
 - **Studio builds `project.json` from `template.json`, not from the payload.** The payload's
   `project.json` is replaced, so its `runtimeOptions` and `dotNetVersion` never reach the user.
   Set `RequiresUserInteraction` in `template.json` (Studio's own Blank template does); when it is
-  absent Studio defaults to `true` (foreground). The .NET version cannot be set from a template:
-  the user picks it in the wizard or in Project Settings, and a missing `dotNetVersion` means
-  .NET 8.
+  absent Studio defaults to `true` (foreground).
+- **Set `"DotNetVersion": "Net10"` in every variant's `template.json`, not only the one it is for.**
+  The value is the `UiPath.Shared.DotNetVersion` enum (`Net8`, `Net6`, `Net10`); a missing field
+  means `Net8`, and Studio then writes no `dotNetVersion` into `project.json`. The New Project
+  wizard copies the .NET version from the variant it opens on (the Legacy one first) and keeps it
+  when the user switches target framework, so a value set only on the Portable variant is
+  overwritten. Studio ignores it for Legacy projects. A .NET 8 Portable project fails on a .NET 10
+  Studio with CS1705 while compiling the `CodedWorkflows` helper.
 - Release channels are `master/<Template>` branches; work in `feature/<target>/<name>`.
