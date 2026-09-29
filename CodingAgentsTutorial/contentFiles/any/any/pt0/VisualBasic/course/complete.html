@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>You ran the loop</title>
+<style>
+  /* Offline by design: no font host, no CDN, no network of any kind.
+     The display face is the monospace stack — this is a course about diffs. */
+  :root {
+    --paper:   #fbfaf8;
+    --surface: #ffffff;
+    --sunken:  #f4f2ee;
+    --edge:    #e5e1da;
+    --ink:     #1b1a18;
+    --ink-2:   #55514a;
+    --ink-3:   #8a847a;
+    --accent:  #fa4616;   /* UiPath orange */
+    --add:     #1a7f37;
+    --del:     #b3261e;
+    --shadow:  0 1px 2px rgba(27,26,24,.05), 0 8px 24px -12px rgba(27,26,24,.15);
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, "Cascadia Code",
+            "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto,
+            "Helvetica Neue", Arial, sans-serif;
+    --glow: radial-gradient(120% 90% at 8% -10%,
+              rgba(250,70,22,.20) 0%, rgba(250,70,22,.07) 38%, transparent 72%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:   #14151a;
+      --surface: #1b1d24;
+      --sunken:  #101116;
+      --edge:    #2c2f39;
+      --ink:     #eceae6;
+      --ink-2:   #a8a49c;
+      --ink-3:   #736f68;
+      --accent:  #ff6a3d;
+      --add:     #3fb950;
+      --del:     #f85149;
+      --shadow:  0 1px 2px rgba(0,0,0,.4), 0 8px 28px -14px rgba(0,0,0,.7);
+      --glow: radial-gradient(120% 90% at 8% -10%,
+                rgba(255,106,61,.13) 0%, rgba(255,106,61,.04) 38%, transparent 72%);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--glow), var(--paper);
+    background-repeat: no-repeat;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  #sky { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 64rem; margin: 0 auto;
+    padding: clamp(2.5rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 3rem) 4rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: .75rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-3); margin: 0 0 1.25rem;
+  }
+  h1 {
+    font-family: var(--sans);
+    font-size: clamp(2.75rem, 9.5vw, 6rem);
+    line-height: .94;
+    letter-spacing: -.038em;
+    font-weight: 800;
+    margin: 0;
+    text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+
+  /* The hero is a diff. It is the form this whole course is about, it is
+     the one place colour belongs, and it says the thing in the subject's
+     own notation instead of describing it. */
+  .hunk {
+    margin: 2rem 0 0;
+    border: 1px solid var(--edge);
+    border-radius: 3px;
+    background: var(--sunken);
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+  .hunk .hh {
+    font-family: var(--mono); font-size: .74rem;
+    letter-spacing: .08em;
+    color: var(--ink-3);
+    padding: .55rem .9rem;
+    border-bottom: 1px solid var(--edge);
+    background: var(--surface);
+  }
+  .hunk .row {
+    font-family: var(--mono);
+    font-size: clamp(.82rem, 2.3vw, 1.12rem);
+    line-height: 1.7;
+    padding: .18rem .9rem;
+    white-space: nowrap;
+    display: flex; gap: .75rem;
+  }
+  .hunk .row .g { width: .6rem; flex: none; opacity: .8; }
+  .hunk .row.minus { color: var(--del); background: color-mix(in srgb, var(--del) 8%, transparent); }
+  .hunk .row.plus  { color: var(--add); background: color-mix(in srgb, var(--add) 10%, transparent); font-weight: 600; }
+  .hunk .row:last-child { padding-bottom: .5rem; }
+  .standfirst {
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    color: var(--ink-2); max-width: 34em; margin: 1.25rem 0 0;
+  }
+
+  /* The loop — the thesis of the whole course. */
+  .loop {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .55rem 1rem;
+    margin: 2.75rem 0 0; padding: 1.25rem 1.4rem;
+    border: 1px solid var(--edge); border-left: 3px solid var(--accent);
+    background: var(--surface); border-radius: 2px;
+    font-family: var(--mono); font-size: clamp(.85rem, 2vw, 1rem);
+  }
+  .loop b { font-weight: 600; letter-spacing: -.01em; }
+  .loop .arrow { color: var(--accent); }
+  .loop .cycle { color: var(--ink-3); margin-left: auto; font-size: .78rem; }
+
+  h2 {
+    font-family: var(--mono); font-size: .8rem;
+    letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 600;
+    margin: 3.5rem 0 1rem; padding-bottom: .5rem;
+    border-bottom: 1px solid var(--edge);
+  }
+
+  /* Run report: figures are the point here, so tiles earn their keep. */
+  .stats {
+    display: grid; gap: 1px;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    background: var(--edge); border: 1px solid var(--edge); border-radius: 2px;
+    overflow: hidden;
+  }
+  .stat { background: var(--surface); padding: .9rem 1rem; }
+  .stat dt {
+    font-family: var(--mono); font-size: .68rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .stat dd {
+    margin: .3rem 0 0; font-family: var(--mono);
+    font-size: 1.5rem; font-weight: 600; letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat dd .unit { font-size: .8rem; font-weight: 400; color: var(--ink-3); margin-left: .15rem; }
+  .stat dd.narrow { font-size: 1.05rem; }
+  .stat .note { display: block; font-family: var(--sans); font-size: .74rem; color: var(--ink-3); margin-top: .2rem; letter-spacing: 0; }
+
+  /* Real terminal output, not a picture of one. */
+  .term {
+    margin-top: 1rem; background: var(--sunken);
+    border: 1px solid var(--edge); border-radius: 2px;
+    padding: .9rem 1rem; overflow-x: auto;
+    font-family: var(--mono); font-size: .84rem; line-height: 1.75;
+  }
+  .term .prompt { color: var(--ink-3); }
+  .term .prompt::before { content: "$ "; color: var(--accent); }
+  .term .sha { color: var(--accent); }
+  .term .graph { color: var(--ink-3); }
+  .term .ref { color: var(--add); }
+
+  ol.ledger { list-style: none; margin: 0; padding: 0; }
+  ol.ledger li {
+    display: grid; grid-template-columns: 1.6rem 1fr auto;
+    gap: .35rem 1rem; align-items: baseline;
+    padding: .8rem 0; border-bottom: 1px dashed var(--edge);
+  }
+  ol.ledger li:last-child { border-bottom: 0; }
+  .n { font-family: var(--mono); font-size: .8rem; color: var(--ink-3); }
+  .what { font-weight: 500; }
+  .what small { display: block; font-weight: 400; color: var(--ink-2); font-size: .9rem; }
+  .hash {
+    font-family: var(--mono); font-size: .82rem;
+    font-variant-numeric: tabular-nums; color: var(--ink-2);
+    background: var(--paper); border: 1px solid var(--edge);
+    border-radius: 2px; padding: .1rem .4rem; white-space: nowrap;
+  }
+  .hash.none { color: var(--ink-3); border-style: dashed; }
+
+  .callout {
+    margin: 1rem 0 0; padding: 1.25rem 1.4rem;
+    background: var(--surface); border: 1px solid var(--edge);
+    border-radius: 2px; box-shadow: var(--shadow);
+  }
+  .callout p { margin: 0 0 .75rem; max-width: 62ch; }
+  .callout p:last-child { margin-bottom: 0; }
+  .say {
+    font-family: var(--mono); font-size: .88rem;
+    background: var(--sunken); border: 1px solid var(--edge);
+    border-left: 3px solid var(--accent); border-radius: 2px;
+    padding: .7rem .85rem; margin: .85rem 0; overflow-x: auto;
+  }
+  .diffline { font-family: var(--mono); font-size: .85rem; white-space: nowrap; }
+  .diffline .minus { color: var(--del); }
+  .diffline .plus  { color: var(--add); }
+
+  ul.plain { margin: 0; padding: 0; list-style: none; display: grid; gap: .7rem; }
+  ul.plain li { display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: baseline; }
+  code {
+    font-family: var(--mono); font-size: .86em;
+    background: var(--sunken); border: 1px solid var(--edge);
+    border-radius: 2px; padding: .08em .35em;
+  }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  footer {
+    margin-top: 4rem; padding-top: 1.25rem;
+    border-top: 1px solid var(--edge);
+    color: var(--ink-3); font-size: .8rem;
+  }
+  footer .env {
+    font-family: var(--mono); font-size: .76rem; line-height: 1.9;
+    display: grid; gap: 0 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    margin: 0 0 1rem;
+  }
+  footer .env b { color: var(--ink-2); font-weight: 500; }
+  footer .env .ok { color: var(--add); }
+  footer .sign { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; }
+  kbd {
+    font-family: var(--mono); font-size: .9em;
+    border: 1px solid var(--edge); border-bottom-width: 2px;
+    border-radius: 3px; padding: .05em .3em; background: var(--surface);
+    color: var(--ink-2);
+  }
+
+  .reveal { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { animation: rise .7s cubic-bezier(.2,.7,.2,1) backwards; }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  }
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <p class="eyebrow reveal" id="eyebrow">Coding Agents Tutorial</p>
+  <h1 class="reveal">You ran the loop.<br>Now it&rsquo;s <em>how you build</em>.</h1>
+
+  <div class="hunk reveal">
+    <div class="hh">@@ how you build automations @@</div>
+    <div class="row minus"><span class="g">-</span><span>drag the activity, run the whole thing, hope</span></div>
+    <div class="row plus"><span class="g">+</span><span>instruct, review the diff, verify it runs, commit</span></div>
+  </div>
+
+  <p class="standfirst reveal">
+    Five steps, and every change reviewed before it was kept. That review is the
+    whole skill — the rest is practice.
+  </p>
+
+  <div class="loop reveal">
+    <b>Instruct</b> <span class="arrow">&rarr;</span>
+    <b>Review the diff</b> <span class="arrow">&rarr;</span>
+    <b>Verify it runs</b> <span class="arrow">&rarr;</span>
+    <b>Commit</b>
+    <span class="cycle">&#8635; repeat</span>
+  </div>
+
+  <h2>Run report</h2>
+  <dl class="stats" id="stats"></dl>
+  <div class="term" id="term"></div>
+
+  <h2>What you did</h2>
+  <ol class="ledger" id="ledger"></ol>
+
+  <h2>One thing before you close this</h2>
+  <div class="callout">
+    <p>
+      The tests you wrote in step 4 now guard the bug you fixed in step 2. Those
+      two steps were never introduced to each other. Do it now:
+    </p>
+    <div class="say">Put the receipt rule back to <span class="plus">&gt; 50</span> and run the tests.</div>
+    <p>
+      You should watch it fail on purpose — the assertion for a 50.00 claim with
+      no receipt goes red, naming the case:
+    </p>
+    <p class="diffline">
+      <span class="minus">- in_Amount &gt;= 50</span> &nbsp;
+      <span class="plus">+ in_Amount &gt; 50</span>
+    </p>
+    <p>
+      Then tell it to put the fix back. That is the loop protecting itself, and
+      it is why the test was worth writing rather than just running the workflow
+      and reading the output.
+    </p>
+  </div>
+
+  <h2>What ran this course</h2>
+  <div class="callout">
+    <p>
+      Not something built into the agent. Three plain markdown files in your own
+      project, which you can read and change:
+    </p>
+    <ul class="plain">
+      <li><code>course/agent/PROCEDURE.md</code><span>The procedure. Which step you are on, when to hand you a line, when to stop and wait.</span></li>
+      <li><code>AGENTS.md</code><span>The rules. One step at a time, evidence not impressions, never a confirmation you did not give.</span></li>
+      <li><code>README.md</code><span>The curriculum. Every line you typed and every check you made came from here.</span></li>
+    </ul>
+    <p style="margin-top:1rem">
+      Open <code>PROCEDURE.md</code> and read the pause points. It is ordinary
+      English. The useful next move is writing one of these for a process you
+      actually own — then when an agent goes off-pattern you point at the line
+      instead of arguing with it.
+    </p>
+  </div>
+
+  <h2>Where to go next</h2>
+  <div class="callout">
+    <ul class="plain">
+      <li><span class="hash">01</span><span><a href="https://docs.uipath.com/coding-agents/standalone/latest/user-guide/overview">Coding agents in UiPath — overview</a><br><span style="color:var(--ink-2)">What the CLI, the skills and the Studio panel actually are, and how they fit together.</span></span></li>
+      <li><span class="hash">02</span><span><a href="https://docs.uipath.com/coding-agents/standalone/latest/user-guide/working-effectively">Working effectively with coding agents</a><br><span style="color:var(--ink-2)">The practices this course drilled, written down properly.</span></span></li>
+      <li><span class="hash">03</span><span>Point an agent at a real project of yours. Commit first. Ask it to describe what the project does before you let it change anything — step 1, on work that matters.</span></li>
+      <li><span class="hash">04</span><span>Write your own <code>AGENTS.md</code>. Start with the three rules you wish this agent had followed.</span></li>
+    </ul>
+  </div>
+
+  <footer>
+    <div class="env" id="env"></div>
+    <div class="sign">
+      <span>There is no step 6.</span>
+      <span>Press <kbd>g</kbd> <kbd>i</kbd> <kbd>t</kbd> for more fireworks.</span>
+    </div>
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------------
+     Params. The agent passes real values in the fragment, so this
+     file is never rewritten and still stands alone with honest
+     defaults — absent data is shown as absent, never invented.
+     --------------------------------------------------------------- */
+  // Read from ?query first, then #fragment. macOS `open` silently drops the
+  // fragment from a file:// URL, so the query string is the reliable carrier
+  // and the fragment is kept for anything that passes the URL through directly.
+  var qs = (location.search || "").replace(/^\?/, "");
+  var hs = (location.hash || "").replace(/^#/, "");
+  var p = new URLSearchParams(qs || hs);
+  var num = function (k) { var v = parseInt(p.get(k), 10); return isFinite(v) ? v : null; };
+  // Keep the slots positional. Filtering blanks out used to shift every label
+  // up, so a real step 5 commit got captioned "Step 4" and a step that never
+  // happened got credited with one.
+  var commits = (p.get("commits") || "").split(",").map(function (s) {
+    s = s.trim();
+    return /^[0-9a-f]{6,40}$/i.test(s) ? s : null;
+  });
+  var status = (p.get("status") || "").split(",").map(function (s) {
+    return s.trim().toLowerCase();
+  });
+  var nDone = 0, nFailed = 0, nSkipped = 0;
+  for (var si = 0; si < 5; si++) {
+    if (status[si] === "failed") nFailed++;
+    else if (status[si] === "skipped") nSkipped++;
+    else nDone++;
+  }
+  var name     = (p.get("name") || "").trim();
+  var tests    = num("tests");
+  var files    = num("files");
+  var difflines = num("difflines");
+
+  var started = null;
+  var raw = (p.get("started") || "").trim();
+  if (raw) {
+    var d = /^\d{9,}$/.test(raw) ? new Date(parseInt(raw, 10) * 1000) : new Date(raw);
+    if (!isNaN(d.getTime())) started = d;
+  }
+
+  var pad = function (n) { return String(n).padStart(2, "0"); };
+
+  /* ISO 8601 with the local UTC offset. The nerd-correct way to
+     write a timestamp, and unambiguous when pasted into a ticket. */
+  function iso(d) {
+    var off = -d.getTimezoneOffset();
+    var sign = off >= 0 ? "+" : "-";
+    off = Math.abs(off);
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) +
+           "T" + pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()) +
+           sign + pad((off / 60) | 0) + ":" + pad(off % 60);
+  }
+
+  function dur(ms) {
+    var s = Math.max(0, Math.round(ms / 1000));
+    var h = (s / 3600) | 0, m = ((s % 3600) / 60) | 0;
+    return h ? h + "h " + pad(m) + "m" : m + "m " + pad(s % 60) + "s";
+  }
+
+  /* ---------------------------------------------------------------
+     Run report
+     --------------------------------------------------------------- */
+  var statsEl = document.getElementById("stats");
+
+  function tile(label, value, unit, note, narrow) {
+    var wrap = document.createElement("div");
+    wrap.className = "stat";
+    var dt = document.createElement("dt"); dt.textContent = label;
+    var dd = document.createElement("dd");
+    if (narrow) dd.className = "narrow";
+    dd.appendChild(document.createTextNode(value));
+    if (unit) {
+      var u = document.createElement("span");
+      u.className = "unit"; u.textContent = unit; dd.appendChild(u);
+    }
+    if (note) {
+      var n = document.createElement("span");
+      n.className = "note"; n.textContent = note; dd.appendChild(n);
+    }
+    wrap.appendChild(dt); wrap.appendChild(dd);
+    statsEl.appendChild(wrap);
+    return dd;
+  }
+
+  var short = nFailed + nSkipped;
+  tile("Steps", String(nDone), "/ 5",
+       short === 0 ? "all logged"
+       : (nFailed ? nFailed + " failed" : "") +
+         (nFailed && nSkipped ? ", " : "") +
+         (nSkipped ? nSkipped + " skipped" : ""));
+  var nHashes = commits.filter(Boolean).length;
+  tile("Commits", nHashes ? String(nHashes) : "—", null,
+       nHashes ? "the work; each step also has a log commit" : "not supplied");
+
+  var elapsedDD = null;
+  if (started) {
+    // The design doc targets 50–60 minutes. Report against it plainly.
+    var mins = (Date.now() - started.getTime()) / 60000;
+    var verdict = mins < 50 ? "inside the 50–60 min target"
+                : mins < 75 ? "about the 50–60 min target"
+                : "over the 50–60 min target";
+    elapsedDD = tile("Elapsed", dur(Date.now() - started.getTime()), null, verdict, true);
+  } else {
+    tile("Elapsed", "—", null, "no start time supplied", true);
+  }
+
+  if (difflines !== null) tile("Diff lines reviewed", String(difflines), null, "the actual skill");
+  if (files !== null)     tile("Workflows touched", String(files), null, "step 5 wrapped each one");
+  if (tests !== null)     tile("Test cases", String(tests), null, "written in step 4");
+
+  var clockDD = tile("Finished", iso(new Date()), null, "local time, ISO 8601", true);
+
+  /* Tick the clock, and keep elapsed honest while the page is open. */
+  setInterval(function () {
+    clockDD.firstChild.nodeValue = iso(new Date());
+    if (elapsedDD && started) {
+      elapsedDD.firstChild.nodeValue = dur(Date.now() - started.getTime());
+    }
+  }, 1000);
+
+  /* ---------------------------------------------------------------
+     git log --oneline, with their real hashes
+     --------------------------------------------------------------- */
+  var SUBJECTS = [
+    "Step 1: describe the project",
+    "Step 2: fix the receipt rule",
+    "Step 3: submit claims into the portal",
+    "Step 4: test the boundary",
+    "Step 5: Try Catch and failure logging"
+  ];
+  var term = document.getElementById("term");
+  var cmd = document.createElement("div");
+  cmd.className = "prompt";
+  cmd.textContent = "git log --oneline --graph -5";
+  term.appendChild(cmd);
+
+  if (commits.filter(Boolean).length) {
+    var newest = -1;
+    for (var ni = 4; ni >= 0; ni--) { if (commits[ni]) { newest = ni; break; } }
+    for (var idx = 4; idx >= 0; idx--) {
+      var h = commits[idx];
+      var line = document.createElement("div");
+      var g = document.createElement("span"); g.className = "graph";
+      g.textContent = h ? "* " : "  ";
+      line.appendChild(g);
+      if (h) {
+        var sh = document.createElement("span");
+        sh.className = "sha"; sh.textContent = h.slice(0, 7);
+        line.appendChild(sh);
+        if (idx === newest) {
+          var r = document.createElement("span");
+          r.className = "ref"; r.textContent = " (HEAD)";
+          line.appendChild(r);
+        }
+        line.appendChild(document.createTextNode(" " + SUBJECTS[idx]));
+      } else {
+        var no = document.createElement("span");
+        no.className = "graph";
+        no.textContent = "        " + SUBJECTS[idx] + "  — " +
+          (status[idx] === "failed" ? "failed" :
+           status[idx] === "skipped" ? "skipped" : "no commit");
+        line.appendChild(no);
+      }
+      term.appendChild(line);
+    }
+  } else {
+    var miss = document.createElement("div");
+    miss.className = "graph";
+    miss.textContent = "  (run it yourself — the history is in your project)";
+    term.appendChild(miss);
+  }
+
+  /* ---------------------------------------------------------------
+     Step ledger
+     --------------------------------------------------------------- */
+  var FILES_LINE = files
+    ? "One sentence, " + files + " workflow" + (files === 1 ? "" : "s") +
+      ", no business logic moved."
+    : "One sentence, every workflow in the project, no business logic moved.";
+  var STEPS = [
+    ["Read an unfamiliar project", "You asked before you touched anything, and checked the answer against the canvas."],
+    ["Found a bug and fixed it",   "A business rule off by one case. One condition changed, reviewed as one line."],
+    ["Built from a PDD",           "A real request, in someone else's words. You corrected the plan before it was built."],
+    ["Wrote tests that can fail",  "Including the boundary the bug had been hiding behind."],
+    ["Try Catch in every workflow", FILES_LINE]
+  ];
+  var motionOK = window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
+  var ledger = document.getElementById("ledger");
+  STEPS.forEach(function (s, i) {
+    var li = document.createElement("li");
+    li.className = "reveal";
+    if (motionOK) li.style.animationDelay = (0.3 + i * 0.09).toFixed(2) + "s";
+    var n = document.createElement("span");
+    n.className = "n"; n.textContent = pad(i + 1);
+    var what = document.createElement("div");
+    what.className = "what";
+    what.appendChild(document.createTextNode(s[0]));
+    var sm = document.createElement("small"); sm.textContent = s[1];
+    what.appendChild(sm);
+    var hash = document.createElement("span");
+    hash.className = commits[i] ? "hash" : "hash none";
+    hash.textContent = commits[i] ? commits[i].slice(0, 7)
+      : status[i] === "failed" ? "failed"
+      : status[i] === "skipped" ? "skipped" : "committed";
+    li.appendChild(n); li.appendChild(what); li.appendChild(hash);
+    ledger.appendChild(li);
+  });
+
+  var eb = "Coding Agents Tutorial · " + nDone + "/5";
+  if (short) eb += " · " + (nFailed ? nFailed + " failed" : "") +
+                   (nFailed && nSkipped ? ", " : "") +
+                   (nSkipped ? nSkipped + " skipped" : "");
+  if (name) eb += " · " + name;
+  document.getElementById("eyebrow").textContent = eb;
+
+  /* ---------------------------------------------------------------
+     Runtime readout. This exists to *prove* the privacy line rather
+     than assert it: if the protocol is file://, nothing was fetched.
+     --------------------------------------------------------------- */
+  var envEl = document.getElementById("env");
+  var local = location.protocol === "file:";
+  var rows = [
+    ["origin", local ? "file:// (local)" : location.protocol + "//" + location.host, local],
+    ["network requests", "0", true],
+    ["platform", (navigator.platform || "unknown") + " · " + (navigator.language || "")],
+    ["viewport", window.innerWidth + "×" + window.innerHeight + " @ " +
+                 (window.devicePixelRatio || 1) + "x"],
+    ["epoch", String(Math.floor(Date.now() / 1000))],
+    ["reduced motion", motionOK ? "off" : "on — fireworks skipped"]
+  ];
+  if (started) rows.splice(2, 0, ["started", iso(started)]);
+  rows.forEach(function (r) {
+    var d = document.createElement("div");
+    var b = document.createElement("b"); b.textContent = r[0] + " ";
+    d.appendChild(b);
+    var v = document.createElement("span");
+    if (r[2]) v.className = "ok";
+    v.textContent = r[1];
+    d.appendChild(v);
+    envEl.appendChild(d);
+  });
+
+  /* ---------------------------------------------------------------
+     Fireworks. Every unit below is per-frame at 60fps — the previous
+     version multiplied decay by 16, so sparks died in about seven
+     frames and all you saw was the flash. Sharpness is what sells
+     these: thin bright streaks on a dark sky, short-lived trails,
+     and a small hard flash. Big soft glows and shockwave rings read
+     as smudges and ripples, so there are none.
+     --------------------------------------------------------------- */
+  var cv = document.getElementById("sky"), ctx = cv.getContext("2d");
+  var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function size() {
+    W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  size();
+  window.addEventListener("resize", size);
+
+  var HUES = [20, 34, 45, 6, 330, 275, 190];
+  var shells = [], sparks = [], flashes = [], flakes = [];
+  var RUN = 10000, t0 = performance.now(), elapsed = 0, next = 300, running = true;
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function launch(finale) {
+    var apex = H * rnd(0.14, 0.40);
+    var g = 0.085;
+    var x = W * rnd(0.12, 0.88);
+    shells.push({
+      x: x, y: H + 6, px: x, py: H + 6,
+      vx: rnd(-0.5, 0.5),                       // drift, so the trail is not a ruler line
+      vy: -Math.sqrt(2 * g * (H - apex)), g: g,
+      hue: HUES[(Math.random() * HUES.length) | 0],
+      type: Math.random() < 0.16 ? "ring"
+          : Math.random() < 0.36 ? "willow"
+          : Math.random() < 0.52 ? "crackle" : "peony",
+      big: finale || Math.random() < 0.22
+    });
+  }
+
+  function spark(x, y, vx, vy, hue, life, decay, g, drag, twinkle) {
+    return { x: x, y: y, px: x, py: y, vx: vx, vy: vy, hue: hue,
+             life: life, max: life, decay: decay, g: g, drag: drag,
+             twinkle: twinkle, ph: Math.random() * 6.283, crackle: false };
+  }
+
+  function detonate(s) {
+    var k = Math.min(W, H) / 850;                 // burst scale
+    var pw = (s.big ? rnd(4.2, 5.6) : rnd(2.9, 4.0)) * k;
+    var i, n, a, sp, z, r, q;
+
+    // A small, hard, brief flash. This is the bang, not a glow.
+    flashes.push({ x: s.x, y: s.y, r: (s.big ? 30 : 21) * k, life: 1 });
+
+    if (s.type === "willow") {
+      n = s.big ? 78 : 54;
+      for (i = 0; i < n; i++) {
+        a = Math.random() * 6.283; sp = pw * rnd(0.30, 0.62);
+        sparks.push(spark(s.x, s.y, Math.cos(a) * sp, Math.sin(a) * sp,
+                          s.hue + rnd(-4, 4), 1, 0.0062, 0.075, 0.990, true));
+      }
+      return;
+    }
+    if (s.type === "ring") {
+      n = s.big ? 84 : 62;
+      var tilt = rnd(0.18, 0.5), rot = rnd(0, 3.14);
+      for (i = 0; i < n; i++) {
+        a = (6.283 * i) / n;
+        var cx = Math.cos(a) * pw, cy = Math.sin(a) * pw * tilt;
+        sparks.push(spark(s.x, s.y,
+          cx * Math.cos(rot) - cy * Math.sin(rot),
+          cx * Math.sin(rot) + cy * Math.cos(rot),
+          s.hue, 1, 0.0135, 0.052, 0.982, false));
+      }
+      return;
+    }
+    n = s.big ? 150 : 104;                        // peony / crackle
+    for (i = 0; i < n; i++) {
+      a = Math.random() * 6.283;
+      z = Math.random() * 2 - 1; r = Math.sqrt(1 - z * z);
+      sp = pw * (0.5 + Math.pow(Math.random(), 0.4) * 0.5);
+      q = spark(s.x, s.y, Math.cos(a) * r * sp, Math.sin(a) * r * sp,
+                s.hue + rnd(-6, 6), 1, 0.0150, 0.058, 0.980, Math.random() < 0.35);
+      q.crackle = (s.type === "crackle" && Math.random() < 0.28);
+      sparks.push(q);
+    }
+  }
+
+  function frame(now) {
+    var i, s, q, f;
+    elapsed = now - t0;
+
+    // Trails: erase a little alpha. Erasing rather than painting a
+    // background keeps the canvas transparent over the page.
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.fillStyle = "rgba(0,0,0,0.24)";
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = "lighter";
+    ctx.lineCap = "round";
+
+    if (elapsed < RUN && shells.length < 4) {
+      next -= 16.7;
+      if (next <= 0) {
+        var fin = elapsed > RUN - 2400;
+        launch(fin);
+        next = fin ? rnd(180, 380) : rnd(520, 1000);
+      }
+    }
+
+    // Rising shells: no drawn line, only a shed trail of embers. A real
+    // launch tail is a dotted glow, and a stroked line looks like a scratch.
+    for (i = shells.length - 1; i >= 0; i--) {
+      s = shells[i];
+      s.px = s.x; s.py = s.y;
+      s.x += s.vx; s.y += s.vy; s.vy += s.g;
+      sparks.push(spark(s.x, s.y, rnd(-0.35, 0.35), rnd(0.15, 0.7),
+                        32, 0.42, 0.026, 0.02, 0.93, true));
+      ctx.strokeStyle = "hsla(38,100%,86%,0.75)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(s.px, s.py); ctx.lineTo(s.x, s.y); ctx.stroke();
+      if (s.vy >= -0.5) { detonate(s); shells.splice(i, 1); }
+    }
+
+    for (i = flashes.length - 1; i >= 0; i--) {
+      f = flashes[i]; f.life -= 0.14;
+      if (f.life <= 0) { flashes.splice(i, 1); continue; }
+      var rr = f.r * (1.6 - f.life * 0.6);
+      var g2 = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, rr);
+      g2.addColorStop(0, "rgba(255,255,248," + (0.85 * f.life) + ")");
+      g2.addColorStop(0.5, "rgba(255,214,150," + (0.28 * f.life * f.life) + ")");
+      g2.addColorStop(1, "rgba(255,170,90,0)");
+      ctx.fillStyle = g2;
+      ctx.beginPath(); ctx.arc(f.x, f.y, rr, 0, 6.283); ctx.fill();
+    }
+
+    for (i = sparks.length - 1; i >= 0; i--) {
+      q = sparks[i];
+      q.px = q.x; q.py = q.y;
+      q.vx *= q.drag; q.vy = q.vy * q.drag + q.g;
+      q.x += q.vx; q.y += q.vy;
+      q.life -= q.decay;
+      if (q.life <= 0 || q.y > H + 60) {
+        if (q.crackle && q.y <= H) {
+          for (var c = 0; c < 4; c++) {
+            var ca = Math.random() * 6.283, cs = rnd(0.6, 1.9);
+            sparks.push(spark(q.x, q.y, Math.cos(ca) * cs, Math.sin(ca) * cs,
+                              q.hue, 0.34, 0.030, 0.03, 0.94, true));
+          }
+        }
+        sparks.splice(i, 1); continue;
+      }
+      var L = q.life / q.max;
+      var al = L * L * L;                          // sharp fade-out
+      if (q.twinkle) al *= 0.55 + 0.45 * Math.sin(now * 0.05 + q.ph);
+      // White-hot at birth, cooling to its own hue.
+      ctx.strokeStyle = "hsla(" + q.hue + "," + (64 + (1 - L) * 32) + "%," +
+                        (46 + L * 50) + "%," + al + ")";
+      ctx.lineWidth = 0.75 + L * 1.05;
+      ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
+    }
+
+    // Confetti is paper, not light.
+    ctx.globalCompositeOperation = "source-over";
+    for (i = flakes.length - 1; i >= 0; i--) {
+      f = flakes[i];
+      f.x += f.vx; f.y += f.vy; f.vy = Math.min(f.vy + 0.012, 1.9);
+      f.vx += Math.sin((now + f.ph * 500) * 0.0012) * 0.045;
+      f.rot += f.vr; f.spin += f.vs;
+      if (f.y > H + 24) { flakes.splice(i, 1); continue; }
+      var sx = Math.cos(f.spin);
+      ctx.save();
+      ctx.translate(f.x, f.y); ctx.rotate(f.rot); ctx.scale(sx, 1);
+      ctx.globalAlpha = 0.5 + Math.abs(sx) * 0.4;
+      ctx.fillStyle = f.col;
+      ctx.fillRect(-f.w / 2, -f.h / 2, f.w, f.h);
+      ctx.restore();
+    }
+    ctx.globalAlpha = 1;
+
+    if (elapsed < RUN || shells.length || sparks.length || flakes.length || flashes.length) {
+      requestAnimationFrame(frame);
+    } else {
+      ctx.globalCompositeOperation = "source-over";
+      ctx.clearRect(0, 0, W, H);
+      running = false;
+    }
+  }
+
+  (function confetti() {
+    var cols = ["#fa4616", "#ff8a3d", "#ffd08a", "#e8e4dc", "#ff5f7e"];
+    for (var i = 0; i < 80; i++) {
+      flakes.push({
+        x: rnd(0, W), y: rnd(-H * 0.55, -10),
+        vx: rnd(-0.5, 0.5), vy: rnd(0.6, 2.0),
+        w: rnd(3, 6), h: rnd(7, 13),
+        rot: rnd(0, 6.28), vr: rnd(-0.07, 0.07),
+        spin: rnd(0, 6.28), vs: rnd(0.05, 0.15),
+        col: cols[(Math.random() * cols.length) | 0], ph: Math.random()
+      });
+    }
+  })();
+
+  requestAnimationFrame(frame);
+
+  function again() {
+    if (running) return;
+    t0 = performance.now(); elapsed = 0; next = 40; running = true;
+    requestAnimationFrame(frame);
+  }
+
+  /* Type "git". Nothing else in this course rewards typing git into a
+     browser, so it may as well reward it here. */
+  var buf = "";
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    buf = (buf + (e.key || "")).slice(-3).toLowerCase();
+    if (buf === "git") { again(); buf = ""; }
+  });
+  document.addEventListener("click", function (e) { if (!e.target.closest("a")) again(); });
+})();
+</script>
+</body>
+</html>
