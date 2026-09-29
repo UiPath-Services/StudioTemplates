@@ -58,12 +58,12 @@ them as Orchestrator credential assets and read them with *Get Credential* where
 
 ### 3. Connect the transaction source
 
-**Orchestrator queue (default).** Change the queue name on *Get Transaction Item* (and the
-`TransactionQueue` resource with it, so a solution deploy creates the right queue). Read the item's
-data in `Process.xaml` as `in_TransactionItem.SpecificContent("FieldName").ToString`. Something else
-must fill the queue (a separate dispatcher process, an API, a person); this project only consumes
-it. With a queue, keep `MaxRetryNumber` at `0` and configure retries on the queue itself, because
-Orchestrator already retries failed items.
+**Orchestrator queue (default).** Select your queue on *Get Transaction Item* in
+`GetTransactionData.xaml`. Read the item's data in `Process.xaml` as
+`in_TransactionItem.SpecificContent("FieldName").ToString`. Something else must fill the queue (a
+separate dispatcher process, an API, a person); this project only consumes it. With a queue, keep
+`MaxRetryNumber` at `0` and configure retries on the queue itself, because Orchestrator already
+retries failed items.
 
 **Any other source.** Change the type of the `TransactionItem` variable in `Main.xaml`, for example
 to `DataRow` for spreadsheet rows, `MailMessage` for emails or `String` for file paths. Change the
@@ -216,11 +216,10 @@ Declared in `Main.xaml` and passed to the invoked workflows.
 
 ### The transaction queue
 
-*Get Transaction Item* in `Framework/GetTransactionData.xaml` reads a queue named
-`TransactionQueue`. The name is written directly on the activity; it is not read from `Config.json`.
-The solution also declares a `TransactionQueue` queue resource
-(`resources/solution_folder/queue/TransactionQueue.json`), but the activity is not bound to it, so
-renaming one does not rename the other. The folder is unset, so the robot's own folder applies.
+*Get Transaction Item* in `Framework/GetTransactionData.xaml` ships with no queue selected. Select
+the Orchestrator queue on the activity before the first run; Studio records it as a queue resource
+of the project, so it can be bound to a queue in each environment at deploy time. Leave the
+activity's folder empty to use the folder the process runs in.
 
 Queue activities need an Orchestrator folder in scope. Without one Orchestrator answers `400 - A
 folder is required for this action. Error code: 1101`, which reads like an authentication failure
