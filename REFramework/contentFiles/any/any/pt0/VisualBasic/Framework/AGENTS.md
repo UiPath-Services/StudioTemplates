@@ -20,9 +20,6 @@ reference material for those steps.
 | Transaction source | Orchestrator queue by default; any other source can replace it |
 | Licence | MIT |
 
-Prose documentation ships at `Documentation/`. Where it and this file disagree, this file is
-correct.
-
 ## What the framework is
 
 The Robotic Enterprise Framework (REFramework) is a template for **transactional** automations. A
@@ -145,7 +142,6 @@ Main.xaml                        the state machine
 Data/Config.xlsx                 configuration: Settings, Constants, Assets sheets
 Framework/                       the framework workflows
 Tests/                           test cases, plus Tests.xlsx
-Documentation/                   reference PDF
 Exceptions_Screenshots/          written on system-exception failures
 ```
 

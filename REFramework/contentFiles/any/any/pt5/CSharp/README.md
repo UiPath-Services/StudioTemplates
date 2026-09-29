@@ -10,8 +10,6 @@ as part of a UiPath Solution, tick *Create in solution* in Studio's New Project 
 * Credentials come from Orchestrator assets
 * Gets transaction data from an Orchestrator queue and writes the status back
 
-Full reference documentation is in the **Documentation** folder.
-
 
 ### How It Works ###
 
