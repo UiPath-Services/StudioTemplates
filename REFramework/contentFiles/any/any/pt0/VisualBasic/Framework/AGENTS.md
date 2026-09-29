@@ -1,7 +1,12 @@
 # Robotic Enterprise Framework (VisualBasic, Legacy)
 
-This directory is a single UiPath RPA project (`project.json` at the root), created from the Robotic
-Enterprise Framework template. Build, validate and run it with Studio or the `uip rpa` CLI.
+This guide covers the UiPath RPA project one folder up (`project.json` at the project root), created
+from the Robotic Enterprise Framework template. Build, validate and run it with Studio or the `uip
+rpa` CLI.
+
+This guide is kept in `Framework/` because Studio replaces the project-root `AGENTS.md` and
+`CLAUDE.md` with its own generic files when it creates a project. Paths below are relative to the
+project root.
 
 **If you are an agent asked to build or change a process in this project, follow [Building a
 process](#building-a-process) in order, and respect [Rules](#rules).** The rest of the file is

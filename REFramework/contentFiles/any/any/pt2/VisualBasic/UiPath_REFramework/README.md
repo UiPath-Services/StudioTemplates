@@ -36,3 +36,10 @@
 2. Implement InitAllApplications.xaml and CloseAllApplications.xaml workflows, reading any values they need from the Config dictionary
 3. Implement GetTransactionData.xaml and SetTransactionStatus.xaml according to the transaction type being used (Orchestrator queues by default)
 4. Implement Process.xaml workflow and invoke other workflows related to the process being automated
+
+
+### For Coding Agents ###
+
+The guide for coding agents (Claude Code, Codex, Cursor and others) is `Framework/AGENTS.md`, with an
+identical `Framework/CLAUDE.md`. It is kept there because Studio replaces the project-root
+`AGENTS.md` and `CLAUDE.md` with its own generic files when it creates a project.
