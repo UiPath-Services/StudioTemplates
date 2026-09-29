@@ -1,7 +1,12 @@
-# Robotic Enterprise Framework (VisualBasic, Portable)
+# Robotic Enterprise Framework (CSharp, Legacy)
 
-This directory is a single UiPath RPA project (`project.json` at the root), created from the Robotic
-Enterprise Framework template. Build, validate and run it with Studio or the `uip rpa` CLI.
+This guide covers the UiPath RPA project one folder up (`project.json` at the project root), created
+from the Robotic Enterprise Framework template. Build, validate and run it with Studio or the `uip
+rpa` CLI.
+
+This guide is kept in `Framework/` because Studio replaces the project-root `AGENTS.md` and
+`CLAUDE.md` with its own generic files when it creates a project. Paths below are relative to the
+project root.
 
 **If you are an agent asked to build or change a process in this project, follow [Building a
 process](#building-a-process) in order, and respect [Rules](#rules).** The rest of the file is
@@ -9,15 +14,14 @@ reference material for those steps.
 
 | | |
 |---|---|
-| Expression language | **VisualBasic**, fixed at project creation, applies to every workflow |
-| Target framework | **Portable**, runs on Windows, macOS and Linux |
-| Configuration | `Data/Config.json` |
+| Expression language | **CSharp**, fixed at project creation, applies to every workflow |
+| Target framework | **Legacy** (.NET Framework 4.7.2), Windows only |
+| Configuration | `Data/Config.xlsx` |
 | Transaction source | Orchestrator queue by default; any other source can replace it |
 | Licence | MIT |
 
-Prose documentation ships at `Documentation/`. **Its configuration and queue sections are out of
-date**: they describe Studio Global Constants and a solution queue resource, neither of which this
-project uses. Where it and this file disagree, this file is correct.
+Prose documentation ships at `Documentation/`. Where it and this file disagree, this file is
+correct.
 
 ## What the framework is
 
@@ -48,18 +52,18 @@ Before editing anything, establish with the user:
 
 ### 2. Set the configuration
 
-Open `Data/Config.json` and set at least `logF_BusinessProcessName` to the name of the process; it
+Open `Data/Config.xlsx` and set at least `logF_BusinessProcessName` to the name of the process; it
 is stamped on every log message. Add a value for every environment-specific item found in step 1 (a
-key in the Settings object). Keep `MaxRetryNumber` at `0` while developing.
+row on the Settings or Constants sheet). Keep `MaxRetryNumber` at `0` while developing.
 
 Never put credentials in the configuration file; it ships inside the package in clear text. Store
 them as Orchestrator credential assets and read them with *Get Credential* where they are needed.
 
 ### 3. Connect the transaction source
 
-**Orchestrator queue (default).** Select your queue on *Get Transaction Item* in
-`GetTransactionData.xaml`. Read the item's data in `Process.xaml` as
-`in_TransactionItem.SpecificContent("FieldName").ToString`. Something else must fill the queue (a
+**Orchestrator queue (default).** Set `OrchestratorQueueName` (and `OrchestratorQueueFolder` if the
+queue lives in another folder) on the Settings sheet. Read the item's data in `Process.xaml` as
+`in_TransactionItem.SpecificContent["FieldName"].ToString()`. Something else must fill the queue (a
 separate dispatcher process, an API, a person); this project only consumes it. With a queue, keep
 `MaxRetryNumber` at `0` and configure retries on the queue itself, because Orchestrator already
 retries failed items.
@@ -74,9 +78,9 @@ errors at design time. Then replace *Get Transaction Item* in `GetTransactionDat
 - Load the source once, on the first call (when `in_TransactionNumber` is 1), into
   `io_dt_TransactionData` (or your own variable).
 - Return item number `in_TransactionNumber`, for a table
-  `io_dt_TransactionData.Rows(in_TransactionNumber - 1)`, and return `Nothing` in
-  `out_TransactionItem` once `in_TransactionNumber` exceeds `io_dt_TransactionData.Rows.Count`.
-  Returning `Nothing` is what ends the process.
+  `io_dt_TransactionData.Rows[in_TransactionNumber - 1]`, and return `null` in `out_TransactionItem`
+  once `in_TransactionNumber` exceeds `io_dt_TransactionData.Rows.Count`. Returning `null` is what
+  ends the process.
 - `SetTransactionStatus.xaml` only updates queue items when the transaction is a `QueueItem`, so it
   needs no other change.
 - Set `MaxRetryNumber` to the number of in-process retries you want (for example 2), because there
@@ -97,11 +101,12 @@ Implement `Framework/Process.xaml`: the steps for **one** transaction. For anyth
 few activities, put the steps in their own workflows (for example under a `Process/` folder) and
 invoke them from `Process.xaml`, passing `in_Config` and the data they need.
 
-- Throw a business rule exception when the data breaks a rule: *Throw* with `New
+- Throw a business rule exception when the data breaks a rule: *Throw* with `new
   BusinessRuleException("Invoice amount is negative")`. The transaction is marked as a business
   exception and skipped.
-- Let every other exception propagate. The framework classifies it as a system exception, retries
-  the transaction if retries are configured, and re-initialises the applications.
+- Let every other exception propagate. The framework classifies it as a system exception, takes a
+  screenshot, retries the transaction if retries are configured, and re-initialises the
+  applications.
 
 ### 6. Fill in the logging fields
 
@@ -128,7 +133,7 @@ project (see [Checking your work](#checking-your-work)) before handing it back.
 - Invoke Workflow File paths are relative to the project root (the folder holding `project.json`),
   not to the calling workflow: `Framework/Process.xaml`, never `../Framework/Process.xaml`.
 - Keep `MaxRetryNumber` at `0` with an Orchestrator queue.
-- No credentials or other secrets in `Data/Config.json`, in log messages or in the logging fields.
+- No credentials or other secrets in `Data/Config.xlsx`, in log messages or in the logging fields.
 
 ## Reference
 
@@ -137,27 +142,36 @@ project (see [Checking your work](#checking-your-work)) before handing it back.
 ```text
 project.json                     project definition; the entry point is Main.xaml
 Main.xaml                        the state machine
-Data/Config.json                 configuration: Settings + Constants
+Data/Config.xlsx                 configuration: Settings, Constants, Assets sheets
 Framework/                       the framework workflows
 Tests/                           test cases, plus Tests.xlsx
 Documentation/                   reference PDF
+Exceptions_Screenshots/          written on system-exception failures
 ```
 
 ### Configuration
 
-`Data/Config.json` has two objects: **Settings** (values that change per environment) and
-**Constants** (values that rarely change). `Framework/InitAllSettings.xaml` reads both (argument
-`in_ConfigSections`) into one `Config` dictionary during the Initialization state. Every framework
-workflow except `KillAllProcesses` and `CloseAllApplications` receives it as the `in_Config`
-argument. Read a value with `CInt(in_Config("MaxRetryNumber"))` or
-`in_Config("logF_BusinessProcessName").ToString`. To add a tunable value, add a key to the Settings
-or Constants object.
+`Data/Config.xlsx` has three sheets. **Settings** and **Constants** are `Name` / `Value` /
+`Description` rows; **Assets** lists `Name` / `Asset` / `Description` rows, where `Asset` is the
+name of an Orchestrator asset. The Description column is for people and is not read.
+`Framework/InitAllSettings.xaml` reads the Settings and Constants sheets (argument
+`in_ConfigSheets`) and then fetches every asset on the Assets sheet from Orchestrator, storing each
+under its `Name`. Everything ends up in one `Config` dictionary. The file is read with the Workbook
+*Read Range* activity, so no Excel installation is needed. Every framework workflow except
+`KillAllProcesses`, `CloseAllApplications` and `TakeScreenshot` receives it as the `in_Config`
+argument. Read a value with `Int32.Parse(in_Config["MaxRetryNumber"].ToString())` or
+`in_Config["logF_BusinessProcessName"].ToString()`. To add a tunable value, add a row to the
+Settings or Constants sheet. To read an Orchestrator asset through the same dictionary, add a row to
+the Assets sheet.
 
 | Name | Default | Meaning |
 |---|---|---|
 | `logF_BusinessProcessName` | `Framework` | Groups the logs of related processes under one business process name. |
+| `OrchestratorQueueName` | `ProcessABCQueue` | Name of the queue the transactions are read from. |
+| `OrchestratorQueueFolder` | empty | Folder that holds the queue. Empty means the folder the process runs in. |
 | `MaxRetryNumber` | `0` | In-process retries after a system exception. `0` with a queue. |
 | `MaxConsecutiveSystemExceptions` | `0` | Stops the job after this many system exceptions in a row. `0` disables it. |
+| `ExScreenshotsFolderPath` | `Exceptions_Screenshots` | Where exception screenshots are written. Full or relative path. |
 | `RetryNumberGetTransactionItem` | `2` | Retries of *Get Transaction Item* when it throws. |
 | `RetryNumberSetTransactionStatus` | `2` | Retries of *Set Transaction Status* when it throws. |
 | `ShouldMarkJobAsFaulted` | `False` | Mark the job as Faulted when Initialization fails or `MaxConsecutiveSystemExceptions` is reached. |
@@ -171,7 +185,7 @@ or Constants object.
 |---|---|---|
 | Initialization | Read the configuration (first run only), kill leftover processes, open the applications. Success goes to Get Transaction Data, failure to End Process. After a system exception the framework comes back here, so applications are re-initialised before the next transaction. | `InitAllSettings`, `KillAllProcesses`, `InitAllApplications` |
 | Get Transaction Data | Fetch the next transaction. None left, or an error, goes to End Process; otherwise Process Transaction. | `GetTransactionData` |
-| Process Transaction | Process one transaction and record the outcome: Success, Business Exception or System Exception. | `Process`, `SetTransactionStatus` (which may invoke `RetryCurrentTransaction`, `CloseAllApplications`, `KillAllProcesses`) |
+| Process Transaction | Process one transaction and record the outcome: Success, Business Exception or System Exception. | `Process`, `SetTransactionStatus` (which may invoke `RetryCurrentTransaction`, `TakeScreenshot`, `CloseAllApplications`, `KillAllProcesses`) |
 | End Process | Close all applications and finish. Reached on normal completion and on abort alike. | `CloseAllApplications`, `KillAllProcesses` |
 
 ### Shared variables
@@ -192,21 +206,22 @@ Declared in `Main.xaml` and passed to the invoked workflows.
 
 | Workflow | Purpose | Arguments |
 |---|---|---|
-| `InitAllSettings.xaml` | Reads the configuration into the `Config` dictionary | `in_ConfigFile`, `in_ConfigSections`, `out_Config` |
+| `InitAllSettings.xaml` | Reads the configuration into the `Config` dictionary | `in_ConfigFile`, `in_ConfigSheets`, `out_Config` |
 | `KillAllProcesses.xaml` | Terminates leftover processes. Ships empty | none |
 | `InitAllApplications.xaml` | Opens and logs in to the applications | `in_Config` |
-| `GetTransactionData.xaml` | Fetches the next transaction; returning `Nothing` ends the process | `in_TransactionNumber`, `in_Config`, `out_TransactionItem`, `out_TransactionID`, `out_TransactionField1`, `out_TransactionField2`, `io_dt_TransactionData` |
+| `GetTransactionData.xaml` | Fetches the next transaction; returning `null` ends the process | `in_TransactionNumber`, `in_Config`, `out_TransactionItem`, `out_TransactionID`, `out_TransactionField1`, `out_TransactionField2`, `io_dt_TransactionData` |
 | `Process.xaml` | **Your business logic**, once per transaction | `in_TransactionItem`, `in_Config` |
 | `SetTransactionStatus.xaml` | Records and logs the outcome, updates the queue item | `in_TransactionItem`, `in_Config`, `in_SystemException`, `in_BusinessException`, `in_TransactionID`, `in_TransactionField1`, `in_TransactionField2`, `io_RetryNumber`, `io_TransactionNumber`, `io_ConsecutiveSystemExceptions` |
 | `RetryCurrentTransaction.xaml` | Decides whether to retry the same transaction | `in_Config`, `in_SystemException`, `in_QueueRetry`, `io_RetryNumber`, `io_TransactionNumber` |
+| `TakeScreenshot.xaml` | Captures the desktop on a system exception | `in_Folder`, `io_FilePath` |
 | `CloseAllApplications.xaml` | Closes the applications. Runs on every exit path | none |
 
 ### The transaction queue
 
-*Get Transaction Item* in `Framework/GetTransactionData.xaml` ships with no queue selected. Select
-the Orchestrator queue on the activity before the first run; Studio records it as a queue resource
-of the project, so it can be bound to a queue in each environment at deploy time. Leave the
-activity's folder empty to use the folder the process runs in.
+*Get Transaction Item* in `Framework/GetTransactionData.xaml` reads the queue named by the
+`OrchestratorQueueName` setting (shipped as `ProcessABCQueue`) in the folder named by
+`OrchestratorQueueFolder`. Leave the folder empty to use the folder the process runs in. The queue
+is not created for you.
 
 Queue activities need an Orchestrator folder in scope. Without one Orchestrator answers `400 - A
 folder is required for this action. Error code: 1101`, which reads like an authentication failure
@@ -223,6 +238,14 @@ With a queue, retries are the queue's (its *Max # retries* setting) and `MaxRetr
 Without a queue, `MaxRetryNumber` sets how many times the same transaction is retried in process.
 `MaxConsecutiveSystemExceptions` stops a persistent fault from failing every remaining transaction.
 
+### Exception screenshots
+
+On a system exception, `SetTransactionStatus.xaml` invokes `TakeScreenshot.xaml`, which writes a PNG
+of the desktop into `ExScreenshotsFolderPath` with a timestamp in the file name.
+`TakeScreenshot.xaml` uses the *Take Screenshot* activity. The path is logged and, for a queue item,
+written to its details so it can be found from Orchestrator. Successful transactions and business
+exceptions produce no screenshot.
+
 ### Logging
 
 The framework logs every state change, transaction outcome and exception. It adds the custom log
@@ -233,14 +256,16 @@ once at start-up. Logs are not encrypted: never log sensitive data.
 
 ### Expressions
 
-Expressions are VisualBasic. They are written in square brackets inside attributes, for example
-`[in_Config("MaxRetryNumber")]`, and names are not case-sensitive.
+Expressions are C#. Every expression lives in a `<CSharpValue>` or `<CSharpReference>` element
+rather than in an attribute, names and dictionary keys are case-sensitive, and `null` replaces
+`Nothing`.
 
 ### Tests
 
 | File | Purpose |
 |---|---|
 | `Tests/MainTestCase.xaml` | Runs every workflow listed on the *Tests* sheet of `Tests.xlsx`, records PASS/FAIL on the *Result* sheet, then asserts no row failed. Only workflows without arguments can be listed. |
+| `Tests/GeneralTestCase.xaml` | Data-driven version of the same idea: runs with data variations from `Tests.xlsx`, one workflow per variation. |
 | `Tests/GetTransactionDataTestCase.xaml` | Checks that a transaction is retrieved. Needs a reachable queue and folder. |
 | `Tests/ProcessTestCase.xaml` | Runs `Process.xaml` against a retrieved transaction. Same prerequisites. |
 | `Tests/InitAllApplicationsTestCase.xaml` | Checks application start-up and shutdown. |
@@ -252,10 +277,8 @@ exceptions it throws.
 
 ### Checking your work
 
-```bash
-uip rpa analyze .                           # validate + workflow analyzer
-uip rpa run --file-path Tests/InitAllSettingsTestCase.xaml
-```
+Validate and analyze with Studio (*Analyze Project*) or `uip rpa analyze .` on a Windows machine;
+Legacy projects do not build on macOS or Linux.
 
 ### Troubleshooting
 
@@ -265,9 +288,6 @@ uip rpa run --file-path Tests/InitAllSettingsTestCase.xaml
 | `feature not available` on validate, build or run | A Studio licence must be assigned to the signed-in user on the active organization. |
 | `400 - A folder is required for this action. Error code: 1101` | A queue activity ran with no Orchestrator folder in scope. |
 | `Error code: 1002` | The named queue does not exist in that folder. |
-| Workflow compiler cannot be found | .NET SDK 8.0 must be on `PATH`; the compiler requires it by name. |
-| `WorkflowRunnerService does not exist` after the first `uip rpa run` | Clear `.local/.codedworkflows`, `.local/.jit` and `.local/install` before each CLI run. Studio is unaffected. |
-| CS1705 about `System.Runtime` 10.0.0.0 vs 8.0.0.0 when compiling `CodedWorkflows` | The project targets .NET 8 (no `dotNetVersion` in `project.json`) while Studio runs on .NET 10. Set the .NET version to 10 in Project Settings, close the project, delete `.local` and reopen. |
 
 ---
 

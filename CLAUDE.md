@@ -47,11 +47,16 @@ Copy from there rather than hand-editing XAML; the Windows/Portable delta is onl
   `project.json` is replaced, so its `runtimeOptions` and `dotNetVersion` never reach the user.
   Set `RequiresUserInteraction` in `template.json` (Studio's own Blank template does); when it is
   absent Studio defaults to `true` (foreground).
-- **Set `"DotNetVersion": "Net10"` in every variant's `template.json`, not only the one it is for.**
-  The value is the `UiPath.Shared.DotNetVersion` enum (`Net8`, `Net6`, `Net10`); a missing field
-  means `Net8`, and Studio then writes no `dotNetVersion` into `project.json`. The New Project
-  wizard copies the .NET version from the variant it opens on (the Legacy one first) and keeps it
-  when the user switches target framework, so a value set only on the Portable variant is
-  overwritten. Studio ignores it for Legacy projects. A .NET 8 Portable project fails on a .NET 10
-  Studio with CS1705 while compiling the `CodedWorkflows` helper.
+- **Never set `DotNetVersion` in `template.json`.** It is the `UiPath.Shared.DotNetVersion` enum, and
+  a Studio whose enum has no `Net10` (every release before .NET 10 support, e.g. the Windows LTS
+  line) fails to deserialize the file; with the field in every variant it loads none of them and
+  reports "The project template in package ... is not supported with the current Studio profile".
+  Leave it out: the user picks the .NET version as *Minimum Robot version* in the New Project
+  dialog (24.10 = .NET 8, the default when the field is absent; 26.10 = .NET 10). A .NET 10 project
+  runs only on Robot 26.10+, so older robots and serverless reject its `project.json`. Studio builds
+  that run on .NET 10 report CS1705 in `CodedWorkflows` for a .NET 8 Portable project; that is a
+  Studio issue, worked around per project by choosing 26.10.
+- **Ship agent guides under `Framework/`, not at the payload root.** Studio 26 writes its own
+  generic `AGENTS.md` and `CLAUDE.md` into every new project root (`AgentInstructionFiles.Write`,
+  no existence check), overwriting the template's copies.
 - Release channels are `master/<Template>` branches; work in `feature/<target>/<name>`.

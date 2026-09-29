@@ -136,6 +136,17 @@ Excel installation. `Tests/MainTestCase.xaml` is the only Excel consumer in the 
 | `RetryNumberSetTransactionStatus` | `Int32` | `2` | The number of times Set transaction status activity is retried in case of an exception. Must be an integer >= 1. |
 | `ShouldMarkJobAsFaulted` | `Boolean` | `False` | Must be TRUE or FALSE. If the value is TRUE and an error occurs in Initialization state or the MaxConsecutiveSystemExceptions is reached, the job is marked as Faulted. |
 
+### .NET Version ###
+
+The template does not set a .NET version. Choose it as *Minimum Robot version* in the New Project
+dialog, or later in Project Settings:
+
+* **24.10** (.NET 8, the default) runs on every robot from 24.10, including serverless.
+* **26.10** (.NET 10) needs Robot 26.10 or newer. Pick it if Studio itself runs on .NET 10 and
+  reports CS1705 (`System.Runtime` 10.0.0.0 vs 8.0.0.0) while compiling `CodedWorkflows`; then close
+  the project, delete `.local` and reopen.
+
+
 ### Prerequisites and Troubleshooting ###
 
 * **.NET SDK 8.0** must be on `PATH` - the workflow compiler requires it by name. A newer SDK may be
@@ -156,3 +167,10 @@ Excel installation. `Tests/MainTestCase.xaml` is the only Excel consumer in the 
 **Dependencies**
 
 `UiPath.Excel.Activities` 3.6.1 · `UiPath.System.Activities` 26.6.3 · `UiPath.Testing.Activities` 25.10.2 · `UiPath.UIAutomation.Activities` 26.10.3
+
+
+### For Coding Agents ###
+
+The guide for coding agents (Claude Code, Codex, Cursor and others) is `Framework/AGENTS.md`, with an
+identical `Framework/CLAUDE.md`. It is kept there because Studio replaces the project-root
+`AGENTS.md` and `CLAUDE.md` with its own generic files when it creates a project.

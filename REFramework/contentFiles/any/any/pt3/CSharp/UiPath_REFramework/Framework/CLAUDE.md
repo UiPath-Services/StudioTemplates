@@ -1,8 +1,12 @@
-# Robotic Enterprise Framework (VisualBasic, Windows)
+# Robotic Enterprise Framework (CSharp, Windows)
 
-This directory is a UiPath solution (`UiPath_REFramework.uipx`) holding one RPA project,
-`UiPath_REFramework/`, created from the Robotic Enterprise Framework template. Drive solution
+This guide covers the RPA project `UiPath_REFramework/` of the UiPath solution
+`UiPath_REFramework.uipx`, created from the Robotic Enterprise Framework template. Drive solution
 operations (pack, publish, deploy) through the `uip solution` CLI and do not hand-edit the `.uipx`.
+
+This guide is kept in `Framework/` because Studio replaces the project-root `AGENTS.md` and
+`CLAUDE.md` with its own generic files when it creates a project. Paths below are relative to the
+project root.
 
 **If you are an agent asked to build or change a process in this project, follow [Building a
 process](#building-a-process) in order, and respect [Rules](#rules).** The rest of the file is
@@ -10,7 +14,7 @@ reference material for those steps.
 
 | | |
 |---|---|
-| Expression language | **VisualBasic**, fixed at project creation, applies to every workflow |
+| Expression language | **CSharp**, fixed at project creation, applies to every workflow |
 | Target framework | **Windows** (.NET 8, `net8.0-windows`), Windows only |
 | Configuration | `Data/Config.json` |
 | Transaction source | Orchestrator queue by default; any other source can replace it |
@@ -60,7 +64,7 @@ them as Orchestrator credential assets and read them with *Get Credential* where
 
 **Orchestrator queue (default).** Select your queue on *Get Transaction Item* in
 `GetTransactionData.xaml`. Read the item's data in `Process.xaml` as
-`in_TransactionItem.SpecificContent("FieldName").ToString`. Something else must fill the queue (a
+`in_TransactionItem.SpecificContent["FieldName"].ToString()`. Something else must fill the queue (a
 separate dispatcher process, an API, a person); this project only consumes it. With a queue, keep
 `MaxRetryNumber` at `0` and configure retries on the queue itself, because Orchestrator already
 retries failed items.
@@ -75,9 +79,9 @@ errors at design time. Then replace *Get Transaction Item* in `GetTransactionDat
 - Load the source once, on the first call (when `in_TransactionNumber` is 1), into
   `io_dt_TransactionData` (or your own variable).
 - Return item number `in_TransactionNumber`, for a table
-  `io_dt_TransactionData.Rows(in_TransactionNumber - 1)`, and return `Nothing` in
-  `out_TransactionItem` once `in_TransactionNumber` exceeds `io_dt_TransactionData.Rows.Count`.
-  Returning `Nothing` is what ends the process.
+  `io_dt_TransactionData.Rows[in_TransactionNumber - 1]`, and return `null` in `out_TransactionItem`
+  once `in_TransactionNumber` exceeds `io_dt_TransactionData.Rows.Count`. Returning `null` is what
+  ends the process.
 - `SetTransactionStatus.xaml` only updates queue items when the transaction is a `QueueItem`, so it
   needs no other change.
 - Set `MaxRetryNumber` to the number of in-process retries you want (for example 2), because there
@@ -98,7 +102,7 @@ Implement `Framework/Process.xaml`: the steps for **one** transaction. For anyth
 few activities, put the steps in their own workflows (for example under a `Process/` folder) and
 invoke them from `Process.xaml`, passing `in_Config` and the data they need.
 
-- Throw a business rule exception when the data breaks a rule: *Throw* with `New
+- Throw a business rule exception when the data breaks a rule: *Throw* with `new
   BusinessRuleException("Invoice amount is negative")`. The transaction is marked as a business
   exception and skipped.
 - Let every other exception propagate. The framework classifies it as a system exception, takes a
@@ -160,9 +164,9 @@ the root for every Invoke Workflow File path.
 **Constants** (values that rarely change). `Framework/InitAllSettings.xaml` reads both (argument
 `in_ConfigSections`) into one `Config` dictionary during the Initialization state. Every framework
 workflow except `KillAllProcesses`, `CloseAllApplications` and `TakeScreenshot` receives it as the
-`in_Config` argument. Read a value with `CInt(in_Config("MaxRetryNumber"))` or
-`in_Config("logF_BusinessProcessName").ToString`. To add a tunable value, add a key to the Settings
-or Constants object.
+`in_Config` argument. Read a value with `Int32.Parse(in_Config["MaxRetryNumber"].ToString())` or
+`in_Config["logF_BusinessProcessName"].ToString()`. To add a tunable value, add a key to the
+Settings or Constants object.
 
 | Name | Default | Meaning |
 |---|---|---|
@@ -207,7 +211,7 @@ Declared in `Main.xaml` and passed to the invoked workflows.
 | `InitAllSettings.xaml` | Reads the configuration into the `Config` dictionary | `in_ConfigFile`, `in_ConfigSections`, `out_Config` |
 | `KillAllProcesses.xaml` | Terminates leftover processes. Ships empty | none |
 | `InitAllApplications.xaml` | Opens and logs in to the applications | `in_Config` |
-| `GetTransactionData.xaml` | Fetches the next transaction; returning `Nothing` ends the process | `in_TransactionNumber`, `in_Config`, `out_TransactionItem`, `out_TransactionID`, `out_TransactionField1`, `out_TransactionField2`, `io_dt_TransactionData` |
+| `GetTransactionData.xaml` | Fetches the next transaction; returning `null` ends the process | `in_TransactionNumber`, `in_Config`, `out_TransactionItem`, `out_TransactionID`, `out_TransactionField1`, `out_TransactionField2`, `io_dt_TransactionData` |
 | `Process.xaml` | **Your business logic**, once per transaction | `in_TransactionItem`, `in_Config` |
 | `SetTransactionStatus.xaml` | Records and logs the outcome, updates the queue item | `in_TransactionItem`, `in_Config`, `in_SystemException`, `in_BusinessException`, `in_TransactionID`, `in_TransactionField1`, `in_TransactionField2`, `io_RetryNumber`, `io_TransactionNumber`, `io_ConsecutiveSystemExceptions` |
 | `RetryCurrentTransaction.xaml` | Decides whether to retry the same transaction | `in_Config`, `in_SystemException`, `in_QueueRetry`, `io_RetryNumber`, `io_TransactionNumber` |
@@ -254,8 +258,9 @@ once at start-up. Logs are not encrypted: never log sensitive data.
 
 ### Expressions
 
-Expressions are VisualBasic. They are written in square brackets inside attributes, for example
-`[in_Config("MaxRetryNumber")]`, and names are not case-sensitive.
+Expressions are C#. Every expression lives in a `<CSharpValue>` or `<CSharpReference>` element
+rather than in an attribute, names and dictionary keys are case-sensitive, and `null` replaces
+`Nothing`.
 
 ### Tests
 
