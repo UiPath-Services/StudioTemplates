@@ -37,6 +37,8 @@ Copy from there rather than hand-editing XAML; the Windows/Portable delta is onl
   dropped it. Newer pins will not restore on a Legacy project.
 - **Cross-platform variants drop Excel and Mail** — the activities that matter need the desktop
   Office apps. Studio's own `Blank/Portable` template does the same.
+  Exception: REFramework's cross-platform variants keep `UiPath.Excel.Activities` because
+  `Tests/MainTestCase.xaml` reads `Tests.xlsx` with the file-based Workbook activities.
 - **The payload must be a flat project, never a solution.** Studio's New Project wizard creates
   one project whose root is the destination folder: it writes `project.json` there from
   `template.json`, drops any `project.json` nested in the payload, and never opens a `.uipx`.
