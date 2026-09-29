@@ -120,15 +120,6 @@ C#: every expression is a `<CSharpValue>` / `<CSharpReference>` element, never a
 | `InitAllApplicationsTestCase.xaml`, `InitAllSettingsTestCase.xaml` | Start-up/shutdown; configuration loading. |
 | `WorkflowTestCaseTemplate.xaml` | Given/When/Then template. |
 
-### Troubleshooting
-
-| Symptom | Fix |
-|---|---|
-| `Value for a required activity argument 'Queue name' was not supplied` | Select the queue on *Get Transaction Item*. |
-| `The <path> workflow cannot be found` | Path not relative to the project root, or the project was opened one folder too high. |
-| `feature not available` | Assign a Studio licence to the user on this organization. |
-| Workflow compiler not found (CLI) | Put the .NET SDK 8.0 on `PATH`. |
-
 ## Publishing
 
 - Process: Studio *Publish*, or `uip rpa pack . <out>` and upload the `.nupkg`.
