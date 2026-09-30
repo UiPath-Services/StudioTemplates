@@ -34,7 +34,7 @@ Each variant is self-contained with its own `project.json`, workflows, and tests
 - pt0/pt1 (Windows): Support both `App` and `Web` test types
 - pt2/pt3 (Portable): Support `Web` test type only (no Application workflows)
 - **pt0 is the reference variant.** Align pt1–pt3 to it (behaviour, log messages, package pins), not the other way round.
-- Video recording (ffmpeg, `StartRecording.cs`/`StopRecording.cs`, `Recording` argument) was removed from the framework — do not reintroduce it. Variants not yet aligned to pt0 may still contain it.
+- Video recording (ffmpeg, `StartRecording.cs`/`StopRecording.cs`, `Recording` argument) was removed from all variants — do not reintroduce it.
 - Studio writes a `<Workflow>.json` outline sidecar next to each `.xaml`, embedding the author's absolute local path. These are gitignored; never commit them.
 
 ### Test Execution Lifecycle
