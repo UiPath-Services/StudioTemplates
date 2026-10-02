@@ -129,7 +129,11 @@
         <InArgument x:TypeArguments="scg:List(sd:DataTable)">[in_ExtractionResults.DocumentMetadata.ResultsAsDataTables]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:MergeDataTable Destination="[DataTableExtracted(0)]" DisplayName="Merge Tables" sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[DataTableExtracted(1)]" />
+    <If Condition="[DataTableExtracted.Count &gt; 1]" sap2010:Annotation.AnnotationText="Documents without table fields (for example W-9) have only the simple fields table." DisplayName="If - Document Has Table Fields" sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Then>
+        <ui:MergeDataTable Destination="[DataTableExtracted(0)]" DisplayName="Merge Tables" sap:VirtualizedContainerService.HintSize="449.6,174.4" sap2010:WorkflowViewState.IdRef="MergeDataTable_1" MissingSchemaAction="Add" Source="[DataTableExtracted(1)]" />
+      </If.Then>
+    </If>
     <Assign DisplayName="Assign - serialize the data" sap:VirtualizedContainerService.HintSize="449.6,113.6" sap2010:WorkflowViewState.IdRef="Assign_4">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[JsonFields]</OutArgument>
