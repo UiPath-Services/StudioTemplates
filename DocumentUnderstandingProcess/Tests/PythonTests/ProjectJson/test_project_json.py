@@ -42,11 +42,11 @@ class ProjectJsonTests:
         Test Manager project: Document Understanding Process
         Test Case: DUP43
 
-        Checks if the "Starts in Background" property is disabled.
+        Checks the "Starts in Background" property: disabled for Windows, enabled for Cross-platform (no attended stations).
         """
         data = yaml.safe_load((open(app_constants.PROJECT + "\\project.json", "r")))
 
-        assert data["runtimeOptions"]["requiresUserInteraction"]
+        assert data["runtimeOptions"]["requiresUserInteraction"] == app_constants.REQUIRES_USER_INTERACTION
 
     @staticmethod
     def test_project_json_supports_persistance(app_constants):

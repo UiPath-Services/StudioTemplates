@@ -4,6 +4,7 @@ import pandas as pd
 
 @mark.smoke
 @mark.config
+@mark.vb
 class ConfigTests:
     @staticmethod
     def test_config_functions_as_expected(app_constants):
