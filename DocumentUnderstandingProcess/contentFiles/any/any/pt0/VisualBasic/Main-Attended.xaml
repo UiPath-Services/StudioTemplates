@@ -34,7 +34,6 @@
       <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
-      <x:String>UiPath.Vision.OCR</x:String>
       <x:String>UiPath.OCR.Contracts</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.DataExtraction</x:String>
       <x:String>System.Xml.Serialization</x:String>
@@ -105,7 +104,6 @@
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
@@ -393,7 +391,7 @@
                                                   </scg:Dictionary>
                                                 </sap:WorkflowViewStateService.ViewState>
                                               </ui:LogMessage>
-                                              <p3:PresentClassificationStation sap2010:Annotation.AnnotationText="Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." AutomaticClassificationResults="[classificationResultsArray]" DisplayName="Present Classification Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" sap:VirtualizedContainerService.HintSize="483.2,416" sap2010:WorkflowViewState.IdRef="PresentClassificationStation_2" Taxonomy="[docTaxonomy]" ValidatedClassificationResults="[validatedClassificationResults]">
+                                              <p3:PresentClassificationStation sap2010:Annotation.AnnotationText="Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." AutomaticClassificationResults="[classificationResultsArray]" DisplayName="Present Classification Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" EnablePageReorderging="True" sap:VirtualizedContainerService.HintSize="483.2,416" sap2010:WorkflowViewState.IdRef="PresentClassificationStation_2" Taxonomy="[docTaxonomy]" ValidatedClassificationResults="[validatedClassificationResults]">
                                                 <sap:WorkflowViewStateService.ViewState>
                                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                     <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -449,7 +447,7 @@
                                                       </ActivityAction.Argument>
                                                       <TryCatch DisplayName="Try Catch - Process Each Document" sap:VirtualizedContainerService.HintSize="672,855.2" sap2010:WorkflowViewState.IdRef="TryCatch_6">
                                                         <TryCatch.Variables>
-                                                          <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located (based on classification)." Default="[(classificationResult.DocumentBounds.StartPage + 1).ToString + &quot;-&quot; + (classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString]" Name="currentPageRange" />
+                                                          <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located (based on classification)." Default="[classificationResult.DocumentBounds.PageRange]" Name="currentPageRange" />
                                                           <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
                                                         </TryCatch.Variables>
                                                         <TryCatch.Try>
@@ -588,7 +586,7 @@
                                                                                 </scg:Dictionary>
                                                                               </sap:WorkflowViewStateService.ViewState>
                                                                             </ui:LogMessage>
-                                                                            <p4:PresentValidationStation FieldsValidationConfidence="{x:Null}" sap2010:Annotation.AnnotationText="Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." AutomaticExtractionResults="[extractionResults]" DisplayName="Present Validation Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" sap:VirtualizedContainerService.HintSize="434,408" sap2010:WorkflowViewState.IdRef="PresentValidationStation_18" ShowOnlyRelevantPageRange="True" Taxonomy="[docTaxonomy]" ValidatedExtractionResults="[validatedExtractionResults]">
+                                                                            <p4:PresentValidationStation FieldsValidationConfidence="{x:Null}" sap2010:Annotation.AnnotationText="Note that, in case of user rejection, a DocumentRejectedByUserException is thrown here." AutomaticExtractionResults="[extractionResults]" DisplayMode="Compact" DisplayName="Present Validation Station - Main" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" EnableRTLControls="False" sap:VirtualizedContainerService.HintSize="434,408" sap2010:WorkflowViewState.IdRef="PresentValidationStation_18" ShowOnlyRelevantPageRange="True" Taxonomy="[docTaxonomy]" ValidatedExtractionResults="[validatedExtractionResults]">
                                                                               <sap:WorkflowViewStateService.ViewState>
                                                                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                                                   <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
@@ -638,6 +636,7 @@
                                                                                     <InArgument x:TypeArguments="p1:Document" x:Key="in_DOM">[dom]</InArgument>
                                                                                     <InArgument x:TypeArguments="x:String" x:Key="in_DocText">[docText]</InArgument>
                                                                                     <InArgument x:TypeArguments="p2:ExtractionResult" x:Key="in_ValidatedExtractionResults">[validatedExtractionResults]</InArgument>
+                                                                                    <InArgument x:TypeArguments="p4:DocumentValidationActionData" x:Key="in_ValidationAction" />
                                                                                     <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
                                                                                     <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[maxAttempts]</InArgument>
                                                                                     <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[retryInterval]</InArgument>

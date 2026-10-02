@@ -201,7 +201,7 @@
                       <OutArgument x:TypeArguments="x:Boolean">[out_AutoClassificationSuccess]</OutArgument>
                     </Assign.To>
                     <Assign.Value>
-                      <InArgument x:TypeArguments="x:Boolean">[not in_ClassificationResult.DocumentType.Confidence &lt;= CDec(minConfidenceThreshold)]</InArgument>
+                      <InArgument x:TypeArguments="x:Boolean">[not If(in_ClassificationResult.DocumentType IsNot Nothing, in_ClassificationResult.DocumentType.Confidence, in_ClassificationResult.SubDocuments.Min(Function(d) d.DocumentType.Confidence)) &lt;= CDec(minConfidenceThreshold)]</InArgument>
                     </Assign.Value>
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
