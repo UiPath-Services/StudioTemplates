@@ -92,8 +92,8 @@
       <Variable x:TypeArguments="p1:DocumentTaxonomy" sap2010:Annotation.AnnotationText="Stores the project taxonomy against which the documents can be processed." Name="docTaxonomy" />
       <Variable x:TypeArguments="p:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="The string of the result of the data extraction process." Name="extractionResultString" />
-      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Automatic extraction outcome when no taxonomy business rule is broken." Name="autoExtractionSuccessWithoutBrokenRule" />
-      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Automatic extraction outcome when a taxonomy business rule is broken." Name="autoExtractionSuccessWithBrokenRule" />
+      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Automatic extraction outcome when no taxonomy business rule is broken." Name="successWithoutBrokenRule" />
+      <Variable x:TypeArguments="x:Boolean" sap2010:Annotation.AnnotationText="Automatic extraction outcome when a taxonomy business rule is broken." Name="successWithBrokenRule" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -156,13 +156,13 @@
           <InArgument x:TypeArguments="udcb:RuleSetResult[]">[New RuleSetResult() {}]</InArgument>
         </Assign.Value>
       </Assign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ExtractionBusinessRuleValidation - autoExtractionSuccessWithoutBrokenRule" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBusinessRuleValidation.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ExtractionBusinessRuleValidation - successWithoutBrokenRule" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBusinessRuleValidation.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">Data\ExampleDocuments\MergedDocuments.pdf</InArgument>
           <InArgument x:TypeArguments="p1:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
           <InOutArgument x:TypeArguments="p:ExtractionResult" x:Key="io_ExtractionResults">[extractionResults]</InOutArgument>
-          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccessWithoutBrokenRule]</OutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[successWithoutBrokenRule]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
       <Assign DisplayName="Assign - broken taxonomy business rule" sap2010:WorkflowViewState.IdRef="Assign_2">
@@ -173,13 +173,13 @@
           <InArgument x:TypeArguments="udcb:RuleSetResult[]">[{New RuleSetResult(&quot;Semi-StructuredDocuments.Financial.Invoice.Name&quot;, FieldType.Text, Criticality.Must, False, New List(Of FieldValueResult), New List(Of UiPath.DocumentProcessing.Contracts.Taxonomy.Rule) From {New UiPath.DocumentProcessing.Contracts.Taxonomy.Rule() With {.Name = &quot;TestRule&quot;, .Type = RuleType.Mandatory}})}]</InArgument>
         </Assign.Value>
       </Assign>
-      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ExtractionBusinessRuleValidation - autoExtractionSuccessWithBrokenRule" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBusinessRuleValidation.xaml">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ExtractionBusinessRuleValidation - successWithBrokenRule" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\55_ExtractionBusinessRuleValidation.xaml">
         <ui:InvokeWorkflowFile.Arguments>
           <InArgument x:TypeArguments="x:String" x:Key="in_TargetDocument">Data\ExampleDocuments\MergedDocuments.pdf</InArgument>
           <InArgument x:TypeArguments="p1:DocumentTaxonomy" x:Key="in_DocTaxonomy">[docTaxonomy]</InArgument>
           <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
           <InOutArgument x:TypeArguments="p:ExtractionResult" x:Key="io_ExtractionResults">[extractionResults]</InOutArgument>
-          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[autoExtractionSuccessWithBrokenRule]</OutArgument>
+          <OutArgument x:TypeArguments="x:Boolean" x:Key="out_AutoExtractionSuccess">[successWithBrokenRule]</OutArgument>
         </ui:InvokeWorkflowFile.Arguments>
       </ui:InvokeWorkflowFile>
     </Sequence>
@@ -194,7 +194,7 @@
           <InArgument x:TypeArguments="x:String" />
         </uta:VerifyExpressionWithOperator.AlternativeVerificationTitle>
         <uta:VerifyExpressionWithOperator.FirstExpression>
-          <InArgument x:TypeArguments="x:Object">[autoExtractionSuccessWithBrokenRule]</InArgument>
+          <InArgument x:TypeArguments="x:Object">[successWithBrokenRule]</InArgument>
         </uta:VerifyExpressionWithOperator.FirstExpression>
         <uta:VerifyExpressionWithOperator.Result>
           <OutArgument x:TypeArguments="x:Boolean" />
@@ -208,7 +208,7 @@
           <InArgument x:TypeArguments="x:String" />
         </uta:VerifyExpressionWithOperator.AlternativeVerificationTitle>
         <uta:VerifyExpressionWithOperator.FirstExpression>
-          <InArgument x:TypeArguments="x:Object">[autoExtractionSuccessWithoutBrokenRule]</InArgument>
+          <InArgument x:TypeArguments="x:Object">[successWithoutBrokenRule]</InArgument>
         </uta:VerifyExpressionWithOperator.FirstExpression>
         <uta:VerifyExpressionWithOperator.Result>
           <OutArgument x:TypeArguments="x:Boolean" />
