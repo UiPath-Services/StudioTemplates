@@ -82,19 +82,20 @@
       <AssemblyReference>UiPath.Platform</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="StartBrowser" sap:VirtualizedContainerService.HintSize="969,1811" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Configure and start the browser for web testing.&#xA;- Determines the browser type (Chrome, Firefox, Edge)&#xA;- Defaults to Chrome if no browser is specified&#xA;- Sets the runtime browser for the test session&#xA;- Add your custom browser navigation logic at the end" DisplayName="StartBrowser" sap:VirtualizedContainerService.HintSize="969,1811" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="uix:NBrowserType" Name="RuntimeBrowser" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <ui:LogMessage DisplayName="Log message for browser setup" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"Start Browser Setup"</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_12">"StartBrowser - Start"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
@@ -120,7 +121,7 @@
           <ui:LogMessage DisplayName="Log message for browser not set" sap:VirtualizedContainerService.HintSize="434,175" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Warn">
             <ui:LogMessage.Message>
               <InArgument x:TypeArguments="x:Object">
-                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">"Browser was not set! Setting default Browser to Chrome"</CSharpValue>
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">"StartBrowser - Browser was not set, defaulting to Chrome"</CSharpValue>
               </InArgument>
             </ui:LogMessage.Message>
           </ui:LogMessage>
@@ -166,7 +167,7 @@
       </Switch.Default>
       <Switch.Expression>
         <InArgument x:TypeArguments="x:String">
-          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">GlobalVariables.TestSetup["Browser"].ToString()</CSharpValue>
+          <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_13">GlobalVariables.TestSetup["Browser"].ToString().Trim().ToLowerInvariant()</CSharpValue>
         </InArgument>
       </Switch.Expression>
       <sap:WorkflowViewStateService.ViewState>
@@ -175,7 +176,7 @@
           <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Assign x:Key="Chrome" DisplayName="Assign - Browser Chrome" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign x:Key="chrome" DisplayName="Assign - Browser Chrome" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_3">
         <Assign.To>
           <OutArgument x:TypeArguments="uix:NBrowserType">
             <CSharpReference x:TypeArguments="uix:NBrowserType" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">RuntimeBrowser</CSharpReference>
@@ -187,7 +188,7 @@
           </InArgument>
         </Assign.Value>
       </Assign>
-      <Assign x:Key="Firefox" DisplayName="Assign - Browser Firefox" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign x:Key="firefox" DisplayName="Assign - Browser Firefox" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_4">
         <Assign.To>
           <OutArgument x:TypeArguments="uix:NBrowserType">
             <CSharpReference x:TypeArguments="uix:NBrowserType" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">RuntimeBrowser</CSharpReference>
@@ -199,7 +200,7 @@
           </InArgument>
         </Assign.Value>
       </Assign>
-      <Assign x:Key="Edge" DisplayName="Assign - Browser Edge" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign x:Key="edge" DisplayName="Assign - Browser Edge" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="Assign_5">
         <Assign.To>
           <OutArgument x:TypeArguments="uix:NBrowserType">
             <CSharpReference x:TypeArguments="uix:NBrowserType" sap2010:WorkflowViewState.IdRef="CSharpReference`1_4">RuntimeBrowser</CSharpReference>
@@ -212,10 +213,10 @@
         </Assign.Value>
       </Assign>
     </Switch>
-    <ui:LogMessage DisplayName="Log message for browser usage" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Trace">
+    <ui:LogMessage DisplayName="Log message for browser usage" sap:VirtualizedContainerService.HintSize="502,175" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9" xml:space="preserve">"Using " + RuntimeBrowser.ToString()  + " browser"</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_9" xml:space="preserve">"StartBrowser - Using " + RuntimeBrowser.ToString()  + " browser"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
@@ -226,10 +227,17 @@
         </InArgument>
       </uix:NSetRuntimeBrowser.BrowserType>
     </uix:NSetRuntimeBrowser>
-    <ui:LogMessage DisplayName="Log message for starting the browser" sap:VirtualizedContainerService.HintSize="502,166" sap2010:WorkflowViewState.IdRef="LogMessage_5">
+    <ui:LogMessage DisplayName="Log message for starting the browser" sap:VirtualizedContainerService.HintSize="502,166" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Warn">
       <ui:LogMessage.Message>
         <InArgument x:TypeArguments="x:Object">
-          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">"Add Here your custom flow to Start the browser"</CSharpValue>
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_11">"StartBrowser - TODO: Add custom flow to start the browser"</CSharpValue>
+        </InArgument>
+      </ui:LogMessage.Message>
+    </ui:LogMessage>
+    <ui:LogMessage DisplayName="Log message for browser end" sap:VirtualizedContainerService.HintSize="502,166" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info">
+      <ui:LogMessage.Message>
+        <InArgument x:TypeArguments="x:Object">
+          <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_15">"StartBrowser - End"</CSharpValue>
         </InArgument>
       </ui:LogMessage.Message>
     </ui:LogMessage>
