@@ -5,6 +5,7 @@ import os
 @mark.smoke
 @mark.folder_structure
 @mark.mock_folder_structure
+@mark.vb
 class MockFolderTests:
     @staticmethod
     def test_project_mock_reusable_folder_structure(app_constants, load_test_input):

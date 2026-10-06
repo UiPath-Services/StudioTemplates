@@ -39,8 +39,7 @@ class AnnotationsValuesTests:
 
                     name = name_re.search(tag[0]).group(0)
 
-                    split_sep = "VisualBasic" if "VisualBasic" in f.name else "CSharp"
-                    annotation_data.append((annotation_value, name, f.name.split(split_sep)[-1].replace("/", "\\")))
+                    annotation_data.append((annotation_value, name, f.name.split("VisualBasic")[-1].replace("/", "\\")))
 
             return annotation_data
 

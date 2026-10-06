@@ -1,3 +1,4 @@
+import pytest
 from pytest import fixture
 from constants import Constants
 
@@ -10,6 +11,7 @@ import xml.etree.ElementTree as et
 # Test Data Paths
 ROOT_TEST_DATA_VARIATION = "../../DocumentUnderstandingProcess/Tests/TestDataGeneration/PythonTests/TestDataVariation/"
 DATA_FOLDER_STRUCTURE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "DataFolderStructure_test_data.yaml"
+CROSS_PLATFORM_DATA_FOLDER_STRUCTURE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "DataFolderStructure_CrossPlatform_test_data.yaml"
 NUSPEC_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Nuspec_test_data.yaml"
 USER_GUIDE_TEST_DATA = ROOT_TEST_DATA_VARIATION + "UserGuide_test_data.yaml"
 PROJECT_JSON_TEST_DATA = ROOT_TEST_DATA_VARIATION + "Project_Json_test_data.yaml"
@@ -26,8 +28,19 @@ TEST_DATA_MAPPING = {
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--env", action="store", help="Development language selection between VB/CSharp"
+        "--env", action="store", help="Development language variant: VB or Cross-platform"
     )
+
+
+def pytest_collection_modifyitems(config, items):
+    """
+    Skips the tests that only apply to the other template variant.
+    """
+    other_variant = "vb" if config.getoption("--env") == "Cross-platform" else "cross_platform"
+    skip = pytest.mark.skip(reason=f"only applies to the {other_variant} variant")
+    for item in items:
+        if other_variant in item.keywords:
+            item.add_marker(skip)
 
 
 @fixture(scope="session")
@@ -83,7 +96,10 @@ def pytest_generate_tests(metafunc):
     test_name = metafunc.function.__name__
 
     if test_name in test_name_list:
-        data = yaml.safe_load((open(TEST_DATA_MAPPING[test_name], "r")))
+        path = TEST_DATA_MAPPING[test_name]
+        if path == DATA_FOLDER_STRUCTURE_TEST_DATA and metafunc.config.getoption("--env") == "Cross-platform":
+            path = CROSS_PLATFORM_DATA_FOLDER_STRUCTURE_TEST_DATA
+        data = yaml.safe_load((open(path, "r")))
         metafunc.parametrize("test_data", data)
 
 
