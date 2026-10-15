@@ -1,0 +1,144 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="TestExecutionTemplate" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Testing.Activities</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:Annotation.AnnotationText="Execution template: every test case bound to it runs in place of the Test Placeholder.&#xA;1. Load Config (Config\Settings.json, Constants.json, Assets.json) into the Config global variable, add TestName from the current job, and log it with TestTimeout.&#xA;2. Within TestTimeout: run Hooks\SetUp.xaml, then the test case.&#xA;3. When the test throws: record a failed assertion with a screenshot, run TearDown, rethrow the original exception.&#xA;4. When the test runs to the end (or the job is stopped): run TearDown.&#xA;FinalizeTestRun is invoked in both Catch and Finally on purpose: the Rethrow in Catch ends the job, so Finally runs only when the test did not throw." DisplayName="TestExecutionTemplate" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Run the test" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <TryCatch.Try>
+        <Sequence DisplayName="Try" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="ui:CurrentJobInfo" Name="currentJobInfo" />
+          </Sequence.Variables>
+          <ui:GetCurrentJobInfo DisplayName="Get the current job info" sap2010:WorkflowViewState.IdRef="GetCurrentJobInfo_1">
+            <ui:GetCurrentJobInfo.Result>
+              <OutArgument x:TypeArguments="ui:CurrentJobInfo">
+                <CSharpReference x:TypeArguments="ui:CurrentJobInfo" sap2010:WorkflowViewState.IdRef="CSharpReference`1_1">currentJobInfo</CSharpReference>
+              </OutArgument>
+            </ui:GetCurrentJobInfo.Result>
+          </ui:GetCurrentJobInfo>
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="InitializeConfig - Invoke Workflow File (Framework\InitializeConfig.cs)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Framework\InitializeConfig.cs">
+            <ui:InvokeWorkflowFile.Arguments>
+              <OutArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="Output">
+                <CSharpReference x:TypeArguments="scg:Dictionary(x:String, x:Object)" sap2010:WorkflowViewState.IdRef="CSharpReference`1_2">GlobalVariables.Config</CSharpReference>
+              </OutArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+          <Assign DisplayName="Add TestName to Config" sap2010:Annotation.AnnotationText="TestName: the running test case (the WorkflowName of the current job)." sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Object">
+                <CSharpReference x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpReference`1_3">GlobalVariables.Config["TestName"]</CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Object">
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">currentJobInfo.WorkflowName</CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+          <ui:LogMessage Level="Info" DisplayName="Log the run configuration" sap2010:WorkflowViewState.IdRef="LogMessage_1">
+            <ui:LogMessage.Message>
+              <InArgument x:TypeArguments="x:Object">
+                <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">"TestExecutionTemplate - TestName: " + GlobalVariables.Config["TestName"].ToString() + ", TestTimeout: " + GlobalVariables.Config["TestTimeout"].ToString()</CSharpValue>
+              </InArgument>
+            </ui:LogMessage.Message>
+          </ui:LogMessage>
+          <ui:TimeoutScope DisplayName="Test timeout" sap2010:WorkflowViewState.IdRef="TimeoutScope_1">
+            <ui:TimeoutScope.ThrowExceptionAfter>
+              <InArgument x:TypeArguments="s:TimeSpan">
+                <CSharpValue x:TypeArguments="s:TimeSpan" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">(TimeSpan)GlobalVariables.Config["TestTimeout"]</CSharpValue>
+              </InArgument>
+            </ui:TimeoutScope.ThrowExceptionAfter>
+            <ui:TimeoutScope.TimeoutMessage>
+              <InArgument x:TypeArguments="x:String">
+                <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_5">"Test exceeded TestTimeout (" + GlobalVariables.Config["TestTimeout"].ToString() + ")"</CSharpValue>
+              </InArgument>
+            </ui:TimeoutScope.TimeoutMessage>
+            <ui:TimeoutScope.Body>
+              <ActivityAction x:TypeArguments="Activity">
+                <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="SetUp - Invoke Workflow File (Hooks\SetUp.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Hooks\SetUp.xaml">
+                    <ui:InvokeWorkflowFile.Arguments>
+                      <scg:Dictionary x:TypeArguments="x:String, Argument" />
+                    </ui:InvokeWorkflowFile.Arguments>
+                  </ui:InvokeWorkflowFile>
+                  <Sequence DisplayName="Run Test" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                    <ui:Placeholder Description="This placeholder activity will be replaced at build time and can only be used within an execution template." DisplayName="Test Placeholder" sap2010:WorkflowViewState.IdRef="Placeholder_1" />
+                  </Sequence>
+                </Sequence>
+              </ActivityAction>
+            </ui:TimeoutScope.Body>
+          </ui:TimeoutScope>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="testException" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Catch" sap2010:WorkflowViewState.IdRef="Sequence_5">
+              <uta:VerifyExpression KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Test failed with an exception" ContinueOnFailure="True" DisplayName="Record the failure with a screenshot" Expression="False" sap2010:WorkflowViewState.IdRef="VerifyExpression_1" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False">
+                <uta:VerifyExpression.OutputMessageFormat>
+                  <InArgument x:TypeArguments="x:String">
+                    <CSharpValue x:TypeArguments="x:String" sap2010:WorkflowViewState.IdRef="CSharpValue`1_6">testException.GetType().Name + ": " + testException.Message</CSharpValue>
+                  </InArgument>
+                </uta:VerifyExpression.OutputMessageFormat>
+              </uta:VerifyExpression>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="FinalizeTestRun after failure - Invoke Workflow File (Framework\FinalizeTestRun.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Framework\FinalizeTestRun.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">
+                    <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_7">testException</CSharpValue>
+                  </InArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <Rethrow DisplayName="Rethrow the test failure" sap2010:WorkflowViewState.IdRef="Rethrow_1" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+      <TryCatch.Finally>
+        <Sequence DisplayName="Finally" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="FinalizeTestRun after success - Invoke Workflow File (Framework\FinalizeTestRun.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Framework\FinalizeTestRun.xaml">
+            <ui:InvokeWorkflowFile.Arguments>
+              <InArgument x:TypeArguments="s:Exception" x:Key="in_Exception">
+                <CSharpValue x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="CSharpValue`1_8">null</CSharpValue>
+              </InArgument>
+            </ui:InvokeWorkflowFile.Arguments>
+          </ui:InvokeWorkflowFile>
+        </Sequence>
+      </TryCatch.Finally>
+    </TryCatch>
+  </Sequence>
+</Activity>
