@@ -1,16 +1,18 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Tests_SampleTestCase" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Tests_SampleTestCase" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uta="clr-namespace:UiPath.Testing.Activities;assembly=UiPath.Testing.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
+      <x:String>GlobalConstantsNamespace</x:String>
+      <x:String>GlobalVariablesNamespace</x:String>
+      <x:String>System</x:String>
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
-      <x:String>System</x:String>
       <x:String>System.Collections</x:String>
       <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
       <x:String>System.Linq</x:String>
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>UiPath.Testing.Activities</x:String>
-      <x:String>GlobalVariablesNamespace</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -23,42 +25,13 @@
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.TypeConverter</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="SampleTestCase" sap2010:Annotation.AnnotationText="Sample test case bound to the TestExecutionTemplate. It checks that the template loaded Config before the test ran: TestTimeout and TestName. Replace or delete it." sap2010:WorkflowViewState.IdRef="Sequence_1">
-    <Sequence DisplayName="... Given" sap2010:Annotation.AnnotationText="Given: the preconditions - bring the application to the state the test starts from." sap2010:WorkflowViewState.IdRef="Sequence_2">
-      <ui:LogMessage Level="Info" DisplayName="Log Given" sap2010:WorkflowViewState.IdRef="LogMessage_1">
-        <ui:LogMessage.Message>
-          <InArgument x:TypeArguments="x:Object">
-            <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_1">"SampleTestCase - Given: TestName '" + GlobalVariables.Config["TestName"].ToString() + "', TestTimeout " + GlobalVariables.Config["TestTimeout"].ToString()</CSharpValue>
-          </InArgument>
-        </ui:LogMessage.Message>
-      </ui:LogMessage>
-    </Sequence>
-    <Sequence DisplayName="... When" sap2010:Annotation.AnnotationText="When: the action - perform the steps under test." sap2010:WorkflowViewState.IdRef="Sequence_3">
-      <ui:LogMessage Level="Info" DisplayName="Log When" sap2010:WorkflowViewState.IdRef="LogMessage_2">
-        <ui:LogMessage.Message>
-          <InArgument x:TypeArguments="x:Object">
-            <CSharpValue x:TypeArguments="x:Object" sap2010:WorkflowViewState.IdRef="CSharpValue`1_2">"SampleTestCase - When"</CSharpValue>
-          </InArgument>
-        </ui:LogMessage.Message>
-      </ui:LogMessage>
-    </Sequence>
-    <Sequence DisplayName="... Then" sap2010:Annotation.AnnotationText="Then: the outcome - assert the result with Verify activities." sap2010:WorkflowViewState.IdRef="Sequence_4">
-      <uta:VerifyExpression KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Config holds TestTimeout as a duration" ContinueOnFailure="True" DisplayName="Verify TestTimeout is loaded" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False" sap2010:WorkflowViewState.IdRef="VerifyExpression_1">
-        <uta:VerifyExpression.Expression>
-          <InArgument x:TypeArguments="x:Boolean">
-            <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_3">GlobalVariables.Config != null &amp;&amp; GlobalVariables.Config["TestTimeout"] is TimeSpan</CSharpValue>
-          </InArgument>
-        </uta:VerifyExpression.Expression>
-      </uta:VerifyExpression>
-      <uta:VerifyExpression KeepScreenshots="{x:Null}" Result="{x:Null}" ScreenshotsPath="{x:Null}" AlternativeVerificationTitle="Config holds the TestName of the running test" ContinueOnFailure="True" DisplayName="Verify TestName is set" TakeScreenshotInCaseOfFailingAssertion="True" TakeScreenshotInCaseOfSucceedingAssertion="False" sap2010:WorkflowViewState.IdRef="VerifyExpression_2">
-        <uta:VerifyExpression.Expression>
-          <InArgument x:TypeArguments="x:Boolean">
-            <CSharpValue x:TypeArguments="x:Boolean" sap2010:WorkflowViewState.IdRef="CSharpValue`1_4">GlobalVariables.Config.ContainsKey("TestName") &amp;&amp; !String.IsNullOrWhiteSpace(GlobalVariables.Config["TestName"].ToString())</CSharpValue>
-          </InArgument>
-        </uta:VerifyExpression.Expression>
-      </uta:VerifyExpression>
-    </Sequence>
+  <Sequence DisplayName="SampleTestCase" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence DisplayName="... Given" sap2010:WorkflowViewState.IdRef="Sequence_2" />
+    <Sequence DisplayName="... When" sap2010:WorkflowViewState.IdRef="Sequence_3" />
+    <Sequence DisplayName="... Then" sap2010:WorkflowViewState.IdRef="Sequence_4" />
   </Sequence>
 </Activity>
