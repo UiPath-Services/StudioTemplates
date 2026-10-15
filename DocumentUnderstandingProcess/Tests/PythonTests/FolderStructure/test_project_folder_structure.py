@@ -24,7 +24,7 @@ class ProjectFolderTests:
         number_of_files = len(os.listdir(app_constants.PROJECT))
 
         # load expected project folder structure
-        project_structure = load_test_input(ProjectFolderTests.PROJECT_STRUCTURE_TEST_DATA)
+        project_structure = load_test_input(app_constants.PROJECT_STRUCTURE_TEST_DATA)
         # expected folders/files count in project folder
         expected_file_count = len(project_structure[0]["ProjectRootFolderStructure"])
 
@@ -44,7 +44,7 @@ class ProjectFolderTests:
         files = os.listdir(app_constants.PROJECT)
 
         # load expected project folder structure
-        project_structure = load_test_input(ProjectFolderTests.PROJECT_STRUCTURE_TEST_DATA)
+        project_structure = load_test_input(app_constants.PROJECT_STRUCTURE_TEST_DATA)
 
         # compare folder content with the expected files
         assert all(file in files for file in project_structure[0]["ProjectRootFolderStructure"])

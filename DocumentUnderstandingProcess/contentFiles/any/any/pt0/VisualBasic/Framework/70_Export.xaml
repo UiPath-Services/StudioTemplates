@@ -112,14 +112,14 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Start Data Export" sap:VirtualizedContainerService.HintSize="434,141" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_DataExportStart&quot;) + &quot; &quot; + in_ExtractionResults.ResultsDocument.DocumentTypeId + &quot; (pag &quot; +  (in_ExtractionResults.ResultsDocument.Bounds.StartPage + 1).ToString + &quot;-&quot; + (in_ExtractionResults.ResultsDocument.Bounds.StartPage + in_ExtractionResults.ResultsDocument.Bounds.PageCount).ToString + &quot;)&quot; + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:LogMessage DisplayName="Log Message - Start Data Export" sap:VirtualizedContainerService.HintSize="434,141" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_DataExportStart&quot;) + &quot; &quot; + in_ExtractionResults.ResultsDocument.DocumentTypeId + &quot; (pag &quot; +  in_ExtractionResults.ResultsDocument.Bounds.PageRange + &quot;)&quot; + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
     <ui:Comment DisplayName="Comment - Example Export" sap:VirtualizedContainerService.HintSize="434,132" sap2010:WorkflowViewState.IdRef="Comment_1" Text="Please note that the below example is intended for illustrative purposes only. The export to excel was just an example. Ideally you would want to use the data extracted in another process." />
     <Assign sap2010:Annotation.AnnotationText="Adding the page range here ensures a unique export name in case PDF splitting is DISABLED" DisplayName="Assign Output File Name" sap:VirtualizedContainerService.HintSize="434,123" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[outputPath]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[Path.Combine(in_config("ExportsFolder"), path.GetFileNameWithoutExtension(in_ExtractionResults.DocumentId) + "_" + (in_ExtractionResults.ResultsDocument.Bounds.StartPage + 1).ToString + "-"+(in_ExtractionResults.ResultsDocument.Bounds.StartPage + in_ExtractionResults.ResultsDocument.Bounds.PageCount).ToString + ".xlsx")]</InArgument>
+        <InArgument x:TypeArguments="x:String">[Path.Combine(in_config("ExportsFolder"), path.GetFileNameWithoutExtension(in_ExtractionResults.DocumentId) + "_" + in_ExtractionResults.ResultsDocument.Bounds.PageRange + ".xlsx")]</InArgument>
       </Assign.Value>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">

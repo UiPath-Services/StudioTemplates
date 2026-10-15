@@ -34,7 +34,6 @@
       <x:String>UiPath.DocumentProcessing.Contracts.Dom</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Taxonomy</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.Results</x:String>
-      <x:String>UiPath.Vision.OCR</x:String>
       <x:String>UiPath.OCR.Contracts</x:String>
       <x:String>UiPath.DocumentProcessing.Contracts.DataExtraction</x:String>
       <x:String>System.Xml.Serialization</x:String>
@@ -104,7 +103,6 @@
       <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
-      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>WindowsBase</AssemblyReference>
       <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
@@ -349,7 +347,7 @@
                                                 </scg:Dictionary>
                                               </sap:WorkflowViewStateService.ViewState>
                                               <ui:LogMessage DisplayName="Log Message - Create Classification Validation Action" sap:VirtualizedContainerService.HintSize="483.2,92.8" sap2010:WorkflowViewState.IdRef="LogMessage_84" Message="[config(&quot;LogMessage_CreateClassificationAction&quot;) + Environment.NewLine + config(&quot;logKey&quot;)]" />
-                                              <p3:CreateDocumentClassificationAction AutomaticExtractionResults="{x:Null}" TimeoutMs="{x:Null}" ActionCatalog="[config(&quot;ActionCatalog&quot;)]" ActionOutput="[classificationAction]" ActionPriority="Medium" ActionTitle="[config(&quot;ClassificationActionTitle&quot;) + &quot; &quot; + Path.GetFileName(in_TargetFile)]" AutomaticClassificationResults="[classificationResultsArray]" BucketFolderPath="[config(&quot;StorageBucketDirectoryPath&quot;)]" BucketName="[config(&quot;StorageBucketName&quot;)]" DisplayName="Create Document Classification Action - Main " DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" FolderPath="[config(&quot;ActionFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="483.2,372" sap2010:WorkflowViewState.IdRef="CreateDocumentClassificationAction_2" RetryOnFailure="True" ShowOnlyRelevantPageRange="False" Taxonomy="[docTaxonomy]" />
+                                              <p3:CreateDocumentClassificationAction AutomaticExtractionResults="{x:Null}" TimeoutMs="{x:Null}" ActionCatalog="[config(&quot;ActionCatalog&quot;)]" ActionOutput="[classificationAction]" ActionPriority="Medium" ActionTitle="[config(&quot;ClassificationActionTitle&quot;) + &quot; &quot; + Path.GetFileName(in_TargetFile)]" AutomaticClassificationResults="[classificationResultsArray]" BucketFolderPath="[config(&quot;StorageBucketDirectoryPath&quot;)]" BucketName="[config(&quot;StorageBucketName&quot;)]" DisplayName="Create Document Classification Action - Main " DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" EnablePageReorderging="True" FolderPath="[config(&quot;ActionFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="483.2,372" sap2010:WorkflowViewState.IdRef="CreateDocumentClassificationAction_2" RetryOnFailure="True" ShowOnlyRelevantPageRange="False" Taxonomy="[docTaxonomy]" />
                                               <If Condition="[TransactionItem IsNot Nothing]" DisplayName="If Valid Transaction Item - Set Classification Validation Status" sap:VirtualizedContainerService.HintSize="483.2,302.4" sap2010:WorkflowViewState.IdRef="If_2">
                                                 <sap:WorkflowViewStateService.ViewState>
                                                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -430,7 +428,7 @@
                                                     </ActivityAction.Argument>
                                                     <TryCatch DisplayName="Try Catch - Process Each Document" sap:VirtualizedContainerService.HintSize="636.8,856" sap2010:WorkflowViewState.IdRef="TryCatch_4">
                                                       <TryCatch.Variables>
-                                                        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located (based on classification)." Default="[(classificationResult.DocumentBounds.StartPage + 1).ToString + &quot;-&quot; + (classificationResult.DocumentBounds.StartPage + classificationResult.DocumentBounds.PageCount).ToString]" Name="currentPageRange" />
+                                                        <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Page range in the input file where the document is located (based on classification)." Default="[classificationResult.DocumentBounds.PageRange]" Name="currentPageRange" />
                                                         <Variable x:TypeArguments="p2:ExtractionResult" sap2010:Annotation.AnnotationText="The results of the data extraction process." Name="extractionResults" />
                                                       </TryCatch.Variables>
                                                       <TryCatch.Try>
@@ -535,7 +533,7 @@
                                                                             </scg:Dictionary>
                                                                           </sap:WorkflowViewStateService.ViewState>
                                                                           <ui:LogMessage DisplayName="Log Message -  Create HitL Validation Action" sap:VirtualizedContainerService.HintSize="478.4,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_86" Message="[config(&quot;LogMessage_CreateValidationAction&quot;) + &quot; &quot; + extractionResults.ResultsDocument.DocumentTypeId + &quot; (pag &quot; +  currentPageRange +&quot;)&quot; + Environment.NewLine + config(&quot;logKey&quot;)]" />
-                                                                          <p3:CreateDocumentValidationAction FieldsValidationConfidence="{x:Null}" TimeoutMs="{x:Null}" ActionCatalog="[config(&quot;ActionCatalog&quot;)]" ActionOutput="[validationAction]" ActionPriority="Medium" ActionTitle="[config(&quot;ValidationActionTitle&quot;) + &quot; &quot; + extractionResults.ResultsDocument.DocumentTypeName]" AutomaticExtractionResults="[extractionResults]" BucketFolderPath="[config(&quot;StorageBucketDirectoryPath&quot;)]" BucketName="[config(&quot;StorageBucketName&quot;)]" DisplayName="Create Document Data Validation Action" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" FolderPath="[config(&quot;ActionFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="478.4,404" sap2010:WorkflowViewState.IdRef="CreateDocumentValidationAction_16" RetryOnFailure="True" ShowOnlyRelevantPageRange="True" Taxonomy="[docTaxonomy]">
+                                                                          <p3:CreateDocumentValidationAction FieldsValidationConfidence="{x:Null}" TimeoutMs="{x:Null}" ActionCatalog="[config(&quot;ActionCatalog&quot;)]" ActionOutput="[validationAction]" ActionPriority="Medium" ActionTitle="[config(&quot;ValidationActionTitle&quot;) + &quot; &quot; + extractionResults.ResultsDocument.DocumentTypeName]" AutomaticExtractionResults="[extractionResults]" BucketFolderPath="[config(&quot;StorageBucketDirectoryPath&quot;)]" BucketName="[config(&quot;StorageBucketName&quot;)]" DisplayMode="Compact" DisplayName="Create Document Data Validation Action" DocumentObjectModel="[dom]" DocumentPath="[in_TargetFile]" DocumentText="[docText]" EnableRTLControls="False" FolderPath="[config(&quot;ActionFolderPath&quot;)]" sap:VirtualizedContainerService.HintSize="478.4,404" sap2010:WorkflowViewState.IdRef="CreateDocumentValidationAction_16" RetryOnFailure="True" ShowOnlyRelevantPageRange="True" Taxonomy="[docTaxonomy]">
                                                                             <sap:WorkflowViewStateService.ViewState>
                                                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -605,6 +603,7 @@
                                                                                   <InArgument x:TypeArguments="p1:Document" x:Key="in_DOM">[dom]</InArgument>
                                                                                   <InArgument x:TypeArguments="x:String" x:Key="in_DocText">[docText]</InArgument>
                                                                                   <InArgument x:TypeArguments="p2:ExtractionResult" x:Key="in_ValidatedExtractionResults">[validatedExtractionResults]</InArgument>
+                                                                                  <InArgument x:TypeArguments="p3:DocumentValidationActionData" x:Key="in_ValidationAction">[validationAction]</InArgument>
                                                                                   <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_Config">[config]</InArgument>
                                                                                   <InArgument x:TypeArguments="x:Int32" x:Key="in_MaxAttempts">[maxAttempts]</InArgument>
                                                                                   <InArgument x:TypeArguments="x:TimeSpan" x:Key="in_RetryInterval">[retryInterval]</InArgument>

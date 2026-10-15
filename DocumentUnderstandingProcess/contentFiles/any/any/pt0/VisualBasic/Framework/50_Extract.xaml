@@ -109,7 +109,6 @@
       <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
       <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
       <AssemblyReference>UiPath.OCR.Core</AssemblyReference>
-      <AssemblyReference>UiPath.Vision.Core</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Sequence sap2010:Annotation.AnnotationText="Pre-extraction processing and Data Extraction workflow. Extractors are process-dependant!&#xA;&#xA;Outputs whether Human validation is required.asdasd" DisplayName="Extract" sap:VirtualizedContainerService.HintSize="843.2,1278.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
@@ -119,7 +118,7 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="780.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_DataExtractionStart&quot;) + &quot; &quot; + in_ClassificationResult.DocumentTypeId + &quot; (pag &quot; + (in_ClassificationResult.DocumentBounds.StartPage +1).ToString + &quot;-&quot; + (in_ClassificationResult.DocumentBounds.StartPage + in_ClassificationResult.DocumentBounds.PageCount).ToString + &quot;)&quot;  + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
+    <ui:LogMessage DisplayName="Log Message - Start Data Extraction" sap:VirtualizedContainerService.HintSize="780.8,174.4" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[in_Config(&quot;LogMessage_DataExtractionStart&quot;) + &quot; &quot; + in_ClassificationResult.DocumentTypeId + &quot; (pag &quot; + in_ClassificationResult.DocumentBounds.PageRange + &quot;)&quot;  + Environment.NewLine + in_Config(&quot;logKey&quot;)]" />
     <ui:RetryScope sap2010:Annotation.AnnotationText="Extractors might need to make API calls. The retry mechanism is used to compensate for minor fluctuations in network stability and other recoverable issues.&#xA;&#xA;MaxExecutionAttemptsExtract overrides the default number of execution attempts." DisplayName="Retry Scope - Extract" sap:VirtualizedContainerService.HintSize="780.8,818.4" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[Cint(in_Config(&quot;MaxExecutionAttemptsExtract&quot;))]" RetryInterval="[in_RetryInterval]">
       <ui:RetryScope.ActivityBody>
         <ActivityAction>

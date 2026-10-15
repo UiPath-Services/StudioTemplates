@@ -117,6 +117,8 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" sap2010:Annotation.AnnotationText="Confile file content in string format." Name="JsonString" />
       <Variable x:TypeArguments="upr:ILocalResource" sap2010:Annotation.AnnotationText="Config file as ILocalResource variable." Name="ConfigFileResource" />
+      <Variable x:TypeArguments="x:Int32" Default="3" sap2010:Annotation.AnnotationText="Number of attempts to download the config file. Set here because the config file is not loaded yet." Name="configDownloadAttempts" />
+      <Variable x:TypeArguments="x:TimeSpan" Default="00:00:30" sap2010:Annotation.AnnotationText="Time between attempts to download the config file. Set here because the config file is not loaded yet." Name="configDownloadRetryInterval" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -143,7 +145,7 @@
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:RetryScope DisplayName="Retry Scope - Download config file from Storage Bucket" sap:VirtualizedContainerService.HintSize="545.6,540" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="3" RetryInterval="00:00:30">
+          <ui:RetryScope DisplayName="Retry Scope - Download config file from Storage Bucket" sap:VirtualizedContainerService.HintSize="545.6,540" sap2010:WorkflowViewState.IdRef="RetryScope_1" NumberOfRetries="[configDownloadAttempts]" RetryInterval="[configDownloadRetryInterval]">
             <ui:RetryScope.ActivityBody>
               <ActivityAction>
                 <Sequence DisplayName="Action" sap:VirtualizedContainerService.HintSize="512,307.2" sap2010:WorkflowViewState.IdRef="Sequence_4">

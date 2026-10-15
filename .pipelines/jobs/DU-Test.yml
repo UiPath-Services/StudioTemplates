@@ -1,6 +1,7 @@
 parameters: 
   projectPath: ""
   name: ""
+  pytestEnv: ""
   orchestratorConnection: ""
   templatePrefix: RunRPATests
 
@@ -13,7 +14,7 @@ jobs:
       - script: |
             cd $(Build.SourcesDirectory)\DocumentUnderstandingProcess\Tests
             pip install -r requirements.txt
-            pytest -m "smoke" --env "${{ parameters.name }}" -v -s  --junitxml=junit/test-results-${{ parameters.name }}.xml
+            pytest -m "smoke" --env "${{ coalesce(parameters.pytestEnv, parameters.name) }}" -v -s  --junitxml=junit/test-results-${{ parameters.name }}.xml
         displayName: "pytest-${{ parameters.name }}"
  
       - task: PublishTestResults@2
